@@ -26,7 +26,8 @@ concrete exploit scenario and the corrective approach, ranked by severity.
 
 ## Context you must load first
 
-- `CLAUDE.md` → "The one rule that cannot break: tenant isolation" + the 4 roles + 6-table model.
+- `CLAUDE.md` → "The one rule that cannot break: tenant isolation" + the 4 roles + 7-table model
+  (incl. `AGENT_COMPANIES`, which scopes a Support Agent's view to their assigned client projects).
 - `docs/ticketing-system-brief.md` → §5 (data model, isolation approaches) and the role matrix.
 - The tenant key is `TICKETS.company_id`. The logged-in user's company is held in the
   APEX application item **`APP_COMPANY_ID`** (and role in `APP_ROLE`), set at login.

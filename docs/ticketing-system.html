@@ -257,6 +257,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
     <div class="stat"><div class="n" data-count="6">6</div><div class="l">DATA TABLES</div></div>
     <div class="stat"><div class="n" data-count="4">4</div><div class="l">USER ROLES</div></div>
   </div>
+  <div style="margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+    <a href="https://apex-demo.dhawilabs.com" target="_blank" rel="noopener"
+       style="background:#fff;color:#0b1320;font-weight:700;padding:13px 22px;border-radius:10px;text-decoration:none;font-size:15px">
+      ▶ Try the live interactive demo
+    </a>
+    <span style="color:#9fe9f5;font-size:13px">Sign in with any account · password <code style="background:rgba(255,255,255,.15);padding:1px 6px;border-radius:4px">demo</code> · simulated login (not real auth)</span>
+  </div>
 </div></header>
 
 <!-- OVERVIEW -->
@@ -309,12 +316,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       <div class="ln"><span class="k">Sees</span><span><b>All</b> of their company's tickets</span></div>
       <div class="ln"><span class="k">Does</span><span>Oversee staff, raise on behalf, company dashboard</span></div></div>
     <div class="role vendor"><div class="tag">Our side</div><h3>Support Agent</h3>
-      <div class="ln"><span class="k">Sees</span><span>Assigned tickets + the open queue</span></div>
+      <div class="ln"><span class="k">Sees</span><span>Tickets for <b>their assigned projects</b> (clients they cover) — never clients they're not on</span></div>
       <div class="ln"><span class="k">Does</span><span>Work tickets: status, comment, resolve</span></div></div>
     <div class="role vendor"><div class="tag">Our side</div><h3>System Admin</h3>
       <div class="ln"><span class="k">Sees</span><span><b>Everything</b>, across all companies</span></div>
       <div class="ln"><span class="k">Does</span><span>Manage companies/users, <b>assign</b>, configure</span></div></div>
   </div>
+  <div class="callout good"><div class="ico">👥</div><div><b>Four roles are enough (decision I).</b> The things you'd expect to be extra roles aren't: a <b>Manager</b> who only watches is just an Admin/overseer who doesn't click the work buttons; <b>L1/L2/L3</b> tiers are the <b>Escalate</b> action (reassign + raise priority, logged) — no per-agent level field; a <b>Project Lead</b> is deferred (returns later as an <code>is_lead</code> flag, not a role). Agents are <b>scoped to their assigned projects</b> via the <code>AGENT_COMPANIES</code> table below.</div></div>
 </div></section>
 
 <!-- REQUIREMENTS -->
@@ -374,7 +382,7 @@ stateDiagram-v2
 <!-- DATA -->
 <section id="data"><div class="wrap reveal">
   <div class="eyebrow">Database · the foundation</div>
-  <h2 class="sec">Six tables</h2>
+  <h2 class="sec">Seven tables</h2>
   <p class="lead">APEX is database-first: get these right and the screens almost build themselves. Every ticket carries a <code>company_id</code> — that column is how we keep clients isolated.</p>
   <div class="erd">
     <div class="tbl"><div class="hd">COMPANIES <span class="pk">PK company_id</span></div><ul>
@@ -406,6 +414,10 @@ stateDiagram-v2
     <div class="tbl"><div class="hd">CATEGORIES <span class="pk">PK category_id</span></div><ul>
       <li><span>category_name</span><span class="t">text</span></li>
       <li><span class="t">Bug · Request · Question…</span></li></ul></div>
+    <div class="tbl"><div class="hd">AGENT_COMPANIES <span class="pk">PK user_id+company_id</span></div><ul>
+      <li><span class="fk">user_id</span><span class="t">FK · agent</span></li>
+      <li><span class="fk">company_id</span><span class="t">FK · client/project</span></li>
+      <li><span class="t">which clients an agent covers</span></li></ul></div>
   </div>
 
   <div class="mbox"><pre class="mermaid">
@@ -416,10 +428,12 @@ erDiagram
     TICKETS ||--o{ TICKET_COMMENTS : has
     TICKETS ||--o{ TICKET_HISTORY : has
     CATEGORIES ||--o{ TICKETS : classifies
+    APP_USERS ||--o{ AGENT_COMPANIES : covers
+    COMPANIES ||--o{ AGENT_COMPANIES : coveredBy
   </pre></div>
   <div class="mcap">Entity relationships (renders if online; the table cards above are the offline-safe version)</div>
 
-  <div class="callout good"><div class="ico">🛡️</div><div><b>Tenant isolation plan (v1):</b> at login, store the user's <code>company_id</code> + role in an APEX application item. Every client-facing report filters <code>WHERE company_id = :APP_COMPANY_ID</code>, with APEX authorization schemes layered on top. In the demo, <b>show</b> a client logging in and seeing only their tickets — that proves it live.</div></div>
+  <div class="callout good"><div class="ico">🛡️</div><div><b>Tenant isolation plan (v1):</b> at login, store the user's <code>company_id</code> + role in an APEX application item. Every client-facing report filters <code>WHERE company_id = :APP_COMPANY_ID</code>, with APEX authorization schemes layered on top. In the demo, <b>show</b> a client logging in and seeing only their tickets — that proves it live. <b>Agents</b> are additionally narrowed to their own projects via <code>WHERE company_id IN (their AGENT_COMPANIES)</code> — a usability filter on the vendor side, separate from the hard client-isolation wall.</div></div>
 </div></section>
 
 <!-- PAGES -->
@@ -499,6 +513,7 @@ erDiagram
   <div class="dec"><div class="k">F</div><div><div class="q">Confirm the 3-week milestone shape.</div><div class="rec">✓ Recommend: Wk1 foundation · Wk2 core · Wk3 polish + demo</div></div></div>
   <div class="dec"><div class="k">G</div><div><div class="q">Escalation: add the lightweight “Escalate” action only (reassign + raise priority, logged), or also add Tier-2/Team-Lead roles?</div><div class="rec">✓ Recommend: action only — models tiered escalation without growing the role matrix</div></div></div>
   <div class="dec"><div class="k">H</div><div><div class="q">Confirm the four new SHOULD items (CSAT, dashboard analytics, auto-ack email, escalate) — all verified feasible in APEX 26.1. Keep SLA as COULD, highlight only?</div><div class="rec">✓ Recommend: yes — adopt the four; SLA stays COULD (no timers)</div></div></div>
+  <div class="dec"><div class="k">I</div><div><div class="q">Should agents see every client's queue, or only the projects they're assigned to?</div><div class="rec">✓ Decided: agents are <strong>scoped to their assigned projects</strong> (AGENT_COMPANIES join). Keeps queues quiet. 4 roles stay — Manager = overseer (not a role), L1/L2/L3 = Escalate (no level field), Project Lead deferred (is_lead flag)</div></div></div>
 </div></section>
 
 <footer><div class="wrap">

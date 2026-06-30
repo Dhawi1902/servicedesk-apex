@@ -22,7 +22,7 @@ verbatim; do not paraphrase it.
 
 Do these once. Pages 1–12 depend on them.
 
-### A.1 Create the schema (6 tables + ref sequence)
+### A.1 Create the schema (7 tables + ref sequence)
 
 Run in **SQL Workshop → SQL Commands** (or SQL Scripts). This is the canonical column set the rest
 of the guide references.
@@ -91,6 +91,15 @@ CREATE TABLE TICKET_HISTORY (
   CREATED_AT TIMESTAMP DEFAULT SYSTIMESTAMP
 );
 
+-- Which CLIENT companies (projects) each Support Agent covers.
+-- Scopes an agent's queue to their own projects (decision I). A bridge/join table:
+-- one agent ↔ many clients, one client ↔ many agents. Composite PK prevents duplicates.
+CREATE TABLE AGENT_COMPANIES (
+  USER_ID    NUMBER NOT NULL REFERENCES APP_USERS(USER_ID),
+  COMPANY_ID NUMBER NOT NULL REFERENCES COMPANIES(COMPANY_ID),
+  CONSTRAINT AGENT_COMPANIES_PK PRIMARY KEY (USER_ID, COMPANY_ID)
+);
+
 CREATE SEQUENCE TICKET_REF_SEQ START WITH 1 INCREMENT BY 1;
 
 -- Human-friendly TKT-00001 reference, generated on insert
@@ -107,11 +116,14 @@ Add a couple of indexes for the tenant key and the queue:
 ```sql
 CREATE INDEX TICKETS_COMPANY_IX  ON TICKETS(COMPANY_ID);
 CREATE INDEX TICKETS_ASSIGNED_IX ON TICKETS(ASSIGNED_TO);
+CREATE INDEX AGENT_COMPANIES_USER_IX ON AGENT_COMPANIES(USER_ID);
 ```
 
 Seed sample data from the mockup dataset (`docs/mockups/assets/demo-data.js`): Northwind IT (VENDOR)
 + Acme/Globex/Initech/Umbrella (CLIENT), the 8 users with their roles, 5 categories, and ~12 tickets.
-You can also generate volume with **`APEX_DG_DATA_GEN`** (`reference/plsql/025-APEX_DG_DATA_GEN.md`).
+Also seed **`AGENT_COMPANIES`** to match the mockup's `agentCompanies` map — Mike covers Acme + Globex,
+Lee covers Acme + Initech (so each agent's queue is scoped to just their projects). You can also
+generate volume with **`APEX_DG_DATA_GEN`** (`reference/plsql/025-APEX_DG_DATA_GEN.md`).
 
 ### A.2 Create the application
 
@@ -201,10 +213,17 @@ Every ticket-bearing region uses this exact `WHERE`. It encodes §2 of the brief
 
 ```sql
 WHERE ( :APP_ROLE = 'System Admin'
-     OR ( :APP_ROLE = 'Support Agent' AND ( t.ASSIGNED_TO = :APP_USER_ID OR t.ASSIGNED_TO IS NULL ) )
+     OR ( :APP_ROLE = 'Support Agent' AND ( t.COMPANY_ID IN (SELECT ac.COMPANY_ID FROM AGENT_COMPANIES ac WHERE ac.USER_ID = :APP_USER_ID) OR t.ASSIGNED_TO = :APP_USER_ID ) )
      OR ( :APP_ROLE = 'Client Admin'  AND t.COMPANY_ID  = :APP_COMPANY_ID )
      OR ( :APP_ROLE = 'Client User'   AND t.COMPANY_ID  = :APP_COMPANY_ID AND t.CREATED_BY = :APP_USER_ID ) )
 ```
+
+> **The agent branch (decision I):** a Support Agent sees tickets for the **client companies they cover**
+> — the `t.COMPANY_ID IN (SELECT … FROM AGENT_COMPANIES …)` subquery — plus, defensively, anything
+> assigned directly to them. This is what keeps an agent's queue free of clients they're not on. Who
+> covers whom is maintained by the System Admin on the **Agent → Project coverage** grid (Page 10a).
+> Note this is a vendor-side *usability* filter; the hard client-isolation wall is still the
+> `t.COMPANY_ID = :APP_COMPANY_ID` test on the client branches.
 
 ---
 
@@ -282,7 +301,7 @@ WHERE ( :APP_ROLE = 'System Admin'
        COUNT(*) FILTER (WHERE t.STATUS IN ('Resolved','Closed'))                         done_cnt
      FROM TICKETS t
      WHERE ( :APP_ROLE = 'System Admin'
-          OR ( :APP_ROLE = 'Support Agent' AND ( t.ASSIGNED_TO = :APP_USER_ID OR t.ASSIGNED_TO IS NULL ) )
+          OR ( :APP_ROLE = 'Support Agent' AND ( t.COMPANY_ID IN (SELECT ac.COMPANY_ID FROM AGENT_COMPANIES ac WHERE ac.USER_ID = :APP_USER_ID) OR t.ASSIGNED_TO = :APP_USER_ID ) )
           OR ( :APP_ROLE = 'Client Admin'  AND t.COMPANY_ID  = :APP_COMPANY_ID )
           OR ( :APP_ROLE = 'Client User'   AND t.COMPANY_ID  = :APP_COMPANY_ID AND t.CREATED_BY = :APP_USER_ID ) )
      ```
@@ -291,7 +310,7 @@ WHERE ( :APP_ROLE = 'System Admin'
      SELECT t.STATUS label, COUNT(*) value
        FROM TICKETS t
       WHERE ( :APP_ROLE = 'System Admin'
-           OR ( :APP_ROLE = 'Support Agent' AND ( t.ASSIGNED_TO = :APP_USER_ID OR t.ASSIGNED_TO IS NULL ) )
+           OR ( :APP_ROLE = 'Support Agent' AND ( t.COMPANY_ID IN (SELECT ac.COMPANY_ID FROM AGENT_COMPANIES ac WHERE ac.USER_ID = :APP_USER_ID) OR t.ASSIGNED_TO = :APP_USER_ID ) )
            OR ( :APP_ROLE = 'Client Admin'  AND t.COMPANY_ID  = :APP_COMPANY_ID )
            OR ( :APP_ROLE = 'Client User'   AND t.COMPANY_ID  = :APP_COMPANY_ID AND t.CREATED_BY = :APP_USER_ID ) )
       GROUP BY t.STATUS
@@ -353,7 +372,7 @@ WHERE ( :APP_ROLE = 'System Admin'
        JOIN COMPANIES c       ON c.COMPANY_ID = t.COMPANY_ID
        LEFT JOIN APP_USERS u  ON u.USER_ID    = t.ASSIGNED_TO
       WHERE ( :APP_ROLE = 'System Admin'
-           OR ( :APP_ROLE = 'Support Agent' AND ( t.ASSIGNED_TO = :APP_USER_ID OR t.ASSIGNED_TO IS NULL ) )
+           OR ( :APP_ROLE = 'Support Agent' AND ( t.COMPANY_ID IN (SELECT ac.COMPANY_ID FROM AGENT_COMPANIES ac WHERE ac.USER_ID = :APP_USER_ID) OR t.ASSIGNED_TO = :APP_USER_ID ) )
            OR ( :APP_ROLE = 'Client Admin'  AND t.COMPANY_ID  = :APP_COMPANY_ID )
            OR ( :APP_ROLE = 'Client User'   AND t.COMPANY_ID  = :APP_COMPANY_ID AND t.CREATED_BY = :APP_USER_ID ) )
      ```
@@ -367,6 +386,14 @@ WHERE ( :APP_ROLE = 'System Admin'
   6. Hide the `COMPANY_NAME` **column** for clients: set its Server-side Condition to
      `:APP_ROLE IN ('System Admin','Support Agent')`. Use Status/Priority **badge** column types for the
      coloured pills in the mockup.
+  7. **Self-assign / Grab (row action — Support Agent, decision A).** Add a **link column** "Grab" that
+     calls the shared self-assign process for that row. Easiest declarative wiring: a link column whose
+     target sets a hidden `P4_TICKET_ID = #TICKET_ID#` and submits a request (e.g. `GRAB`), handled by a
+     page process (condition `:REQUEST = 'GRAB'`) that runs
+     `SD_ASSIGN_TICKET(:P4_TICKET_ID, :APP_USER_ID, :APP_USER_ID);` then refreshes the region. Show the
+     Grab link only on **unowned** rows for **agents**: column Server-side / link condition
+     `:APP_ROLE = 'Support Agent' AND '#ASSIGNED_TO#' IS NULL` (or filter in the link SQL on
+     `ASSIGNED_TO IS NULL`). See §7a for the process and the "already taken" guard.
 - **Buttons:** **New Ticket** (region button) → redirect to Page 6 (modal). Server-side Condition =
   `:APP_ROLE IN ('Client User','Client Admin')`.
 - **Authorization:** page-level none (all roles). The page **title** can be dynamic: "My Tickets" for
@@ -376,8 +403,12 @@ WHERE ( :APP_ROLE = 'System Admin'
   - As **Anna (Client User, Acme)**: only Acme tickets she created; no Globex/Initech rows; no Company
     facet/column.
   - As **Carla (Client Admin, Globex)**: all Globex tickets, zero Acme rows.
-  - As **Mike (Support Agent)**: tickets assigned to Mike + all unassigned; Company column visible.
-  - As **Sara (System Admin)**: every ticket, every company.
+  - As **Mike (Support Agent)**: only tickets for **Mike's projects** (Acme + Globex) — zero Initech rows,
+    even though Initech has open tickets; Company column visible; the
+    **Grab** link shows only on unassigned rows in his projects. Clicking it sets `ASSIGNED_TO`=Mike, status→Assigned,
+    writes an `ASSIGN` history row, and the row leaves the "unassigned" set. A second agent no longer sees
+    Grab on that row (already taken).
+  - As **Sara (System Admin)**: every ticket, every company; no Grab link (admins use the Page 7 modal).
   - **Attack test:** while logged in as Anna, edit the URL to open Page 5 for a Globex ticket id →
     Page 5 must deny it (see Page 5 test).
 
@@ -403,7 +434,7 @@ WHERE ( :APP_ROLE = 'System Admin'
          FROM TICKETS t
         WHERE t.TICKET_ID = :P5_TICKET_ID
           AND ( :APP_ROLE = 'System Admin'
-             OR ( :APP_ROLE = 'Support Agent' AND ( t.ASSIGNED_TO = :APP_USER_ID OR t.ASSIGNED_TO IS NULL ) )
+             OR ( :APP_ROLE = 'Support Agent' AND ( t.COMPANY_ID IN (SELECT ac.COMPANY_ID FROM AGENT_COMPANIES ac WHERE ac.USER_ID = :APP_USER_ID) OR t.ASSIGNED_TO = :APP_USER_ID ) )
              OR ( :APP_ROLE = 'Client Admin'  AND t.COMPANY_ID  = :APP_COMPANY_ID )
              OR ( :APP_ROLE = 'Client User'   AND t.COMPANY_ID  = :APP_COMPANY_ID AND t.CREATED_BY = :APP_USER_ID ) );
        IF l_ok = 0 THEN
@@ -489,10 +520,16 @@ END;
 `ASSIGNED_TO = <senior agent>`, and log `ACTION = 'Escalated'`. Keep status `In Progress` — it is an
 action, not a new state.
 
-### 5b. Assign + Comment buttons
+### 5b. Assign + Self-assign + Comment buttons
 
 - **Assign / Reassign** button → opens Page 7 (modal) with `P7_TICKET_ID = P5_TICKET_ID`. Show when
-  `IS_SYSTEM_ADMIN` (decision A: admin assigns).
+  `IS_SYSTEM_ADMIN` (decision A: the admin assigns/reassigns *anyone* to *any* agent).
+- **Self-assign / Grab** button (decision A — Support Agent path) → runs the shared `SD_ASSIGN_TICKET`
+  process in place (no modal), assigning the ticket to the current agent. **Show when**
+  `:APP_ROLE = 'Support Agent' AND :P5_ASSIGNED_TO IS NULL AND :P5_STATUS IN ('New','Assigned')`.
+  Process: `SD_ASSIGN_TICKET(:P5_TICKET_ID, :APP_USER_ID, :APP_USER_ID);` then refresh regions. Full
+  details and the "already taken" guard are in §7a. (You'll need a hidden `P5_ASSIGNED_TO` item, set from
+  the ticket on load, for the condition.)
 - **Comment** button → opens Page 8 (modal) with `P8_TICKET_ID = P5_TICKET_ID`. Show to all roles that
   can see the ticket.
 
@@ -505,6 +542,9 @@ Conversation, and History regions.
   (`reference/plsql/027-APEX_ESCAPE.md`). Assignment/ack email via `APEX_MAIL` lives on Pages 6/7.
 - **Test it:**
   - Open a ticket you own → correct buttons appear for your role/state only.
+  - As an agent, open an **unassigned** ticket → **Self-assign / Grab** shows; click it → `ASSIGNED_TO`
+    becomes you, status→Assigned, one `ASSIGN` history row, and the button disappears (now owned). On an
+    already-owned ticket the button is hidden.
   - Each transition writes exactly one History row with old→new and your name.
   - **Isolation/attack test:** as Anna, hit `f?p=&APP_ID.:5:session::::P5_TICKET_ID:<a Globex ticket>` →
     the guard raises "You do not have access to this ticket."
@@ -583,7 +623,10 @@ Conversation, and History regions.
 ## Page 7 — Assign / Reassign
 
 - **Purpose / who / priority:** Put an agent on a ticket; writes history; optional assignment email.
-  **System Admin** (decision A). **MUST.** (FR-10, FR-21.)
+  **System Admin assigns/reassigns *anyone* to *any* agent** (decision A, confirmed). A **Support Agent
+  can also self-assign** an unowned ticket — but that path is a one-click button on Pages 4 & 5 (see
+  §"Self-assign / Grab" below), **not** this modal; it reuses the very same assignment logic. **MUST.**
+  (FR-10, FR-21.)
 - **Page type:** **Form / Blank**, **Modal Dialog** page.
 - **Build steps:**
   1. Create Page → **Modal Dialog**, name `Assign`. Add hidden `P7_TICKET_ID` (Value Protected).
@@ -620,7 +663,41 @@ Conversation, and History regions.
             (SELECT STATUS FROM TICKETS WHERE TICKET_ID = :P7_TICKET_ID));
   END;
   ```
-- **Assignment email (SHOULD, FR-21)** — second process, condition `P7_SEND_EMAIL = 'Y'`:
+
+  > **Make it the single shared assignment routine.** Because the agent **self-assign** buttons (Pages 4
+  > & 5) must run *the same* logic, extract the block above into one schema procedure and have both Page 7
+  > and the self-assign buttons call it. Create it once (SQL Workshop):
+  > ```plsql
+  > CREATE OR REPLACE PROCEDURE SD_ASSIGN_TICKET (
+  >   p_ticket_id IN TICKETS.TICKET_ID%TYPE,
+  >   p_agent_id  IN APP_USERS.USER_ID%TYPE,   -- the agent to put on the ticket
+  >   p_actor_id  IN APP_USERS.USER_ID%TYPE )  -- who performed it (admin, or the agent themselves)
+  > IS
+  >   l_old        TICKETS.STATUS%TYPE;
+  >   l_agent_name APP_USERS.FULL_NAME%TYPE;
+  >   l_new        TICKETS.STATUS%TYPE;
+  > BEGIN
+  >   SELECT STATUS INTO l_old FROM TICKETS WHERE TICKET_ID = p_ticket_id FOR UPDATE;
+  >   UPDATE TICKETS
+  >      SET ASSIGNED_TO = p_agent_id,
+  >          STATUS      = CASE WHEN STATUS = 'New' THEN 'Assigned' ELSE STATUS END,
+  >          UPDATED_AT  = SYSTIMESTAMP
+  >    WHERE TICKET_ID = p_ticket_id
+  >    RETURNING STATUS INTO l_new;
+  >   SELECT FULL_NAME INTO l_agent_name FROM APP_USERS WHERE USER_ID = p_agent_id;
+  >   INSERT INTO TICKET_HISTORY (TICKET_ID, USER_ID, ACTION, OLD_VALUE, NEW_VALUE)
+  >   VALUES (p_ticket_id, p_actor_id, 'ASSIGN', l_old, l_agent_name);
+  > END;
+  > /
+  > ```
+  > Page 7's process then becomes one line: `SD_ASSIGN_TICKET(:P7_TICKET_ID, :P7_AGENT_ID, :APP_USER_ID);`
+  > A self-assign button passes the agent's own id as both agent and actor:
+  > `SD_ASSIGN_TICKET(:P5_TICKET_ID, :APP_USER_ID, :APP_USER_ID);` (see the self-assign section below).
+
+- **Assignment email (SHOULD, FR-21)** — runs after assignment **on both paths** (admin-assign here, and
+  agent self-assign on Pages 4/5), emailing whoever the ticket is now assigned to. As a Page 7 process use
+  condition `P7_SEND_EMAIL = 'Y'`; for the self-assign buttons, run the same email block unconditionally
+  (or behind an app setting) keyed off the ticket's current `ASSIGNED_TO`:
   ```plsql
   DECLARE
     l_to APP_USERS.EMAIL%TYPE; l_ref TICKETS.TICKET_REF%TYPE; l_subj TICKETS.SUBJECT%TYPE;
@@ -637,11 +714,40 @@ Conversation, and History regions.
   ```
   `APEX_MAIL.SEND` — `reference/plsql/043-APEX_MAIL.md`.
 - **Branch:** Close Dialog → return to Page 5 (the Dialog-Closed DA on Page 5 refreshes regions).
-- **Authorization:** **page-level = `IS_SYSTEM_ADMIN`.** Belt-and-braces: the Page 5 Assign button is
-  also gated to admin.
-- **Test it:** assigning a New ticket flips it to Assigned, sets `ASSIGNED_TO`, writes "Assigned to
-  <agent>" history; the agent now sees it in their queue (Page 4). A non-admin cannot open Page 7 even by
-  URL (page authorization denies). Email lands when the switch is on and instance email is configured.
+- **Authorization:** **page-level = `IS_SYSTEM_ADMIN`** — this modal (pick *any* agent / reassign) is
+  admin-only. Agents do **not** use this page; they self-assign via the button below, which the page guard
+  on Pages 4/5 limits to unowned tickets. Belt-and-braces: the Page 5 Assign/Reassign button is also gated
+  to admin.
+- **Test it:** assigning a New ticket flips it to Assigned, sets `ASSIGNED_TO`, writes an `ASSIGN`
+  history row; the agent now sees it in their queue (Page 4). A non-admin cannot open Page 7 even by URL
+  (page authorization denies) — yet an agent can still self-assign an unowned ticket via the button.
+  Email lands when the switch is on and instance email is configured.
+
+### 7a. Self-assign / Grab (Support Agent path — decision A)
+
+The agent "grabs" an **unowned** ticket from the open queue in one click. It calls the **same**
+`SD_ASSIGN_TICKET` routine as the admin modal, with the agent as both the assignee and the actor.
+
+- **Where:** a button on **Page 5 (Ticket Detail)** and a row-level link/button on **Page 4 (Ticket
+  Queue)** — see those page sections for placement.
+- **Server-side Condition (show only when it makes sense):** authorization **`IS_AGENT`** **AND** the
+  ticket is unowned and not yet started, e.g. on Page 5
+  `:APP_ROLE = 'Support Agent' AND :P5_ASSIGNED_TO IS NULL AND :P5_STATUS IN ('New','Assigned')`. (On
+  Page 4 the equivalent is a row condition `ASSIGNED_TO IS NULL`.)
+- **Shared process (PL/SQL)** — identical effect to Page 7's assign, agent-triggered:
+  ```plsql
+  SD_ASSIGN_TICKET(
+    p_ticket_id => :P5_TICKET_ID,   -- or :P4_TICKET_ID from the grabbed row
+    p_agent_id  => :APP_USER_ID,    -- assign to me
+    p_actor_id  => :APP_USER_ID );  -- I performed it
+  ```
+  This sets `ASSIGNED_TO = :APP_USER_ID`, flips `STATUS` New→`Assigned`, stamps `UPDATED_AT`, and writes
+  one `TICKET_HISTORY` row (`ACTION='ASSIGN'`, `NEW_VALUE`=the agent's name). Add a server-side re-check
+  inside or before the call — only proceed if `ASSIGNED_TO IS NULL` — to avoid two agents grabbing the
+  same ticket (the `FOR UPDATE` in `SD_ASSIGN_TICKET` serializes them; you may add
+  `WHERE ASSIGNED_TO IS NULL` and raise a friendly "Already taken" if no row updates).
+- **Email:** reuse the FR-21 assignment-email block above (it reads the ticket's current `ASSIGNED_TO`),
+  so a self-assigned agent gets the same notification.
 
 ---
 
@@ -722,6 +828,47 @@ Conversation, and History regions.
 - **Test it:** create a Client User for Acme → log in as them → they land scoped to Acme (proves
   role+company flow end to end). Change a user's role → their authorization/visibility changes next login
   (or next page view if you set evaluation point that way).
+
+### 10a. Agent → Project coverage (AGENT_COMPANIES) — the admin screen
+
+This is where the System Admin decides **which clients each Support Agent covers** — the data that
+scopes an agent's queue (decision I, A.7). Build it as a **second Interactive Grid region on Page 10**
+(it lives with user management, so the admin sets up a person and their coverage in one place).
+
+- **Purpose / who / priority:** Maintain agent ↔ client-company assignments. **System Admin only. MUST**
+  (an agent with no rows here sees an empty queue, so this must exist before agents can work).
+- **Build steps:**
+  1. On Page 10, add a new region → **Interactive Grid**, **Editing Enabled = Yes**, title
+     `Agent Project Coverage`, Source SQL:
+     ```sql
+     SELECT ac.USER_ID, ac.COMPANY_ID
+       FROM AGENT_COMPANIES ac
+     ```
+  2. **`USER_ID`** column → type **Select List**, **Required**, LOV = only support agents:
+     ```sql
+     SELECT FULL_NAME d, USER_ID r
+       FROM APP_USERS
+      WHERE ROLE = 'Support Agent' AND STATUS = 'Active'
+      ORDER BY FULL_NAME
+     ```
+  3. **`COMPANY_ID`** column → type **Select List**, **Required**, LOV = only client companies:
+     ```sql
+     SELECT COMPANY_NAME d, COMPANY_ID r
+       FROM COMPANIES
+      WHERE COMPANY_TYPE = 'CLIENT' AND STATUS = 'Active'
+      ORDER BY COMPANY_NAME
+     ```
+  4. Leave the IG's built-in **Save Interactive Grid Data** process to handle add/delete rows. The
+     composite primary key (`USER_ID, COMPANY_ID`) stops duplicate pairings with a friendly error.
+- **Authorization:** region (and page) **`IS_SYSTEM_ADMIN`**.
+- **Test it:** add rows *Mike→Acme*, *Mike→Globex*; log in as **Mike** → Page 4 shows only Acme + Globex
+  tickets. Delete *Mike→Globex* → Globex tickets vanish from Mike's queue on his next page view. An agent
+  with no rows here sees an empty queue (expected — assign them at least one project).
+
+> Want the IMS-style "pick a project, then see its tickets" landing the team liked? It's an optional
+> polish on top of this: a Cards region on Page 2 listing the agent's covered companies (same subquery),
+> each linking to Page 4 pre-filtered by that `COMPANY_ID`. Not required for the demo — the scoped queue
+> + Company facet already give the same result.
 
 ---
 

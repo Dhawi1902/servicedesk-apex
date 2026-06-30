@@ -90,13 +90,20 @@ Two sides: the **client side** (our customers) and the **vendor side** (our comp
 |---|---|---|---|
 | **Client User** | Everyday employee at a client company (has the problem) | Only **their own** tickets | Raise a ticket, comment, view status |
 | **Client Admin** | Coordinator/manager at a client company | **All tickets for their own company** (never other companies') | Everything a Client User can + oversee their company's tickets, raise on behalf of staff, see their company dashboard |
-| **Support Agent** | Our support staff who do the work | Tickets **assigned to them** + the open queue | Work tickets: change status, comment, resolve. Cannot manage users/companies |
+| **Support Agent** | Our support staff who do the work | Tickets in **their assigned projects** (the clients they cover) — never clients they're not on | Work tickets: change status, comment, resolve. Cannot manage users/companies |
 | **System Admin** | Our manager/lead (likely the team lead) | **Everything**, across all companies | Manage companies & users, **assign/reassign** tickets, configure system, see global dashboard |
 
 - **Multi-company isolation** lives in the jump from *Client Admin* (one company) to *System Admin* (all companies).
 - **Assignment** is the *System Admin* (and optionally *Support Agent* self-assign) putting an agent on a ticket.
 
 > **Decision (A) — ✅ confirmed:** A Support Agent **can self-assign** from the open queue, **and** the System Admin assigns/reassigns anyone. (Self-assign = an `IS_AGENT`-gated button on the queue/detail that sets `assigned_to = :APP_USER_ID`, moves status to *Assigned*, and writes a `TICKET_HISTORY` row — the same process the Admin's assign action uses.)
+
+> **Decision (I) — ✅ confirmed: agents are scoped to their projects.** Our staff each work specific clients, not all of them. So a Support Agent only sees tickets for the **client companies (projects) they're assigned to** — never clients they're not on. This kills cross-project "noise". Mechanism: a small join table **`AGENT_COMPANIES`** (`user_id` + `company_id`); the queue/dashboard filter `WHERE company_id IN (the agent's covered companies)`. System Admin is exempt (sees every company by role). *Within* a covered project an agent sees the whole project's tickets (team visibility), but can only change status on tickets assigned to them or unassigned.
+
+> **Four roles are enough — these are *not* extra roles:**
+> - **Manager** (sees everything, never works tickets) = a System Admin/overseer who simply doesn't use the action buttons. We don't hard-block them, so no separate role is needed.
+> - **L1 / L2 / L3 tiers** = handled by the **Escalate** action (FR-26: reassign to a more senior agent + raise priority, logged). Like the big tools (ServiceNow/Zendesk use "assignment groups"), tiering is just reassignment — **no per-agent "level" field**. The labels are how the team talks, not a database column.
+> - **Project Lead** (assigns teammates' work within a project *and* works tickets) = deferred. For v1, assigning is the System Admin's job (plus agents self-assign). If wanted later, it returns as a **"lead" flag on `AGENT_COMPANIES`**, not a new role.
 
 ---
 
@@ -213,6 +220,7 @@ Now that we know the requirements and workflow, we can model the data to support
 | **TICKET_COMMENTS** | The conversation on a ticket | `comment_id` (PK), `ticket_id` (FK), `user_id` (FK), `comment_text`, `is_internal` (Y/N — internal note vs client-visible), `created_at` |
 | **TICKET_HISTORY** | Audit trail of every change | `history_id` (PK), `ticket_id` (FK), `user_id` (FK), `action`, `old_value`, `new_value`, `created_at` |
 | **CATEGORIES** | Ticket types (Bug, Request, Question…) | `category_id` (PK), `category_name` |
+| **AGENT_COMPANIES** | Which clients (projects) each support agent covers — *the agent-scoping key (decision I)* | `user_id` (FK), `company_id` (FK); together the PK. *(Optional later: `is_lead` Y/N for the deferred Project Lead.)* |
 
 > Priorities and statuses can start as simple fixed lists (Low/Medium/High/Critical; the states above). If we have time, promote them to lookup tables — cleaner, but not required for the demo.
 
@@ -227,7 +235,11 @@ erDiagram
     TICKETS ||--o{ TICKET_HISTORY : "has"
     CATEGORIES ||--o{ TICKETS : "classifies"
     APP_USERS ||--o{ TICKET_COMMENTS : "writes"
+    APP_USERS ||--o{ AGENT_COMPANIES : "covers"
+    COMPANIES ||--o{ AGENT_COMPANIES : "is covered by"
 ```
+
+> **Note:** `AGENT_COMPANIES` is a many-to-many bridge — one agent covers several clients, one client is covered by several agents. It's what scopes an agent's queue to only their projects (decision I). It does **not** weaken client isolation: clients are still locked to their own `company_id`; this table only *narrows* what an agent sees on the vendor side.
 
 ### The single most important technical rule: tenant isolation
 Every ticket carries a `company_id`. **A client must only ever see rows where `company_id` = their own company** (this is FR-4). If a Client User from Company A can see Company B's tickets, the "production-level" claim collapses.
@@ -286,6 +298,25 @@ So we build the Ticket List *once*: a Client User sees only their tickets, a Sys
 
 > This 12-page map slots straight into the workstreams below: pages 1–2 + the app-item/auth plumbing → *Data model & security*; pages 4–8 → *Ticket screens & workflow*; page 3 → *Dashboard & reporting*; pages 9–12 + theme → split between *Admin* and *UI/UX*.
 
+### 6.1 Clickable prototype (built — review before building in APEX)
+A **working, role-aware front-end prototype** of all 12 pages is live. It runs in the browser
+only (HTML/CSS/JS) — **no APEX, no real database, no real authentication** — so the team can
+agree on layout and flow, and rehearse the demo, *before* a line of APEX is built.
+
+- **Live demo:** <https://apex-demo.dhawilabs.com>  (source in `docs/mockups/`)
+- **Sign in:** password is `demo` for every account. Try **anna@acme.example** (Client User)
+  then **sara@northwind.example** (System Admin) to see tenant isolation; **mike@northwind.example**
+  is a Support Agent.
+- **What it proves (the judges' four non-negotiables, live):** role-based access (nav/buttons
+  change per role), multi-company isolation (a client sees only their company; admin sees all,
+  and a cross-company URL is blocked), ticket assignment, and the dashboard.
+- **What you can actually do:** raise → assign → start work → comment (with internal-note
+  toggle) → resolve → close, with **history** and **dashboard counts** updating. Changes persist
+  in the browser; **Reset demo** (top-right) restores the seed data.
+- ⚠️ **This is a mockup, not the product.** The real auth, role checks, and tenant isolation are
+  implemented in APEX per §5 (application items + `WHERE company_id` + authorization schemes).
+  The prototype's job is to lock the UX and de-risk the build.
+
 ---
 
 ## 7. GOALS & TASK DISTRIBUTION (discuss last)
@@ -308,7 +339,7 @@ Balanced by **effort, not page count** (Ticket Detail alone is ~5× a Categories
 
 | Owner | Workstream | Pages | Also owns |
 |---|---|---|---|
-| **P1 — Lead (you)** | Foundation & Security → Demo/QA | **1** Login | 6-table schema + `TKT-` ref sequence, 3 app items (`APP_COMPANY_ID/USER_ID/ROLE`), 4 authorization schemes, the login post-auth process, **tenant-isolation audit across every page**, demo script |
+| **P1 — Foundation Lead** | Foundation & Security → Demo/QA | **1** Login | 7-table schema (incl. `AGENT_COMPANIES`) + `TKT-` ref sequence, 3 app items (`APP_COMPANY_ID/USER_ID/ROLE`), 4 authorization schemes, the login post-auth process, **tenant-isolation audit across every page**, demo script |
 | **P2** | Ticket Detail hub (hardest page) | **5** Ticket Detail · **8** Add Comment | Lifecycle buttons/processes (each writes `TICKET_HISTORY`), Escalate action, CSAT capture, internal-note flag, the self-assign button on detail |
 | **P3** | Intake, queue & assignment | **4** Ticket List/Queue · **6** Create Ticket · **7** Assign/Reassign | Self-assign process, auto-acknowledgement email + assignment email (`APEX_MAIL`), faceted filtering/search |
 | **P4** | Dashboard & data | **2** Home/Landing · **3** Dashboard | Charts + analytics (avg resolution time, per-agent counts), realistic **test data** (feeds everyone's testing) |
@@ -334,6 +365,7 @@ Balanced by **effort, not page count** (Ticket Detail alone is ~5× a Categories
 - **F.** Confirm the 3-week milestone shape.
 - **G.** Escalation depth: add the lightweight **"Escalate" action** only (reassign + raise priority, logged), or also add Tier-2/Team-Lead **roles**? *(recommend: action only — models the senior's tiered escalation without growing the role matrix)*
 - **H.** Confirm the four new **SHOULD** items (CSAT, dashboard analytics, auto-ack email, escalate) — all verified feasible in APEX 26.1 and low-cost. Keep SLA as **COULD**, declarative breach-highlight only (no timers). *(recommend: yes)*
+- **I.** ✅ **Decided: agents are scoped to their projects.** A Support Agent sees only tickets for the client companies they're assigned to (`AGENT_COMPANIES` join + `WHERE company_id IN (...)`). Four roles stay; **Manager** = an overseer who doesn't take tickets (no separate role), **L1/L2/L3** = the Escalate action (no level field), **Project Lead** = deferred (`is_lead` flag later). See §2.
 
 ---
 

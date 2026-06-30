@@ -43,11 +43,12 @@ the entire "production-level" claim. Test this harder than anything else.
 ### Roles (4)
 - **Client User** — sees only their own tickets; raises/comments.
 - **Client Admin** — sees all of their own company's tickets.
-- **Support Agent** — works assigned tickets (status/comments/resolve); no user/company admin.
+- **Support Agent** — works tickets for their **assigned projects only** (status/comments/resolve); no user/company admin. (Manager, L1/L2/L3, Project Lead are *not* separate roles — see brief decision I.)
 - **System Admin** — everything across all companies; manages users/companies; **assigns** tickets.
 
-### Data model (6 tables)
-`COMPANIES` · `APP_USERS` · `TICKETS` · `TICKET_COMMENTS` · `TICKET_HISTORY` · `CATEGORIES`.
+### Data model (7 tables)
+`COMPANIES` · `APP_USERS` · `TICKETS` · `TICKET_COMMENTS` · `TICKET_HISTORY` · `CATEGORIES` ·
+`AGENT_COMPANIES` (which clients each agent covers — scopes an agent's queue to their projects).
 `TICKETS.company_id` is the tenant key. Full schema + ERD in the brief.
 
 ### Ticket lifecycle
@@ -120,6 +121,12 @@ who clones it — no per-machine setup:
   any client-facing SQL, page, process, LOV, chart, or report. Review-only (reports leaks,
   doesn't edit). Covers missing `company_id` filters, IDOR via URL/item tampering, role
   bypass, session-state trust, unscoped sub-objects, and injection-as-isolation-bypass.
+- **`apex-ui-stylist` agent** (`.claude/agents/apex-ui-stylist.md`) — UI/CSS polish advisor
+  for Universal Theme. Use it to improve a page's look (branded theme, dashboard tiles, card
+  layouts, color/spacing). Recommends the most declarative route first (Theme Roller →
+  Template Options → component CSS Classes → custom CSS) and grounds every selector in
+  `reference/ui/universal-theme-classes.md` — never invents class names. Advisory (outputs
+  paste-ready CSS + where it goes; doesn't edit the APEX app).
 - **`apex` skill** (`.claude/skills/apex/`) — the APEXlang low-code generation workflow
   (component registry, templates, generation workflow) used for scaffolding apps/pages.
 
