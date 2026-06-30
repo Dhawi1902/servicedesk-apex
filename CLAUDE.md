@@ -84,9 +84,22 @@ Look these up in the reference before implementing:
 | `ticketing-system.html` | Interactive, visual version for sharing/screen-share |
 | `Ticketing-Kickoff.pptx` | Slide deck to present the kickoff |
 | `Ticketing-Requirements.xlsx` | Live requirements tracker (filter by priority, assign owners) |
+| `mockups/` | Clickable HTML/JS prototype of all 12 pages (APEX Universal-Theme look) |
 
 When project decisions change (e.g. the A–F open decisions in the brief), **update all four**
 so they stay consistent.
+
+## Interactive prototype (`docs/mockups/`)
+A working, **simulated** front-end demo of the 12-page architecture — APEX is NOT involved yet.
+Use it to agree on layout/flow and to demo RBAC + tenant isolation before building in APEX.
+
+- **Live:** <https://apex-demo.dhawilabs.com> · **Source:** `docs/mockups/` · **Public repo:** `Dhawi1902/servicedesk-mockups` (Pages).
+- **Stack:** thin HTML shells (`<body data-page="…">`) rendered by `assets/app.js`; seed data in
+  `assets/demo-data.js`; styling `assets/apex-mock.css`. Data persists in browser localStorage.
+- **Accounts:** password `demo` for all — e.g. `anna@acme.example` (Client User),
+  `sara@northwind.example` (System Admin), `mike@northwind.example` (Support Agent).
+- ⚠️ **Client-side simulation only — NOT real auth/security.** Real auth + isolation are built in APEX.
+- **Redeploy after editing `docs/mockups/`:** copy folder to a staging dir, keep `CNAME`/`.nojekyll`/`README`, commit + push to the repo.
 
 ## Conventions
 - **SQL/PLSQL:** UPPER_SNAKE_CASE tables/columns; singular-purpose objects; parameterized
@@ -102,6 +115,11 @@ who clones it — no per-machine setup:
 - **`apex-expert` agent** (`.claude/agents/apex-expert.md`) — senior APEX engineer wired to
   the offline reference; grounds every capability claim in `reference/` instead of guessing.
   Invoke it for any APEX SQL/PL-SQL, JS, page/flow, or "can APEX do X" question.
+- **`tenant-isolation-auditor` agent** (`.claude/agents/tenant-isolation-auditor.md`) —
+  adversarial reviewer for the one rule that cannot break. Run it before merging/demoing
+  any client-facing SQL, page, process, LOV, chart, or report. Review-only (reports leaks,
+  doesn't edit). Covers missing `company_id` filters, IDOR via URL/item tampering, role
+  bypass, session-state trust, unscoped sub-objects, and injection-as-isolation-bypass.
 - **`apex` skill** (`.claude/skills/apex/`) — the APEXlang low-code generation workflow
   (component registry, templates, generation workflow) used for scaffolding apps/pages.
 
