@@ -1,0 +1,2539 @@
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/JavaScript-APIs.html -->
+<!-- Oracle APEX 26.1 API Reference -->
+
+## 65  JavaScript APIs
+
+This content has been moved to the <a href="https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/index.html" target="_blank">Oracle APEX JavaScript API Reference</a>.
+
+------------------------------------------------------------------------
+
+## Index
+
+[A](#A)  [B](#B)  [C](#C)  [D](#D)  [E](#E)  [F](#F)  [G](#G)  [H](#H)  [I](#I)  [J](#J)  [K](#K)  [L](#L)  [M](#M)  [N](#N)  [O](#O)  [P](#P)  [Q](#Q)  [R](#R)  [S](#S)  [T](#T)  [U](#U)  [V](#V)  [W](#W)  [Z](#Z)
+
+------------------------------------------------------------------------
+
+## A
+
+- ABORT procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_ABORT-Procedure.html#GUID-8C2D23EB-8245-4159-B265-59DC11466856" target="contentwin">12.1</a>
+- ABORT procedure signature 1
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS.ABORT-Procedure-Signature-1.html#GUID-454814A2-BDB0-4097-B036-979D71603565" target="contentwin">13.3</a>
+- ABORT procedure signature 2
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS.ABORT-Procedure-Signature-2.html#GUID-FE0F2941-8BCE-4E92-85AC-14340B8DA945" target="contentwin">13.4</a>
+- ADD_3RD_PARTY_LIBRARY_FILE procedure
+  - APEX_CSS <a href="ADD_3RD_PARTY_LIBRARY_FILE-Procedure.html#GUID-249CAA12-7293-4CE0-832E-2BED0C0E891B" target="contentwin">17.2</a>
+  - APEX_JAVASCRIPT <a href="ADD_3RD_PARTY_LIBRARY_FILE-Procedure-2.html#GUID-8A31D19C-A21C-417D-B1E2-9333818BD913" target="contentwin">38.2</a>
+- ADD_AD_COLUMN procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="ADD_AD_COLUMN-Procedure.html#GUID-70CFF2C0-C894-4162-A380-5A41FAE64E8B" target="contentwin">60.1</a>
+- ADD_AD_SYNONYM procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="ADD_AD_SYNONYM-Procedure.html#GUID-8D72422E-B10B-42E3-9E1A-E91C622FDA5F" target="contentwin">60.2</a>
+- ADD_AGGREGATE procedure
+  - APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT-ADD_AGGREGATE-Procedure.html#GUID-9CC21557-27C8-45B4-BC70-8A9C18E2E683" target="contentwin">20.3</a>
+- ADD_ATTACHMENT procedure
+  - APEX_MAIL <a href="ADD_ATTACHMENT-Procedure-Signature-1.html#GUID-5B514926-2C0A-40E3-82BB-7E357CB0C927" target="contentwin">43.2</a>, <a href="ADD_ATTACHMENT-Procedure-Signature-2.html#GUID-0C43024A-D0B5-4358-A43E-8BF8FAD30E08" target="contentwin">43.3</a>
+- ADD_ATTRIBUTE function signature 1
+  - APEX_JAVASCRIPT <a href="ADD_ATTRIBUTE-Function-Signature-1.html#GUID-1543D51A-1689-4B2E-9E86-94ED95BE7612" target="contentwin">38.3</a>
+- ADD_ATTRIBUTE function signature 2
+  - APEX_JAVASCRIPT <a href="ADD_ATTRIBUTE-Function-Signature-2.html#GUID-A0D1EBF9-FCA2-4924-8BE6-596D25EDD34F" target="contentwin">38.4</a>
+- ADD_ATTRIBUTE function signature 3
+  - APEX_JAVASCRIPT <a href="ADD_ATTRIBUTE-Function-Signature-3.html#GUID-BAF99F53-F78A-4FAF-A402-D2E36F0091FE" target="contentwin">38.5</a>
+- ADD_ATTRIBUTE function signature 4
+  - APEX_JAVASCRIPT <a href="ADD_ATTRIBUTE-Function-Signature-4.html#GUID-6BF8C80A-7942-4C6E-BCDA-AFD9D3DA28BC" target="contentwin">38.6</a>
+- ADD_AUTO_PROV_RESTRICTIONS procedure
+  - APEX_INSTANCE_ADMIN <a href="ADD_AUTO_PROV_RESTRICTIONS-Procedure.html#GUID-38A4AF49-7970-45FB-99CB-B7A8F8FC382B" target="contentwin">33.2</a>
+- ADD_BLUEPRINT_FROM_FILE procedure
+  - APEX_DG_DATA_GEN <a href="ADD_BLUEPRINT_FROM_FILE-Procedure.html#GUID-0AFE617D-657E-479E-A76E-2F478A61C63C" target="contentwin">25.2</a>
+- ADD_BLUEPRINT_FROM_TABLES procedure
+  - APEX_DG_DATA_GEN <a href="ADD_BLUEPRINT_FROM_TABLES-Procedure.html#GUID-9BD5C59E-C17C-45BE-8829-5FEBC9CC7CF1" target="contentwin">25.3</a>
+- ADD_BLUEPRINT procedure
+  - APEX_DG_DATA_GEN <a href="ADD_BLUEPRINT-Procedure.html#GUID-E4DE550B-CD51-4618-91D6-86255AC85512" target="contentwin">25.1</a>
+- ADD_COLUMN_GROUP procedure
+  - APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT-ADD_COLUMN_GROUP-Procedure.html#GUID-AB1B0D6C-F964-4729-9DF3-D0DA8457C060" target="contentwin">20.5</a>
+- ADD_COLUMN procedure
+  - APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT-ADD_COLUMN-Procedure.html#GUID-C06428D3-6777-4DA5-B1E4-CC20535E8DAF" target="contentwin">20.4</a>
+  - APEX_DG_DATA_GEN <a href="APEX_DG_DATA_GEN.ADD_COLUMN-Procedure.html#GUID-31CBAAB7-BDE2-479A-AA98-083533B89849" target="contentwin">25.4</a>
+  - APEX_EXEC <a href="APEX_EXEC.ADD_COLUMN-Procedure.html#GUID-2AD6B830-7815-4554-9076-C05709CC8D42" target="contentwin">28.4</a>
+- ADD_DATA_REPORTER_REMAP procedure
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL-ADD_DATA_REPORTER_REMAP-Procedure.html#GUID-7D7D5EE9-FB0F-4612-8770-F1DFB6060059" target="contentwin">8.5</a>
+- ADD_DATA_SOURCE procedure
+  - APEX_DG_DATA_GEN <a href="ADD_DATA_SOURCE-Procedure.html#GUID-D5ABB590-6A8F-4ACF-914B-F2DAD37FC247" target="contentwin">25.5</a>
+- ADD_DML_ARRAY_ROW procedure
+  - APEX_EXEC <a href="APEX_EXEC.ADD_DML_ARRAY_ROW-Procedure.html#GUID-37F4CB18-7657-4C79-B114-6D7C5A6CC803" target="contentwin">28.5</a>
+- ADD_DML_ROW procedure
+  - APEX_EXEC <a href="APEX_EXEC.ADD_DML_ROW-Procedure.html#GUID-774A49F8-C0AD-4917-A2A8-6E7A5B0F56B1" target="contentwin">28.6</a>
+- ADD_ERROR procedure signature 1
+  - APEX_ERROR <a href="ADD_ERROR-Procedure-Signature-1.html#GUID-27CC02FC-F327-4D37-B63D-17EDDDEBED7E" target="contentwin">26.3</a>
+- ADD_ERROR procedure signature 2
+  - APEX_ERROR <a href="ADD_ERROR-Procedure-Signature-2.html#GUID-DAF0BD0D-C9E2-4E41-949B-FE9F3FBCEF84" target="contentwin">26.4</a>
+- ADD_ERROR procedure signature 3
+  - APEX_ERROR <a href="ADD_ERROR-Procedure-Signature-3.html#GUID-C8432266-F1E9-4430-B616-D1D968AEED49" target="contentwin">26.5</a>
+- ADD_ERROR procedure signature 4
+  - APEX_ERROR <a href="ADD_ERROR-Procedure-Signature-4.html#GUID-E7DEB5EF-B158-487E-9CAA-9993C760E690" target="contentwin">26.6</a>
+- ADD_ERROR procedure signature 5
+  - APEX_ERROR <a href="ADD_ERROR-Procedure-Signature-5.html#GUID-6548C2E6-EC77-401E-97EF-291F2B334A2B" target="contentwin">26.7</a>
+- ADD_FILE procedure
+  - APEX_CSS <a href="ADD_FILE-Procedure.html#GUID-4CDF4F1D-3CD9-4BBE-B205-CEBF53E81F3F" target="contentwin">17.3</a>
+  - APEX_ZIP <a href="APEX_ZIP.ADD_FILE-Procedure-2.html#GUID-C079D220-7C17-4EB8-8D57-B7D2B77DB974" target="contentwin">64.2</a>
+- ADD_FILTER procedure
+  - APEX_EXEC <a href="APEX_EXEC.ADD_FILTER-Procedure.html#GUID-995DF2C9-4448-4613-A7C1-FA5F7F45B25F" target="contentwin">28.7</a>
+  - Oracle TEXT <a href="APEX_EXEC.ADD_FILTER-Procedure.html#GUID-995DF2C9-4448-4613-A7C1-FA5F7F45B25F" target="contentwin">28.7</a>
+- ADD_FILTER procedure signature 1
+  - APEX_IG <a href="APEX_IG-ADD_FILTER-Procedure-Signature-1.html#GUID-D5FAE02F-085E-43AD-893B-C94B37D0AD2C" target="contentwin">35.1</a>
+  - APEX_IR <a href="ADD_FILTER-Procedure-Signature-1.html#GUID-3BEF6280-0BEE-47B2-9067-B607E0D822A0" target="contentwin">36.2</a>
+- ADD_FILTER procedure signature 2
+  - APEX_IG <a href="APEX_IG-ADD_FILTER-Procedure-Signature-2.html#GUID-87616437-2B08-40BC-BBF9-FC8C40D49B2A" target="contentwin">35.2</a>
+  - APEX_IR <a href="ADD_FILTER-Procedure-Signature-2.html#GUID-6C8D1168-6735-4FDE-AC01-907C8F528062" target="contentwin">36.3</a>
+- ADD_FILTER procedure signature 3
+  - APEX_IG <a href="APEX_IG-ADD_FILTER-Procedure-Signature-3.html#GUID-96535F0F-F84E-470C-83C3-C8619C973EBC" target="contentwin">35.3</a>
+  - APEX_IR <a href="ADD_FILTER-Procedure-Signature-3.html#GUID-8E1C4271-E1D7-4819-BD6A-21D6ECAB2F9E" target="contentwin">36.4</a>
+- ADD_HIGHLIGHT procedure
+  - APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT-ADD_HIGHLIGHT-Procedure.html#GUID-7C0EDF89-1FA2-4DAE-8F51-8344E8EE0165" target="contentwin">20.6</a>
+- ADD_INLINE_CODE procedure
+  - APEX_JAVASCRIPT <a href="ADD_INLINE_CODE-Procedure.html#GUID-03CEB45D-3C48-4524-9454-6C15046A9510" target="contentwin">38.7</a>
+- ADD_JET procedure
+  - APEX_JAVASCRIPT <a href="ADD_JET-Procedure.html#GUID-9377B50E-C15C-4812-B37F-D4FDAD29C2A3" target="contentwin">38.8</a>
+- ADD_LIBRARY procedure
+  - APEX_JAVASCRIPT <a href="ADD_LIBRARY-Procedure.html#GUID-702E89BC-5E65-4758-B0F8-52BD0C45AC06" target="contentwin">38.9</a>
+- ADD_MEMBER function
+  - APEX_COLLECTION <a href="ADD_MEMBER-Function.html#GUID-60E9B7BF-EFD1-405E-9A9D-9CDFF967F789" target="contentwin">15.3</a>
+- ADD_MEMBER procedure
+  - APEX_COLLECTION <a href="ADD_MEMBER-Procedure.html#GUID-C4A6C36B-F241-423A-9E3F-F7D89CB1E616" target="contentwin">15.2</a>
+- ADD_MEMBERS procedure
+  - APEX_COLLECTION <a href="ADD_MEMBERS-Procedure.html#GUID-8579068A-4BB5-4611-9598-30AF06787D32" target="contentwin">15.4</a>
+- ADD_MENU_ENTRY procedure
+  - APEX_EXTENSION <a href="APEX_EXTENSION.ADD_MENU_ENTRY-Procedure.html#GUID-3F5696AC-5BCE-4915-9169-8F45D60ED28C" target="contentwin">30.1</a>
+- ADD_ONLOAD_CODE procedure
+  - APEX_JAVASCRIPT <a href="ADD_ONLOAD_CODE-Procedure.html#GUID-6F564113-CE53-4B32-9129-D04CC24398B3" target="contentwin">38.12</a>
+- ADD_ORDER_BY procedure
+  - APEX_EXEC <a href="APEX_EXEC.ADD_ORDERBY-Procedure.html#GUID-3AA67C0E-3049-4846-B277-C6B123CE515A" target="contentwin">28.8</a>
+- ADD_PARAMETER procedure
+  - APEX_EXEC <a href="APEX_EXEC.ADD_ORDER_BY-Procedure.html#GUID-F58D89B4-8AA0-4F77-B31A-C7BDF7055AD9" target="contentwin">28.9</a>
+- ADD_REQUIREJS_DEFINE procedure
+  - APEX_JAVASCRIPT <a href="ADD_REQUIREJS_DEFINE-Procedure.html#GUID-6E0A0962-4AB1-4576-BB31-FE35866F5A98" target="contentwin">38.11</a>
+- ADD_REQUIREJS procedure
+  - APEX_JAVASCRIPT <a href="ADD_REQUIREJS-Procedure.html#GUID-788F79DF-48CA-4F96-8D3E-A3666BAEA138" target="contentwin">38.10</a>
+- ADD_SCHEMA procedure
+  - APEX_INSTANCE_ADMIN <a href="ADD_SCHEMA-Procedure.html#GUID-236327B1-7D98-4804-BE96-8A9CBD6A8D0C" target="contentwin">33.3</a>
+- ADD_TABLE procedure
+  - APEX_DG_DATA_GEN <a href="ADD_TABLE-Procedure.html#GUID-B8D6DD0D-2C4B-4D5A-8376-9BF1B8878EF7" target="contentwin">25.6</a>
+- ADD_TASK_COMMENT procedure
+  - APEX_APPROVAL <a href="ADD_TASK_COMMENT-Procedure.html#GUID-A69F74B7-AC57-4615-B709-C77850BF7B7A" target="contentwin">9.2</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.ADD_TASK_COMMENT-Procedure.html#GUID-46A9A8B8-5824-4497-80F8-E8732625521A" target="contentwin">32.2</a>
+- ADD_TASK_POTENTIAL_OWNER procedure
+  - APEX_APPROVAL <a href="ADD_TASK_POTENTIAL_OWNER-Procedure.html#GUID-CCD5B305-BB5E-4C22-A414-5AB1A210DA49" target="contentwin">9.3</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.ADD_TASK_POTENTIAL_OWNER-Procedure.html#GUID-B179FB8F-A627-4E75-A115-A4EC3FA473D0" target="contentwin">32.3</a>
+- ADD_TO_HISTORY procedure
+  - APEX_APPROVAL <a href="ADD_TO_HISTORY-Procedure.html#GUID-9B21340D-5897-468B-B8A6-2CC48721C7A9" target="contentwin">9.4</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.ADD_TO_HISTORY-Procedure.html#GUID-B1723CE2-A145-48E4-B913-5290FCB021EC" target="contentwin">32.4</a>
+- ADD_USER_ROLE procedure signature 1
+  - APEX_ACL <a href="ADD_USER_ROLE-Procedure-Signature1.html#GUID-9371025F-7E1B-4C52-A8A2-EA5581BC7FC3" target="contentwin">2.1</a>
+- ADD_USER_ROLE procedure signature 2
+  - APEX_ACL <a href="ADD_USER_ROLE-Procedure-Signature2.html#GUID-0323BCE8-6D8B-45E6-91B6-377025844BDF" target="contentwin">2.2</a>
+- ADD_VALUE function signature 1
+  - APEX_JAVASCRIPT <a href="ADD_VALUE-Function-Signature-1.html#GUID-D344AF0E-CD03-47B5-86A8-F3BAC92E9FEE" target="contentwin">38.13</a>
+- ADD_VALUE function signature 2
+  - APEX_JAVASCRIPT <a href="ADD_VALUE-Function-Signature-2.html#GUID-602DEF5A-A8C2-4013-A45F-E6EC7D330723" target="contentwin">38.14</a>
+- ADD_VALUE function signature 3
+  - APEX_JAVASCRIPT <a href="ADD_VALUE-Function-Signature-3.html#GUID-3CF1D2BD-A6F5-45E3-BEB5-64F0921F0640" target="contentwin">38.15</a>
+- ADD_VALUE function signature 4
+  - APEX_JAVASCRIPT <a href="ADD_VALUE-Function-Signature-4.html#GUID-18293772-D6DF-4990-BEB2-3650A8BBBFF6" target="contentwin">38.16</a>
+- ADD_WEB_ENTRY_POINT procedure
+  - APEX_INSTANCE_ADMIN <a href="ADD_WEB_ENTRY_POINT-procedure.html#GUID-F72BC668-2818-4037-9234-E4403D6FB981" target="contentwin">33.4</a>
+- ADD_WORKSPACE procedure
+  - APEX_INSTANCE_ADMIN <a href="ADD_WORKSPACE-Procedure.html#GUID-A5901582-5A5D-4273-9795-7D203E616C1A" target="contentwin">33.5</a>
+- ADD procedure
+  - APEX_CSS <a href="ADD-Procedure.html#GUID-BED2BC8B-91F5-4A9E-9487-2F4D834AFDD7" target="contentwin">17.1</a>
+- APEX_ACL <a href="APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288" target="contentwin">2</a>
+- APEX_ACL_USERS <a href="APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288" target="contentwin">2</a>
+- APEX_AI <a href="APEX_AI.html#GUID-9451C383-56B9-411D-8BAF-37F437B95FB1" target="contentwin">3</a>
+- APEX_APP_OBJECT_DEPENDENCY <a href="APEX_APP_OBJECT_DEPENDENCY.html#GUID-9E5E8896-492E-4CB0-B153-C0F7A81BA54F" target="contentwin">4</a>
+- APEX_APP_SETTING <a href="APEX_APP_SETTING.html#GUID-22D1A770-2748-42CB-A679-F89CD33B1335" target="contentwin">5</a>
+- APEX_APPLICATION <a href="APEX_APPLICATION.html#GUID-46D9B879-3180-480D-B5D6-54AABDD146F6" target="contentwin">6</a>
+- APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A" target="contentwin">7</a>
+- APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.html#GUID-64D43160-E4F9-44CF-96A4-42D3190102BE" target="contentwin">8</a>
+- APEX_APPROVAL (deprecated) <a href="APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4" target="contentwin">9</a>
+- APEX_AUTHENTICATION <a href="APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92" target="contentwin">10</a>
+- APEX_AUTHORIZATION <a href="APEX_AUTHORIZATION.html#GUID-4C7EE89E-9C67-4713-B62F-25873C819574" target="contentwin">11</a>
+- APEX_AUTOMATION <a href="APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7" target="contentwin">12</a>
+- APEX_BACKGROUND_PROCESS <a href="apex_background_process.html#GUID-3CF5E160-F9FA-4FE0-8907-CAFC173348FF" target="contentwin">13</a>
+- APEX_BARCODE <a href="APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367" target="contentwin">14</a>
+- APEX_COLLECTION <a href="APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76" target="contentwin">15</a>
+- APEX_CREDENTIAL <a href="APEX_CREDENTIAL.html#GUID-4680B4A9-6606-443B-AFE3-4E53A62F222B" target="contentwin">16</a>
+- APEX_CSS <a href="APEX_CSS.html#GUID-37060CB4-6354-445E-8CE8-67CF252D278F" target="contentwin">17</a>
+- APEX_CUSTOM_AUTH <a href="APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0" target="contentwin">18</a>
+- APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78" target="contentwin">20</a>
+- APEX_DATA_INSTALL <a href="APEX_DATA_INSTALL.html#GUID-863E024E-AB46-4081-BF91-8FC5F1613CFB" target="contentwin">21</a>
+- APEX_DATA_LOADING <a href="APEX_DATA_LOADING.html#GUID-D45764A0-5A56-422C-9D51-FC1FE26E52A7" target="contentwin">19</a>
+- APEX_DATA_PARSER <a href="APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A" target="contentwin">22</a>
+- APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.html#GUID-5CBE27A0-B1E6-4700-9FA4-6F32F0418E42" target="contentwin">23</a>
+- APEX_DEBUG <a href="APEX_DEBUG.html#GUID-8E80E46E-CCEF-4CCC-8D00-8EC3A5C36FDE" target="contentwin">24</a>
+- APEX_DG_DATA_GEN <a href="APEX_DG_DATA_GEN.html#GUID-5DB25668-0D85-45FD-A062-281D2852CFA1" target="contentwin">25</a>
+- APEX_ERROR <a href="APEX_ERROR.html#GUID-F9353D6E-85FB-48EE-B493-3A0C0F596436" target="contentwin">26</a>
+- APEX_ESCAPE <a href="APEX_ESCAPE.html#GUID-889DE8EF-ED8C-4E52-A3CE-7DA9A9A79B88" target="contentwin">27</a>
+- APEX_EXEC <a href="APEX_EXEC.html#GUID-3CF1D2DD-AEA4-4982-9857-548567AB7169" target="contentwin">28</a>
+- APEX_EXPORT <a href="APEX_EXPORT.html#GUID-6A4628A6-9F86-4394-9938-87A7FFFC7BC8" target="contentwin">29</a>
+- APEX_EXTENSION <a href="APEX_EXTENSION.html#GUID-1DB896FA-5BC4-4BB6-A566-D865009EDA52" target="contentwin">30</a>
+- APEX_HTTP <a href="APEX_HTTP.html#GUID-33430D6F-EAE1-4FDB-9159-327F34F39FE0" target="contentwin">31</a>
+- APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4" target="contentwin">32</a>
+- APEX_IG <a href="APEX_IG.html#GUID-9A4189AF-FEAE-4CC0-A602-A10A5E4868C2" target="contentwin">35</a>
+- APEX_INSTANCE_ADMIN <a href="APEX_INSTANCE_ADMIN.html#GUID-1A894D25-A884-466B-9B88-B10888B2FFEA" target="contentwin">33</a>
+- APEX_INSTANCE_DEBUG <a href="APEX_INSTANCE_DEBUG.html#GUID-40FB5D60-7A76-4E48-B097-84D5A0BF2FC9" target="contentwin">34</a>
+- APEX_IR <a href="APEX_IR.html#GUID-04DB43B3-B600-4D4C-8C97-9B103D15C9F5" target="contentwin">36</a>
+- APEX_ITEM <a href="APEX_ITEM.html#GUID-A111B577-2503-4F4E-962E-192C7D5B5338" target="contentwin">37</a>
+- APEX_JAVASCRIPT <a href="APEX_JAVASCRIPT.html#GUID-D43D6DA7-9A22-4B53-8138-AC97C00C7622" target="contentwin">38</a>
+- APEX_JSON <a href="APEX_JSON.html#GUID-11919ED6-CE3D-4497-8733-F56CD27B6BFF" target="contentwin">39</a>
+- APEX_JWT <a href="APEX_JWT.html#GUID-D44A3F15-75BE-41DC-A557-17FA70D466B9" target="contentwin">40</a>
+- APEX_LANG <a href="APEX_LANG.html#GUID-68DF9D22-3C3A-418A-B27A-868A569BD990" target="contentwin">41</a>
+- APEX_LDAP <a href="APEX_LDAP.html#GUID-0BE5C87B-BF08-4B80-BA42-5A08CE5923AC" target="contentwin">42</a>
+- APEX_MAIL <a href="APEX_MAIL.html#GUID-14F51C6D-CB82-4B38-AB6E-61C46E75596F" target="contentwin">43</a>
+- APEX_MARKDOWN <a href="APEX_MARKDOWN.html#GUID-5BB40765-1F66-43E4-A86C-287C64D1D7F0" target="contentwin">44</a>
+- APEX_PAGE <a href="APEX_PAGE.html#GUID-4E9A6524-DD04-4C34-BF9A-ABC6233E6C22" target="contentwin">45</a>
+- APEX_PLUGIN <a href="APEX_PLUGIN.html#GUID-E4CF534E-D795-44B6-8C3D-C464A8EF115C" target="contentwin">46</a>
+- APEX_PLUGIN_UTIL <a href="APEX_PLUGIN_UTIL.html#GUID-E1FE05BA-E290-4446-82DC-5271B75FDD4C" target="contentwin">47</a>
+- APEX_PRINT <a href="APEX_PRINT.html#GUID-D6C94354-7BF6-4A3B-88F5-0F169874BF49" target="contentwin">48</a>
+- APEX_PWA <a href="APEX_PWA.html#GUID-BCA64530-D95D-4FDD-9250-D655EF0BD261" target="contentwin">49</a>
+- APEX_REGION <a href="APEX_REGION.html#GUID-63EFEB48-D5B9-42F6-9313-85C3984D42B8" target="contentwin">50</a>
+- APEX_REST_SOURCE_SYNC <a href="APEX_REST_SOURCE_SYNC.html#GUID-0F08A144-A6A6-4EEE-9D20-49CA7C257B36" target="contentwin">51</a>
+- APEX_SEARCH <a href="APEX_SEARCH.html#GUID-952CEB05-C585-4CBF-97DA-06F5EB0E6165" target="contentwin">52</a>
+- APEX_SESSION <a href="APEX_SESSION.html#GUID-710E9F4F-157C-4EBA-BBA9-3E0B9EE4002A" target="contentwin">53</a>
+- APEX_SESSION_STATE <a href="APEX_SESSION_STATE.html#GUID-BF814518-6981-4F69-9F88-C36FED14323F" target="contentwin">54</a>
+- APEX_SPATIAL <a href="APEX_SPATIAL.html#GUID-B92B11BD-4A18-405F-AE84-0C85E6176BEA" target="contentwin">56</a>
+- APEX_STRING <a href="APEX_STRING.html#GUID-CAFD987C-7382-4F0F-8CB9-1D3BD05F054A" target="contentwin">57</a>
+- APEX_STRING_UTIL <a href="APEX_STRING_UTIL.html#GUID-E939DB34-40A0-4CBE-B9F4-A3F5E878C113" target="contentwin">58</a>
+- APEX_THEME <a href="APEX_THEME.html#GUID-D0E62CB5-22C1-42CE-A2C1-D1E22EE63555" target="contentwin">59</a>
+- APEX_UI_DEFAULT_UPDATE <a href="APEX_UI_DEFAULT_UPDATE.html#GUID-90E0D15A-4EBB-4C12-B66E-8FA76A4F31F5" target="contentwin">60</a>
+- APEX_UTIL <a href="APEX_UTIL.html#GUID-5ECE5C10-1A88-4D37-8A7D-C51925ADB2B9" target="contentwin">61</a>
+  - GET_EMAIL function <a href="GET_EMAIL-Function.html#GUID-4C914173-426C-4D40-A11F-FA51EF63C0DA" target="contentwin">61.50</a>
+  - IS_HIGH_CONTRAST_SESSION function <a href="IS_HIGH_CONTRAST_SESSION-Function.html#GUID-E24A9BCE-F745-4C34-B9A0-7297644A3A74" target="contentwin">61.88</a>
+  - IS_USERNAME_UNIQUE function <a href="IS_USERNAME_UNIQUE-Function.html#GUID-75E32B2D-DE30-4AB4-B7D8-5E8580D0671E" target="contentwin">61.93</a>
+  - REMOVE_PREFERENCE procedure <a href="REMOVE_PREFERENCE-Procedure.html#GUID-79BB456C-A6EA-40D3-8F54-F0667CC17D39" target="contentwin">61.105</a>
+  - SET_SECURITY_HIGH_CONTRAST_ON procedure <a href="SET_SESSION_HIGH_CONTRAST_ON-Procedure.html#GUID-BE4DA7E2-F572-479D-8A0C-12BF6D4F47F3" target="contentwin">61.133</a>
+  - SET_SESSION_STATE procedure <a href="SET_SESSION_STATE-Procedure.html#GUID-ECF66FA6-91DF-4463-A7DC-EFFB3E49A5D1" target="contentwin">61.139</a>
+- APEX_WEB_SERVICE <a href="APEX_WEB_SERVICE.html#GUID-B95EA4B6-950D-419D-A2B0-CDB254E1E9F0" target="contentwin">62</a>
+- APEX_WEB_SERVICE API <a href="About-the-APEX_WEB_SERVICE-API.html#GUID-ECC9CC44-D10B-4502-B832-A171B370F3B4" target="contentwin">62.1</a>
+- APEX_WORKFLOW <a href="APEX_WORKFLOW.html#GUID-4FAAF38B-BB10-4BC8-8A87-9BF3C0CA6772" target="contentwin">63</a>
+- APEX_ZIP <a href="APEX_ZIP.html#GUID-270BFF3A-5FB1-4089-894E-978608F9BD87" target="contentwin">64</a>
+- APPEND_TO_MULTIPART procedure signature 1
+  - APEX_WEB_SERVICE <a href="APEX_WEB_SERVICE.APPEND_TO_MULTIPART-Procedure-1.html#GUID-85A07746-3C39-4918-99D3-8CCB7FF68B4C" target="contentwin">62.5</a>
+- APPEND_TO_MULTIPART procedure signature 2
+  - APEX_WEB_SERVICE <a href="APEX_WEB_SERVICE.APPEND_TO_MULTIPART-Procedure-2.html#GUID-06AB95BE-E63A-426B-B85B-3EAAF7AA1D22" target="contentwin">62.6</a>
+- application
+  - sending messages in APEX_MAIL_QUEUE <a href="PUSH_QUEUE-Procedure.html#GUID-A17CEA4E-B667-4657-AC0E-F2C0833010EC" target="contentwin">43.7</a>
+  - sending outbound email <a href="SEND-Procedure-Signature-1.html#GUID-B1CD726B-EABE-4A9D-A7A4-3A973E84262D" target="contentwin">43.10</a>
+  - sending outbound email as attachment <a href="ADD_ATTACHMENT-Procedure-Signature-1.html#GUID-5B514926-2C0A-40E3-82BB-7E357CB0C927" target="contentwin">43.2</a>, <a href="ADD_ATTACHMENT-Procedure-Signature-2.html#GUID-0C43024A-D0B5-4358-A43E-8BF8FAD30E08" target="contentwin">43.3</a>
+- APPLICATION_PAGE_ITEM_EXISTS function
+  - APEX_CUSTOM_AUTH <a href="APPLICATION_PAGE_ITEM_EXISTS-Function.html#GUID-7252D07F-C762-4894-B8C0-09284B62177F" target="contentwin">18.1</a>
+- application installation <a href="APEX_APPLICATION_INSTALL.html#GUID-64D43160-E4F9-44CF-96A4-42D3190102BE" target="contentwin">8</a>
+- APPLY_XLIFF_DOCUMENT procedure
+  - APEX_LANG <a href="APPLY_XLIFF_DOCUMENT-Procedure.html#GUID-7006EC05-AEBF-44D0-AB3F-9CB38A73781F" target="contentwin">41.1</a>
+- APPROVE_TASK procedure
+  - APEX_APPROVAL <a href="APPROVE_TASK-Procedure.html#GUID-1EC3B9FF-B925-4BFB-BE54-4D208E6B0F71" target="contentwin">9.5</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.APPROVE_TASK-Procedure.html#GUID-3B8537E7-55F1-4A37-B8EB-9CC6D613C89A" target="contentwin">32.5</a>
+- arrays
+  - APEX_APPLICATION <a href="working-with-g_fnn-arrays.html#GUID-9418A964-B125-4C9A-9CB3-DBBA0CB6E20A" target="contentwin">6.1</a>
+  - G_Fnn arrays <a href="working-with-g_fnn-arrays.html#GUID-9418A964-B125-4C9A-9CB3-DBBA0CB6E20A" target="contentwin">6.1</a>
+- ASSERT_FILE_TYPE function
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.ASSERT_FILE_TYPE-Function.html#GUID-DA4A9A5C-5575-43BB-A38F-E595E1643322" target="contentwin">22.3</a>
+- ATTACH procedure
+  - APEX_SESSION <a href="ATTACH-Procedure.html#GUID-27465355-B6EB-412A-BFAC-F63FCDB396E0" target="contentwin">53.1</a>
+- attribute values
+  - setting <a href="SET_ATTRIBUTE-Procedure.html#GUID-9EF508D0-1518-4CAB-9BE2-E07174441CA3" target="contentwin">61.117</a>
+- authenticated user
+  - create user group <a href="CREATE_USER_GROUP-Procedure.html#GUID-A61F8280-8B18-430A-9CCA-8E59FC01EDF5" target="contentwin">61.16</a>
+  - delete user group <a href="DELETE_USER_GROUP-Procedure-Signature-1.html#GUID-061B00E4-6E45-410A-BE64-3DB8C1294CAA" target="contentwin">61.21</a>, <a href="DELETE_USER_GROUP-Procedure-Signature-2.html#GUID-CE1E0E86-5D42-4D77-AB43-47760E71AB70" target="contentwin">61.22</a>
+- AUTHENTICATE function
+  - APEX_LDAP <a href="AUTHENTICATE-Function.html#GUID-6E036FCC-DF11-4696-91E0-879E87BE876B" target="contentwin">42.1</a>
+- authentication
+  - scheme session cookies <a href="GET_COOKIE_PROPS-Procedure.html#GUID-F21A8AC5-49DE-4E9D-BF33-0E1F3CACB7EA" target="contentwin">18.4</a>
+- AUTO_SET_ASSOCIATED_ITEM procedure
+  - APEX_ERROR <a href="AUTO_SET_ASSOCIATED_ITEM-Procedure.html#GUID-408422C1-BED2-4DE6-8E92-169639A098D4" target="contentwin">26.8</a>
+
+------------------------------------------------------------------------
+
+## B
+
+- BLOB_TO_CLOB function
+  - APEX_UTIL <a href="BLOB_TO_CLOB-Function.html#GUID-5134EA04-4DB1-4438-ABA7-5446D2E5850F" target="contentwin">61.1</a>
+- BLOB2CLOBBASE64 function
+  - APEX_WEB_SERVICE <a href="BLOB2CLOBBASE64-Function.html#GUID-A572E80C-02CC-467B-8A3D-DEE8A8FD0452" target="contentwin">62.7</a>
+- BUILD_REQUEST_BODY procedure
+  - APEX_PLUGIN_UTIL <a href="BUILD_REQUEST_BODY-Procedure.html#GUID-9C3D709D-3B50-4568-B3FE-96C02BD92D9E" target="contentwin">47.1</a>
+
+------------------------------------------------------------------------
+
+## C
+
+- CACHE_GET_DATE_OF_PAGE_CACHE function
+  - APEX_UTIL <a href="CACHE_GET_DATE_OF_PAGE_CACHE-Function.html#GUID-C79A76BB-E2D2-4A5F-AA52-FD015B0B6087" target="contentwin">61.2</a>, <a href="CACHE_GET_DATE_OF_REGION_CACHE-Function.html#GUID-BA251335-AE89-40CA-ACAD-D42D0D3442B5" target="contentwin">61.3</a>
+- CACHE_PURGE_BY_APPLICATION procedure
+  - APEX_UTIL <a href="CACHE_PURGE_BY_APPLICATION-Procedure.html#GUID-05004DCB-CE65-41F6-905F-31A6AB84510E" target="contentwin">61.4</a>
+- CACHE_PURGE_BY_PAGE procedure
+  - APEX_UTIL <a href="CACHE_PURGE_BY_PAGE-Procedure.html#GUID-DA79E21A-64C8-4FDC-869C-546972B63188" target="contentwin">61.5</a>
+- CACHE_PURGE_STALE procedure
+  - APEX_UTIL <a href="CACHE_PURGE_STALE-Procedure.html#GUID-87590490-1EFB-412E-AFC4-A3D44DEA4598" target="contentwin">61.6</a>
+- CALLBACK2 procedure
+  - APEX_AUTHENTICATION <a href="CALLBACK2-Procedure.html#GUID-F67D5A66-2ECB-40A3-8FEE-7D2689C1E103" target="contentwin">10.3</a>
+- CALLBACK procedure
+  - APEX_AUTHENTICATION <a href="CALLBACK-Procedure.html#GUID-69402EA6-F362-4D25-BBB4-B2C67C789E6E" target="contentwin">10.2</a>
+- Call sequence
+  - APEX_EXEC <a href="call-sequences-for-APEX_EXEC.html#GUID-DD8B248D-A6D9-48D5-8889-DE302644363A" target="contentwin">28.1</a>, <a href="call-sequences-for-APEX_EXEC.html#GUID-CAB0706C-E9CF-45CF-82D6-69C2998ED237" target="contentwin">28.1.1</a>, <a href="call-sequences-for-APEX_EXEC.html#GUID-450A9C24-E63C-49E9-8CA9-66316887FC3A" target="contentwin">28.1.2</a>, <a href="call-sequences-for-APEX_EXEC.html#GUID-583B6B4C-0518-4EE4-961B-8DB85F35B385" target="contentwin">28.1.3</a>
+- CANCEL_TASK procedure
+  - APEX_APPROVAL <a href="CANCEL_TASK-Procedure.html#GUID-A470EEE9-CFA3-494C-928C-4C6517177FD9" target="contentwin">9.6</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.CANCEL_TASK-Procedure.html#GUID-BF09310B-5E41-40C3-B73B-471B3B5DDB50" target="contentwin">32.6</a>
+- CHANGE_CURRENT_USER_PW procedure
+  - APEX_UTIL <a href="CHANGE_CURRENT_USER_PW-Procedure.html#GUID-3B5A7DD8-6301-440D-B879-70E2A7770796" target="contentwin">61.7</a>
+- CHANGE_GEOM_METADATA procedure
+  - APEX_SPATIAL <a href="CHANGE_GEOM_METADATA-Procedure.html#GUID-16480559-CF68-4646-8F9B-6FECE291016F" target="contentwin">56.2</a>
+- CHANGE_PASSWORD_ON_FIRST_USE function
+  - APEX_UTIL <a href="CHANGE_PASSWORD_ON_FIRST_USE-Function.html#GUID-72EDA90E-BF49-454E-BF79-B5DAE19D35E7" target="contentwin">61.8</a>
+- CHANGE_REPORT_OWNER procedure
+  - APEX_IG <a href="APEX_IG-CHANGE_REPORT_OWNER-Procedure.html#GUID-C387B0CC-60A2-4321-83FD-28FCAA3F5E80" target="contentwin">35.4</a>
+  - APEX_IR <a href="CHANGE_REPORT_OWNER-Procedure.html#GUID-B1CF8F7A-3E1B-4DCB-9480-0704A4478ABF" target="contentwin">36.5</a>
+- CHANGE_SUBSCRIPTION_EMAIL procedure
+  - APEX_IR <a href="CHANGE_SUBSCRIPTION_EMAIL-Procedure.html#GUID-65C114DF-EBCF-416E-BBD7-45A4ECFF70E2" target="contentwin">36.6</a>
+- CHANGE_SUBSCRIPTION_LANG procedure
+  - APEX_IR <a href="CHANGE_SUBSCRIPTION_LANG-Procedure.html#GUID-5133EC62-EB99-434B-81ED-E70055B7198B" target="contentwin">36.7</a>
+- CHAT function signature 1
+  - APEX_AI <a href="APEX_AI.CHAT-Function-Signature-1.html#GUID-F9B1F1EE-A8C4-4FE1-9F20-8532C77B36D9" target="contentwin">3.2</a>
+- CHAT function signature 2
+  - APEX_AI <a href="APEX_AI.CHAT-Function-Signature-2.html#GUID-5E10D51A-50DB-4BD2-9809-C97043E1DB06" target="contentwin">3.3</a>
+- CHAT function signature 3
+  - APEX_AI <a href="APEX_AI.CHAT-Function-Signature-3.html#GUID-E41FAEA1-68C6-49DF-8DF4-7D3D92679F69" target="contentwin">3.4</a>
+- CHECKBOX2 function
+  - APEX_ITEM <a href="CHECKBOX2-Function.html#GUID-27C89D70-D5A7-4418-B212-DAFDD44F44CC" target="contentwin">37.1</a>
+- CIRCLE_POLYGON function
+  - APEX_SPATIAL <a href="CIRCLE_POLYGON-Function.html#GUID-0D07C628-1D34-4B13-94D6-819D4BCD2A09" target="contentwin">56.3</a>
+- CLAIM_TASK procedure
+  - APEX_APPROVAL <a href="CLAIM_TASK-Procedure.html#GUID-9FBB4450-E6A3-484B-BCA5-DF2F96009A3F" target="contentwin">9.7</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.CLAIM_TASK-Procedure.html#GUID-41076A60-12D6-47EC-8497-3761944CD0BD" target="contentwin">32.7</a>
+- CLEAR_ALL_USERS_STYLE procedure
+  - APEX_THEME <a href="CLEAR_ALL_USERS_STYLE-Procedure.html#GUID-E52E6FE7-E250-4BB3-BC13-48F3C6D2FE4D" target="contentwin">59.1</a>
+- CLEAR_ALL procedure
+  - APEX_APPLICATION_INSTALL <a href="CLEAR_ALL-Procedure.html#GUID-78369470-ED8E-4379-B89B-F3C54308248D" target="contentwin">8.6</a>
+- CLEAR_APP_CACHE procedure
+  - APEX_UTIL <a href="CLEAR_APP_CACHE-Procedure.html#GUID-174C5EA5-43C1-4DBE-8C28-14E162CF59E8" target="contentwin">61.11</a>
+- CLEAR_CACHE procedure
+  - APEX_APP_OBJECT_DEPENDENCY <a href="APEX_APP_OBJECT_DEPENDENCY.CLEAR_CACHE-Procedure.html#GUID-C721C557-7168-4415-9CA3-4C4556EBBBEB" target="contentwin">4.2</a>
+- CLEAR_COMPONENT_VALUES procedure
+  - APEX_PLUGIN_UTIL <a href="CLEAR_COMPONENT_VALUES-Procedure.html#GUID-D61D4ED0-B386-42A3-9C03-2CA9D16F36C8" target="contentwin">47.2</a>
+- CLEAR_DATA_REPORTER_REMAP procedure
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.CLEAR_DATA_REPORTER_REMAP-Procedure.html#GUID-52AD48FE-69D6-4280-ACEE-29AAAA91420E" target="contentwin">8.8</a>
+- CLEAR_DATASET_IMPORT_MODES procedure
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.CLEAR_DATASET_IMPORT_MODES-Procedure.html#GUID-707C5D77-3A48-4BE5-8539-0BDD4B7678E7" target="contentwin">8.7</a>
+- CLEAR_DML_ROWS procedure
+  - APEX_EXEC <a href="APEX_EXEC.CLEAR_DML_ROWS-Procedure.html#GUID-36EEB170-F52C-4647-8BC7-29F3831E5DA5" target="contentwin">28.10</a>
+- CLEAR_PAGE_CACHE procedure
+  - APEX_UTIL <a href="CLEAR_PAGE_CACHE-Procedure.html#GUID-BFD48CCC-DC58-4B83-A8E1-3A49A5133C42" target="contentwin">61.12</a>
+- CLEAR_REPORT procedure signature 1
+  - APEX_IG <a href="APEX_IG-CLEAR_REPORT-Procedure-Signature-1.html#GUID-38888BFE-A309-4C9D-94E8-A35310537BB2" target="contentwin">35.5</a>
+  - APEX_IR <a href="CLEAR_REPORT-Procedure-Signature-1.html#GUID-4185B596-36FE-4F63-BFDA-7A066A253698" target="contentwin">36.8</a>
+- CLEAR_REPORT procedure signature 2
+  - APEX_IG <a href="APEX_IG-CLEAR_REPORT-Procedure-Signature-2.html#GUID-2C5E4EFF-290B-4559-8D29-AF7CF0D9F14C" target="contentwin">35.6</a>, <a href="APEX_IG-CLEAR_REPORT-Procedure-Signature-3.html#GUID-3579D939-7BD7-47AF-A741-35B1910CFC3A" target="contentwin">35.7</a>
+  - APEX_IR <a href="CLEAR_REPORT-Procedure-Signature-2.html#GUID-A8D7FCA4-C4EE-4473-AF90-71E7C137D04E" target="contentwin">36.9</a>
+- CLEAR_REPORT procedure signature 3
+  - APEX_IR <a href="CLEAR_REPORT-Procedure-Signature-3.html#GUID-18ED8C9D-1AEF-42CB-A897-5F43DEDDF46F" target="contentwin">36.10</a>
+- CLEAR_REQUEST_COOKIES procedure
+  - APEX_WEB_SERVICE <a href="CLEAR_REQUEST_COOKIES-Procedure.html#GUID-81763977-7873-4584-9F8F-1510EC11C056" target="contentwin">62.8</a>
+- CLEAR_REQUEST_HEADERS procedure
+  - APEX_WEB_SERVICE <a href="CLEAR_REQUEST_HEADERS-Procedure.html#GUID-521DB393-685F-4254-B625-A581EF0006ED" target="contentwin">62.9</a>
+- CLEAR_TOKENS procedure
+  - APEX_CREDENTIAL <a href="CLEAR_TOKENS-Procedure.html#GUID-25B2697F-C9E8-42A8-AE0C-E52437B247DD" target="contentwin">16.1</a>
+- CLEAR_USER_CACHE procedure
+  - APEX_UTIL <a href="CLEAR_USER_CACHE-Procedure.html#GUID-53630F55-27D0-421F-B2D9-CDD940463E2C" target="contentwin">61.13</a>
+- CLEAR_USER_STYLE procedure
+  - APEX_THEME <a href="CLEAR_USER_STYLE-Procedure.html#GUID-E3D0A1A9-FC0E-414F-93E3-310920E53596" target="contentwin">59.2</a>
+- clearing session state
+  - collections <a href="Clearing-Collection-Session-State.html#GUID-888BA98D-CD54-4BC1-ADBF-2121A632DDBC" target="contentwin">15.1.3</a>
+- CLEAR procedure signature 1
+  - APEX_REGION <a href="APEX_REGION.CLEAR-Procedure-Signature-1.html#GUID-C28DF0E2-57EE-4656-931E-18D6BE089A4E" target="contentwin">50.1</a>
+- CLEAR procedure signature 2
+  - APEX_REGION <a href="APEX_REGION.CLEAR-Procedure-Signature-2.html#GUID-0C7FD8DE-34EA-4A02-B05F-BEC90C810E8C" target="contentwin">50.2</a>
+- clicks, counting <a href="COUNT_CLICK-Procedure.html#GUID-EAC385E4-B686-481C-B95E-2FD6BB997388" target="contentwin">61.14</a>
+- CLOB_TO_BLOB function
+  - APEX_UTIL <a href="CLOB_TO_BLOB-Function.html#GUID-849F9E66-F713-4F48-B9D1-D07B2F104D1E" target="contentwin">61.9</a>
+- CLOBBASE642BLOB function
+  - APEX_WEB_SERVICE <a href="CLOBBASE642BLOB-Function.html#GUID-14B11175-7D0A-4FB2-904D-84B176593161" target="contentwin">62.10</a>
+- CLONE_REPORT function
+  - APEX_IR <a href="CLONE_REPORT-Function.html#GUID-FE2CA1AF-0798-41D4-9CD6-0EC62950A1CF" target="contentwin">36.11</a>
+- CLOSE_ALL procedure
+  - APEX_JSON <a href="CLOSE_ALL-Procedure.html#GUID-42A69AF0-9853-4E4E-BFC4-38C2D20980C0" target="contentwin">39.3</a>
+- CLOSE_ARRAY procedure
+  - APEX_EXEC <a href="APEX_EXEC.CLOSE_ARRAY-Procedure.html#GUID-E933C2AC-C2F3-4F1F-B67A-F98023DDD8D6" target="contentwin">28.12</a>
+  - APEX_JSON <a href="CLOSE_ARRAY-Procedure.html#GUID-308E76AB-627A-4F2E-B7AC-E6DD32A18E94" target="contentwin">39.4</a>
+- CLOSE_OBJECT procedure
+  - APEX_JSON <a href="CLOSE_OBJECT-Procedure.html#GUID-98070930-044F-4230-B4DC-F0D43C014901" target="contentwin">39.5</a>
+- CLOSE_OPEN_DB_LINKS procedure
+  - APEX_UTIL <a href="CLOSE_OPEN_DB_LINKS-Procedure.html#GUID-2B1F4574-F249-43A5-9C7E-B5F2A0FA6522" target="contentwin">61.10</a>
+- CLOSE procedure
+  - APEX_EXEC <a href="APEX_EXEC.CLOSE-Procedure.html#GUID-0CC0037C-443B-4669-9282-D08DB7103281" target="contentwin">28.11</a>
+- COLLECTION_EXISTS function
+  - APEX_COLLECTION <a href="COLLECTION_EXISTS-Function.html#GUID-92AE3589-C89F-4CE4-8166-79A2B8E1C938" target="contentwin">15.5</a>
+- COLLECTION_HAS_CHANGED function
+  - APEX_COLLECTION <a href="COLLECTION_HAS_CHANGED-Function.html#GUID-1DC33627-7413-4D71-88DF-60731B6CE8A4" target="contentwin">15.6</a>
+- COLLECTION_MEMBER_COUNT function
+  - APEX_COLLECTION <a href="COLLECTION_MEMBER_COUNT-Function.html#GUID-30C0AF1E-C8FB-4D10-BF82-C964E8246D6F" target="contentwin">15.7</a>
+- collections
+  - accessing <a href="Accessing-a-Collection.html#GUID-19432196-C604-475D-80AC-283CDCF4FF86" target="contentwin">15.1.1</a>
+  - APEX_COLLECTION API <a href="About-the-APEX_COLLECTION-API.html#GUID-56991245-9102-4301-AC86-7A43701649AD" target="contentwin">15.1</a>
+  - clearing session state <a href="Clearing-Collection-Session-State.html#GUID-888BA98D-CD54-4BC1-ADBF-2121A632DDBC" target="contentwin">15.1.3</a>
+  - determining status <a href="Determining-Collection-Status.html#GUID-1B9FBD91-D989-49D1-8005-CA2DF561B2F6" target="contentwin">15.1.2</a>
+- COLUMN_EXISTS function
+  - APEX_EXEC <a href="APEX_EXEC.COLUMN_EXISTS-Function.html#GUID-9ED0138E-BB3E-4486-A3AE-5C49D9186B80" target="contentwin">28.13</a>
+- COMPLETE_TASK procedure
+  - APEX_APPROVAL <a href="COMPLETE_TASK-Procedure.html#GUID-E2879695-2496-44F9-AC0A-2B2E947A1D17" target="contentwin">9.8</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.COMPLETE_TASK-Procedure.html#GUID-8695ADE4-F7F1-4B2D-9EE7-60BF38712C40" target="contentwin">32.8</a>
+- constants
+  - APEX_AI <a href="APEX_AI.Data-Types.html#GUID-8671F505-F1FF-4AFD-B45A-4C5D94A1DB67" target="contentwin">3.1</a>
+  - APEX_APP_OBJECT_DEPENDENCY <a href="APEX_APP_OBJECT_DEPENDENCY.Constants.html#GUID-B2C2F938-BDC5-418A-B92C-71C47C9317D4" target="contentwin">4.1</a>
+  - APEX_APPLICATION <a href="APEX_APPLICATION-Global-Variables.html#GUID-5164592B-6864-4E2B-8DE3-64B463687A41" target="contentwin">6.2</a>
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.Constants-and-Data-Types.html#GUID-D74F07EC-5A3D-4BD7-A1F1-A3EEBCA7F126" target="contentwin">7.1</a>
+  - APEX_APPROVAL <a href="APEX_APPROVAL.Constants-and-Data-Types.html#GUID-536A42B1-5099-467F-908F-A1C3C209D77B" target="contentwin">9.1</a>
+  - APEX_AUTHENTICATION <a href="APEX_AUTHENTICATION-Constants.html#GUID-0D2C76D2-2A42-42AD-A86F-F92508B64A8D" target="contentwin">10.1</a>
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS-Constants.html#GUID-F8B2006B-AEF3-4F50-96A2-8DE5349C2A94" target="contentwin">13.1</a>
+  - APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT-Global-Constants.html#GUID-3E08E8B0-85B4-4AF4-A0EE-8DF81149B472" target="contentwin">20.1</a>
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.Global-Constants.html#GUID-AE3C3092-4156-41BA-9254-DDEDF630CDA7" target="contentwin">22.1</a>
+  - APEX_DEBUG <a href="APEX_DEBUG-Constants.html#GUID-412ED5E2-1739-4A9B-B214-38674B4A4BCD" target="contentwin">24.1</a>
+  - APEX_ESCAPE <a href="APEX_ESCAPE-Constants.html#GUID-A2306BE3-AAED-457F-B65D-B8E4CFDB041C" target="contentwin">27.1</a>
+  - APEX_EXEC <a href="APEX_EXEC.Global-Constants.html#GUID-DC49AC73-4DEA-4937-B59F-14F0211D9804" target="contentwin">28.2</a>
+  - APEX_EXPORT <a href="APEX_EXPORT.Constants_Data_Types.html#GUID-04D60288-682F-4CAC-9D05-227237B9416B" target="contentwin">29.1</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.Constants-and-Data-Types.html#GUID-34AC2E11-1DB2-4596-AD96-8259E5E12901" target="contentwin">32.1</a>
+  - APEX_IR <a href="APEX_IR.Constants-Data-Types.html#GUID-F15F9992-0524-483E-818C-D56E71AFF096" target="contentwin">36.1</a>
+  - APEX_JSON <a href="APEX_JSON-Constants-and-Data-Types.html#GUID-83BF8800-E60D-4A7D-A32E-9FDC63ED4923" target="contentwin">39.2</a>
+  - APEX_MARKDOWN <a href="APEX_MARKDOWN-Constants.html#GUID-247A2C6C-C70E-4F26-8524-9A40C6A024C3" target="contentwin">44.1</a>
+  - APEX_PAGE <a href="APEX_PAGE-Global-Constants.html#GUID-2B37224A-FFA2-48F6-BB24-2A7C9F87638E" target="contentwin">45.1</a>
+  - APEX_PLUGIN <a href="APEX_PLUGIN-Constants.html#GUID-F66C398F-B1D5-4E57-BE7C-481A15669578" target="contentwin">46.2</a>
+  - APEX_PRINT <a href="APEX_PRINT.Constants.html#GUID-A7361529-20ED-4C38-B78F-8EE0DB8D5850" target="contentwin">48.1</a>
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE-Global-Constants.html#GUID-BCE8E30C-76D5-4AEB-ABCF-5466DC531BDD" target="contentwin">54.1</a>
+  - APEX_SHARED_COMPONENT <a href="APEX_SHARED_COMPONENT.Global-Constants.html#GUID-5AA4BDA1-7347-49B2-9158-EA4E6C04A6DD" target="contentwin">55.1</a>
+  - APEX_WEB_SERVICE <a href="APEX_WEB_SERVICE.Global-Variables.html#GUID-3A4D9CE9-0418-4EB5-AA2B-5EC5B9AF0617" target="contentwin">62.4</a>
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.Constants-and-Data-Types.html#GUID-F74FDBF6-0525-44CF-AD58-63F0E5CF0006" target="contentwin">63.1</a>
+- CONTINUE_ACTIVITY procedure signature 1
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.CONTINUE_ACTIVITY-Procedure-Signature-1.html#GUID-6FEB1A64-FE41-439A-9393-AFB2859573E0" target="contentwin">63.2</a>
+- CONTINUE_ACTIVITY procedure signature 2
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.CONTINUE_ACTIVITY-Procedure-Signature-2.html#GUID-2F4B6F46-CFC7-4789-A503-94076E161596" target="contentwin">63.3</a>
+- COPY_DATA procedure
+  - APEX_EXEC <a href="APEX_EXEC.COPY_DATA-Procedure.html#GUID-BEEFB3C1-00CD-4C0F-84FC-E4F7F62F3462" target="contentwin">28.14</a>
+- COUNT_CLICK procedure
+  - APEX_UTIL <a href="COUNT_CLICK-Procedure.html#GUID-EAC385E4-B686-481C-B95E-2FD6BB997388" target="contentwin">61.14</a>
+- CREATE_CLOUD_CREDENTIAL procedure
+  - APEX_INSTANCE_ADMIN <a href="CREATE_CLOUD_CREDENTIAL-Procedure.html#GUID-D5E3419E-D305-4033-9225-C10EDCA08963" target="contentwin">33.6</a>
+- CREATE_COLLECTION_FROM_QUERY_B procedure
+  - APEX_COLLECTION <a href="CREATE_COLLECTION_FROM_QUERY_B-Procedure.html#GUID-1C319954-50DF-4C28-8B57-2AA52066B900" target="contentwin">15.11</a>
+- CREATE_COLLECTION_FROM_QUERY_B procedure (no bind version)
+  - APEX_COLLECTION <a href="CREATE_COLLECTION_FROM_QUERY_B-Procedure-NBV.html#GUID-4F715772-4228-493E-8F3D-F58716078BC5" target="contentwin">15.12</a>
+- CREATE_COLLECTION_FROM_QUERY2 procedure
+  - APEX_COLLECTION <a href="CREATE_COLLECTION_FROM_QUERY2-Procedure.html#GUID-7800CD9E-FD29-4E49-B637-A426D78A644C" target="contentwin">15.10</a>
+- CREATE_COLLECTION_FROM_QUERYB2 procedure
+  - APEX_COLLECTION <a href="CREATE_COLLECTION_FROM_QUERYB2-Procedure.html#GUID-A429035B-82A7-452F-94DE-AAD32B7C0821" target="contentwin">15.13</a>
+- CREATE_COLLECTION_FROM_QUERYB2 procedure (no bind version)
+  - APEX_COLLECTION <a href="CREATE_COLLECTION_FROM_QUERYB2-Procedure-NBV.html#GUID-A5F61B56-DFEA-48B1-BBE3-B4DF37551D8C" target="contentwin">15.14</a>
+- CREATE_COLLECTION_FROM_QUERY procedure
+  - APEX_COLLECTION <a href="CREATE_COLLECTION_FROM_QUERY-Procedure.html#GUID-E2940996-DCB5-4056-B1C4-94C93BD6FB44" target="contentwin">15.9</a>
+- CREATE_COLLECTION procedure
+  - APEX_COLLECTION <a href="CREATE_COLLECTION-Procedure.html#GUID-99D165B6-26C8-4142-9013-9948AFD67FF2" target="contentwin">15.8</a>
+- CREATE_CREDENTIAL procedure signature 1
+  - APEX_CREDENTIAL <a href="CREATE_CREDENTIAL-Procedure-Signature-1.html#GUID-72E64FBF-C0B8-40EE-ABCB-67766F2304A7" target="contentwin">16.2</a>
+- CREATE_CREDENTIAL procedure signature 2
+  - APEX_CREDENTIAL <a href="CREATE_CREDENTIAL-Procedure-Signature-2.html#GUID-9A3B04C6-49B2-465B-91A9-AAA86324AEA9" target="contentwin">16.3</a>
+- CREATE_LANGUAGE_MAPPING procedure
+  - APEX_LANG <a href="CREATE_LANGUAGE_MAPPING-Procedure.html#GUID-A983CA72-673A-4EFE-9B1C-915E7FE7F35A" target="contentwin">41.2</a>
+- CREATE_MESSAGE procedure
+  - APEX_LANG <a href="APEX_LANG.CREATE_MESSAGE-Procedure.html#GUID-1AAABD8A-AF94-4B69-846D-1430B7684578" target="contentwin">41.3</a>
+- CREATE_OR_TRUNCATE_COLLECTION procedure
+  - APEX_COLLECTION <a href="CREATE_OR_TRUNCATE_COLLECTION-Procedure.html#GUID-94CD827F-9C10-4362-B2A1-30145D451098" target="contentwin">15.15</a>
+- CREATE_OR_UPDATE_ADMIN_USER procedure
+  - APEX_INSTANCE_ADMIN <a href="CREATE_OR_UPDATE_ADMIN_USER-Procedure.html#GUID-089439C5-1D96-46A2-9922-E1C9E2453553" target="contentwin">33.7</a>
+- CREATE_SCHEMA_EXCEPTION procedure
+  - APEX_INSTANCE_ADMIN <a href="CREATE_SCHEMA_EXCEPTION-Procedure.html#GUID-35D91F30-6D42-4E0F-BCA7-9FB1E0BF2B21" target="contentwin">33.8</a>
+- CREATE_SESSION procedure
+  - APEX_SESSION <a href="CREATE_SESSION-Procedure.html#GUID-348C879F-3B45-4F4E-8641-518C711CE76F" target="contentwin">53.2</a>
+- CREATE_TASK function
+  - APEX_APPROVAL <a href="CREATE_TASK-Function.html#GUID-12261F10-5D8D-42A6-ADD9-FD323DC44156" target="contentwin">9.9</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.CREATE_TASK-Function.html#GUID-F2CAD3DA-63E0-46EB-9793-5797C12EE5A4" target="contentwin">32.9</a>
+- CREATE_USER_GROUP procedure
+  - APEX_UTIL <a href="CREATE_USER_GROUP-Procedure.html#GUID-A61F8280-8B18-430A-9CCA-8E59FC01EDF5" target="contentwin">61.16</a>
+- CREATE_USER procedure
+  - APEX_UTIL <a href="CREATE_USER-Procedure.html#GUID-95721E36-4DAB-4BCA-A6F3-AC2BACC52A66" target="contentwin">61.15</a>
+- CSS_SELECTOR function
+  - APEX_ESCAPE <a href="CSS_SELECTOR-Function.html#GUID-5A4586E2-E957-4042-B74C-EABA258A243C" target="contentwin">27.2</a>
+- CSV function
+  - APEX_ESCAPE <a href="CSV-Function-Signature-1.html#GUID-DBACC982-E014-4185-A3DF-225FFFEFDA6F" target="contentwin">27.3</a>
+- CSV function signature 2
+  - APEX_ESCAPE <a href="CSV-Function-Signature-2.html#GUID-29DF663C-2057-48EF-8E56-3C2BCA37ADC2" target="contentwin">27.4</a>
+- CURRENT_PAGE_IS_PUBLIC function
+  - APEX_CUSTOM_AUTH <a href="CURRENT_PAGE_IS_PUBLIC-Function.html#GUID-8101AA16-D385-47BF-8B52-8DF0A39D0ACA" target="contentwin">18.2</a>
+- CURRENT_ROW_CHANGED function
+  - API_PLUGIN_UTIL <a href="CURRENT_ROW_CHANGED-Function.html#GUID-BCD1863E-5F87-4976-B2E6-964E4558F832" target="contentwin">47.3</a>
+- CURRENT_USER_IN_GROUP function
+  - APEX_UTIL <a href="CURRENT_USER_IN_GROUP-Function.html#GUID-0EEC4210-DD10-42FD-862C-5B67E284E961" target="contentwin">61.17</a>
+- CUSTOM_CALENDAR procedure
+  - APEX_UTIL <a href="CUSTOM_CALENDAR-Procedure.html#GUID-12FB982F-C021-4E1C-87CF-EC7668F97562" target="contentwin">61.18</a>
+
+------------------------------------------------------------------------
+
+## D
+
+- data types
+  - APEX_AI <a href="APEX_AI.Data-Types.html#GUID-8671F505-F1FF-4AFD-B45A-4C5D94A1DB67" target="contentwin">3.1</a>
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.Constants-and-Data-Types.html#GUID-D74F07EC-5A3D-4BD7-A1F1-A3EEBCA7F126" target="contentwin">7.1</a>
+  - APEX_APPROVAL <a href="APEX_APPROVAL.Constants-and-Data-Types.html#GUID-536A42B1-5099-467F-908F-A1C3C209D77B" target="contentwin">9.1</a>
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS-Data-Types.html#GUID-FF0174C9-EFF7-4DC8-A2AB-06BCA95F3E30" target="contentwin">13.2</a>
+  - APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT-Data-Types.html#GUID-89148B14-CBD1-48F9-9E83-898EEE765E39" target="contentwin">20.2</a>
+  - APEX_DATA_LOADING <a href="APEX_DATA_LOADING-Data-Types.html#GUID-CFFCEC5F-7AD2-4350-9002-225772C1ACF2" target="contentwin">19.1</a>
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.Data-Types.html#GUID-55057C52-3A39-4F89-BF6A-6E66C920558C" target="contentwin">22.2</a>
+  - APEX_EXEC <a href="APEX_EXEC.Data-Types.html#GUID-8BE94A0F-E511-4CB5-831F-46B5E2FCC4A3" target="contentwin">28.3</a>
+  - APEX_EXPORT <a href="APEX_EXPORT.Constants_Data_Types.html#GUID-04D60288-682F-4CAC-9D05-227237B9416B" target="contentwin">29.1</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.Constants-and-Data-Types.html#GUID-34AC2E11-1DB2-4596-AD96-8259E5E12901" target="contentwin">32.1</a>
+  - APEX_IR <a href="APEX_IR.Constants-Data-Types.html#GUID-F15F9992-0524-483E-818C-D56E71AFF096" target="contentwin">36.1</a>
+  - APEX_JAVASCRIPT <a href="APEX_JAVASCRIPT.Data-Types.html#GUID-77C05E7D-8667-4771-BFDE-BAEF87E8D505" target="contentwin">38.1</a>
+  - APEX_JSON <a href="APEX_JSON-Constants-and-Data-Types.html#GUID-83BF8800-E60D-4A7D-A32E-9FDC63ED4923" target="contentwin">39.2</a>
+  - APEX_PLUGIN <a href="APEX_PLUGIN-Data-Types.html#GUID-93D46E76-0813-470A-8177-51E9F67128D7" target="contentwin">46.3</a>
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE-Data-Types.html#GUID-9515A813-1243-4F44-8CA4-55F44B5AA276" target="contentwin">54.2</a>
+  - APEX_SPATIAL <a href="APEX_SPATIAL-Data-Types.html#GUID-D0B47BE3-FB5A-4DB7-8A1A-89374C177927" target="contentwin">56.1</a>
+  - APEX_WEB_SERVICE <a href="APEX_WEB_SERVICE.Data-Types.html#GUID-A9857D6B-4C82-4BE6-89C6-0495BDD196E4" target="contentwin">62.3</a>
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.Constants-and-Data-Types.html#GUID-F74FDBF6-0525-44CF-AD58-63F0E5CF0006" target="contentwin">63.1</a>
+  - APEX_ZIP <a href="APEX_ZIP.Data-Types.html#GUID-30834CEE-92B3-4A75-BCED-E219B54796E6" target="contentwin">64.1</a>
+- DATE_POPUP function
+  - APEX_ITEM <a href="DATE_POPUP-Function.html#GUID-AF346914-3775-45E8-B93A-CDAC42B5AC04" target="contentwin">37.2</a>, <a href="DATE_POPUP2-Function.html#GUID-A4FB5BCD-7536-48FD-AAC8-25B27BA7E45E" target="contentwin">37.3</a>
+- DB_OPERATION_ALLOWED function
+  - APEX_PLUGIN_UTIL <a href="DB_OPERATION_ALLOWED-Function.html#GUID-799CAA3D-A03A-41F4-B50E-6605F87A1A42" target="contentwin">47.4</a>
+- DB_SIGNATURE function
+  - APEX_INSTANCE_ADMIN <a href="DB_SIGNATURE-Function.html#GUID-DABD4498-E220-4C52-8E93-8ADF93D370D5" target="contentwin">33.9</a>
+- DEBUG_DYNAMIC_ACTION procedure
+  - APEX_PLUGIN_UTIL <a href="DEBUG_DYNAMIC-_ACTION-Procedure.html#GUID-1A0BE743-786B-471D-BDA7-F6486FBBF3CA" target="contentwin">47.5</a>
+- DEBUG_PAGE_ITEM procedure signature 1
+  - APEX_PLUGIN_UTIL <a href="DEBUG_PAGE_ITEM-Procedure-Signature-1.html#GUID-32C44069-329E-40C2-A9D4-86D943EC89EF" target="contentwin">47.6</a>
+- DEBUG_PAGE_ITEM procedure signature 2
+  - APEX_PLUGIN_UTIL <a href="DEBUG_PAGE_ITEM-Procedure-Signature-2.html#GUID-B8C0384B-D2CC-4F39-A2ED-175BDEAEFC62" target="contentwin">47.7</a>
+- DEBUG_PROCESS procedure
+  - APEX_PLUGIN_UTIL <a href="DEBUG_PROCESS-Procedure.html#GUID-5CA81432-5AC5-4D71-91A9-ECCD152CC044" target="contentwin">47.8</a>
+- DEBUG_REGION procedure signature 1
+  - APEX_PLUGIN_UTIL <a href="DEBUG_REGION-Procedure-Signature-1.html#GUID-74E386D2-BC55-44C6-B883-D18DC826CA5C" target="contentwin">47.9</a>
+- DEBUG_REGION procedure signature 2
+  - APEX_PLUGIN_UTIL <a href="DEBUG_REGION-Procedure-Signature-2.html#GUID-E1DA4F34-3F0B-4E1E-B716-EC2B57F4E0B2" target="contentwin">47.10</a>
+- DECODE function
+  - APEX_JWT <a href="DECODE.html#GUID-6AF6E193-B39E-4F1C-9502-70B9760C884E" target="contentwin">40.3</a>
+- DEFINE_USER_SESSION procedure
+  - APEX_CUSTOM_AUTH <a href="DEFINE_USER_SESSION-Procedure.html#GUID-074370BA-C80B-4C2D-BEB8-12FE895D48CB" target="contentwin">18.3</a>
+- DEL_AD_COLUMN procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="DEL_AD_COLUMN-Procedure.html#GUID-68A53CCB-54CB-47F8-AF57-DF3F9CE716B9" target="contentwin">60.3</a>
+- DEL_AD_SYNONYM procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="DEL_AD_SYNONYM-Procedure.html#GUID-344D8F38-0A88-48E4-B109-11BBB369B296" target="contentwin">60.4</a>
+- DEL_COLUMN procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="DEL_COLUMN-Procedure.html#GUID-5BD7FEE4-FAA9-4FEE-9453-80C4C2EFF2FA" target="contentwin">60.5</a>
+- DEL_GROUP procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="DEL_GROUP-Procedure.html#GUID-138DF419-EF73-4CDB-AA08-6A20BFA8591B" target="contentwin">60.6</a>
+- DEL_TABLE procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="DEL_TABLE-Procedure.html#GUID-EF58F5C0-4032-48AF-AA42-9143467A0868" target="contentwin">60.7</a>
+- DELEGATE_TASK procedure
+  - APEX_APPROVAL <a href="DELEGATE_TASK-Procedure.html#GUID-BE9387C9-5406-4C5F-A69D-4C183F094F5F" target="contentwin">9.10</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.DELEGATE_TASK-Procedure.html#GUID-596120EC-A092-46E8-AF71-EB31C264A1E0" target="contentwin">32.10</a>
+- DELETE_ALL_COLLECTIONS_SESSION procedure
+  - APEX_COLLECTION <a href="DELETE_ALL_COLLECTIONS_SESSION-Procedure.html#GUID-E139DBBC-9026-485B-84E0-CC95601CCCA3" target="contentwin">15.17</a>
+- DELETE_ALL_COLLECTIONS procedure
+  - APEX_COLLECTION <a href="DELETE_ALL_COLLECTIONS-Procedure.html#GUID-5B981CC9-ABE7-4EDB-8EAC-14724BAE8F7D" target="contentwin">15.16</a>
+- DELETE_COLLECTION procedure
+  - APEX_COLLECTION <a href="DELETE_COLLECTION-Procedure.html#GUID-53D9F8B7-79C6-4301-9D68-6B426216F470" target="contentwin">15.18</a>
+- DELETE_FEEDBACK_ATTACHMENT procedure
+  - APEX_UTIL <a href="APEX_UTIL.DELETE_FEEDBACK_ATTACHMENT-Procedure.html#GUID-63DED1ED-E675-49C2-9B2B-0F387BDAC801" target="contentwin">61.20</a>
+- DELETE_FEEDBACK procedure
+  - APEX_UTIL <a href="APEX_UTIL.DELETE_FEEDBACK-Procedure.html#GUID-22BBE1D0-31E7-4571-B9AE-A3F47EA76789" target="contentwin">61.19</a>
+- DELETE_GEOM_METADATA procedure
+  - APEX_SPATIAL <a href="DELETE_GEOM_METADATA-Procedure.html#GUID-645A08B4-FEAB-45D9-ADC1-9CBA3B340B89" target="contentwin">56.4</a>
+- DELETE_LANGUAGE_MAPPING procedure
+  - APEX_LANG <a href="DELETE_LANGUAGE_MAPPING-Procedure.html#GUID-9BFEA551-139B-4784-89CD-CE9ECC5504EE" target="contentwin">41.4</a>
+- DELETE_MEMBER procedure
+  - APEX_COLLECTION <a href="DELETE_MEMBER-Procedure.html#GUID-16D57A70-AAF9-43B8-A176-9AD7708193C4" target="contentwin">15.19</a>
+- DELETE_MEMBERS procedure
+  - APEX_COLLECTION <a href="DELETE_MEMBERS-Procedure.html#GUID-527C6A66-3658-4DF6-8439-21DA4A6796FB" target="contentwin">15.20</a>
+- DELETE_MESSAGE procedure
+  - APEX_LANG <a href="DELETE_MESSAGE-Procedure.html#GUID-A0CFF75D-C7A7-4DED-BA2F-9E384A3C6395" target="contentwin">41.5</a>
+- DELETE_REPORT procedure
+  - APEX_IG <a href="APEX_IG-DELETE_REPORT-Procedure.html#GUID-0A936C75-222B-4D24-8675-1B9C742084AD" target="contentwin">35.8</a>
+  - APEX_IR <a href="DELETE_REPORT-Procedure.html#GUID-6383F027-BB39-450C-91FC-9B89175E3481" target="contentwin">36.12</a>
+- DELETE_SESSION procedure
+  - APEX_SESSION <a href="DELETE_SESSION-Procedure.html#GUID-E37F7000-633D-466C-BA8F-0051EDB7A0CC" target="contentwin">53.4</a>
+- DELETE_SUBSCRIPTION procedure
+  - APEX_IR <a href="DELETE_SUBSCRIPTION-Procedure.html#GUID-D0C11FBE-7A85-44B2-A759-80313F6AD534" target="contentwin">36.13</a>
+- DELETE_TASKS procedure
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.DELETE_TASKS-Procedure.html#GUID-054137DB-3D2C-4FCC-BE38-F5E682E68C75" target="contentwin">32.11</a>
+- DELETE_USER_GROUP procedure signature 1
+  - APEX_UTIL <a href="DELETE_USER_GROUP-Procedure-Signature-1.html#GUID-061B00E4-6E45-410A-BE64-3DB8C1294CAA" target="contentwin">61.21</a>
+- DELETE_USER_GROUP procedure signature 2
+  - APEX_UTIL <a href="DELETE_USER_GROUP-Procedure-Signature-2.html#GUID-CE1E0E86-5D42-4D77-AB43-47760E71AB70" target="contentwin">61.22</a>
+- DELETE_WORKFLOWS procedure
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.DELETE_WORKFLOWS-Procedure.html#GUID-9E1681AD-B7BE-4939-B0F3-F9F4034BC327" target="contentwin">63.4</a>
+- DESCRIBE_QUERY function signature 1
+  - APEX_EXEC <a href="APEX_EXEC.DESCRIBE_QUERY-Function-Signature-1.html#GUID-B910361D-9F34-48D4-A7E0-FD5B536FA084" target="contentwin">28.15</a>
+- DESCRIBE_QUERY function signature 2
+  - APEX_EXEC <a href="APEX_EXEC.DESCRIBE_QUERY-Function-Signature-2.html#GUID-ED00E70E-1AAC-416C-8B88-E4669B7CC42A" target="contentwin">28.16</a>
+- DETACH procedure
+  - APEX_SESSION <a href="DETACH-Procedure.html#GUID-95C1F12F-7B2A-4E86-B244-A9801B95BB72" target="contentwin">53.3</a>
+- DIFF function
+  - APEX_STRING_UTIL <a href="APEX_STRING_UTIL-DIFF-Function.html#GUID-BEEA5073-812E-4294-AFAD-BD1293378C44" target="contentwin">58.1</a>
+- DISABLE_DBMS_OUTPUT procedure
+  - APEX_DEBUG <a href="DISABLE_DBMS_OUTPUT-Procedure.html#GUID-72DEBC3D-FBE7-4762-9BCD-F33AA90671C7" target="contentwin">24.3</a>
+- DISABLE_USER_STYLE procedure
+  - APEX_THEME <a href="DISABLE_USER_STYLE-Procedure.html#GUID-385E5D9D-05DC-4327-AF7A-9E7E8A13064A" target="contentwin">59.3</a>
+- DISABLE procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_DISABLE-Procedure.html#GUID-902B0AB6-54A1-4845-A31F-58E86CBE3616" target="contentwin">12.2</a>
+  - APEX_DEBUG <a href="DISABLE-Procedure.html#GUID-761FDBC4-3140-430B-AA83-C24D219E769B" target="contentwin">24.2</a>
+  - APEX_INSTANCE_DEBUG <a href="APEX_INSTANCE_DEBUG.DISABLE-Procedure.html#GUID-60BEB1D5-B0C4-47F2-A050-FFB1BDAEC5E8" target="contentwin">34.1</a>
+  - APEX_REST_SOURCE_SYNC <a href="APEX_REST_SOURCE_SYNC-DISABLE-Procedure.html#GUID-64633AD9-9C38-4A00-BCCD-8733DDDD1342" target="contentwin">51.1</a>
+- DISCOVER function
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.DISCOVER-Function.html#GUID-D0DC85D9-A731-4EC0-A1F1-E662B30C6894" target="contentwin">22.4</a>
+- DISPLAY_AND_SAVE function
+  - APEX_ITEM <a href="DISPLAY_AND_SAVE-Function.html#GUID-C68D4602-1ED1-48FC-8C01-81818900F514" target="contentwin">37.4</a>
+- DOES_EXIST function
+  - APEX_JSON <a href="DOES_EXIST-Function.html#GUID-E19F683A-FF3F-41B3-AFD2-87FEAD5A843D" target="contentwin">39.6</a>
+- DOWNLOAD_PRINT_DOCUMENT procedure signature 1
+  - APEX_UTIL <a href="DOWNLOAD_PRINT_DOCUMENT-Procedure-Signature-1.html#GUID-5CB9D495-8AD1-4449-A4D4-A418F929B3A7" target="contentwin">61.23</a>
+- DOWNLOAD_PRINT_DOCUMENT procedure signature 2
+  - APEX_UTIL <a href="DOWNLOAD_PRINT_DOCUMENT-Procedure-Signature-2.html#GUID-34D5BE72-BD31-4B35-92E6-A82C7455C6A1" target="contentwin">61.24</a>
+- DOWNLOAD_PRINT_DOCUMENT procedure signature 3
+  - APEX_UTIL <a href="DOWNLOAD_PRINT_DOCUMENT-Procedure-Signature-3.html#GUID-36376CDF-15D0-46A7-87B8-54A5EF4C7088" target="contentwin">61.25</a>
+- DOWNLOAD_PRINT_DOCUMENT procedure signature 4
+  - APEX_UTIL <a href="DOWNLOAD_PRINT_DOCUMENT-Procedure-Signature-4.html#GUID-EF83167E-E860-4998-AD04-C1C9ABBB3218" target="contentwin">61.26</a>
+- DOWNLOAD procedure
+  - APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT-DOWNLOAD-Procedure.html#GUID-A2095839-B801-40C0-98D6-0576766489EB" target="contentwin">20.7</a>
+- DOWNLOAD procedure signature 1
+  - APEX_HTTP <a href="APEX_HTTP.DOWNLOAD-Procedure-Signature-1.html#GUID-DFCAD11E-F2D9-42A9-A0C2-6DC81E5B505C" target="contentwin">31.1</a>
+- DOWNLOAD procedure signature 2
+  - APEX_HTTP <a href="APEX_HTTP.DOWNLOAD-Procedure-Signature-2.html#GUID-84063315-D3B9-45BC-BB2B-F3015B199695" target="contentwin">31.2</a>
+- DROP_CLOUD_CREDENTIAL procedure
+  - APEX_INSTANCE_ADMIN <a href="DROP_CLOUD_CREDENTIAL-Procedure.html#GUID-2A1B2011-2EC4-4006-A98E-76872DEA12B9" target="contentwin">33.10</a>
+- DROP_CREDENTIAL procedure
+  - APEX_CREDENTIAL <a href="DROP_CREDENTIAL-Procedure.html#GUID-4257D6FB-70AD-463C-8D87-2827219BEF73" target="contentwin">16.4</a>
+- DYNAMIC_SYNCHRONIZE_DATA procedure
+  - APEX_REST_SOURCE_SYNC <a href="DYNAMIC_SYNCHRONIZE_DATA-Procedure.html#GUID-77A7F3A3-A2AD-430F-BE5D-EBF80B1A5255" target="contentwin">51.2</a>
+
+------------------------------------------------------------------------
+
+## E
+
+- EDIT_USER procedure
+  - APEX_UTIL <a href="EDIT_USER-Procedure.html#GUID-4AD804FC-F209-489F-9F46-A79327F3632E" target="contentwin">61.27</a>
+- email
+  - sending as an attachment <a href="ADD_ATTACHMENT-Procedure-Signature-1.html#GUID-5B514926-2C0A-40E3-82BB-7E357CB0C927" target="contentwin">43.2</a>, <a href="ADD_ATTACHMENT-Procedure-Signature-2.html#GUID-0C43024A-D0B5-4358-A43E-8BF8FAD30E08" target="contentwin">43.3</a>
+  - sending messages in APEX_MAIL_QUEUE <a href="PUSH_QUEUE-Procedure.html#GUID-A17CEA4E-B667-4657-AC0E-F2C0833010EC" target="contentwin">43.7</a>
+  - sending outbound <a href="SEND-Procedure-Signature-1.html#GUID-B1CD726B-EABE-4A9D-A7A4-3A973E84262D" target="contentwin">43.10</a>
+- EMIT_LANGUAGE_SELECTOR_LIST procedure
+  - APEX_LANG <a href="EMIT_LANGUAGE_SELECTOR_LIST-Procedure.html#GUID-99ACD9EA-9250-4DEF-B6B4-0B95E3F97D9B" target="contentwin">41.6</a>
+- ENABLE_DBMS_OUTPUT procedure
+  - APEX_DEBUG <a href="ENABLE_DBMS_OUTPUT-Procedure.html#GUID-C783CD13-4429-45D9-8A2E-4C0460C21E5C" target="contentwin">24.6</a>
+- ENABLE_DYNAMIC_GROUPS procedure
+  - APEX_AUTHORIZATION <a href="ENABLE_DYNAMIC_GROUPS-Procedure.html#GUID-14F31749-CF8F-4DED-9D6A-EA5C5ED4A650" target="contentwin">11.1</a>
+- ENABLE_USER_STYLE procedure
+  - APEX_THEME <a href="ENABLE_USER_STYLE-Procedure.html#GUID-F356976E-FFC2-4305-B1D9-5F2D30BF80B9" target="contentwin">59.4</a>
+- ENABLE procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_ENABLE-Procedure.html#GUID-F26ABF18-0B0A-428F-A595-794ECD52C407" target="contentwin">12.3</a>
+  - APEX_DEBUG <a href="APEX_DEBUG-ENABLE-Procedure.html#GUID-EFBF6BEB-2BE4-4AC2-9C89-B4CD4867394A" target="contentwin">24.4</a>
+  - APEX_INSTANCE_DEBUG <a href="APEX_INSTANCE_DEBUG.ENABLE-Procedure.html#GUID-71E02DF7-5007-486B-9FE3-90AD66B0BDDC" target="contentwin">34.2</a>
+  - APEX_REST_SOURCE_SYNC <a href="APEX_REST_SOURCE_SYNC-ENABLE-Procedure.html#GUID-F6893D88-76F0-4C6A-9CEC-E4CDEC9EDEC2" target="contentwin">51.3</a>
+- ENCODE function
+  - APEX_JWT <a href="ENCODE.html#GUID-3ACCE379-F193-485D-BA5F-2F4BBD03257B" target="contentwin">40.2</a>
+- END_USER_ACCOUNT_DAYS_LEFT function
+  - APEX_UTIL <a href="END_USER_ACCOUNT_DAYS_LEFT-Function.html#GUID-FA687E3D-D1B1-4FBA-9921-89E8F25FF11C" target="contentwin">61.28</a>
+- ENQUOTE_LITERAL function
+  - APEX_EXEC <a href="APEX_EXEC.ENQUOTE_LITERAL-Function.html#GUID-07962BBF-409A-49B6-9437-4DC2DD53A238" target="contentwin">28.17</a>
+- ENQUOTE_NAME function
+  - APEX_EXEC <a href="APEX_EXEC.ENQUOTE_NAME-Function.html#GUID-DA5CC9B0-4C83-4708-9557-80735EA782E8" target="contentwin">28.18</a>
+- ENTER procedure
+  - APEX_DEBUG <a href="ENTER-Procedure.html#GUID-56D49575-92E8-4BD9-8469-30E3F66D7682" target="contentwin">24.5</a>
+- error handling function
+  - APEX_ERROR <a href="Example-of-an-Error-Handling-Function.html#GUID-2CD75881-1A59-4787-B04B-9AAEC14E1A82" target="contentwin">26.2</a>
+- ERROR procedure
+  - APEX_DEBUG <a href="ERROR-Procedure.html#GUID-9CAFF9DD-A2FB-46DC-A4CB-EEB6D61CE0D5" target="contentwin">24.7</a>
+- ESCAPE function
+  - APEX_JAVASCRIPT <a href="Escape-Function.html#GUID-150431EA-998E-4559-851B-416846527E9F" target="contentwin">38.17</a>
+  - APEX_PLUGIN_UTIL <a href="ESCAPE-Function-2.html#GUID-0835FD58-E48A-442B-AE6B-C62957E5CBA5" target="contentwin">47.11</a>
+- EXCECUTE_DML procedure
+  - APEX_EXEC <a href="APEX_EXEC.EXECUTE_DML-Procedure.html#GUID-6445280E-BFD2-49B4-A114-AE1DFB88E313" target="contentwin">28.19</a>
+- EXCLUDE_POTENTIAL_OWNER procedure
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.EXCLUDE_POTENTIAL_OWNER-Procedure.html#GUID-FCAD6B3A-6DA7-4FDE-9F5D-BF82A5BFFAC8" target="contentwin">32.12</a>
+- EXECUTE_PLSQL_CODE procedure
+  - APEX_PLUGIN_UTIL <a href="EXECUTE_PLSQL_CODE-Procedure.html#GUID-87124F57-70BC-4E1F-9E11-975804F1A19C" target="contentwin">47.12</a>
+- EXECUTE_PLSQL procedure signature 1
+  - APEX_EXEC <a href="APEX_EXEC.EXECUTE_PLSQL-Procedure-Signature-1.html#GUID-53BF190A-464A-4BFD-B2A8-A8936E8EAC06" target="contentwin">28.20</a>
+- EXECUTE_PLSQL procedure signature 2
+  - APEX_EXEC <a href="APEX_EXEC.EXECUTE_PLSQL-Procedure-Signature-2.html#GUID-1E0EA6FE-224B-46C6-ABC8-3CA7DD68F55B" target="contentwin">28.21</a>
+- EXECUTE_REMOTE_PLSQL procedure signature 1
+  - APEX_EXEC <a href="APEX_EXEC.EXECUTE_REMOTE_PLSQL-Procedure.html#GUID-EE9E3F1F-F40D-4CCD-84CF-C1CF6DC2B45B" target="contentwin">28.22</a>
+- EXECUTE_REMOTE_PLSQL procedure signature 2
+  - APEX_EXEC <a href="APEX_EXEC.EXECUTE_REMOTE_PLSQL-Procedure-Signature-2.html#GUID-C7D4A19F-D8EF-44AB-A456-40B1DF918BAB" target="contentwin">28.23</a>
+- EXECUTE_REST_SOURCE procedure signature 1
+  - APEX_EXEC <a href="APEX_EXEC.EXECUTE_REST_SOURCE-Procedure-Signature-1.html#GUID-2DB748DC-E5B7-4AF8-B64A-6716F8A5E447" target="contentwin">28.24</a>
+- EXECUTE_REST_SOURCE procedure signature 2
+  - APEX_EXEC <a href="APEX_EXEC.EXECUTE_REST_SOURCE-Procedure-Signature-2.html#GUID-5A7A4F85-C05A-44B5-8948-DFC04B6B3AC4" target="contentwin">28.25</a>
+- EXECUTE_WEB_SOURCE procedure
+  - APEX_EXEC <a href="APEX_EXEC.EXECUTE_WEB_SOURCE-Procedure.html#GUID-30272C98-EA7B-4220-A26B-63DFF9DFCD1F" target="contentwin">28.26</a>
+- EXECUTE for query context procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_EXECUTE-for-Query-Context.html#GUID-E6592669-10F6-4816-9999-E2EB8A83A337" target="contentwin">12.6</a>
+- EXECUTE procedure signature 1
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_EXECUTE-Procedure-Signature-1.html#GUID-EFAA0508-792C-462D-92C2-A351D4EE9191" target="contentwin">12.4</a>
+- EXECUTE procedure signature 2
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_EXECUTE-Procedure-Signature-2.html#GUID-C4C147B8-F507-4BE4-B68D-8160908CA47F" target="contentwin">12.5</a>
+- EXIT procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_EXIT-Procedure.html#GUID-7CB51015-E945-48EC-A97C-618D8DD1CEDF" target="contentwin">12.7</a>
+- EXPIRE_END_USER_ACCOUNT procedure
+  - APEX_UTIL <a href="EXPIRE_END_USER_ACCOUNT-Procedure.html#GUID-71C0F84E-EBF1-4793-A416-48A3AF0E6947" target="contentwin">61.29</a>
+- EXPIRE_WORKSPACE_ACCOUNT procedure
+  - APEX_UTIL <a href="EXPIRE_WORKSPACE_ACCOUNT-Procedure.html#GUID-BEF1EE02-CCE0-431D-8189-12439FC9F508" target="contentwin">61.30</a>
+- EXPORT_BLUEPRINT function
+  - APEX_DG_DATA_GEN <a href="EXPORT_BLUEPRINT-Function.html#GUID-72C087B1-BD73-4B30-AFBF-7FA53BB96CE2" target="contentwin">25.7</a>
+- EXPORT_DATA function
+  - APEX_REGION <a href="APEX_REGION-EXPORT_DATA-Function.html#GUID-BB045B2B-AFB9-4060-9E21-5AA6365C3C94" target="contentwin">50.3</a>
+- EXPORT_SAVED_REPORTS function
+  - APEX_IR <a href="EXPORT_SAVED_REPORTS-Function.html#GUID-9388CE03-9EB2-4991-BF04-3B41DAAC3C9C" target="contentwin">36.14</a>
+- EXPORT_TEXT_MESSAGES function signature 1
+  - APEX_LANG <a href="APEX_LANG.EXPORT_TEXT_MESSAGES-Function-Signature-1.html#GUID-F8D1C305-EFF6-475F-994D-8771316AFD9B" target="contentwin">41.7</a>
+- EXPORT_TEXT_MESSAGES function signature 2
+  - APEX_LANG <a href="APEX_LANG.EXPORT_TEXT_MESSAGES-Function-Signature-2.html#GUID-60B6F915-FF9E-4570-B038-18D7BB6A1284" target="contentwin">41.8</a>
+- EXPORT_USERS procedure
+  - APEX_UTIL <a href="EXPORT_USERS-Procedure.html#GUID-2BC13E3E-6093-4C01-9238-E9223C0EAD50" target="contentwin">61.31</a>
+- export file
+  - of workspace <a href="EXPORT_USERS-Procedure.html#GUID-2BC13E3E-6093-4C01-9238-E9223C0EAD50" target="contentwin">61.31</a>
+- EXPORT function
+  - APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT-EXPORT-Function.html#GUID-6109A537-50C4-4FB2-8414-7A554B19EC8E" target="contentwin">20.8</a>
+- EXTRACT_CONSTRAINT_NAME function
+  - APEX_ERROR <a href="EXTRACT_CONSTRAINT_NAME-Function.html#GUID-92587F3B-F1EF-4EF7-BF56-5E3291DA0F38" target="contentwin">26.9</a>
+
+------------------------------------------------------------------------
+
+## F
+
+- FEEDBACK_ENABLED function
+  - APEX_UTIL <a href="FEEDBACK_ENABLED-Function.html#GUID-DF2C6873-CB2B-47E0-A53D-A128921CDC22" target="contentwin">61.32</a>
+- FETCH_APP_ITEM function
+  - APEX_UTIL <a href="FETCH_APP_ITEM-Function.html#GUID-308BAC59-9DAA-44A6-9227-3996B07AD6D0" target="contentwin">61.33</a>
+- FETCH_USER procedure signature 1
+  - APEX_UTIL <a href="FETCH_USER-Procedure-Signature-1.html#GUID-573FAD5B-59AB-47D2-B68C-EC92E313D5BD" target="contentwin">61.34</a>
+- FETCH_USER procedure signature 2
+  - APEX_UTIL <a href="FETCH_USER-Procedure-Signature-2.html#GUID-58B47D6B-ED40-425D-9E1A-E9990A01C56B" target="contentwin">61.35</a>
+- FETCH_USER procedure signature 3
+  - APEX_UTIL <a href="FETCH_USER-Procedure-Signature-3.html#GUID-C7483EF7-D7B7-4476-8DF4-FCEDFCE4CA9F" target="contentwin">61.36</a>
+- file repository
+  - downloading files <a href="GET_FILE-Procedure.html#GUID-93CFF3B6-A3CF-4BD3-B935-1FE4E389BFCB" target="contentwin">61.52</a>
+  - obtaining primary key <a href="GET_FILE_ID-Function.html#GUID-52743094-E09D-47E3-83F8-8571093636A9" target="contentwin">61.53</a>
+- FIND_EMAIL_ADDRESSES function
+  - APEX_STRING_UTIL <a href="FIND_EMAIL_ADDRESSES-Function.html#GUID-856D11D9-579B-4D19-80F2-6AA86F64D25A" target="contentwin">58.2</a>
+- FIND_EMAIL_FROM function
+  - APEX_STRING_UTIL <a href="FIND_EMAIL_FROM-Function.html#GUID-0BC6B56D-1059-4AE6-9651-24456AB3D674" target="contentwin">58.3</a>
+- FIND_EMAIL_SUBJECT function
+  - APEX_STRING_UTIL <a href="FIND_EMAIL_SUBJECT-Function.html#GUID-A250E5FE-1E9F-4BE8-8D58-796F304A7921" target="contentwin">58.4</a>
+- FIND_IDENTIFIERS function
+  - APEX_STRING_UTIL <a href="FIND_IDENTIFIERS-Function.html#GUID-88A402CC-2058-47A6-8EFC-F04E80C7198D" target="contentwin">58.5</a>
+- FIND_LINKS function
+  - APEX_STRING_UTIL <a href="FIND_LINKS-Function.html#GUID-4188E883-C1D9-4CE5-A2CD-19EEF68690DC" target="contentwin">58.6</a>
+- FIND_PATHS_LIKE function
+  - APEX_JSON <a href="FIND_PATHS_LIKE-Function.html#GUID-9EAF9B91-DD2D-4DC2-ACBC-F039D54A4DFB" target="contentwin">39.7</a>
+- FIND_PHRASES function
+  - APEX_STRING_UTIL <a href="FIND_PHRASES-Function.html#GUID-746EE6DE-F48D-4ED4-BE17-9720E6723C3C" target="contentwin">58.7</a>
+- FIND_SECURITY_GROUP_ID function
+  - APEX_UTIL <a href="FIND_SECURITY_GROUP_ID-Function.html#GUID-F8532F5E-BB69-4E5F-8D7C-3115ED59323B" target="contentwin">61.37</a>
+- FIND_TAGS function
+  - APEX_STRING_UTIL <a href="FIND_TAGS-Function.html#GUID-C9F693B2-D6CE-46C4-A1EB-7E82059743EB" target="contentwin">58.8</a>
+- FIND_WORKSPACE function
+  - APEX_UTIL <a href="FIND_WORKSPACE-Function.html#GUID-A492D35F-649C-4211-8F13-02B3030989AC" target="contentwin">61.38</a>
+- FINISH procedure
+  - APEX_ZIP <a href="APEX_ZIP.FINISH-Procedure.html#GUID-6CD58D8F-7A23-4133-956B-A901E7E82EBE" target="contentwin">64.3</a>
+- flexible remote servers <a href="About-Configuring-Flexible-Remote-Servers.html#GUID-FAF1E808-56B5-43E8-8B38-34A1B9AC272B" target="contentwin">46.1</a>
+- FLUSH procedure
+  - APEX_JSON <a href="FLUSH-Procedure.html#GUID-A6DBBBFB-A6E9-4B7D-96E6-44DDBA7AD18E" target="contentwin">39.8</a>
+- FORMAT_METADATA Function Signature 1
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.FORMAT_METADATA-Function-Signature-1.html#GUID-B1B9B281-12E0-4A10-8972-EC4CA71D2CD5" target="contentwin">23.9</a>
+- FORMAT_METADATA Function Signature 2
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.FORMAT_METADATA-Function-Signature-2.html#GUID-4E14B93D-1BA1-4327-8940-F0FC0B8BD612" target="contentwin">23.10</a>
+- FORMAT function
+  - APEX_STRING <a href="FORMAT-Function.html#GUID-77E01643-C482-476C-9404-F3AEDDACCD22" target="contentwin">57.1</a>
+- FREE_OUTPUT procedure
+  - APEX_JSON <a href="FREE_OUTPUT-Procedure.html#GUID-716748F9-A7CC-4BB4-898A-61215609525F" target="contentwin">39.9</a>
+- FREE_WORKSPACE_APP_IDS procedure
+  - APEX_INSTANCE_ADMIN <a href="FREE_WORKSPACE_APP_IDS-Procedure.html#GUID-19B5F47B-A6D7-4E9A-9540-72251194ED48" target="contentwin">33.11</a>
+
+------------------------------------------------------------------------
+
+## G
+
+- G_Fnn arrays <a href="working-with-g_fnn-arrays.html#GUID-9418A964-B125-4C9A-9CB3-DBBA0CB6E20A" target="contentwin">6.1</a>
+- GENERATE_APPLICATION_ID procedure
+  - APEX_APPLICATION_INSTALL <a href="GENERATE_APPLICATION_ID-Procedure.html#GUID-928F4CEC-42D8-4CE7-9754-433EA4C4D899" target="contentwin">8.9</a>
+- GENERATE_DATA_INTO_COLLECTION procedure
+  - APEX_DG_DATA_GEN <a href="GENERATE_DATA_INTO_COLLECTION-Procedure.html#GUID-C570DFA5-7D3A-49AA-9A3B-22C2F3832281" target="contentwin">25.10</a>
+- GENERATE_DATA procedure
+  - APEX_DG_DATA_GEN <a href="GENERATE_DATA-Procedure-Signature-1.html#GUID-601D4AF6-AF29-4D05-B86F-BF28A9788908" target="contentwin">25.8</a>, <a href="GENERATE_DATA-Procedure-Signature-2.html#GUID-8B5EC881-3C77-494F-B8A5-1B6D3FEEE678" target="contentwin">25.9</a>
+- GENERATE_DOCUMENT function signature 1
+  - APEX_PRINT <a href="APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-1.html#GUID-A78EE63E-772B-43AC-92CC-A2C1DCA0C323" target="contentwin">48.2</a>
+- GENERATE_DOCUMENT function signature 2
+  - APEX_PRINT <a href="APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-2.html#GUID-B63F5188-3F9C-407F-BEEB-93FA7626A3DB" target="contentwin">48.3</a>
+- GENERATE_DOCUMENT function signature 3
+  - APEX_PRINT <a href="APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-3.html#GUID-FE4A510D-1555-4556-939F-D81A37818116" target="contentwin">48.4</a>
+- GENERATE_DOCUMENT function signature 4
+  - APEX_PRINT <a href="APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-4.html#GUID-50926736-8221-44E5-A13F-8FE922EA94FC" target="contentwin">48.5</a>
+- GENERATE_DOCUMENT function signature 5
+  - APEX_PRINT <a href="APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-5.html#GUID-BFA49493-38F0-4C80-B35D-378D2B04B033" target="contentwin">48.6</a>
+- GENERATE_DOCUMENT function Signature 6
+  - APEX_PRINT <a href="APEX_PRINT.GENERATE_DOCUMENT-Function-Signature-6.html#GUID-655E1FAC-1162-42A9-9280-AE0CF82478A4" target="contentwin">48.7</a>
+- GENERATE_OFFSET procedure
+  - APEX_APPLICATION_INSTALL <a href="GENERATE_OFFSET-Procedure.html#GUID-3489119C-C57D-406A-AC42-9AC089BE1668" target="contentwin">8.10</a>
+- GENERATE_PUSH_CREDENTIALS procedure
+  - APEX_PWA <a href="APEX_PWA.GENERATE_PUSH_CREDENTIALS-Procedure.html#GUID-E35FF8C9-1736-4818-BC6A-3FE529BC4E4C" target="contentwin">49.1</a>
+- GENERATE_REQUEST_BODY function
+  - APEX_WEB_SERVICE <a href="GENERATE_REQUEST_BODY-Function.html#GUID-8AF5EB88-07BA-4723-ADBD-0EDB49B108CB" target="contentwin">62.11</a>
+- GENERATE function signature 1
+  - APEX_AI <a href="APEX_AI.GENERATE-Function-Signature-1.html#GUID-AE40FBA1-4822-45B8-865D-43C29FE9901E" target="contentwin">3.5</a>
+- GENERATE function signature 2
+  - APEX_AI <a href="APEX_AI.GENERATE-Function-Signature-2.html#GUID-E865EB64-C620-41B4-AF63-185E7563E69E" target="contentwin">3.6</a>
+- GENERATE function signature 3
+  - APEX_AI <a href="APEX_AI.GENERATE-Function-Signature-3.html#GUID-481DDE73-56D6-44EB-BB17-59D187115F33" target="contentwin">3.7</a>
+- GET_ACCOUNT_LOCKED_STATUS function
+  - APEX_UTIL <a href="GET_ACCOUNT_LOCKED_STATUS-Function.html#GUID-4164E9A2-26B5-49B3-90CB-84C3EC7CE844" target="contentwin">61.39</a>
+- GET_AJAX_IDENTIFIER function
+  - APEX_PLUGIN <a href="GET_AJAX_IDENTIFIER-Function.html#GUID-4E48F89D-40A1-4EB3-92D7-ACC401B89F47" target="contentwin">46.4</a>
+- GET_ALL_USER_ATTRIBUTES procedure
+  - APEX_LDAP <a href="GET_ALL_USER_ATTRIBUTES-Procedure.html#GUID-6DA4B634-14E7-4132-98C5-AAE93BC6EA3A" target="contentwin">42.2</a>
+- GET_APEX_OWNER function
+  - APEX_UTIL <a href="APEX_UTIL.GET_APEX_OWNER-Function.html#GUID-447C16E0-414F-4F43-9821-DF8356B7AA0E" target="contentwin">61.40</a>
+- GET_APPLICATION_ALIAS function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_APPLICATION_ALIAS-Function.html#GUID-FA8FBB9C-C2D6-43FA-AA4C-9A7C66371086" target="contentwin">7.2</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_APPLICATION_ALIAS-Function.html#GUID-28FDA0C6-44BC-4B66-A2E1-856913DAEB26" target="contentwin">8.11</a>
+- GET_APPLICATION_ID function
+  - APEX_APPLICATION_INSTALL <a href="GET_APPLICATION_ID-Function.html#GUID-FFAD05A9-F1C6-44DF-89F6-8D127EE7B4A2" target="contentwin">8.12</a>
+- GET_APPLICATION_NAME function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_APPLICATION_NAME-Function.html#GUID-37EB9D81-F058-426C-9F77-B41945009DA6" target="contentwin">7.3</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_APPLICATION_NAME-Function.html#GUID-2AF12D9D-0250-44D2-8E7C-BD28C0AEF62C" target="contentwin">8.13</a>
+- GET_APPLICATION_STATUS function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_APPLICATION_STATUS-Function.html#GUID-900216A7-96DE-4BA5-8DDB-C010CFD77159" target="contentwin">7.4</a>
+  - APEX_UTIL <a href="GET_APPLICATION_STATUS-Function.html#GUID-7BFE4603-753C-40C7-BBCA-0ED3D4E0AD46" target="contentwin">61.41</a>
+- GET_APPLICATION_VERSION function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_APPLICATION_VERSION-Function.html#GUID-1B6AB3B4-C791-4E2C-BE18-C17BC566D171" target="contentwin">7.5</a>
+- GET_APPLICATION function
+  - APEX_EXPORT <a href="GET_APPLICATION_Function.html#GUID-A8E626D6-D7DE-4E59-8F90-3666A7A41A87" target="contentwin">29.2</a>
+- GET_ARRAY_ROW_DML_OPERATION function
+  - APEX_EXEC <a href="APEX_EXEC.GET_ARRAY_ROW_DML_OPERATION-Function.html#GUID-34934601-765E-403B-8AE8-EB665DCB085F" target="contentwin">28.28</a>
+- GET_ARRAY_ROW_VERSION_CHECKSUM function
+  - APEX_EXEC <a href="APEX_EXEC.GET_ARRAY_ROW_VERSION_CHECKSUM-Function.html#GUID-09AE7CF0-C687-4629-85B2-4A1F007F25F1" target="contentwin">28.29</a>
+- GET_ATTRIBUTE_AS_NUMBER function
+  - APEX_PLUGIN_UTIL <a href="GET_ATTRIBUTE_AS_NUMBER-Function.html#GUID-EC55E32B-655D-4A51-8E83-CCA672032FF1" target="contentwin">47.13</a>
+- GET_ATTRIBUTE function
+  - APEX_UTIL <a href="GET_ATTRIBUTE-Function.html#GUID-273A7F20-CE4C-42B7-BFF0-EE0E52C66F11" target="contentwin">61.42</a>
+- GET_AUTHENTICATION_RESULT function
+  - APEX_UTIL <a href="GET_AUTHENTICATION_RESULT-Function.html#GUID-1E45FC0F-3634-4D33-93B9-12560854F388" target="contentwin">61.43</a>
+- GET_AUTHENTICATION_SCHEME function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_AUTHENTICATION_SCHEME-Function.html#GUID-0D4E029C-6248-4AF8-A1EC-019A5A849BAC" target="contentwin">7.6</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_AUTHENTICATION_SCHEME-Function.html#GUID-465BBDAA-E1F9-4250-86B2-369D4C731F51" target="contentwin">8.14</a>
+- GET_AUTO_INSTALL_SUP_OBJ function
+  - APEX_APPLICATION_INSTALL <a href="GET_AUTO_INSTALL_SUP_OBJ-Function.html#GUID-16ADECB8-FE73-4B83-A408-0C661821C063" target="contentwin">8.15</a>
+- GET_AVAILABLE_TOKENS function
+  - APEX_AI <a href="APEX_AI.GET_AVAILABLE_TOKENS-Function.html#GUID-42699745-3F2D-4C1B-80D6-43B6FA798DEE" target="contentwin">3.8</a>
+- GET_BLOB_FILE_SRC function
+  - APEX_UTIL <a href="GET_BLOB_FILE_SRC-Function.html#GUID-21F2D33A-A616-48B5-BAF5-A85C0EDC998F" target="contentwin">61.44</a>
+- GET_BLUEPRINT_ID function
+  - APEX_DG_DATA_GEN <a href="GET_BLUEPRINT_ID-Function.html#GUID-442014F9-11C2-4C57-9C6F-21DA6C3C46C1" target="contentwin">25.11</a>
+- GET_BOOLEAN function
+  - APEX_JSON <a href="GET_BOOLEAN-Function.html#GUID-16DDCCF8-CA67-4DE4-B3BC-8D52AE3DD0A3" target="contentwin">39.10</a>
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE.GET_BOOLEAN-Function.html#GUID-FCB7EFD7-FFBC-4AA0-AC45-5089FE1D9CB8" target="contentwin">54.3</a>
+- GET_BP_TABLE_ID function
+  - APEX_DG_DATA_GEN <a href="GET_BP_TABLE_ID-Function.html#GUID-A662EFD9-59DD-4C50-87CD-A77B165D34B6" target="contentwin">25.12</a>
+- GET_BUILD_OPTION_STATUS function signature 1
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-1.html#GUID-C4F1D753-5706-40B0-B7DB-FE3AA3061E96" target="contentwin">7.7</a>
+  - APEX_UTIL <a href="GET_BUILD_OPTION_STATUS-Function-Signature-1.html#GUID-02BC68A0-BA3B-4504-88F7-F234CD3C8A12" target="contentwin">61.45</a>
+- GET_BUILD_OPTION_STATUS function signature 2
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-2.html#GUID-83E577E8-CD91-435D-88E5-993937EF3AB7" target="contentwin">7.8</a>
+  - APEX_UTIL <a href="GET_BUILD_OPTION_STATUS-Function-Signature-2.html#GUID-37AB01D1-83C9-4F9E-B78F-64DB9C676B7F" target="contentwin">61.46</a>
+- GET_BUILD_STATUS function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_BUILD_STATUS-Function.html#GUID-A30D953D-CA68-4DA9-90BC-7343AE6D9C0D" target="contentwin">7.9</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_BUILD_STATUS-Function.html#GUID-B82A06BF-7294-4FAA-8BD3-541FF2C7BA6B" target="contentwin">8.16</a>
+- GET_BUILDER_LINK function
+  - APEX_EXTENSION <a href="APEX_EXTENSION.GET_BUILDER_LINK-Function.html#GUID-2612F2AA-8B0C-4636-AD61-C14342B55A47" target="contentwin">30.2</a>
+- GET_CACHE_DATE function
+  - APEX_PAGE <a href="APEX_PAGE.GET_CACHE_DATA-Function.html#GUID-36077A7A-B392-4A57-A4ED-62A03ED09ACD" target="contentwin">45.2</a>
+  - APEX_REGION <a href="APEX_REGION.GET_CACHE_DATE-Function.html#GUID-85721535-233C-41CC-A84D-A276A4DD764D" target="contentwin">50.4</a>
+- GET_CALLBACK_URL procedure
+  - APEX_AUTHENTICATION <a href="GET_CALLBACK_URL-Function.html#GUID-313219AF-BA04-4367-9EA0-AB2946AD2689" target="contentwin">10.4</a>
+- GET_CLOB_OUTPUT function
+  - APEX_JSON <a href="GET_CLOB_OUTPUT-Function.html#GUID-DBF0A813-D22B-4C21-A455-3AF2E10EEE68" target="contentwin">39.12</a>
+- GET_CLOB function
+  - APEX_JSON <a href="APEX_JSON.GET_CLOB-Function.html#GUID-360982E5-800D-452A-A100-2FDB86075046" target="contentwin">39.11</a>
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE.GET_CLOB-Function.html#GUID-D4616FDE-C742-4AEA-A445-11919818B737" target="contentwin">54.4</a>
+- GET_CODE128_PNG function
+  - APEX_BARCODE <a href="GET_CODE128_PNG-Function.html#GUID-ABE51C99-16F1-4590-84A7-9A7D4B33C2FE" target="contentwin">14.1</a>
+- GET_CODE128_SVG function
+  - APEX_BARCODE <a href="GET_CODE128_SVG-Function.html#GUID-68B3E5C3-20F6-4463-BCE4-6BA78EAA7DFC" target="contentwin">14.2</a>
+- GET_COLUMN_COUNT function
+  - APEX_EXEC <a href="APEX_EXEC.GET_COLUMN_COUNT-FUNCTION.html#GUID-6B4EB17B-E6BA-4359-AA65-7627C71B38A1" target="contentwin">28.32</a>
+- GET_COLUMN_POSITION function
+  - APEX_EXEC <a href="APEX_EXEC.GET_COLUMN_POSITION-FUNCTION.html#GUID-972DC4E1-A732-45C3-A322-3CAC65306ED9" target="contentwin">28.33</a>
+- GET_COLUMN function
+  - APEX_EXEC <a href="APEX_EXEC.GET_COLUMN-FUNCTION.html#GUID-45137DEB-F9F2-4F9F-BD3A-98FA5677096A" target="contentwin">28.30</a>
+- GET_COLUMNS function
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.GET_COLUMNS-Function.html#GUID-3685DE82-C298-481C-916F-00A578C1D5C3" target="contentwin">22.5</a>
+  - APEX_EXEC <a href="APEX_EXEC.GET_COLUMNS-Function.html#GUID-8A9BA532-F210-43DD-97A0-4B98698EA59E" target="contentwin">28.31</a>
+- GET_COOKIE_PROPS procedure
+  - APEX_CUSTOM_AUTH <a href="GET_COOKIE_PROPS-Procedure.html#GUID-F21A8AC5-49DE-4E9D-BF33-0E1F3CACB7EA" target="contentwin">18.4</a>
+- GET_COUNT function
+  - APEX_JSON <a href="GET_COUNT-Function.html#GUID-00808027-C1E0-4FFF-8983-BCDFE44B7BD2" target="contentwin">39.13</a>
+- GET_CSV_ENCLOSED_BY function
+  - APEX_ESCAPE <a href="GET_CSV_ENCLOSED_BY-Function.html#GUID-205EF416-E758-4CCB-B591-75C858E9AC9A" target="contentwin">27.5</a>
+- GET_CSV_SEPARATED_BY function
+  - APEX_ESCAPE <a href="GET_CSV_SEPARATED_BY-Function.html#GUID-B5631663-3644-40BB-AD00-FD168858DFC0" target="contentwin">27.6</a>
+- GET_CURRENT_DATABASE_TYPE function
+  - APEX_PLUGIN_UTIL <a href="GET_CURRENT_DATABASE_TYPE-Function.html#GUID-CE7E24C1-3C5A-4516-A942-BAEBB0633E91" target="contentwin">47.14</a>
+- GET_CURRENT_EXECUTION function
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS.GET_CURRENT_EXECUTION-Function.html#GUID-276F85A9-0B16-4F06-BE7F-70A54DE5B2B0" target="contentwin">13.5</a>
+- GET_CURRENT_USER_ID function
+  - APEX_UTIL <a href="GET_CURRENT_USER_ID-Function.html#GUID-CC815022-6F30-4692-93E8-8B4272B692C9" target="contentwin">61.47</a>
+- GET_DATA_REPORTER_REMAP function
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_DATA_REPORTER_REMAP-Function.html#GUID-157DA98C-1176-41A1-9495-B03CAF22804A" target="contentwin">8.17</a>
+- GET_DATA_TYPE function
+  - APEX_EXEC <a href="APEX_EXEC.GET_DATA_TYPE-Function.html#GUID-D380E6A6-759D-4A68-8BF5-26A4B3AF7EB9" target="contentwin">28.34</a>
+- GET_DATA2 function signature 1
+  - APEX_PLUGIN_UTIL <a href="GET_DATA2-Function-Signature-1.html#GUID-C3026414-6879-4BD5-A8A8-D31B51C7EEDB" target="contentwin">47.17</a>
+- GET_DATA2 function signature 2
+  - APEX_PLUGIN_UTIL <a href="GET_DATA2-Function-Signature-2.html#GUID-35C86FEC-BA17-411E-B3E3-92F10F73A204" target="contentwin">47.18</a>
+- GET_DATA function signature 1
+  - APEX_PLUGIN_UTIL <a href="GET_DATA-Function-Signature-1.html#GUID-2B38D0C3-50B3-4152-9834-8D018760D602" target="contentwin">47.15</a>
+- GET_DATA function signature 2
+  - APEX_PLUGIN_UTIL <a href="GET_DATA-Function-Signature-2.html#GUID-E768C671-AB40-4758-9A7E-1D81228C81D5" target="contentwin">47.16</a>
+- GET_DATASET_IMPORT_MODE function
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_DATASET_IMPORT_MODE-Function.html#GUID-1C659B8D-417F-466A-B675-74440FBF72F4" target="contentwin">8.18</a>
+- GET_DATE function
+  - APEX_JSON <a href="GET_DATE-Function.html#GUID-8635BAEB-97C9-4FC2-A199-15BE6605FAA8" target="contentwin">39.14</a>
+- GET_DEFAULT_SCHEMA function
+  - APEX_UTIL <a href="GET_DEFAULT_SCHEMA-Function.html#GUID-C2C83251-D4EE-4A5F-BFA6-28BF27ECB600" target="contentwin">61.48</a>
+- GET_DIR_ENTRIES function
+  - APEX_ZIP <a href="APEX_ZIP.GET_DIR_ENTRIES-Function.html#GUID-9AE91D64-2EF6-468B-BD5B-DE218EF282FA" target="contentwin">64.4</a>
+- GET_DISPLAY_DATA function signature 1
+  - APEX_PLUGIN_UTIL <a href="GET_DISPLAY_DATA-Function-Signature-1.html#GUID-777E0819-9862-420D-93B5-CED8D3C08C5E" target="contentwin">47.19</a>
+- GET_DISPLAY_DATA function signature 2
+  - APEX_PLUGIN_UTIL <a href="GET_DISPLAY_DATA-Function-Signature-2.html#GUID-8237A2EF-B63B-4FF4-9201-93233728B6E3" target="contentwin">47.20</a>
+- GET_DML_STATUS_CODE function
+  - APEX_EXEC <a href="APEX_EXEC.GET_DML_STATUS_CODE-Function.html#GUID-7FA74357-5178-4192-A74B-EF10F615D62C" target="contentwin">28.35</a>
+- GET_DML_STATUS_MESSAGE function
+  - APEX_EXEC <a href="APEX_EXEC.GET_DML_STATUS_MESSAGE-Function.html#GUID-C7B59752-4E8B-44D6-8EAB-1C4A55C65C07" target="contentwin">28.36</a>
+- GET_DOMAIN function
+  - APEX_STRING_UTIL <a href="GET_DOMAIN-Function.html#GUID-DD21DF34-E88D-49E3-88DC-2BFD58220A17" target="contentwin">58.9</a>
+- GET_EAN8_PNG function
+  - APEX_BARCODE <a href="GET_EAN8_PNG-Function.html#GUID-0692F5E9-AE5D-406B-B073-E75A3CA7B493" target="contentwin">14.3</a>
+- GET_EAN8_SVG function
+  - APEX_BARCODE <a href="GET_EAN8_SVG-Function.html#GUID-D8E1D73B-6562-49FF-841C-D8EF3F4F5E4A" target="contentwin">14.4</a>
+- GET_EDITION function
+  - APEX_UTIL <a href="GET_EDITION-Function.html#GUID-1D3811CC-F5A4-4C60-9964-8B99B0F2D5AB" target="contentwin">61.49</a>
+- GET_ELEMENT_ATTRIBUTES function
+  - APEX_PLUGIN_UTIL <a href="GET_ELEMENT_ATTRIBUTES-Function.html#GUID-D612BF2F-DEA6-4D4C-879D-32D6511BC160" target="contentwin">47.21</a>
+- GET_EXAMPLE function
+  - APEX_DG_DATA_GEN <a href="GET_EXAMPLE-Function.html#GUID-6DD10BBA-BCF7-4826-9953-F33B5F043606" target="contentwin">25.13</a>
+- GET_EXECUTION function
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS.GET_EXECUTION-Function.html#GUID-E9D6735E-04F0-4B5F-8589-0FB845DA6E69" target="contentwin">13.6</a>
+- GET_FEEDBACK_FOLLOW_UP function
+  - APEX_UTIL <a href="GET_FEEDBACK_FOLLOW_UP-Function.html#GUID-C31A7C32-1C79-4E38-9DED-AF0D4C46120C" target="contentwin">61.51</a>
+- GET_FEEDBACK function
+  - APEX_EXPORT <a href="GET_FEEDBACK_Function.html#GUID-0A3A7571-D8E9-4E1F-9BC7-5D087F92CED8" target="contentwin">29.3</a>
+- GET_FILE_CONTENT function signature 1 (deprecated)
+  - APEX_ZIP <a href="APEX_ZIP.GET_FILE_CONTENT-Function-Signature-1.html#GUID-20FBFBA8-6F1A-4D6D-961D-114CC48AD336" target="contentwin">64.5</a>
+- GET_FILE_CONTENT function signature 2
+  - APEX_ZIP <a href="APEX_ZIP.GET_FILE_CONTENT-Function-Signature-2.html#GUID-FD9C60C0-1DC1-4B5D-9A5F-FA36BE4DC916" target="contentwin">64.6</a>
+- GET_FILE_EXTENSION function
+  - APEX_STRING_UTIL <a href="GET_FILE_EXTENSION-Function.html#GUID-0C9CF50A-9BD5-4A9C-81BE-B9ACB030D0A3" target="contentwin">58.10</a>
+- GET_FILE_ID function
+  - APEX_UTIL <a href="GET_FILE_ID-Function.html#GUID-52743094-E09D-47E3-83F8-8571093636A9" target="contentwin">61.53</a>
+- GET_FILE_PROFILE function
+  - APEX_DATA_LOADING <a href="APEX_DATA_LOADING.GET_FILE_PROFILE-Function.html#GUID-936F90C7-1705-430B-B775-68D7144D6D9D" target="contentwin">19.2</a>
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.GET_FILE_PROFILE-Function.html#GUID-8036CFB0-5F82-437E-8D0E-D9304E538CB9" target="contentwin">22.6</a>
+- GET_FILE_STORAGE function
+  - APEX_APPLICATION_ADMIN <a href="GET_FILE_STORAGE-Function.html#GUID-7DD9652C-F0A4-45E5-AA32-EEFA9F775417" target="contentwin">7.11</a>
+- GET_FILE_TYPE function
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.GET_FILE_TYPE-Function.html#GUID-C5E80645-7877-48D0-9B7E-9D19EED2879F" target="contentwin">22.7</a>
+- GET_FILE procedure
+  - APEX_UTIL <a href="GET_FILE-Procedure.html#GUID-93CFF3B6-A3CF-4BD3-B935-1FE4E389BFCB" target="contentwin">61.52</a>
+- GET_FILES function
+  - APEX_ZIP <a href="APEX_ZIP.GET_FILES-Function.html#GUID-04C49D54-E547-42CC-8A70-E400D14FB5D6" target="contentwin">64.7</a>
+- GET_FIRST_NAME function
+  - APEX_UTIL <a href="GET_FIRST_NAME-Function.html#GUID-9497A80C-69CE-4BE7-9BB0-E44B9A746482" target="contentwin">61.54</a>
+- GET_FIRST_ORA_ERROR_TEXT procedure
+  - APEX_ERROR <a href="GET_FIRST_ORA_ERROR_TEXT-Function.html#GUID-D9410D97-5581-45B6-93D6-0C4F287BF25E" target="contentwin">26.10</a>
+- GET_GLOBAL_NOTIFICATION function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_GLOBAL_NOTIFICATION-Function.html#GUID-CACCA96E-926E-4E42-9863-9EB477CFE678" target="contentwin">7.10</a>
+  - APEX_UTIL <a href="GET_GLOBAL_NOTIFICATION-Function.html#GUID-11D82B35-AC47-4124-A1F5-F72B6441CA29" target="contentwin">61.55</a>
+- GET_GRANTOR_WORKSPACE function
+  - APEX_EXTENSION <a href="APEX_EXTENSION.GET_GRANTOR_WORKSPACE-Function.html#GUID-F946FDDC-91F6-40B5-AFF7-CE12A5E688C2" target="contentwin">30.3</a>
+- GET_GROUP_ID function
+  - APEX_UTIL <a href="GET_GROUP_ID-Function.html#GUID-656F9C2E-AA62-42DF-B253-884FD89B6C9B" target="contentwin">61.57</a>
+- GET_GROUP_NAME function
+  - APEX_UTIL <a href="GET_GROUP_NAME-Function.html#GUID-C2AD3804-5434-48E2-9B48-E33B8491F379" target="contentwin">61.58</a>
+- GET_GROUPS_USER_BELONGS_TO function
+  - APEX_UTIL <a href="GET_GROUPS_USER_BELONGS_TO-Function.html#GUID-CEEAD6F1-C2F0-41D7-A4B4-A3784CB6662F" target="contentwin">61.56</a>
+- GET_HASH function
+  - APEX_UTIL <a href="GET_HASH-Function.html#GUID-AEDCFDF9-94D7-4428-9B51-D3FE0248CEE2" target="contentwin">61.59</a>
+- GET_HIGH_CONTRAST_MODE_TOGGLE function
+  - APEX_UTIL <a href="GET_HIGH_CONTRAST_MODE_TOGGLE-Function.html#GUID-0B25D1BF-8B95-4E51-BDFB-E0A0F51DB100" target="contentwin">61.60</a>
+- GET_HTML_ATTR function
+  - APEX_PLUGIN_UTIL <a href="GET_HTML_ATTR-Function.html#GUID-64BE2F8E-9844-4F7D-9EE4-9D9166E645D8" target="contentwin">47.22</a>
+- GET_ID function signature 1
+  - APEX_REGION <a href="APEX_REGION.GET_ID-Function-Signature-1.html#GUID-AFF48793-6093-4AEB-BA71-7E132D14C8C4" target="contentwin">50.5</a>
+- GET_ID function signature 2
+  - APEX_REGION <a href="APEX_REGION.GET_ID-Function-Signature-2.html#GUID-96A4DFCF-D448-4515-9F3B-C33C73A0ADD2" target="contentwin">50.6</a>
+- GET_IMAGE_PREFIX function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_IMAGE_PREFIX-Function.html#GUID-0EBBB67C-13D9-438C-AC72-8CAEC7620F03" target="contentwin">7.12</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_IMAGE_PREFIX-Function.html#GUID-457F5A77-6CC3-44A7-B3C5-792D05ED0669" target="contentwin">8.19</a>
+- GET_IMAGES_URL function
+  - APEX_MAIL <a href="GET_IMAGES_URL-Function.html#GUID-5FBF4725-3B92-4B4F-8FF6-E135838FD687" target="contentwin">43.4</a>
+- GET_INFO function
+  - APEX_APPLICATION_INSTALL <a href="GET_INFO-Function.html#GUID-A9851A90-DBD1-45A0-9076-06A921C8EF70" target="contentwin">8.20</a>
+- GET_INITIALS function
+  - APEX_STRING <a href="GET_INITIALS-Function.html#GUID-DF86D2AA-56B2-4DCA-A251-1B2E8019EB19" target="contentwin">57.2</a>
+- GET_INPUT_NAME_FOR_ITEM function
+  - APEX_PLUGIN <a href="APEX_PLUGIN_UTIL.GET_INPUT_NAME_FOR_ITEM-Function.html#GUID-0E550FCD-A82B-4AFB-A4C5-E1334E50086D" target="contentwin">46.6</a>
+- GET_INPUT_NAME_FOR_PAGE_ITEM function
+  - APEX_PLUGIN <a href="GET_INPUT_NAME_FOR_PAGE_ITEM-Function.html#GUID-6E53D97A-0710-4203-9F20-8F4B2153A2E1" target="contentwin">46.7</a>
+- GET_INSTANCE_URL function
+  - APEX_MAIL <a href="GET_INSTANCE_URL-Function.html#GUID-6CB52F5D-4FE8-4ECD-855E-306CAA160CEF" target="contentwin">43.5</a>
+- GET_KEEP_BACKGROUND_EXECS function
+  - APEX_APPLICATION_INSTALL <a href="GET_KEEP_BACKGROUND_EXECS-Function.html#GUID-E2B22CA2-A9D8-4DFE-906D-10357C4CF9EC" target="contentwin">8.21</a>, <a href="APEX_PLUGIN.html#GUID-E2B22CA2-A9D8-4DFE-906D-10357C4CF9EC" target="contentwin">46.5</a>
+- GET_KEEP_SESSIONS function
+  - APEX_APPLICATION_INSTALL <a href="GET_KEEP_SESSIONS-Function.html#GUID-3309F3E6-BB2E-4ED4-8D88-3E0CAB672E03" target="contentwin">8.22</a>
+- GET_LANGUAGE_SELECTOR_LIST function
+  - APEX_LANG <a href="GET_LANGUAGE_SELECTOR_LIST-Function.html#GUID-40CFCC0F-78EF-44FB-BCDF-FE635E56BC68" target="contentwin">41.9</a>
+- GET_LAST_MESSAGE_ID function
+  - APEX_DEBUG <a href="GET_LAST_MESSAGE_ID-Function.html#GUID-BFCF1EC8-6260-460B-8D78-9B714139CCF7" target="contentwin">24.8</a>
+- GET_LAST_NAME function
+  - APEX_UTIL <a href="GET_LAST_NAME-Function.html#GUID-144B5C5A-ADD1-428B-A1D2-329C42A84C16" target="contentwin">61.61</a>
+- GET_LAST_RUN_TIMESTAMP function
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_GET_LAST_RUN_TIMESTAMP-Procedure.html#GUID-7F5AA067-AF9E-4C4E-BFEF-D451CC8A74D4" target="contentwin">12.9</a>
+- GET_LAST_RUN function
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_GET_LAST_RETURN-Function.html#GUID-9A8BB4FF-D522-4AAB-9102-81010E085686" target="contentwin">12.8</a>
+- GET_LAST_SYNC_TIMESTAMP function
+  - APEX_REST_SOURCE_SYNC <a href="GET_LAST_SYNC_TIMESTAMP-Function.html#GUID-9BA7CF70-871A-40F8-9C9E-3E5259373890" target="contentwin">51.4</a>
+- GET_LAST_VIEWED_REPORT_ID function
+  - APEX_IG <a href="APEX_IG-GET_LAST_VIEWED_REPORT_ID-Function-Signature-1.html#GUID-5A054177-027B-493D-9597-075C4945924F" target="contentwin">35.9</a>
+  - APEX_IR <a href="GET_LAST_VIEWED_REPORT_ID-Function-Signature-1.html#GUID-656AE33C-719D-4943-8B9D-33CBDDF2B740" target="contentwin">36.15</a>
+- GET_LDAP_PROPS procedure
+  - APEX_CUSTOM_AUTH <a href="GET_LDAP_PROPS-Procedure.html#GUID-D9070BB8-009F-4BCE-914A-3D6C8FAECFCA" target="contentwin">18.5</a>
+- GET_LOGIN_USERNAME_COOKIE_LOGIN function
+  - APEX_AUTHENTICATION <a href="GET_LOGIN_USERNAME_COOKIE-Function.html#GUID-BD5AC718-4D89-4BD9-940E-FC88BF937945" target="contentwin">10.5</a>
+- GET_LOV_ACTIVITY_STATE function
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.GET_LOV_ACTIVITY_STATE-Function.html#GUID-6D36834B-D845-4C5E-B8D8-268D5B1D26CF" target="contentwin">63.5</a>
+- GET_LOV_PRIORITY function
+  - APEX_APPROVAL <a href="GET_LOV_PRIORITY-Function.html#GUID-4F10A434-D3B9-4DDE-A095-25C7E69434F1" target="contentwin">9.11</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.GET_LOV_PRIORITY-Function.html#GUID-06052DD9-55DC-424C-8F6D-BE3165E11D5B" target="contentwin">32.13</a>
+- GET_LOV_STATE function
+  - APEX_APPROVAL <a href="GET_LOV_STATE-Function.html#GUID-E681CE57-1CB1-48CB-872C-79A6229AAB09" target="contentwin">9.12</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.GET_LOV_STATE-Function.html#GUID-48A375C4-6E1A-47AE-A004-0BF998C86CC0" target="contentwin">32.14</a>
+- GET_LOV_TYPE function
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.GET_LOV_TYPE-Function.html#GUID-B417B912-533E-4637-9BAC-B6A782EA5930" target="contentwin">32.15</a>
+- GET_LOV_WORKFLOW_STATE function
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.GET_LOV_WORKFLOW_STATE-Function.html#GUID-47D8E45C-F039-4E69-85AD-AF9F984E2A52" target="contentwin">63.6</a>
+- GET_MAX_SCHEDULER_JOBS function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_MAX_SCHEDULER_JOBS-Function.html#GUID-3BABB9EE-A621-4992-A2AC-84D211FAF2A8" target="contentwin">7.13</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_MAX_SCHEDULER_JOBS-Function.html#GUID-0D413F89-15D0-414A-BACA-6DC886CB74AC" target="contentwin">8.23</a>
+- GET_MEMBER_MD5 function
+  - APEX_COLLECTION <a href="GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD" target="contentwin">15.21</a>
+- GET_MEMBERS function
+  - APEX_JSON <a href="GET_MEMBERS-Function.html#GUID-461C42D7-CE76-4A8A-9C71-1E5706084F51" target="contentwin">39.15</a>
+- GET_MESSAGE function
+  - APEX_LANG <a href="APEX_LANG.GET_MESSAGE-Function.html#GUID-0E4ED6B6-64E7-4043-9DC9-9C746E595357" target="contentwin">41.10</a>
+- GET_METADATA Function
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.GET_METADATA-Function.html#GUID-E78DF450-D52F-4D1B-981A-1CD0B4F935C1" target="contentwin">23.1</a>
+- GET_NEXT_PURGE_TIMESTAMP function
+  - APEX_APPROVAL <a href="APEX_APPROVAL.GET_NEXT_PURGE_TIMESTAMP-Function.html#GUID-3B2794D9-4735-476A-870A-08581C40333E" target="contentwin">9.13</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.GET_NEXT_PURGE_TIMESTAMP-Function.html#GUID-EE632ABE-B9A7-43E8-9E7D-1712E9BCB5E6" target="contentwin">32.16</a>
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.GET_NEXT_PURGE_TIMESTAMP-Function.html#GUID-BEB5EA98-79F6-4746-98BC-B55DA011BC25" target="contentwin">63.7</a>
+- GET_NEXT_SESSION_ID function
+  - APEX_CUSTOM_AUTH <a href="GET_NEXT_SESSION_ID-Function.html#GUID-EFD81F68-2FA1-4EE3-974F-4B22C456FD16" target="contentwin">18.6</a>
+- GET_NO_PROXY_DOMAINS function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_NO_PROXY_DOMAINS-Function.html#GUID-DDB4F804-00FF-4273-9D81-356179506181" target="contentwin">7.14</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_NO_PROXY_DOMAINS-Function.html#GUID-1F15E62C-AA10-4A11-BCEE-902356FE9DA6" target="contentwin">8.24</a>
+- GET_NUMBER function
+  - APEX_JSON <a href="APEX_JSON.GET_NUMBER-Function.html#GUID-272C06D5-17F8-474D-B1A3-6ED0675F89E2" target="contentwin">39.16</a>
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE.GET_NUMBER-Function.html#GUID-EC3142D9-2E62-4163-AACC-884ECE9FEDB5" target="contentwin">54.5</a>
+- GET_NUMERIC_SESSION_STATE function
+  - APEX_UTIL <a href="GET_NUMERIC_SESSION_STATE-Function.html#GUID-98F76BFB-F2A2-47B5-A024-081DC6CD094A" target="contentwin">61.62</a>
+- GET_OFFSET function
+  - APEX_APPLICATION_INSTALL <a href="GET_OFFSET-Function.html#GUID-3D2426BE-3842-4025-80AE-EA09084FE40D" target="contentwin">8.25</a>
+- GET_ORDERBY_NULLS_SUPPORT function
+  - APEX_PLUGIN_UTIL <a href="GET_ORDERBY_NULLS_SUPPORT-Function.html#GUID-4C417AD8-4EBE-415C-AD99-EF8A8FEA7EF6" target="contentwin">47.23</a>
+- GET_PAGE_MODE function
+  - APEX_PAGE <a href="GET_PAGE_MODE-Function.html#GUID-9F604150-AD2F-40AC-A0CC-6E352D7E3D5A" target="contentwin">45.3</a>
+- GET_PAGE_VIEW_ID function
+  - APEX_DEBUG <a href="GET_PAGE_VIEW_ID-Function.html#GUID-1A21EA73-0444-4E8A-9B32-932475796F7F" target="contentwin">24.9</a>
+- GET_PARAMETER function
+  - APEX_EXEC <a href="APEX_EXEC.GET_PARAMETERS-Function.html#GUID-15420F6D-CECA-4BAB-86A5-AFDC032E4833" target="contentwin">28.37</a>
+  - APEX_INSTANCE_ADMIN <a href="GET_PARAMETER-Function.html#GUID-6BA9A60E-9B0A-4AE5-98DB-68E229008CE0" target="contentwin">33.12</a>
+- GET_PARSING_SCHEMA function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_PARSING_SCHEMA-Function.html#GUID-8E351461-2457-473F-9074-5FC60C27676C" target="contentwin">7.15</a>
+- GET_PASS_ECID function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_PASS_ECID-Function.html#GUID-D08BB889-19B3-4923-9FD0-01D4683CA53C" target="contentwin">7.16</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_PASS_ECID-Function.html#GUID-CEE56C2E-4E5D-4F63-8155-4B84ECC5AED1" target="contentwin">8.26</a>
+- GET_PLSQL_EXPR_RESULT_BOOLEAN function
+  - APEX_PLUGIN_UTIL <a href="GET_PLSQL_EXPR_RESULT_BOOLEAN-Function.html#GUID-9D185D3B-8E9F-496B-AD0A-3D41D7C407D9" target="contentwin">47.24</a>
+- GET_PLSQL_EXPR_RESULT_CLOB function
+  - APEX_PLUGIN_UTIL <a href="GET_PLSQL_EXPR_RESULT_CLOB-Function.html#GUID-D0B985BF-2673-4AEC-8A66-244711A0D86C" target="contentwin">47.25</a>
+- GET_PLSQL_EXPRESSION_RESULT function
+  - APEX_PLUGIN_UTIL <a href="GET_PLSQL_EXPRESSION_RESULT-Function.html#GUID-1BA415C4-8700-4995-B6F0-AF93F356E887" target="contentwin">47.26</a>
+- GET_PLSQL_FUNC_RESULT_BOOLEAN function
+  - APEX_PLUGIN_UTIL <a href="GET_PLSQL_FUNC_RESULT_BOOLEAN-Function.html#GUID-06FEC089-347C-4EDE-A0E3-9EF1C064869B" target="contentwin">47.27</a>
+- GET_PLSQL_FUNC_RESULT_CLOB function
+  - APEX_PLUGIN_UTIL <a href="GET_PLSQL_FUNC_RESULT_CLOB-Function.html#GUID-AF2C197C-8193-47E1-A8D2-3146B00079C2" target="contentwin">47.28</a>
+- GET_PLSQL_FUNCTION_RESULT function
+  - APEX_PLUGIN_UTIL <a href="GET_PLSQL_FUNCTION_RESULT-Function.html#GUID-8C1A7328-ED0D-48F5-BE7B-0FDCD5A73B8E" target="contentwin">47.29</a>
+- GET_POSITION_IN_LIST function
+  - APEX_PLUGIN_UTIL <a href="GET_POSITION_IN_LIST-Function.html#GUID-76597C32-B306-43B8-A317-CB14E008BE84" target="contentwin">47.30</a>
+- GET_PREFERENCE function
+  - APEX_UTIL <a href="GET_PREFERENCE-Function.html#GUID-538B55DF-96D8-4F9C-8011-8B7ACAAFAF59" target="contentwin">61.63</a>
+- GET_PRIMARY_KEY_COLUMNS Function
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.GET_PRIMARY_KEY_COLUMNS-Function.html#GUID-62045F17-27F2-48FA-AF1E-C4B5BD9BEF5B" target="contentwin">23.2</a>
+- GET_PRINT_CONFIG function
+  - APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT-GET_PRINT_CONFIG-Procedure.html#GUID-FEBD25E1-53E7-4C03-A30B-5859692188A7" target="contentwin">20.9</a>
+- GET_PRINT_DOCUMENT function signature 1
+  - APEX_UTIL <a href="GET_PRINT_DOCUMENT-Function-Signature-1.html#GUID-4E7A883F-BD0E-454F-9C25-4089AD7C9AA6" target="contentwin">61.64</a>
+- GET_PRINT_DOCUMENT function signature 2
+  - APEX_UTIL <a href="GET_PRINT_DOCUMENT-Function-Signature-2.html#GUID-DCD48A1D-9F26-4727-9BE9-EBD990F2BD8D" target="contentwin">61.65</a>
+- GET_PRINT_DOCUMENT function signature 3
+  - APEX_UTIL <a href="GET_PRINT_DOCUMENT-Function-Signature-3.html#GUID-2352DD40-BB65-47DB-8134-E2471C2A36C1" target="contentwin">61.66</a>
+- GET_PRINT_DOCUMENT function signature 4
+  - APEX_UTIL <a href="GET_PRINT_DOCUMENT-Function-Signature-4.html#GUID-E14791E8-21F6-4C1A-B413-0786344BFD2F" target="contentwin">61.67</a>
+- GET_PROXY_SERVER function
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.GET_PROXY_SERVER-Function.html#GUID-7535FD46-30F4-413B-B0DB-A9D012B3CE10" target="contentwin">7.17</a>
+- GET_PROXY function
+  - APEX_APPLICATION_INSTALL <a href="GET_PROXY-Function.html#GUID-B2E67A54-16E2-480C-9460-222A88B0ACC1" target="contentwin">8.27</a>
+- GET_QRCODE_PNG function
+  - APEX_BARCODE <a href="GET_QRCODE_PNG-Function.html#GUID-AB407002-93F7-4DA2-9004-F1E0E41B7313" target="contentwin">14.5</a>
+- GET_QRCODE_SVG function
+  - APEX_BARCODE <a href="GET_QRCODE_SVG-Function.html#GUID-6B4A6ED3-1A55-4960-9937-223D50CD5C27" target="contentwin">14.6</a>
+- GET_REMOTE_SERVER_AI_ATTRS function
+  - APEX_APPLICATION_INSTALL <a href="GET_REMOTE_SERVER_AI_ATTRS-Function.html#GUID-66BB1F3C-E9C2-4387-B8CD-A97D8FBFFF01" target="contentwin">8.28</a>
+- GET_REMOTE_SERVER_AI_HEADERS function
+  - APEX_APPLICATION_INSTALL <a href="GET_REMOTE_SERVER_AI_HEADERS-Function.html#GUID-C56EA07C-C404-48DB-AA2A-EF5DFED25744" target="contentwin">8.29</a>
+- GET_REMOTE_SERVER_AI_MAXTOKENS function
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_REMOTE_SERVER_AI_MAXTOKENS-Function.html#GUID-C8F40771-67E4-454F-8B90-6B909880051C" target="contentwin">8.30</a>
+- GET_REMOTE_SERVER_AI_MODEL function
+  - APEX_APPLICATION_INSTALL <a href="GET_REMOTE_SERVER_AI_MODEL-Function.html#GUID-7636CBBD-31A6-4715-8654-DDE9E0E33083" target="contentwin">8.31</a>
+- GET_REMOTE_SERVER_BASE_URL function
+  - APEX_APPLICATION_INSTALL <a href="GET_REMOTE_SERVER_BASE_URL-Function.html#GUID-67EA8C5D-2B06-4F6A-8719-64D5BCA9D171" target="contentwin">8.32</a>
+- GET_REMOTE_SERVER_DEFAULT_DB function
+  - APEX_APPLICATION_INSTALL <a href="GET_REMOTE_SERVER_DEFAULT_DB-Function.html#GUID-C6EF728F-47F1-4C0C-AF92-E743750A8FF4" target="contentwin">8.33</a>
+- GET_REMOTE_SERVER_HTTPS_HOST function
+  - APEX_APPLICATION_INSTALL <a href="GET_REMOTE_SERVER_HTTPS_HOST-Function.html#GUID-3AC608E6-898F-440A-B6CA-7F12A49CC468" target="contentwin">8.34</a>
+- GET_REMOTE_SERVER_SQL_MODE function
+  - APEX_APPLICATION_INSTALL <a href="GET_REMOTE_SERVER_SQL_MODE-Function.html#GUID-74B0A7F6-F6E8-4248-A417-04EB970F3536" target="contentwin">8.35</a>
+- GET_REPORT function
+  - APEX_IR <a href="GET_REPORT-Function.html#GUID-7F8F7BC9-3A97-46C8-BF8D-4984DDBD7325" target="contentwin">36.16</a>
+- GET_REQUEST_HEADER function
+  - APEX_WEB_SERVICE <a href="GET_REQUEST_HEADER-Function.html#GUID-44E0A105-078A-4C73-BA18-1A67E3EB35A2" target="contentwin">62.12</a>
+- GET_REST_SOURCE_CATALOG_GROUP function
+  - APEX_APPLICATION_INSTALL <a href="GET_REST_SOURCE_CATALOG_GROUP-Function.html#GUID-0E01B631-6A79-4B09-8EA7-69CB3026899B" target="contentwin">8.36</a>
+- GET_ROW_VERSION_CHECKSUM function
+  - APEX_EXEC <a href="APEX_EXEC.GET_ROW_VERSION_CHECKSUM-Function.html#GUID-982B244F-C322-4421-AEB2-153B8410EB6D" target="contentwin">28.38</a>
+- GET_SCHEDULER_JOB_NAME function
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_GET_SCHEDULER_JOB_NAME-Function.html#GUID-71C5DBF1-5E89-43D8-AF34-7FEEE3CE2B13" target="contentwin">12.10</a>
+- GET_SCHEMA function
+  - APEX_APPLICATION_INSTALL <a href="GET_SCHEMA-Function.html#GUID-51696980-0A45-4D75-B294-BC33AD6A5BE7" target="contentwin">8.37</a>
+- GET_SCHEMAS function
+  - APEX_INSTANCE_ADMIN <a href="GET_SCHEMAS-Function.html#GUID-101190F8-54D9-4DD4-A14D-A4263EB02291" target="contentwin">33.13</a>
+- GET_SCREEN_READER_MODE_TOGGLE function
+  - APEX_UTIL <a href="GET_SCREEN_READER_MODE_TOGGLE-Function.html#GUID-8AC37F7A-5B2A-4FE0-9C2F-10D9C037122F" target="contentwin">61.68</a>
+- GET_SDO_GEOMETRY function
+  - APEX_JSON <a href="GET_SDO_GEOMETRY-Function.html#GUID-A4C62208-37BA-444F-ADE0-CBEC5584E0D1" target="contentwin">39.17</a>
+- GET_SEARCH_STRING function
+  - APEX_PLUGIN_UTIL <a href="GET_SEARCH_STRING-Function.html#GUID-246990B9-E747-4B0F-B2AC-B593A35737A5" target="contentwin">47.31</a>
+- GET_SEARCHABLE_PHRASES function
+  - APEX_STRING <a href="GET_SEARCHABLE_PHRASES-Function.html#GUID-1B090E64-8C1F-41E3-8BFD-51431CF8B81A" target="contentwin">57.3</a>
+- GET_SECURITY_GROUP_ID function
+  - APEX_CUSTOM_AUTH <a href="GET_SECURITY_GROUP_ID-Function.html#GUID-C0A955EC-D940-4898-8A8F-F3655C045540" target="contentwin">18.7</a>
+- GET_SESSION_ID_FROM_COOKIE
+  - APEX_CUSTOM_AUTH <a href="GET_SESSION_ID_FROM_COOKIE-Function.html#GUID-5465B60E-5CC5-43CE-94E9-1BC8E69E7704" target="contentwin">18.9</a>
+- GET_SESSION_ID function
+  - APEX_CUSTOM_AUTH <a href="GET_SESSION_ID-Function.html#GUID-A5136D4E-FFE0-4498-BA8B-4CD008F5ABE5" target="contentwin">18.8</a>
+- GET_SESSION_LANG function
+  - APEX_UTIL <a href="GET_SESSION_LANG-Function.html#GUID-C4B2CBE1-BC6C-4F5C-90FA-8BE3A84A91C4" target="contentwin">61.69</a>
+- GET_SESSION_STATE function
+  - APEX_UTIL <a href="GET_SESSION_STATE-Function.html#GUID-8BB0C252-C4DB-4300-AA34-9E1FF3B2DAA7" target="contentwin">61.70</a>
+- GET_SESSION_TERRITORY function
+  - APEX_UTIL <a href="GET_SESSION_TERRITORY-Function.html#GUID-B6956201-1B69-4951-9F09-DE6311856ECD" target="contentwin">61.71</a>
+- GET_SESSION_TIME_ZONE function
+  - APEX_UTIL <a href="GET_SESSION_TIME_ZONE-Function.html#GUID-20CD19C7-832B-4BE9-9042-DFC002EB4539" target="contentwin">61.72</a>
+- GET_SINCE function signature 1
+  - APEX_UTIL <a href="GET_SINCE-Function-Signature-1.html#GUID-B9BF0204-15FB-4DBA-94CD-0EDB316D5B2E" target="contentwin">61.73</a>
+- GET_SINCE function signature 2
+  - APEX_UTIL <a href="GET_SINCE-Function-Signature-2.html#GUID-D071A540-074B-4F82-800A-C871C4263F03" target="contentwin">61.74</a>
+- GET_SLUG function
+  - APEX_STRING_UTIL <a href="GET_SLUG-Function.html#GUID-244FE07F-C993-4E1C-8CF9-E66CA9F3075C" target="contentwin">58.11</a>
+- GET_SUBSCRIPTION_MAPPING function
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_SUBSCRIPTION_MAPPING-Function.html#GUID-A6F66402-8C0B-44A5-9B7C-D26902CBE001" target="contentwin">8.38</a>
+- GET_SUBSCRIPTION_MODE function
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.GET_SUBSCRIPTION_MODE-Function.html#GUID-AEE61250-8DEE-4643-AAD8-290C0A095252" target="contentwin">8.39</a>
+- GET_SUPPORTING_OBJECT_SCRIPT function
+  - APEX_UTIL <a href="GET_SUPPORTING_OBJECT_SCRIPT-Function.html#GUID-4D1BCDB8-8CB0-4709-9ACE-09109D6D083F" target="contentwin">61.75</a>
+- GET_SUPPORTING_OBJECT_SCRIPT procedure
+  - APEX_UTIL <a href="GET_SUPPORTING_OBJECT_SCRIPT-Procedure.html#GUID-6CB69835-1A81-4865-855D-07E322A9C401" target="contentwin">61.76</a>
+- GET_SYNC_TABLE_DEFINITION_SQL function
+  - APEX_REST_SOURCE_SYNC <a href="GET_SYNC_TABLE_DEFINITION_SQL-Function.html#GUID-4EEAF2AB-5615-4C27-B157-68B35051DEED" target="contentwin">51.5</a>
+- GET_T_NUMBER function
+  - APEX_JSON <a href="GET_T_NUMBER-Function.html#GUID-4E16284C-7C85-42EE-8DD3-FD8B556200EE" target="contentwin">39.18</a>
+- GET_T_VARCHAR2 function
+  - APEX_JSON <a href="GET_T_VARCHAR2-Function.html#GUID-D4EA7B1A-5F27-41D3-895F-D4C2F567A509" target="contentwin">39.19</a>
+- GET_TABLE_INFO_REGEX Function
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.GET_TABLE_INFO_REGEX-Function.html#GUID-7110F7F7-21BE-4299-B439-A5CFDB173535" target="contentwin">23.5</a>
+- GET_TABLE_INFO Function Signature 1
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.GET_TABLE_INFO-Function-Signature-1.html#GUID-C69A135D-C732-4C5C-A2DC-48E86F077043" target="contentwin">23.3</a>
+- GET_TABLE_INFO Function Signature 2
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.GET_TABLE_INFO-Function-Signature-2.html#GUID-877B8059-5A02-4165-B548-1B152BC7561D" target="contentwin">23.4</a>
+- GET_TABLES_ARRAY Function
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.GET_TABLES_ARRAY-Function.html#GUID-B9755639-5C38-48B8-8AE0-99F489F98446" target="contentwin">23.6</a>
+- GET_TABLES_JSON Function
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.GET_TABLES_JSON-Function.html#GUID-B029FBDB-8F8C-4E61-9C5F-675A8645763D" target="contentwin">23.7</a>
+- GET_TABLES_SUMMARY Function
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.GET_TABLES_SUMMARY-Function.html#GUID-F3C15F36-6255-45DB-AEE4-3338A4D32AC1" target="contentwin">23.8</a>
+- GET_TASK_DELEGATES function
+  - APEX_APPROVAL <a href="GET_TASK_DELEGATES-Function.html#GUID-5711AEF9-45D6-4FCC-9A40-85C5AC726144" target="contentwin">9.14</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.GET_TASK_DELEGATES-Function.html#GUID-374EE381-582E-4B96-81CF-3D301A2A56FB" target="contentwin">32.17</a>
+- GET_TASK_HISTORY function
+  - APEX_APPROVAL <a href="GET_TASK_HISTORY-Function.html#GUID-4D1838F7-3222-471F-ADF5-BD5EF919F125" target="contentwin">9.15</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.GET_TASK_HISTORY-Function.html#GUID-2852B48C-84B3-4479-8BFC-4A26F922A5E1" target="contentwin">32.18</a>
+- GET_TASK_PARAMETER_OLD_VALUE function
+  - APEX_APPROVAL <a href="GET_TASK_PARAMETER_OLD_VALUE-Function.html#GUID-6391B97D-C26D-4A41-999D-02BDADE14D40" target="contentwin">9.16</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.GET_TASK_PARAMETER_OLD_VALUE-Function.html#GUID-C412C715-3484-4F38-96FA-CA4AEFF129A6" target="contentwin">32.19</a>
+- GET_TASK_PARAMETER_VALUE function
+  - APEX_APPROVAL <a href="GET_TASK_PARAMETER_VALUE-Function.html#GUID-ACCCB320-9E6E-4C5A-8E06-5BFF77B272CE" target="contentwin">9.17</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.GET_TASK_PARAMETER_VALUE-Function.html#GUID-BC7F6DA8-EE6E-4010-953C-BC8E5DECD4A1" target="contentwin">32.20</a>
+- GET_TASK_PRIORITIES function
+  - APEX_APPROVAL <a href="GET_TASK_PRIORITIES-Function.html#GUID-977C6E3B-8F10-42AA-A052-FAE9F92CC506" target="contentwin">9.18</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.GET_TASK_PRIORITIES-Function.html#GUID-DDCF08E6-7AA6-487C-AB5C-A92ABFC3AD67" target="contentwin">32.21</a>
+- GET_TASKS function
+  - APEX_APPROVAL <a href="GET_TASKS-Function.html#GUID-D20D814B-29CD-40B8-BD8A-2D0976ADC1A8" target="contentwin">9.19</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.GET_TASKS-Function.html#GUID-8E039EDF-AA8C-473C-8B67-ACAD503CF40B" target="contentwin">32.22</a>
+- GET_THEME_ID function
+  - APEX_APPLICATION_INSTALL <a href="GET_THEME_ID-Function.html#GUID-8D4F4284-A324-4932-8047-4A3DDA04A305" target="contentwin">8.40</a>
+- GET_TIMESTAMP function
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE.GET_TIMESTAMP-Function.html#GUID-4855DF77-686C-4203-A8C7-17E220BD1686" target="contentwin">54.6</a>
+- GET_TOTAL_ROW_COUNT function
+  - APEX_EXEC <a href="APEX_EXEC.GET_TOTAL_ROW_COUNT-FUNCTION.html#GUID-A7DD0D6B-0842-4CA7-8F7F-FA1E01A9A949" target="contentwin">28.39</a>
+- GET_UI_TYPE function (deprecated)
+  - APEX_PAGE <a href="GET_UI_TYPE-Function.html#GUID-2686DAD6-3D80-4FEB-90D7-CEA6C82358DE" target="contentwin">45.4</a>
+- GET_URL function
+  - APEX_PAGE <a href="GET_URL-Function.html#GUID-83A2A2A0-5B43-4A3E-BBD3-2FBD3B7B01CE" target="contentwin">45.5</a>
+- GET_USER_ATTRIBUTES procedure
+  - APEX_LDAP <a href="GET_USER_ATTRIBUTES-Procedure.html#GUID-DE8E045A-3BE9-4072-A9A5-F107D6BCC218" target="contentwin">42.3</a>
+- GET_USER_ID function
+  - APEX_UTIL <a href="GET_USER_ID-Function.html#GUID-26B8E977-A356-4A79-B35A-6C61C8C7A054" target="contentwin">61.77</a>
+- GET_USER_ROLES function
+  - APEX_UTIL <a href="GET_USER_ROLES-Function.html#GUID-A2DB0D79-3FD4-4297-93D4-92836E426175" target="contentwin">61.78</a>
+- GET_USER_STYLE Function
+  - APEX_THEME <a href="GET_USER_STYLE-Function.html#GUID-69F4057C-66AD-486B-A8ED-8C74FD3EDC15" target="contentwin">59.5</a>
+- GET_USER function
+  - APEX_CUSTOM_AUTH <a href="GET_USER-Function.html#GUID-8ED1A03E-5D85-4DD9-80CE-EC2370D1B318" target="contentwin">18.10</a>
+- GET_USERNAME
+  - APEX_CUSTOM_AUTH <a href="GET_USERNAME-Function.html#GUID-0D7A6D5A-F46F-49D4-98B1-43F98A031DBA" target="contentwin">18.11</a>
+- GET_USERNAME function
+  - APEX_UTIL <a href="GET_USERNAME-Function-2.html#GUID-08CC3815-F8B4-4E12-ACC3-6DCCAA482CDF" target="contentwin">61.79</a>
+- GET_VALUE_AS_VARCHAR2 function
+  - APEX_PLUGIN_UTIL <a href="GET_VALUE_AS_VARCHAR2-Function.html#GUID-D5143DBC-7166-44AD-B0AB-D713405085D5" target="contentwin">47.32</a>
+- GET_VALUE_KIND function
+  - APEX_JSON <a href="GET_VALUE_KIND-Function.html#GUID-A75D065B-9817-4822-B158-DA26CC83CB94" target="contentwin">39.21</a>
+- GET_VALUE function
+  - APEX_APP_SETTING <a href="APEX_APP_SETTING.GET_VALUE-Function.html#GUID-5CA958F9-E071-424F-9AE5-BB662494ADE2" target="contentwin">5.1</a>
+  - APEX_JSON <a href="APEX_JSON.GET_VALUE-Function.html#GUID-AA42ED2A-B8E1-48A3-A24C-904528B56BB9" target="contentwin">39.20</a>
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE.GET_VALUE-Function.html#GUID-26FF2D8B-7560-47C8-9275-A1762CACE90A" target="contentwin">54.7</a>
+- GET_VARCHAR2 function
+  - APEX_JSON <a href="APEX_JSON.GET_VARCHAR2-Function.html#GUID-BC908E35-57DC-46B3-BFB2-EFF092855D25" target="contentwin">39.22</a>
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE.GET_VARCHAR2-Function.html#GUID-122C5796-B264-4A3C-B8F4-563A61F4A4A5" target="contentwin">54.8</a>
+- GET_VARIABLE_CLOB_VALUE function
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.GET_VARIABLE_CLOB_VALUE-Function.html#GUID-484C37E5-808F-42D6-A935-076A4D845D81" target="contentwin">63.8</a>
+- GET_VARIABLE_VALUE function
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.GET_VARIABLE_VALUE-Function.html#GUID-2E130DE2-0D38-42A6-8E20-82B8D1E3B63E" target="contentwin">63.9</a>
+- GET_VECTOR_EMBEDDINGS function signature 1
+  - APEX_AI <a href="APEX_AI.GET_VECTOR_EMBEDDINGS-Function-Signature-1.html#GUID-7DFD1C02-7117-4CF3-A172-162112886683" target="contentwin">3.9</a>
+- GET_VECTOR_EMBEDDINGS function signature 2
+  - APEX_AI <a href="APEX_AI.GET_VECTOR_EMBEDDINGS-Function-Signature-2.html#GUID-6B601167-BF6C-4351-8EEC-51CDF0F7ADD6" target="contentwin">3.10</a>
+- GET_VECTOR_EMBEDDINGS function signature 3
+  - APEX_AI <a href="APEX_AI.GET_VECTOR_EMBEDDINGS-Function-Signature-3.html#GUID-77490197-94DB-4C69-B180-9A693FCFE7EC" target="contentwin">3.11</a>
+- GET_WEB_SOURCE_OPERATION function
+  - APEX_PLUGIN_UTIL <a href="GET_WEB_SOURCE_OPERATION-Function.html#GUID-653B2B87-5AEE-444F-9C97-04220456C761" target="contentwin">47.33</a>
+- GET_WEIGHTED_INLINE_DATA function
+  - APEX_DG_DATA_GEN <a href="GET_WEIGHTED_INLINE_DATA-Function.html#GUID-404E9D2C-6B6F-4389-902A-40D90AE43A17" target="contentwin">25.14</a>
+- GET_WORKFLOW_STATE function
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.GET_WORKFLOW_STATE-Function.html#GUID-B4960E64-32FA-4DFE-B1BA-6787FA25647F" target="contentwin">63.10</a>
+- GET_WORKFLOWS function
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.GET_WORKFLOWS-Function.html#GUID-DF6F82C9-464A-4A80-811D-25CBB22163E5" target="contentwin">63.11</a>
+- GET_WORKSPACE_FILES function
+  - APEX_EXPORT <a href="GET_WORKSPACE.html#GUID-C8A37D81-3DA0-4942-B889-78CB671B7070" target="contentwin">29.5</a>
+- GET_WORKSPACE_ID function
+  - APEX_APPLICATION_INSTALL <a href="GET_WORKSPACE_ID-Function.html#GUID-F79B0F60-3CB7-4CCF-B8DD-A7262F2386FA" target="contentwin">8.41</a>
+- GET_WORKSPACE_PARAMETER procedure
+  - APEX_INSTANCE_ADMIN <a href="GET_WORKSPACE_PARAMETER.html#GUID-D918661E-CA5E-44E7-BF53-101E783C32E4" target="contentwin">33.14</a>
+- GET_WORKSPACE function
+  - APEX_EXPORT <a href="GET_WORKSPACE_Function.html#GUID-493DB29D-8740-418E-9AF9-419EDE564CC5" target="contentwin">29.4</a>
+- GET_XLIFF_DOCUMENT function
+  - APEX_LANG <a href="GET_XLIFF_DOCUMENT-Function.html#GUID-BFCC4CCF-1DFD-4565-B63C-A5A5AA46EF44" target="contentwin">41.11</a>
+- GET_XLSX_WORKSHEETS function
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.GET_XLSX_WORKSHEETS-Function.html#GUID-41FC640A-A683-440E-A8F4-026BDD582C34" target="contentwin">22.8</a>
+- GET function
+  - APEX_EXEC <a href="APEX_EXEC.GET-Functions.html#GUID-D59C7753-A9CF-41BC-AAB9-06DB32CA3361" target="contentwin">28.27</a>
+- global constants
+  - APEX_APP_OBJECT_DEPENDENCY <a href="APEX_APP_OBJECT_DEPENDENCY.Constants.html#GUID-B2C2F938-BDC5-418A-B92C-71C47C9317D4" target="contentwin">4.1</a>
+  - APEX_APPLICATION <a href="APEX_APPLICATION-Global-Variables.html#GUID-5164592B-6864-4E2B-8DE3-64B463687A41" target="contentwin">6.2</a>
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.Constants-and-Data-Types.html#GUID-D74F07EC-5A3D-4BD7-A1F1-A3EEBCA7F126" target="contentwin">7.1</a>
+  - APEX_APPROVAL <a href="APEX_APPROVAL.Constants-and-Data-Types.html#GUID-536A42B1-5099-467F-908F-A1C3C209D77B" target="contentwin">9.1</a>
+  - APEX_AUTHENTICATION <a href="APEX_AUTHENTICATION-Constants.html#GUID-0D2C76D2-2A42-42AD-A86F-F92508B64A8D" target="contentwin">10.1</a>
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS-Constants.html#GUID-F8B2006B-AEF3-4F50-96A2-8DE5349C2A94" target="contentwin">13.1</a>
+  - APEX_DATA_EXPORT <a href="APEX_DATA_EXPORT-Global-Constants.html#GUID-3E08E8B0-85B4-4AF4-A0EE-8DF81149B472" target="contentwin">20.1</a>
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.Global-Constants.html#GUID-AE3C3092-4156-41BA-9254-DDEDF630CDA7" target="contentwin">22.1</a>
+  - APEX_DEBUG <a href="APEX_DEBUG-Constants.html#GUID-412ED5E2-1739-4A9B-B214-38674B4A4BCD" target="contentwin">24.1</a>
+  - APEX_ESCAPE <a href="APEX_ESCAPE-Constants.html#GUID-A2306BE3-AAED-457F-B65D-B8E4CFDB041C" target="contentwin">27.1</a>
+  - APEX_EXEC <a href="APEX_EXEC.Global-Constants.html#GUID-DC49AC73-4DEA-4937-B59F-14F0211D9804" target="contentwin">28.2</a>
+  - APEX_EXPORT <a href="APEX_EXPORT.Constants_Data_Types.html#GUID-04D60288-682F-4CAC-9D05-227237B9416B" target="contentwin">29.1</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.Constants-and-Data-Types.html#GUID-34AC2E11-1DB2-4596-AD96-8259E5E12901" target="contentwin">32.1</a>
+  - APEX_IR <a href="APEX_IR.Constants-Data-Types.html#GUID-F15F9992-0524-483E-818C-D56E71AFF096" target="contentwin">36.1</a>
+  - APEX_JSON <a href="APEX_JSON-Constants-and-Data-Types.html#GUID-83BF8800-E60D-4A7D-A32E-9FDC63ED4923" target="contentwin">39.2</a>
+  - APEX_MARKDOWN <a href="APEX_MARKDOWN-Constants.html#GUID-247A2C6C-C70E-4F26-8524-9A40C6A024C3" target="contentwin">44.1</a>
+  - APEX_PAGE <a href="APEX_PAGE-Global-Constants.html#GUID-2B37224A-FFA2-48F6-BB24-2A7C9F87638E" target="contentwin">45.1</a>
+  - APEX_PLUGIN <a href="APEX_PLUGIN-Constants.html#GUID-F66C398F-B1D5-4E57-BE7C-481A15669578" target="contentwin">46.2</a>
+  - APEX_PRINT <a href="APEX_PRINT.Constants.html#GUID-A7361529-20ED-4C38-B78F-8EE0DB8D5850" target="contentwin">48.1</a>
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE-Global-Constants.html#GUID-BCE8E30C-76D5-4AEB-ABCF-5466DC531BDD" target="contentwin">54.1</a>
+  - APEX_SHARED_COMPONENT <a href="APEX_SHARED_COMPONENT.Global-Constants.html#GUID-5AA4BDA1-7347-49B2-9158-EA4E6C04A6DD" target="contentwin">55.1</a>
+  - APEX_WEB_SERVICE <a href="APEX_WEB_SERVICE.Global-Variables.html#GUID-3A4D9CE9-0418-4EB5-AA2B-5EC5B9AF0617" target="contentwin">62.4</a>
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.Constants-and-Data-Types.html#GUID-F74FDBF6-0525-44CF-AD58-63F0E5CF0006" target="contentwin">63.1</a>
+- global variables
+  - APEX_APPLICATION <a href="APEX_APPLICATION-Global-Variables.html#GUID-5164592B-6864-4E2B-8DE3-64B463687A41" target="contentwin">6.2</a>
+  - APEX_WEB_SERVICE <a href="APEX_WEB_SERVICE.Global-Variables.html#GUID-3A4D9CE9-0418-4EB5-AA2B-5EC5B9AF0617" target="contentwin">62.4</a>
+- GRANT_EXTENSION_WORKSPACE procedure
+  - APEX_INSTANCE_ADMIN <a href="GRANT_EXTENSION_WORKSPACE-Procedure.html#GUID-170786CB-23FF-43FB-BED6-F41E28029C1B" target="contentwin">33.15</a>
+- GREP function signature 1
+  - APEX_STRING <a href="GREP-Function-Signature-1.html#GUID-35F517ED-6EA2-4466-AD77-B28F2B45DEEA" target="contentwin">57.4</a>
+- GREP function signature 2
+  - APEX_STRING <a href="GREP-Function-Signature-2.html#GUID-D9E483F8-0168-4765-9C8A-04E584D653E7" target="contentwin">57.5</a>
+- GREP function signature 3
+  - APEX_STRING <a href="GREP-Function-Signature-3.html#GUID-1B26C798-73B3-4D24-A993-06A5627CA1E7" target="contentwin">57.6</a>
+
+------------------------------------------------------------------------
+
+## H
+
+- HANDLE_TASK_DEADLINES procedure
+  - APEX_APPROVAL <a href="HANDLE_TASK_DEADLINES-Procedure.html#GUID-E0FD697C-977E-4C69-8004-FB0CF21E4A8F" target="contentwin">9.20</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.HANDLE_TASK_DEADLINES-Procedure.html#GUID-C6F77F49-1577-458E-83AD-B9085232098B" target="contentwin">32.23</a>
+- HAS_ACCESS function
+  - APEX_AUTHORIZATION <a href="APEX_AUTHORIZATION.HAS_ACCESS-Function.html#GUID-77D715DD-7EBC-463E-AD72-49EF4E6E8A6C" target="contentwin">11.2</a>
+- HAS_ERROR function
+  - APEX_EXEC <a href="APEX_EXEC.HAS_ERROR-Function.html#GUID-BF3BC9CB-87FF-4379-8219-927834E7DAA2" target="contentwin">28.40</a>
+- HAS_MORE_ARRAY_ROWS function
+  - APEX_EXEC <a href="APEX_EXEC.HAS_MORE_ARRAY_ROWS-Function.html#GUID-7198465B-A737-4244-9FA6-3C405B119497" target="contentwin">28.41</a>
+- HAS_MORE_ROWS function
+  - APEX_EXEC <a href="APEX_EXEC.HAS_MORE_ROWS-Function.html#GUID-5E5B3C8C-40F6-4465-B525-1B504B119147" target="contentwin">28.42</a>
+- HAS_PUSH_SUBSCRIPTION function
+  - APEX_PWA <a href="APEX_PWA.HAS_PUSH_SUBSCRIPTION-Function.html#GUID-D0C2528F-D272-48A3-A728-430DE5465D0D" target="contentwin">49.2</a>
+- HAS_TASK_PARAM_CHANGED function
+  - APEX_APPROVAL <a href="HAS_TASK_PARAM_CHANGED-Function.html#GUID-2A5B6EA2-0BDF-474F-BA92-1E6F70FF3C45" target="contentwin">9.21</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.HAS_TASK_PARAM_CHANGED-Function.html#GUID-9E6F3A71-87FC-4DDD-B02F-FD195DD0746F" target="contentwin">32.24</a>
+- HAS_USER_ANY_ROLES function
+  - APEX_ACL <a href="HAS_USER_ANY_ROLES-Function.html#GUID-97D53D94-AAF9-4ACE-86C9-CD856B21116A" target="contentwin">2.3</a>
+- HAS_USER_ROLE function
+  - APEX_ACL <a href="HAS_USER_ROLE-Function.html#GUID-39D0A194-58ED-4411-B9C1-F1DB8015DA54" target="contentwin">2.4</a>
+- HAVE_ERRORS_OCCURRED function
+  - APEX_ERROR <a href="APEX_ERROR.HAVE_ERRORS_OCCURRED-Function.html#GUID-A8A2B1B3-7C8E-44E3-9393-41427474F691" target="contentwin">26.11</a>
+- HELP Procedure
+  - APEX_APPLICATION <a href="HELP-Procedure.html#GUID-C82E7C47-AED1-4374-AA88-8189990D4E55" target="contentwin">6.3</a>
+- HIDDEN function
+  - APEX_ITEM <a href="HIDDEN-Function.html#GUID-120D2827-88CA-4D60-A09E-CCAC85D56953" target="contentwin">37.5</a>
+- HOST_URL function
+  - APEX_UTIL <a href="HOST_URL-Function.html#GUID-6E9330B4-B748-4DFB-AD48-B32678608666" target="contentwin">61.80</a>
+- HTML_ALLOWLIST_CLOB function
+  - APEX_ESCAPE <a href="HTML_ALLOWLIST_CLOB-Function.html#GUID-CDE891B3-BECF-444A-9918-F406149EC5CD" target="contentwin">27.9</a>
+- HTML_ALLOWLIST function
+  - APEX_ESCAPE <a href="HTML_ALLOWLIST-Function.html#GUID-AB0E2A42-D232-4AC6-9881-FE9437B9373E" target="contentwin">27.8</a>
+- HTML_ATTRIBUTE_CLOB function
+  - APEX_ESCAPE <a href="HTML_ATTRIBUTE_CLOB-Function.html#GUID-A357E38B-FA27-4144-B240-26EAE24112D2" target="contentwin">27.11</a>
+- HTML_ATTRIBUTE function
+  - APEX_ESCAPE <a href="HTML_ATTRIBUTE-Function.html#GUID-25DC5007-BE1A-41F2-9664-DC7145C33CB0" target="contentwin">27.10</a>
+- HTML_CLOB function
+  - APEX_ESCAPE <a href="HTML_CLOB-Function.html#GUID-C8B67ED0-D768-4A32-BB10-0662BCCA9893" target="contentwin">27.12</a>
+- HTML_TRUNC function signature 1
+  - APEX_ESCAPE <a href="HTML_TRUNC-Function.html#GUID-924FA21F-9AB6-4C84-A7A7-CAEEB50F8FD8" target="contentwin">27.13</a>
+- HTML_TRUNC function signature 2
+  - APEX_ESCAPE <a href="HTML_TRUNC-Function-Signature-2.html#GUID-21471D1D-AE22-46E9-B151-5A4CD2724E01" target="contentwin">27.14</a>
+- HTML function
+  - APEX_ERROR <a href="HTML-Function.html#GUID-E52EBEB9-048F-49CA-8A98-C3A92AA696A1" target="contentwin">27.7</a>
+
+------------------------------------------------------------------------
+
+## I
+
+- IMPORT_BLUEPRINT procedure
+  - APEX_DG_DATA_GEN <a href="IMPORT_BLUEPRINT-Procedure.html#GUID-FAF3F071-1878-4BB9-A55F-788522C82419" target="contentwin">25.15</a>
+- IMPORT_SAVED_REPORTS procedure
+  - APEX_IR <a href="IMPORT_SAVED_REPORTS-Procedure.html#GUID-A1085F96-1C34-4F35-AA99-5B047139804C" target="contentwin">36.17</a>
+- IMPORT_TEXT_MESSAGES procedure signature 1
+  - APEX_LANG <a href="APEX_LANG.IMPORT_TEXT_MESSAGES-Procedure-Signature-1.html#GUID-AB822B9E-6402-44A0-8BC8-63102E4A4826" target="contentwin">41.12</a>
+- IMPORT_TEXT_MESSAGES procedure signature 2
+  - APEX_LANG <a href="APEX_LANG.IMPORT_TEXT_MESSAGES-Procedure-Signature-2.html#GUID-022C48FA-779C-4968-B2B3-6BAFEBD55E52" target="contentwin">41.13</a>
+- import application <a href="Import-Script-Examples.html#GUID-3FA670B9-823F-4630-9E0E-29F3A61666F2" target="contentwin">8.4</a>
+- Import Data Types
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL-Data-Types.html#GUID-2347958B-A9CC-437C-9FEA-D2B9A58ADB4C" target="contentwin">8.3</a>
+- import script <a href="Import-Script-Examples.html#GUID-3FA670B9-823F-4630-9E0E-29F3A61666F2" target="contentwin">8.4</a>
+- INDEX_OF function signature 1
+  - APEX_STRING <a href="INDEX_OF-Function-Signature-1.html#GUID-F187D646-5720-4E85-89E7-19BFB6789E9D" target="contentwin">57.7</a>
+- INDEX_OF function signature 2
+  - APEX_STRING <a href="INDEX_OF-Function-Signature-2.html#GUID-4ED0CCBA-E0FE-4F05-AB0B-6AFE32883E0B" target="contentwin">57.8</a>
+- INFO procedure
+  - APEX_DEBUG <a href="INFO-Procedure.html#GUID-C8E6E25E-8211-49F8-9110-33F074E68927" target="contentwin">24.10</a>
+- INITIALIZE_OUTPUT procedure
+  - APEX_JSON <a href="INITIALIZE_CLOB_OUTPUT-Procedure.html#GUID-F0269C54-A421-4185-AF06-AF71780EE7A4" target="contentwin">39.23</a>, <a href="INITIALIZE_OUTPUT-Procedure.html#GUID-F79A155E-7C62-432A-A0F9-C8B528ED476D" target="contentwin">39.24</a>
+- INSERT_GEOM_METADATA_LONLAT procedure
+  - APEX_SPATIAL <a href="INSERT_GEOM_METADATA_LONLAT-Procedure.html#GUID-13597DEE-7B13-4AEF-8F15-3F8AA11F0F31" target="contentwin">56.6</a>
+- INSERT_GEOM_METADATA procedure
+  - APEX_SPATIAL <a href="INSERT_GEOM_METADATA-Procedure.html#GUID-D718B5C0-6E01-407A-945D-16C41087CCB6" target="contentwin">56.5</a>
+- installation <a href="APEX_APPLICATION_INSTALL.html#GUID-64D43160-E4F9-44CF-96A4-42D3190102BE" target="contentwin">8</a>
+- INSTALL procedure
+  - APEX_APPLICATION_INSTALL <a href="INSTALL-Procedure.html#GUID-D44BDEE9-C249-4984-987E-55F1DABD6B03" target="contentwin">8.42</a>
+- INT_ERROR_RESULT function
+  - APEX_ERROR <a href="INIT_ERROR_RESULT-Function.html#GUID-0A105D73-A5CF-471D-B8EC-9C28DF7243A0" target="contentwin">26.12</a>
+- IR_CLEAR procedure
+  - APEX_UTIL <a href="IR_CLEAR-Procedure-DEPRECATED.html#GUID-F8F9A729-5111-41C3-9582-E3EAD765EEB1" target="contentwin">61.83</a>
+- IR_DELETE_REPORT procedure
+  - APEX_UTIL <a href="IR_DELETE_REPORT-Procedure-DEPRECATED.html#GUID-88628785-C58C-4ABF-BBCF-548F0341276C" target="contentwin">61.84</a>
+- IR_DELETE_SUBSCRIPTION procedure
+  - APEX_UTIL <a href="IR_DELETE_SUBSCRIPTION-Procedure-DEPRECATED.html#GUID-EC8D1BF3-95A2-40F7-ADFE-DBDE1A1F626B" target="contentwin">61.85</a>
+- IR_FILTER procedure
+  - APEX_UTIL <a href="IR_FILTER-Procedure-DEPRECATED.html#GUID-B4DB3E46-D950-484C-87AC-9910C7D107B9" target="contentwin">61.86</a>
+- IR_RESET procedure
+  - APEX_UTIL <a href="IR_RESET-Procedure-DEPRECATED.html#GUID-BF75E659-1C82-443F-AD3E-2A36B9283426" target="contentwin">61.87</a>
+- IS_ADMIN function
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.IS_ADMIN-Function.html#GUID-A075B17E-167B-4DF8-B85A-506A03A84B70" target="contentwin">63.12</a>
+- IS_ALLOWED function
+  - APEX_APPROVAL <a href="IS_ALLOWED-Function.html#GUID-D1732D81-A3DD-4910-8753-465EDB058248" target="contentwin">9.22</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.IS_ALLOWED-Function.html#GUID-D1BC4D15-B46B-4CAA-93D7-7147E5FEAA1E" target="contentwin">32.25</a>
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.IS_ALLOWED-Function.html#GUID-9E25181B-DD7A-4AAE-AD6F-3A7E90C323AF" target="contentwin">63.13</a>
+- IS_AUTHENTICATED function
+  - APEX_AUTHENTICATION <a href="IS_AUTHENTICATED-Function.html#GUID-A240AEBD-E694-43F1-A2E0-1F86DB484365" target="contentwin">10.6</a>
+- IS_AUTHORIZED function
+  - APEX_AUTHORIZATION <a href="IS_AUTHORIZED-Function.html#GUID-508AD235-84C1-4CDF-B877-D344B0A42E58" target="contentwin">11.3</a>
+- IS_BUSINESS_ADMIN function
+  - APEX_APPROVAL <a href="IS_BUSINESS_ADMIN-Function.html#GUID-B193C8C6-A5C1-4360-BDA3-87A90EF26742" target="contentwin">9.23</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.IS_BUSINESS_ADMIN-Function.html#GUID-E36B8682-F7BC-485F-BACF-2E78A080922C" target="contentwin">32.26</a>
+- IS_COMPONENT_USED function
+  - APEX_PLUGIN_UTIL <a href="IS_COMPONENT_USED-Function.html#GUID-7BE7EA7C-DCBA-4940-8FC8-8F6EB849E3AE" target="contentwin">47.35</a>
+- IS_DB_SIGNATURE_VALID function
+  - APEX_INSTANCE_ADMIN <a href="IS_DB_SIGNATURE_VALID-Function.html#GUID-2F6EBECA-354C-4D41-9BEC-4CF9F7F69E85" target="contentwin">33.16</a>
+- IS_DESKTOP_UI function (deprecated)
+  - APEX_PAGE <a href="IS_DESKTOP_UI-Function.html#GUID-FB62E0E5-4895-4F25-AD45-B54455E71195" target="contentwin">45.6</a>
+- IS_ENABLED function
+  - APEX_AI <a href="APEX_AI.IS_ENABLED-Function.html#GUID-FE8A7174-FFBC-45E6-9382-ADBD3B6CE2FC" target="contentwin">3.12</a>
+  - APEX_INSTANCE_DEBUG <a href="APEX_INSTANCE_DEBUG.IS_ENABLED-Function.html#GUID-57975F7B-2ACA-41A4-9E26-74B38EE7D959" target="contentwin">34.3</a>
+- IS_EQUAL function
+  - APEX_PLUGIN_UTIL <a href="IS_EQUAL-Function.html#GUID-6BCB00A6-5286-4235-B403-E34632FD7C71" target="contentwin">47.34</a>
+- IS_GROUP_END function
+  - APEX_EXEC <a href="APEX_EXEC.IS_GROUP_END-Function.html#GUID-9655D742-0870-4113-A427-6CF84FD8DC37" target="contentwin">28.43</a>
+- IS_HIGH_CONTRAST_SESSION_YN function
+  - APEX_UTIL <a href="IS_HIGH_CONTRAST_SESSION_YN-Function.html#GUID-17EEDC70-B8A2-48C7-8564-55A4C3A579AB" target="contentwin">61.89</a>
+- IS_LOGIN_PASSWORD_VALID function
+  - APEX_UTIL <a href="IS_LOGIN_PASSWORD_VALID-Function.html#GUID-A8E23B74-22C6-4786-8DF6-E666FD3A0F1D" target="contentwin">61.90</a>
+- IS_MEMBER function
+  - APEX_LDAP <a href="IS_MEMBER-Function.html#GUID-5F12A2CD-805F-4DC6-8382-9BF9F3E9AE32" target="contentwin">42.4</a>
+- IS_OF_PARTICIPANT_TYPE function
+  - APEX_APPROVAL <a href="IS_OF_PARTICIPANT_TYPE-Function.html#GUID-9736830F-C3CB-4FD5-81AA-8C1D4DE5E4BB" target="contentwin">9.24</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.IS_OF_PARTICIPANT_TYPE-Function.html#GUID-D69256B4-5B3E-496F-B0F5-B3FBC6F38D47" target="contentwin">32.27</a>
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.IS_OF_PARTICIPANT_TYPE-Function.html#GUID-0FA6FB19-579B-471A-9702-E793A88FC4D1" target="contentwin">63.14</a>
+- IS_PUBLIC_USER function
+  - APEX_AUTHENTICATION <a href="IS_PUBLIC_USER-Function.html#GUID-EF06EDD9-8483-4297-915F-59AA5853D342" target="contentwin">10.7</a>
+- IS_READ_ONLY function
+  - APEX_PAGE <a href="APEX_PAGE-IS_READ_ONLY-Function.html#GUID-2875816C-988B-4BEB-8533-CC9B6D5D74B2" target="contentwin">45.7</a>
+  - APEX_REGION <a href="APEX_REGION-IS_READ_ONLY-Function.html#GUID-737D7A14-AA73-4B26-B7FD-B4D6935CA372" target="contentwin">50.7</a>
+- IS_REMOTE_SQL_AUTH_VALID function
+  - APEX_EXEC <a href="APEX_EXEC.IS_REMOTE_SQL_AUTH_VALID-Function.html#GUID-F72C8319-BB56-4175-B9DC-F9C740566C75" target="contentwin">28.44</a>
+- IS_ROLE_REMOVED_FROM_USER function
+  - APEX_ACL <a href="IS_ROLE_REMOVED_FROM_USER-Function.html#GUID-1B650723-4E97-4179-91BB-4AE626379AA9" target="contentwin">2.5</a>
+- IS_RUNNING function
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_IS_RUNNING-Function.html#GUID-C8E7EB86-2E80-4B4A-817B-EC7F44BDC7A9" target="contentwin">12.11</a>
+  - APEX_REST_SOURCE_SYNC <a href="APEX_REST_SOURCE_SYNC-IS_RUNNING-Function.html#GUID-4CE59FBF-1DF5-49F2-B0B1-30C7C0ABDBE5" target="contentwin">51.6</a>
+- IS_SCREEN_READER_SESSION_YN function
+  - APEX_UTIL <a href="IS_SCREEN_READER_SESSION_YN-Function.html#GUID-5A1FB0B2-ABBA-43A1-9B2B-F9F3803CF99A" target="contentwin">61.92</a>
+- IS_SCREEN_READER_SESSION function
+  - APEX_UTIL <a href="IS_SCREEN_READER_SESSION-Function.html#GUID-96F41F29-8EAF-445E-B0E6-4455D0250D45" target="contentwin">61.91</a>
+- IS_SESSION_VALID function
+  - APEX_CUSTOM_AUTH <a href="IS_SESSION_VALID-Function.html#GUID-DC6EACB2-80B1-47ED-BBF1-2ABECC065880" target="contentwin">18.12</a>
+- IS_SUPPORTED Function
+  - APEX_DB_DICTIONARY <a href="APEX_DB_DICTIONARY.IS_SUPPORTED-Function.html#GUID-2A1766C7-5B83-44F5-B3B1-C96E76277FD8" target="contentwin">23.11</a>
+- IS_USER_CONSENT_NEEDED function
+  - APEX_AI <a href="APEX_AI.IS_USER_CONSENT_NEEDED-Function.html#GUID-14EF1D8B-48DC-4769-A9E7-17A9FBF825B5" target="contentwin">3.13</a>
+
+------------------------------------------------------------------------
+
+## J
+
+- JOIN_CLOB
+  - APEX_STRING <a href="JOIN_CLOB-Function.html#GUID-591EF535-0B50-4971-B419-A575145341C7" target="contentwin">57.9</a>
+- JOIN_CLOBS function
+  - APEX_STRING <a href="JOIN_CLOBS-Function.html#GUID-875DAF96-A317-4D3A-A108-2DD8C9A4C558" target="contentwin">57.10</a>
+- JOIN function signature 1 <a href="JOIN-Function-Signature-1.html#GUID-C7904CB2-C420-441D-9B5F-C7C33D7804CC" target="contentwin">57.11</a>
+- JOIN function signature 2
+  - APEX_STRING <a href="JOIN-Function-Signature-2.html#GUID-02F2D5BD-36C2-47CE-9FFF-54DFAA2129C8" target="contentwin">57.12</a>
+- JS_LITERAL_CLOB function
+  - APEX_ESCAPE <a href="JS_LITERAL_CLOB-Function.html#GUID-01E42386-59CC-40CC-8FE3-5C91A9B81726" target="contentwin">27.16</a>
+- JS_LITERAL function
+  - APEX_ESCAPE <a href="JS_LITERAL-Function.html#GUID-680F2EA0-7923-4578-BFEF-7CE505DEB310" target="contentwin">27.15</a>
+- JSON_CLOB function
+  - APEX_ESCAPE <a href="JSON_CLOB-Function.html#GUID-B0588D1F-31B9-4A2E-A4E4-1AABC4878F94" target="contentwin">27.18</a>
+- JSON_TO_PROFILE function
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.JSON_TO_PROFILE-Function.html#GUID-67B9351A-FFE8-47EE-AEED-A5A0478072DA" target="contentwin">22.9</a>
+- JSON function
+  - APEX_ESCAPE <a href="JSON-Function.html#GUID-FB99C59D-B7B5-443C-B087-62F06B5B15C9" target="contentwin">27.17</a>
+
+------------------------------------------------------------------------
+
+## K
+
+- KEYVAL_NUM function
+  - APEX_UTIL <a href="KEYVAL_NUM-Function.html#GUID-6698ACC2-13C1-4392-9927-5770A135D274" target="contentwin">61.94</a>
+- KEYVAL_VC2 function
+  - APEX_UTIL <a href="KEYVAL_VC2-Function.html#GUID-F51D5026-9BB3-4BD5-96F7-8B21B6C04670" target="contentwin">61.95</a>
+
+------------------------------------------------------------------------
+
+## L
+
+- LANG function
+  - APEX_LANG <a href="LANG_Function.html#GUID-B189F9B8-3E40-4C77-9A5A-0AE4A612B75F" target="contentwin">41.14</a>
+- LDAP_DN function
+  - APEX_ESCAPE <a href="LDAP_DN-Function.html#GUID-2ADCFFBB-F5C6-42A3-8AA1-4B20D4F0579C" target="contentwin">27.19</a>
+- LDAP_DNPREP function
+  - APEX_CUSTOM_AUTH <a href="LDAP_DNPREP-Function.html#GUID-B26FE8AE-D110-47D4-9453-77E15D03C652" target="contentwin">18.13</a>
+- LDAP_SEARCH_FILTER function
+  - APEX_ESCAPE <a href="LDAP_SEARCH_FILTER-Function.html#GUID-E5EA0DC4-A131-43AE-9C08-D98A63B65E5A" target="contentwin">27.20</a>
+- LDAP attributes
+  - obtaining <a href="GET_LDAP_PROPS-Procedure.html#GUID-D9070BB8-009F-4BCE-914A-3D6C8FAECFCA" target="contentwin">18.5</a>
+- LIST_ACTIVITY procedure
+  - APEX_INSTANCE_DEBUG <a href="APEX_INSTANCE_DEBUG.LIST_ACTIVITY-Procedure.html#GUID-F755488F-C0D7-4950-AB56-832798C0968E" target="contentwin">34.4</a>
+- LIST_MESSAGES procedure
+  - APEX_INSTANCE_DEBUG <a href="APEX_INSTANCE_DEBUG.LIST_MESSAGES-Procedure.html#GUID-E918EF29-8802-4A98-B504-B12777918720" target="contentwin">34.5</a>
+- LIST_PAGE_VIEWS procedure
+  - APEX_INSTANCE_DEBUG <a href="APEX_INSTANCE_DEBUG.LIST_PAGE_VIEWS-Procedure.html#GUID-1302CE84-860E-4C3C-9ABA-3DEDD09BE539" target="contentwin">34.6</a>
+- LOAD_DATA function
+  - APEX_DATA_LOADING <a href="LOAD_DATA-Function-Signature-1.html#GUID-54FF0F84-BD45-47F1-B218-F5ED8A2D7D05" target="contentwin">19.3</a>, <a href="LOAD_DATA-Function-Signature-2.html#GUID-E254169A-FA3D-4169-B77A-A573DB3962F4" target="contentwin">19.4</a>
+- LOAD_SUPPORTING_OBJECT_DATA procedure
+  - APEX_DATA_INSTALL <a href="LOAD_SUPPORTING_OBJECT_DATA-Procedure.html#GUID-1837E7E4-3631-410F-8718-F84E1A1AF2EF" target="contentwin">21.1</a>
+- LOCK_ACCOUNT procedure
+  - APEX_UTIL <a href="LOCK_ACCOUNT-Procedure.html#GUID-630379B6-6C06-4C06-9535-8DBE9DE5E24E" target="contentwin">61.96</a>, <a href="UNLOCK_ACCOUNT-Procedure.html#GUID-0867626D-9B3B-49AA-97C9-2C45443188BC" target="contentwin">61.154</a>
+- LOG_DBMS_OUTPUT procedure
+  - APEX_DEBUG <a href="LOG_DBMS_OUTPUT-Procedure.html#GUID-6C44E073-F2C0-44AA-A94B-BAA659A2AE10" target="contentwin">24.11</a>
+- LOG_ERROR procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_LOG_ERROR-Procedure.html#GUID-A6218EAE-BFEA-4244-853C-11C3A6AB4D1D" target="contentwin">12.12</a>
+- LOG_INFO procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_LONG_INFO-Procedure.html#GUID-569DBB08-BD4A-41F9-800A-07F64E4D0531" target="contentwin">12.13</a>
+- LOG_LONG_MESSAGE procedure
+  - APEX_DEBUG <a href="LOG_LONG_MESSAGE-Procedure.html#GUID-92348F3F-9021-49B3-9203-7100EED6B904" target="contentwin">24.12</a>
+- LOG_MESSAGE procedure
+  - APEX_DEBUG <a href="LOG_MESSAGE-Procedure-Deprecated.html#GUID-2CFA0096-9CA5-496E-9D35-DD71896D8C14" target="contentwin">24.13</a>
+- LOG_PAGE_SESSION_STATE procedure
+  - APEX_DEBUG <a href="LOG_PAGE_SESSION_STATE-Procedure.html#GUID-67A62EEB-B7DE-464A-A922-38BEFDFE8353" target="contentwin">24.14</a>
+- LOG_WARN procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_LOG_WARN-Procedure.html#GUID-77E12F46-A9F6-48FD-9697-5705382C6647" target="contentwin">12.14</a>
+- LOGIN procedure
+  - APEX_AUTHENTICATION <a href="LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97" target="contentwin">10.8</a>
+  - APEX_CUSTOM_AUTH <a href="LOGIN-Procedure-2.html#GUID-FCB0BBAE-9587-4052-87A5-5A6BA81FB1AD" target="contentwin">18.14</a>
+- LOGOUT procedure
+  - APEX_CUSTOM_AUTH <a href="LOGOUT-Procedure-DEPRECATED.html#GUID-8EB16B9D-53F9-41A6-B0E2-AAB55D0D1425" target="contentwin">18.15</a>
+- LOGOUT Procedure
+  - APEX_AUTHENTICATION <a href="LOGOUT-Procedure.html#GUID-99FDBE2B-0369-4EAE-987E-4D7C44FA92AF" target="contentwin">10.9</a>
+
+------------------------------------------------------------------------
+
+## M
+
+- MAKE_REQUEST function signature 1
+  - APEX_WEB_SERVICE <a href="MAKE_REQUEST-Function.html#GUID-2973A635-6A7D-426B-8ED0-F458D96FD520" target="contentwin">62.13</a>
+- MAKE_REQUEST function signature 2
+  - APEX_WEB_SERVICE <a href="MAKE_REQUEST-Function-Signature-2.html#GUID-7B2C84A3-900B-4CC0-90BA-CC7D8B4855B0" target="contentwin">62.14</a>
+- MAKE_REQUEST procedure signature 1
+  - APEX_WEB_SERVICE <a href="MAKE_REQUEST-Procedure.html#GUID-74F2C990-5D85-47BE-BC90-CC3F07D9788B" target="contentwin">62.15</a>
+- MAKE_REQUEST procedure signature 2
+  - APEX_WEB_SERVICE <a href="MAKE_REQUEST-Procedure-Signature-2.html#GUID-AAD7DC72-911C-4728-B513-6F514DADCF03" target="contentwin">62.16</a>
+- MAKE_REST_REQUEST function
+  - APEX_WEB_SERVICE <a href="MAKE_REST_REQUEST-Function.html#GUID-C77BB45A-8968-470C-8243-BADB63743DE9" target="contentwin">62.17</a>, <a href="MAKE_REST_REQUEST_B-Function.html#GUID-1FCD717A-A515-4394-832C-980D2990564F" target="contentwin">62.18</a>
+- MAKE_REST_REQUEST procedure
+  - APEX_PLUGIN_UTIL <a href="MAKE_REST_REQUEST-Procedure-Signature-1.html#GUID-8E618B80-FDE9-475C-BC0C-B7C985FCECFF" target="contentwin">47.36</a>, <a href="MAKE_REST_REQUEST-Procedure-Signature-2.html#GUID-0CF925E3-3648-49B8-8D5A-56BE61F40B28" target="contentwin">47.37</a>
+- MD5_CHECKSUM function
+  - APEX_ITEM <a href="MD5_CHECKSUM-Function.html#GUID-025DF33F-CC93-4702-BB6E-453397BD7195" target="contentwin">37.6</a>
+- MD5_HIDDEN function
+  - APEX_ITEM <a href="MD5_HIDDEN-Function.html#GUID-485ACEB1-B491-4158-BE51-3C18E8AB0E7B" target="contentwin">37.7</a>
+- MEMBER_OF2 function
+  - APEX_LDAP <a href="MEMBER_OF2-Function.html#GUID-3B8B2963-0F88-41F9-9D83-33E3ADB5A631" target="contentwin">42.6</a>
+- MEMBER_OF function
+  - APEX_LDAP <a href="MEMBER_OF-Function.html#GUID-A00AFE37-BEFD-46BC-9E9A-108496530624" target="contentwin">42.5</a>
+- MERGE_MEMBERS procedure
+  - APEX_COLLECTION <a href="MERGE_MEMBERS-Procedure.html#GUID-B73EC254-C04A-496D-8389-E5BCC30E89A5" target="contentwin">15.22</a>
+- MESSAGE function (deprecated)
+  - APEX_LANG <a href="MESSAGE-Function.html#GUID-0D2B9901-CEBB-4B99-A6EA-7D7B3CCA8F1A" target="contentwin">41.15</a>
+- MESSAGE procedure
+  - APEX_DEBUG <a href="MESSAGE-Procedure.html#GUID-2503CA63-2C6F-429C-A767-611CFEE6FE73" target="contentwin">24.15</a>
+- MOVE_MEMBER_DOWN procedure
+  - APEX_COLLECTION <a href="MOVE_MEMBER_DOWN-Procedure.html#GUID-B421E0EA-027F-45AF-8578-33BBC9710CCD" target="contentwin">15.23</a>
+- MOVE_MEMBER_UP procedure
+  - APEX_COLLECTION <a href="MOVE_MEMBER_UP-Procedure.html#GUID-4B5A4C05-EB36-44F4-BDBC-09CE3A6E3278" target="contentwin">15.24</a>
+
+------------------------------------------------------------------------
+
+## N
+
+- NEXT_ARRAY_ROW function
+  - APEX_EXEC <a href="APEX_EXEC.NEXT_ARRAY_ROW-Function.html#GUID-9918364A-5A5E-45A2-9F13-F463E44EDABD" target="contentwin">28.45</a>
+- NEXT_CHUNK function
+  - APEX_STRING <a href="NEXT_CHUNK-Function.html#GUID-B1C78B6A-DC55-4C38-923D-A9AA5613FB5C" target="contentwin">57.13</a>
+- NEXT_ROW function
+  - APEX_EXEC <a href="APEX_EXEC.NEXT_ROW-Function.html#GUID-A2FDA960-4826-4FCD-B39A-5C491651BD3D" target="contentwin">28.46</a>
+- NOOP function signature 1
+  - APEX_ESCAPE <a href="NOOP-Function-Signature-1.html#GUID-106D2765-FC9B-4177-BD41-3A5D3BDE33AC" target="contentwin">27.21</a>
+- NOOP function signature 2
+  - APEX_ESCAPE <a href="NOOP-Function-Signature-2.html#GUID-B9C86CDB-4494-4BA2-8392-A119F907F9EC" target="contentwin">27.22</a>
+- NUMBER
+  - APEX_MAIL <a href="SEND-Function-Signature-1.html#GUID-760A11B9-3CB9-435C-9289-C2F2791BB80C" target="contentwin">43.8</a>
+
+------------------------------------------------------------------------
+
+## O
+
+- OAUTH_AUTHENTICATE_CREDENTIAL procedure
+  - APEX_WEB_SERVICE <a href="OAUTH_AUTHENTICATE_CREDENTIAL.html#GUID-267B5978-4154-425B-81FB-87427BC7BAA8" target="contentwin">62.21</a>
+- OAUTH_AUTHENTICATE procedure signature 1
+  - APEX_WEB_SERVICE <a href="OAUTH_AUTHENTICATE-Procedure-Signature-1.html#GUID-F6BADD65-416C-4B2F-8B19-BE98C64D5D83" target="contentwin">62.19</a>
+- OAUTH_AUTHENTICATE procedure signature 2
+  - APEX_WEB_SERVICE <a href="OAUTH_AUTHENTICATE-Procedure-Signature-2.html#GUID-E9E81AE6-15F3-451D-9B3D-6B34000AA087" target="contentwin">62.20</a>
+- OAUTH_GET_LAST_TOKEN function
+  - APEX_WEB_SERVICE <a href="OAUTH_GET_LAST_TOKEN-Function.html#GUID-114DBB66-F36D-4897-92D2-6A54873CD714" target="contentwin">62.22</a>
+- OAUTH_SET_TOKEN procedure
+  - APEX_WEB_SERVICE <a href="OAUTH_SET_TOKEN-Procedure.html#GUID-C6CB535D-F3D3-4333-A097-F07B8EBC366E" target="contentwin">62.23</a>
+- OPEN_ARRAY procedure
+  - APEX_JSON <a href="OPEN_ARRAY-Procedure.html#GUID-2B346A28-2FB5-4CEC-9B86-33B8B3FFD94B" target="contentwin">39.25</a>
+- OPEN_ARRAY procedure signature 1
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_ARRAY-Procedure-Signature-1.html#GUID-D1CB527B-C92B-4994-BFF4-E224979A4702" target="contentwin">28.47</a>
+- OPEN_ARRAY procedure signature 2
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_ARRAY-Procedure-Signature-2.html#GUID-E3413CEA-9E20-45A7-A071-4F3661B11F25" target="contentwin">28.48</a>
+- OPEN_DUALITY_VIEW_DML_CONTEXT function
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_DUALITY_VIEW_DML_CONTEXT-Function.html#GUID-C249ADAD-ECA9-4BB0-B56E-97224A119F2D" target="contentwin">28.49</a>
+- OPEN_JSON_SOURCE_DML_CONTEXT function
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_JSON_SOURCE_DML_CONTEXT-Function.html#GUID-AEEEAE28-E2F6-4FF8-A582-45B9D1B290F1" target="contentwin">28.50</a>
+- OPEN_LOCAL_DML_CONTEXT function
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_LOCAL_DML_CONTEXT-Function.html#GUID-D3CAB370-8CA4-4371-A5EE-72FDA4AFE30C" target="contentwin">28.51</a>
+- OPEN_OBJECT procedure
+  - APEX_JSON <a href="OPEN_OBJECT-Procedure.html#GUID-652FE97B-B33C-4EC2-A8AB-9056E8B49477" target="contentwin">39.26</a>
+- OPEN_QUERY_CONTEXT function signature 1
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_QUERY_CONTEXT-Function-1.html#GUID-9C0BF735-0749-44F6-B7E2-731070D0E9DE" target="contentwin">28.52</a>
+  - APEX_REGION <a href="APEX_REGION-OPEN_QUERY_CONTEXT-Function-Signature-1.html#GUID-BDB9F4B7-D1A7-4C9A-B4C7-45A57AD76427" target="contentwin">50.8</a>
+- OPEN_QUERY_CONTEXT function signature 2
+  - APEX_EXEC <a href="APEX_EXEC-OPEN_QUERY_CONTEXT-Function-2.html#GUID-0EFB6FF7-15B1-4E25-A78E-9F482408F638" target="contentwin">28.53</a>
+  - APEX_REGION <a href="APEX_REGION-OPEN_QUERY_CONTEXT-Function-Signature-2.html#GUID-B4E6D1E9-0961-40DF-BC22-ACD4E41A6D01" target="contentwin">50.9</a>
+- OPEN_REMOTE_DML_CONTEXT function
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_REMOTE_DML_CONTEXT-Function.html#GUID-1D856CD4-906A-404A-A541-66534CF3E0A9" target="contentwin">28.54</a>
+- OPEN_REMOTE_SQL_QUERY function
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_REMOTE_SQL_QUERY-Function.html#GUID-75BF9671-7289-40A9-9896-394DCD3FB482" target="contentwin">28.55</a>
+- OPEN_REST_SOURCE_DML_CONTEXT function
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_REST_SOURCE_DML_CONTEXT-Function.html#GUID-8C5E17C9-884D-43D0-8A12-2C071F05019C" target="contentwin">28.56</a>
+- OPEN_REST_SOURCE_QUERY function
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_REST_SOURCE_QUERY-Function.html#GUID-F09E0A46-8282-4917-8C3B-94910F9DD919" target="contentwin">28.57</a>
+- OPEN_WEB_SOURCE_DML_CONTEXT function
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_WEB_SOURCE_DML_CONTEXT-Function.html#GUID-A805DA13-F33D-4927-8D51-EB49F79A4A34" target="contentwin">28.58</a>
+- OPEN_WEB_SOURCE_QUERY function
+  - APEX_EXEC <a href="APEX_EXEC.OPEN_WEB_SOURCE_QUERY-Function.html#GUID-B0B2F973-BB25-4F6E-9AC8-37864CC8FDA6" target="contentwin">28.59</a>
+- Oracle TEXT
+  - ADD_FILTER procedure <a href="APEX_EXEC.ADD_FILTER-Procedure.html#GUID-995DF2C9-4448-4613-A7C1-FA5F7F45B25F" target="contentwin">28.7</a>
+
+------------------------------------------------------------------------
+
+## P
+
+- PAGE_ITEM_NAMES_TO_JQUERY function
+  - APEX_PLUGIN_UTIL <a href="PAGE_ITEM_NAMES_TO_JQUERY-Function.html#GUID-0EAA3D4A-D5CA-499C-97B7-B8D01B88E110" target="contentwin">47.38</a>
+- parameter values
+  - APEX_INSTANCE_ADMIN <a href="APEX_INSTANCE_ADMIN.Available-Parameter-Values.html#GUID-75DCF658-5A76-4E81-B12D-04E254A3D80A" target="contentwin">33.1</a>
+- PARSE_REFETCH_RESPONSE function
+  - APEX_PLUGIN_UTIL <a href="PARSE_REFETCH_RESPONSE-Function.html#GUID-1B262696-038E-4D5E-B482-DAC842FEDF87" target="contentwin">47.39</a>
+- PARSE_RESPONSE_CLOB function
+  - APEX_WEB_SERVICE <a href="PARSE_RESPONSE_CLOB-Function.html#GUID-2901DFC9-509E-4180-94C6-81AF28CD6093" target="contentwin">62.25</a>
+- PARSE_RESPONSE function
+  - APEX_WEB_SERVICE <a href="PARSE_RESPONSE-Function.html#GUID-1D07AFB6-3D34-448B-AB28-7127273BD11B" target="contentwin">62.24</a>
+- PARSE_XML_CLOB function
+  - APEX_WEB_SERVICE <a href="PARSE_XML_CLOB-Function.html#GUID-4CE9C1AE-8404-46B5-80B0-1A5C99F6D9DC" target="contentwin">62.27</a>
+- PARSE_XML function
+  - APEX_WEB_SERVICE <a href="PARSE_XML-Function.html#GUID-BDE092C8-77BD-425A-B522-0FE3656628B4" target="contentwin">62.26</a>
+- PARSE function
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.PARSE-Function.html#GUID-B815CF74-C469-4F78-9433-643D1339E930" target="contentwin">22.10</a>
+- PARSE procedure signature 1
+  - APEX_JSON <a href="PARSE-Procedure-Signature-1.html#GUID-2083D6CF-9B16-4770-BF3B-D1BF63B6AC2D" target="contentwin">39.27</a>
+- PARSE procedure signature 2
+  - APEX_JSON <a href="PARSE-Procedure-Signature-2.html#GUID-4CDBACA2-B124-4097-B06A-EC62FEFB7F81" target="contentwin">39.28</a>
+- password
+  - changing <a href="CHANGE_CURRENT_USER_PW-Procedure.html#GUID-3B5A7DD8-6301-440D-B879-70E2A7770796" target="contentwin">61.7</a>
+  - resetting and emailing <a href="RESET_PW-Procedure.html#GUID-42CC5310-81A2-41B3-BC2F-2653B0DA8EE1" target="contentwin">61.112</a>
+- PASSWORD_FIRST_USE_OCCURRED function
+  - APEX_UTIL <a href="PASSWORD_FIRST_USE_OCCURRED-Function.html#GUID-5BC0A4F7-1C06-4DA3-A394-684A828DFC79" target="contentwin">61.97</a>
+- PERSISTENT_AUTH_ENABLED function
+  - APEX_AUTHENTICATION <a href="PERSISTENT_AUTH_ENABLED-Function.html#GUID-3EC703D9-7AA1-45E6-961F-290CBBC6E38C" target="contentwin">10.10</a>
+- PERSISTENT_COOKIES_ENABLED function
+  - APEX_AUTHENTICATION <a href="PERSISTENT_COOKIES_ENABLED-Function.html#GUID-D44AD38F-D649-4E1E-AA78-A09F8BB0E3C7" target="contentwin">10.11</a>
+- PHRASE_EXISTS function
+  - APEX_STRING_UTIL <a href="PHRASE_EXISTS-Function.html#GUID-E5A76E4E-1AC7-4574-A828-0F5097851FBF" target="contentwin">58.12</a>
+- PLIST_DELETE procedure
+  - APEX_STRING <a href="PLIST_DELETE-Procedure.html#GUID-6E693596-60DE-4177-963B-E2C5DA16E921" target="contentwin">57.14</a>
+- PLIST_EXISTS function
+  - APEX_STRING <a href="APEX_STRING.PLIST_EXISTS-Function.html#GUID-5B07C2C3-8ECB-4F61-887A-1F4D055DDB69" target="contentwin">57.15</a>
+- PLIST_GET_KEY function
+  - APEX_STRING <a href="APEX_STRING.PLIST_GET_KEY-Function.html#GUID-5AAFB6C5-2983-49F2-8365-2EDAF3B8ED6E" target="contentwin">57.17</a>
+- PLIST_GET function
+  - APEX_STRING <a href="PLIST_GET-Function.html#GUID-90EA43D7-6BFF-4A4B-8AB6-44DE7B319F4B" target="contentwin">57.16</a>
+- PLIST_PUSH procedure
+  - APEX_STRING <a href="PLIST_PUSH-Procedure.html#GUID-5B2015AF-4306-40E2-84F1-CB74DDDBB7AD" target="contentwin">57.18</a>
+- PLIST_PUT function
+  - APEX_STRING <a href="PLIST_PUT-Function.html#GUID-0CB6422C-7E8F-4128-819E-4654F7B8DF7B" target="contentwin">57.19</a>
+- PLIST_TO_JSON_CLOB function
+  - APEX_STRING <a href="PLIST_TO_JSON_CLOB-Function.html#GUID-63705980-D27D-4220-8C38-88AAD3599831" target="contentwin">57.20</a>
+- plugins
+  - remote servers <a href="About-Configuring-Flexible-Remote-Servers.html#GUID-FAF1E808-56B5-43E8-8B38-34A1B9AC272B" target="contentwin">46.1</a>
+- POINT function
+  - APEX_SPATIAL <a href="POINT-Function.html#GUID-0B6AF301-D21A-4158-99F8-E473C52E13A5" target="contentwin">56.7</a>
+- POPUP_FROM_LOV function
+  - APEX_ITEM <a href="POPUP_FROM_LOV-Function.html#GUID-58F5BECA-8B2C-4A82-B880-EAC19B65FE64" target="contentwin">37.8</a>
+- POPUP_FROM_QUERY function
+  - APEX_ITEM <a href="POPUP_FROM_QUERY-Function.html#GUID-78E8D5D0-6E0F-4BD2-914A-CF811B261D6C" target="contentwin">37.9</a>
+- POPUPKEY_FROM_LOV function
+  - APEX_ITEM <a href="POPUPKEY_FROM_LOV-Function.html#GUID-C97AFD39-6D0F-415D-90BD-5570C8496420" target="contentwin">37.10</a>
+- POPUPKEY_FROM_QUERY function
+  - APEX_ITEM <a href="POPUPKEY_FROM_QUERY-Function.html#GUID-6BF28C46-B6DA-4742-A487-1BEDE8E552F9" target="contentwin">37.11</a>
+- POST_LOGIN procedure
+  - APEX_AUTHENTICATION <a href="POST_LOGIN-Procedure.html#GUID-72781393-33B9-4992-816A-2DA44B30F3FC" target="contentwin">10.12</a>
+  - APEX_CUSTOM_AUTH <a href="POST_LOGIN-Procedure-2.html#GUID-4F23BA8C-909E-46C0-A015-032BBE256D5B" target="contentwin">18.16</a>
+- PREPARE_TEMPLATE procedure
+  - APEX_MAIL <a href="PREPARE_TEMPLATE_Procedure.html#GUID-639A0777-5A94-461A-8DD7-F71C950E7B69" target="contentwin">43.6</a>
+- PREPARE_URL function
+  - APEX_UTIL <a href="PREPARE_URL-Function.html#GUID-A61DFF37-2211-43E4-B7FE-B89C31E151FF" target="contentwin">61.98</a>
+- PREVIEW_BLUEPRINT procedure
+  - APEX_DG_DATA_GEN <a href="PREVIEW_BLUEPRINT-Procedure.html#GUID-5D20B0F4-BD14-4F8C-91B9-5DDB3D06FAA9" target="contentwin">25.16</a>
+- PRINT_DISPLAY_ONLY procedure signature 1
+  - APEX_PLUGIN_UTIL <a href="PRINT_DISPLAY_ONLY-Procedure-Signature-1.html#GUID-7302B306-09FE-40DC-BB4D-0D605B862330" target="contentwin">47.40</a>
+- PRINT_DISPLAY_ONLY procedure signature 2
+  - APEX_PLUGIN_UTIL <a href="PRINT_DISPLAY_ONLY-Procedure-Signature-2.html#GUID-D8566941-EB68-40B9-B577-6E4547CCA3B6" target="contentwin">47.41</a>
+- PRINT_ESCAPED_VALUE procedure signature 1
+  - APEX_PLUGIN_UTIL <a href="PRINT_ESCAPED_VALUE-Procedure.html#GUID-2A94DB10-CD69-4436-A103-EF29EC0782DF" target="contentwin">47.42</a>
+- PRINT_ESCAPED_VALUE procedure signature 2
+  - APEX_PLUGIN_UTIL <a href="PRINT_ESCAPED_VALUE-Procedure-Signature-2.html#GUID-E6AB6AF7-DFA9-4ADD-A987-719AACBB7989" target="contentwin">47.43</a>
+- PRINT_HIDDEN_IF_READONLY procedure
+  - APEX_PLUGIN_UTIL <a href="PRINT_HIDDEN_IF_READONLY-Procedure.html#GUID-F384CA3E-178A-4063-98BF-C8FC3DFB1F89" target="contentwin">47.45</a>
+- PRINT_HIDDEN procedure
+  - APEX_PLUGIN_UTIL <a href="PRINT_HIDDEN-Procedure.html#GUID-AD6FDF9E-5E34-45A8-ACA2-2A00EE755637" target="contentwin">47.44</a>
+- PRINT_JSON_HTTP_HEADER procedure
+  - APEX_PLUGIN_UTIL <a href="PRINT_JSON_HTTP_HEADER-Procedure.html#GUID-C5AE4453-178B-48FC-B876-C7FDFDFC399D" target="contentwin">47.46</a>
+- PRINT_LOV_AS_JSON procedure
+  - APEX_PLUGIN_UTIL <a href="PRINT_LOV_AS_JSON-Procedure.html#GUID-B5C3E18B-0A33-4428-8803-5E8AD76C7AB5" target="contentwin">47.47</a>
+- PRINT_OPTION procedure
+  - APEX_PLUGIN_UTIL <a href="PRINT_OPTION-Procedure.html#GUID-DAC2B906-047D-406C-80A2-476FA6F1108F" target="contentwin">47.48</a>
+- PRINT_READ_ONLY procedure signature 1
+  - APEX_PLUGIN_UTIL <a href="PRINT_READ_ONLY-Procedure-Signature-1.html#GUID-59E4BC1F-4526-4F95-BFCC-40C74F80657D" target="contentwin">47.49</a>
+- PRINT_READ_ONLY procedure signature 2
+  - APEX_PLUGIN_UTIL <a href="PRINT_READ_ONLY-Procedure-Signature-2.html#GUID-AA244E85-9AFC-42C9-A546-5DFB02426E59" target="contentwin">47.50</a>
+- PRN procedure
+  - APEX_UTIL <a href="PRN-Procedure.html#GUID-DDA0150D-33DC-4A29-98BD-60F6EE051B89" target="contentwin">61.99</a>
+- PROCESS_DML_RESPONSE procedure
+  - APEX_PLUGIN_UTIL <a href="PROCESS_DML_RESPONSE-Procedure.html#GUID-60036A16-F1A6-4A45-AD3F-BEE03E49114E" target="contentwin">47.51</a>
+- PUBLIC_CHECK_AUTHORIZATION function
+  - APEX_UTIL <a href="PUBLIC_CHECK_AUTHORIZATION-Function-DEPRECATED.html#GUID-77BDCD4A-3677-49A3-A3F4-EB77B7EE3A54" target="contentwin">61.100</a>
+- PUBLISH_APPLICATION procedure
+  - APEX_LANG <a href="PUBLISH_APPLICATION-Procedure.html#GUID-0C32F288-AC1A-488F-BF8D-59F0A9125D3A" target="contentwin">41.16</a>
+- PUBLISH procedure
+  - APEX_SHARED_COMPONENT <a href="APEX_SHARED_COMPONENT.PUBLISH-Procedure.html#GUID-9DCCC0E2-986A-4F76-B76A-9A50A9011539" target="contentwin">55.2</a>
+- PURGE_CACHE procedure
+  - APEX_PAGE <a href="PURGE_CACHE-Procedure.html#GUID-DA08D745-1D62-4DFE-A6CF-2F4E0D1B316E" target="contentwin">45.8</a>
+- PURGE_CACHE procedure signature 1
+  - APEX_REGION <a href="APEX_REGION.PURGE_CACHE-Procedure-Signature-1.html#GUID-9FC1EBE9-C11B-4CB7-9477-F667F9E1021A" target="contentwin">50.10</a>
+- PURGE_CACHE procedure signature 2
+  - APEX_REGION <a href="APEX_REGION.PURGE_CACHE-Procedure-Signature-2.html#GUID-CAED8068-76D5-46C4-8396-217416BAD73F" target="contentwin">50.11</a>
+- PURGE_DUALITY_VIEW_CACHE procedure
+  - APEX_EXEC <a href="APEX_EXEC.PURGE_DUALITY_VIEW_CACHE-Procedure.html#GUID-1A6625C2-6D12-4FF0-A2FB-298443C8163E" target="contentwin">28.60</a>
+- PURGE_JSON_SOURCE_CACHE procedure
+  - APEX_EXEC <a href="APEX_EXEC.PURGE_JSON_SOURCE_CACHE-Procedure.html#GUID-45369AFC-DA47-4C82-88B9-BDBF77A8763B" target="contentwin">28.61</a>
+- PURGE_REGIONS_BY_APP procedure
+  - APEX_UTIL <a href="PURGE_REGIONS_BY_APP-Procedure.html#GUID-BDCA1761-5E9C-482F-B337-715FC5D441C5" target="contentwin">61.101</a>
+- PURGE_REGIONS_BY_NAME procedure
+  - APEX_UTIL <a href="PURGE_REGIONS_BY_NAME-Procedure.html#GUID-27B5662C-DB73-40BB-BEFB-5EB22BA16484" target="contentwin">61.102</a>
+- PURGE_REGIONS_BY_PAGE procedure
+  - APEX_UTIL <a href="PURGE_REGIONS_BY_PAGE-Procedure.html#GUID-AFD748BC-5C3F-4F4C-AF2D-B98B8410319E" target="contentwin">61.103</a>
+- PURGE_REST_SOURCE_CACHE procedure
+  - APEX_EXEC <a href="APEX_EXEC.PURGE_REST_SOURCE_CACHE-procedure.html#GUID-FA580EA0-4825-4732-80C9-86E72DB9DBCC" target="contentwin">28.62</a>
+- PURGE_WEB_SOURCE_CACHE procedure
+  - APEX_EXEC <a href="APEX_EXEC.PURGE_WEB_SOURCE_CACHE-Procedure.html#GUID-A2D048D6-68D7-4FA6-AB2C-78ECD796D377" target="contentwin">28.63</a>
+- PUSH_QUEUE procedure
+  - APEX_MAIL <a href="PUSH_QUEUE-Procedure.html#GUID-A17CEA4E-B667-4657-AC0E-F2C0833010EC" target="contentwin">43.7</a>
+  - APEX_PWA <a href="APEX_PWA.PUSH_QUEUE-Procedure.html#GUID-5AFC6E30-5734-43E3-AABC-CCE271D3D218" target="contentwin">49.3</a>
+- PUSH procedure signature 1
+  - APEX_STRING <a href="PUSH-Procedure-Signature-1.html#GUID-E1100503-907E-4F98-B6F6-EED5376BA9A8" target="contentwin">57.21</a>
+- PUSH procedure signature 2
+  - APEX_STRING <a href="PUSH-Procedure-Signature-2.html#GUID-A2B53F2F-034E-412F-8BA2-5B0E76F47436" target="contentwin">57.22</a>
+- PUSH procedure signature 3
+  - APEX_STRING <a href="PUSH-Procedure-Signature-3.html#GUID-4A0F18B7-8E62-4308-9276-FFC0F7FE69A9" target="contentwin">57.23</a>
+- PUSH procedure signature 4
+  - APEX_STRING <a href="PUSH-Procedure-Signature-4.html#GUID-F17963E5-B3C4-49C5-B272-31D2869A94E8" target="contentwin">57.24</a>
+- PUSH procedure signature 5
+  - APEX_STRING <a href="PUSH-Procedure-Signature-5.html#GUID-BFB19B53-E5B2-46A7-B5FC-D050166EE6D3" target="contentwin">57.25</a>
+- PUSH procedure signature 6
+  - APEX_STRING <a href="PUSH-Procedure-Signature-6.html#GUID-42FE8472-6298-4DCE-BD75-7E7F1A62ABD2" target="contentwin">57.26</a>
+- PUSH procedure signature 7
+  - APEX_STRING <a href="PUSH-Procedure-Signature-7.html#GUID-03ED4AB6-49FB-421B-BF31-928C4E6891C1" target="contentwin">57.27</a>
+
+------------------------------------------------------------------------
+
+## Q
+
+- QUERY_EXPERT_SEARCH function
+  - APEX_SEARCH <a href="QUERY_EXPERT_SEARCH-Function.html#GUID-8406E422-85A3-4E5E-BC22-E5493CDBE5D0" target="contentwin">52.1</a>
+- QUERY_SEARCH_ENGINE function
+  - APEX_SEARCH <a href="QUERY_SEARCH_ENGINE-Function.html#GUID-1FD52515-7613-450C-BB24-4774E86EE05A" target="contentwin">52.2</a>
+
+------------------------------------------------------------------------
+
+## R
+
+- RADIOGROUP function
+  - APEX_ITEM <a href="RADIOGROUP-Function.html#GUID-E52D82B2-C7BD-4347-B5E8-35353B6C52CB" target="contentwin">37.12</a>
+- RECTANGLE function
+  - APEX_SPATIAL <a href="RECTANGLE-Function.html#GUID-2C21073A-0585-4106-A82F-18B1E500FEE9" target="contentwin">56.8</a>
+- REDIRECT_URL procedure
+  - APEX_UTIL <a href="REDIRECT_URL-Procedure.html#GUID-79186327-F301-4F71-8E05-B5A7E0CFB6E3" target="contentwin">61.104</a>
+- REFRESH_BUSINESS_ADMINS procedure
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.REFRESH_BUSINESS_ADMINS-Procedure.html#GUID-7669BDFA-B40C-4910-BF16-5814967A29F7" target="contentwin">32.28</a>
+- REFRESH_PARTICIPANTS procedure
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.REFRESH_PARTICIPANTS-Procedure.html#GUID-9508FAE8-00A5-4A41-A8E3-B2686618BE6A" target="contentwin">63.15</a>
+- REFRESH procedure
+  - APEX_SHARED_COMPONENT <a href="APEX_SHARED_COMPONENT.REFRESH-Procedure.html#GUID-031B76FC-C254-4173-8D4B-D2A669A004BA" target="contentwin">55.3</a>
+- REGEXP function
+  - APEX_ESCAPE <a href="REGEXP-Function.html#GUID-99620CB3-2BEC-4FDC-AD54-10C774F7E6C4" target="contentwin">27.23</a>
+- REJECT_TASK procedure
+  - APEX_APPROVAL <a href="REJECT_TASK-Procedure.html#GUID-83D225BB-D838-4F09-AB6D-000B59238506" target="contentwin">9.25</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.REJECT_TASK-Procedure.html#GUID-BECA2C83-2E57-457B-BF06-28B17694BB1A" target="contentwin">32.29</a>
+- RELEASE_TASK procedure
+  - APEX_APPROVAL <a href="RELEASE_TASK-Procedure.html#GUID-1F5801D8-6284-4A03-B7ED-B703363ED46E" target="contentwin">9.26</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.RELEASE_TASK-Procedure.html#GUID-F6FD9D81-8415-4D8A-B786-AD90823688C9" target="contentwin">32.30</a>
+- remote servers <a href="About-Configuring-Flexible-Remote-Servers.html#GUID-FAF1E808-56B5-43E8-8B38-34A1B9AC272B" target="contentwin">46.1</a>
+- REMOVE_ALL_USER_ROLES procedure
+  - APEX_ACL <a href="REMOVE_ALL_USER_ROLES-Procedure.html#GUID-B69043B9-9CE2-46F0-A900-C71F2912638A" target="contentwin">2.10</a>
+- REMOVE_APPLICATION procedure
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.REMOVE_APPLICATION-Procedure.html#GUID-7EB6E461-5403-4D67-BD0C-F22366657C1E" target="contentwin">8.43</a>
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_APPLICATION-Procedure.html#GUID-063B673C-0DFD-4BE1-9B41-BEB41D160A7D" target="contentwin">33.17</a>
+- REMOVE_AUTO_PROV_RESTRICTIONS procedure
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_AUTO_PROV_RESTRICTIONS-Procedure.html#GUID-8151ABF7-2EE0-4FC9-B6C4-799EC9885480" target="contentwin">33.18</a>
+- REMOVE_BLUEPRINT procedure
+  - APEX_DG_DATA_GEN <a href="REMOVE_BLUEPRINT-Procedure.html#GUID-4C72B9A9-2F9B-4A6C-AD65-388CE7316EB7" target="contentwin">25.17</a>
+- REMOVE_COLUMN procedure
+  - APEX_DG_DATA_GEN <a href="REMOVE_COLUMN-Procedure.html#GUID-E9E80BC9-202D-4978-B4F4-7D0E7C28B997" target="contentwin">25.18</a>
+- REMOVE_CURRENT_PERSISTENT_AUTH procedure
+  - APEX_AUTHENTICATION <a href="REMOVE_CURRENT_PERSISTENT_AUTH-Procedure.html#GUID-657B316B-DEEB-477E-9474-EB2635AAB3FF" target="contentwin">10.13</a>
+- REMOVE_DATA_SOURCE procedure
+  - APEX_DG_DATA_GEN <a href="REMOVE_DATA_SOURCE-Procedure.html#GUID-0E766A94-6787-4BD9-BB31-248FBE08EB45" target="contentwin">25.19</a>
+- REMOVE_DEBUG_BY_AGE procedure
+  - APEX_DEBUG <a href="REMOVE_DEBUG_BY_AGE-Procedure.html#GUID-EBD89F07-6D3B-4A97-8029-1F46FE8339B3" target="contentwin">24.16</a>
+- REMOVE_DEBUG_BY_APP procedure
+  - APEX_DEBUG <a href="REMOVE_DEBUG_BY_APP-Procedure.html#GUID-47124CAC-08A4-4B93-82EC-3E04DBBE47BD" target="contentwin">24.17</a>
+- REMOVE_DEBUG_BY_VIEW procedure
+  - APEX_DEBUG <a href="REMOVE_DEBUG_BY_VIEW-Procedure.html#GUID-4E27243D-92A2-44E7-8446-3ADADF185A65" target="contentwin">24.18</a>
+- REMOVE_DEVELOPMENT_INSTANCES procedure
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.REMOVE_DEVELOPMENT_INSTANCES-Procedure.html#GUID-A49F2E2F-1D13-4272-9D61-A0505DC647D5" target="contentwin">63.16</a>
+- REMOVE_MENU_ENTRY procedure
+  - APEX_EXTENSION <a href="APEX_EXTENSION.REMOVE_MENU_ENTRY-Procedure.html#GUID-9DF637AD-1AA5-4774-9445-B2CB24C80A45" target="contentwin">30.4</a>
+- REMOVE_PERSISTENT_AUTH procedure
+  - APEX_AUTHENTICATION <a href="REMOVE_PERSISTENT_AUTH-Procedure.html#GUID-4E1EC64B-FCCB-40EA-9690-F653D10093E0" target="contentwin">10.14</a>
+- REMOVE_POTENTIAL_OWNER procedure
+  - APEX_APPROVAL <a href="REMOVE_POTENTIAL_OWNER-Procedure.html#GUID-4A688074-5BEF-4A66-AE30-091FB069BAE5" target="contentwin">9.27</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.REMOVE_POTENTIAL_OWNER-Procedure.html#GUID-AE9D8639-38FB-4333-B426-030297BF8F19" target="contentwin">32.31</a>
+- REMOVE_REQUEST_HEADER procedure
+  - APEX_WEB_SERVICE <a href="REMOVE_REQUEST_HEADER-Procedure.html#GUID-F7BB37FE-A739-4609-98A9-61421F09B94E" target="contentwin">62.28</a>
+- REMOVE_SAVED_REPORT procedure
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_SAVED_REPORTS-Procedure.html#GUID-D2097869-4C18-4A60-B8F6-B2E80F6D5064" target="contentwin">33.20</a>
+- REMOVE_SAVED_REPORTS procedure
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_SAVED_REPORT-Procedure.html#GUID-E7F32AC1-C3EC-4DC6-B789-CA1EFDF9560B" target="contentwin">33.19</a>
+- REMOVE_SCHEMA_EXCEPTION procedure
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_SCHEMA_EXCEPTION-Procedure.html#GUID-F866ACE1-45F2-482E-AA42-F6B62C68F803" target="contentwin">33.22</a>
+- REMOVE_SCHEMA_EXCEPTIONS procedure
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_SCHEMA_EXCEPTIONS-Procedure.html#GUID-5DA71997-98DC-4D07-ACDB-B342AF6EEE69" target="contentwin">33.23</a>
+- REMOVE_SCHEMA procedure
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_SCHEMA-Procedure.html#GUID-0B53EA6F-1A24-476E-ADF5-8DCF0DF11324" target="contentwin">33.21</a>
+- REMOVE_SESSION_MESSAGES procedure
+  - APEX_DEBUG <a href="REMOVE_SESSION_MESSAGES-Procedure.html#GUID-4608E5F5-DC7D-4582-BE4C-A19FFDAB8C71" target="contentwin">24.19</a>
+- REMOVE_SORT_PREFERENCES procedure
+  - APEX_UTIL <a href="REMOVE_SORT_PREFERENCES-Procedure.html#GUID-E7EEC658-2A2D-47ED-84D6-1C30F4C29E6C" target="contentwin">61.106</a>
+- REMOVE_SUBSCRIPTION procedure
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_SUBSCRIPTION-Procedure.html#GUID-E7921204-2B41-4343-A11C-5CD6ED4E2BF2" target="contentwin">33.24</a>
+- REMOVE_TABLE procedure
+  - APEX_DG_DATA_GEN <a href="REMOVE_TABLE-Procedure.html#GUID-7004CD87-4E2F-402F-AFA3-BAB5096FCEE8" target="contentwin">25.20</a>
+- REMOVE_TEMPLATE procedure
+  - APEX_PRINT <a href="APEX_PRINT.REMOVE_TEMPLATE-Procedure.html#GUID-4072B77C-E4B8-456F-AEBE-67E9363747EA" target="contentwin">48.8</a>
+- REMOVE_USER_ROLE procedure signature 1
+  - APEX_ACL <a href="REMOVE_USER_ROLE-Procedure-Signature1.html#GUID-D846C00D-AD16-4463-8839-103CB3873D7A" target="contentwin">2.6</a>
+- REMOVE_USER_ROLE procedure signature 2
+  - APEX_ACL <a href="REMOVE_USER_ROLE-Procedure-Signature2.html#GUID-F54C8EC5-DFC3-455A-B84D-F524BFFBD47E" target="contentwin">2.7</a>
+- REMOVE_USER procedure
+  - APEX_UTIL <a href="REMOVE_USER-Signature-1-Procedure.html#GUID-BC7FB468-AC36-49E2-A36A-E594751B9468" target="contentwin">61.107</a>, <a href="REMOVE_USER-Signature-2-Procedure.html#GUID-01450749-F187-4DB5-8A65-F5427FB7B061" target="contentwin">61.108</a>
+- REMOVE_WEB_ENTRY_POINT procedure
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_WEB_ENTRY_POINT-Procedure.html#GUID-E2804C78-FC9D-428D-9132-A0F80824CC0F" target="contentwin">33.25</a>
+- REMOVE_WORKSPACE_EXCEPTIONS procedure
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_WORKSPACE_EXCEPTIONS-Procedure.html#GUID-A16B1798-C959-4900-B946-43842D4D6510" target="contentwin">33.27</a>
+- REMOVE_WORKSPACE procedure
+  - APEX_INSTANCE_ADMIN <a href="REMOVE_WORKSPACE-Procedure.html#GUID-4A70CC87-4DE6-43DA-A5E5-06DBD22668C1" target="contentwin">33.26</a>
+- RENEW_TASK function
+  - APEX_APPROVAL <a href="RENEW_TASK-Function.html#GUID-30276716-D04A-465F-99AC-36CDA949A7B5" target="contentwin">9.28</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.RENEW_TASK-Function.html#GUID-1B97BC63-0831-4707-B54B-B14C61A79D45" target="contentwin">32.32</a>
+- REPLACE_SUBSTITUTIONS function
+  - APEX_PLUGIN_UTIL <a href="REPLACE_SUBSTITUTIONS-Function.html#GUID-4462ADC1-479B-46B5-A823-B93B5087FDC0" target="contentwin">47.52</a>
+- REPLACE_USER_ROLES procedure signature 1
+  - APEX_ACL <a href="REPLACE_USER_ROLES-Procedure-Signature1.html#GUID-24C89315-91F7-4F9A-85EC-3748C082111E" target="contentwin">2.8</a>
+- REPLACE_USER_ROLES procedure signature 2
+  - APEX_ACL <a href="REPLACE_USER_ROLES-Procedure-Signature2.html#GUID-01CED8FC-CAEF-482B-AF8D-5D5A85A5D02B" target="contentwin">2.9</a>
+- REPLACE_WHITESPACE function
+  - APEX_STRING_UTIL <a href="REPLACE_WHITESPACE-Function.html#GUID-1839349F-2767-4351-9DF6-9A82121789C2" target="contentwin">58.13</a>
+- REPLY_TO_FEEDBACK procedure
+  - APEX_UTIL <a href="APEX_UTIL.REPLY_TO_FEEDBACK-Procedure.html#GUID-2DA3ED65-5D63-4705-B6D7-B214FDE114CC" target="contentwin">61.109</a>
+- REQUEST_MORE_INFORMATION procedure
+  - APEX_APPROVAL <a href="REQUEST_MORE_INFORMATION-Procedure.html#GUID-3A0AE94D-5C0C-417E-B651-3A7E4497B84D" target="contentwin">9.29</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.REQUEST_MORE_INFORMATION-Procedure.html#GUID-E3D88D24-F3E1-4022-B3F7-1A042E5741FF" target="contentwin">32.33</a>
+- RESCHEDULE procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_RESCHEDULE-Procedure.html#GUID-AEA1FD5A-135C-4B8E-84D4-FDD8076BFD3D" target="contentwin">12.15</a>
+  - APEX_REST_SOURCE_SYNC <a href="APEX_REST_SOURCE_SYNC-RESCHEDULE-Procedure.html#GUID-25F12A56-E56D-4318-88EF-94B6BFB41747" target="contentwin">51.7</a>
+- RESEQUENCE_BLUEPRINT procedure
+  - APEX_DG_DATA_GEN <a href="RESEQUENCE_BLUEPRINT-Procedure.html#GUID-5D8B5F4B-CE8F-43C4-B870-27EBB4C90028" target="contentwin">25.21</a>
+- RESEQUENCE_COLLECTION procedure
+  - APEX_COLLECTION <a href="RESEQUENCE_COLLECTION-Procedure.html#GUID-31A7CABB-A10C-4C4F-B7F4-B36006271662" target="contentwin">15.25</a>
+- RESERVE_WORKSPACE_APP_IDS procedure
+  - APEX_INSTANCE_ADMIN <a href="RESERVE_WORKSPACE_APP_IDS-Procedure.html#GUID-3E66E35B-2787-4A6F-8712-F3DB8C141AC0" target="contentwin">33.28</a>
+- RESET_AUTHORIZATIONS procedure
+  - APEX_UTIL <a href="RESET_AUTHORIZATIONS-Procedure-DEPRECATED.html#GUID-2FA75372-AB9A-417B-A4C4-EDE7E98DF15D" target="contentwin">61.110</a>
+- RESET_CACHE procedure
+  - APEX_AUTHORIZATION <a href="RESET_CACHE-Procedure.html#GUID-0FAD752E-C5B3-4876-9528-5C909BA20056" target="contentwin">11.4</a>
+- RESET_COLLECTION_CHANGED_ALL procedure
+  - APEX_COLLECTION <a href="RESET_COLLECTION_CHANGED_ALL-Procedure.html#GUID-9660DD2F-FC08-489D-8205-AF9F22B16549" target="contentwin">15.27</a>
+- RESET_COLLECTION_CHANGED procedure
+  - APEX_COLLECTION <a href="RESET_COLLECTION_CHANGED-Procedure.html#GUID-B63E77BD-479A-4B79-84AA-05CC6BA2F698" target="contentwin">15.26</a>
+- RESET_PASSWORD procedure
+  - APEX_UTIL <a href="RESET_PASSWORD-Procedure.html#GUID-D7416D24-1DBB-4784-960A-86E0EEC6F801" target="contentwin">61.111</a>
+- RESET_PW procedure
+  - APEX_UTIL <a href="RESET_PW-Procedure.html#GUID-42CC5310-81A2-41B3-BC2F-2653B0DA8EE1" target="contentwin">61.112</a>
+- RESET_REPORT procedure signature 1
+  - APEX_IG <a href="APEX_IG-RESET_REPORT-Procedure-Signature-1.html#GUID-584E0A60-501A-4A56-98A6-BC63F0815E82" target="contentwin">35.10</a>
+  - APEX_IR <a href="RESET_REPORT-Procedure-Signature-1.html#GUID-DB90E012-0DDC-4DC6-A330-295285C0F44D" target="contentwin">36.18</a>
+- RESET_REPORT procedure signature 2
+  - APEX_IG <a href="APEX_IG-RESET_REPORT-Procedure-Signature-2.html#GUID-548B0C16-3B00-4E66-A32B-A5167ADECD3B" target="contentwin">35.11</a>
+  - APEX_IR <a href="RESET_REPORT-Procedure-Signature-2.html#GUID-0AD09A7C-AB05-4B7F-8BE0-D845D4E613F4" target="contentwin">36.19</a>
+- RESET_REPORT procedure signature 3
+  - APEX_IG <a href="APEX_IG-RESET_REPORT-Procedure-Signature-3.html#GUID-D3C8B5EE-9BCC-4D0B-BE88-FCE31053C781" target="contentwin">35.12</a>
+  - APEX_IR <a href="RESET_REPORT-Procedure-Signature-3.html#GUID-86F5A943-BEF2-4E46-8478-C04FCAF5C704" target="contentwin">36.20</a>
+- RESET procedure signature 1
+  - APEX_REGION <a href="APEX_REGION.RESET-Procedure-Signature-1.html#GUID-344939F4-6CD7-4599-BB8B-3D673997F2FE" target="contentwin">50.12</a>
+- RESET procedure signature 2
+  - APEX_REGION <a href="APEX_REGION.RESET-Procedure-Signature-2.html#GUID-535BF5F6-7232-47F3-89B0-6E847BA15DF7" target="contentwin">50.13</a>
+- REST Data Source
+  - constants <a href="APEX_PLUGIN-Constants.html#GUID-F66C398F-B1D5-4E57-BE7C-481A15669578" target="contentwin">46.2</a>
+  - format <a href="APEX_PLUGIN-Constants.html#GUID-F66C398F-B1D5-4E57-BE7C-481A15669578" target="contentwin">46.2</a>
+- RESTful Web Service <a href="Invoking-a-RESTful-Style-Web-Service.html#GUID-E1CF6424-53BF-411A-8C54-67DCF754C737" target="contentwin">62.1.2</a>
+- RESTRICT_SCHEMA procedure
+  - APEX_INSTANCE_ADMIN <a href="RESTRICT_SCHEMA-Procedure.html#GUID-97A8DD03-5B6B-4C12-91E8-842CB156B6C6" target="contentwin">33.29</a>
+- RESUME procedure
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.RESUME-Procedure.html#GUID-52C1BAFA-119E-4E97-8341-149430825197" target="contentwin">63.17</a>
+- Retrieving Cookies and HTTP Headers
+  - APEX_WEB_SERVICE <a href="Retrieving-Cookies-and-HTTP-Headers.html#GUID-39ADA850-DDD1-4A71-834A-1F7BC4FB2269" target="contentwin">62.1.4</a>
+- RETRY procedure
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.RETRY-Procedure.html#GUID-46E78BD0-DE6F-4F75-B593-09804F99E88C" target="contentwin">63.18</a>
+- REVOKE_EXTENSION_WORKSPACE procedure
+  - APEX_INSTANCE_ADMIN <a href="REVOKE_EXTENSION_WORKSPACE-Procedure.html#GUID-CC0B1C6C-3859-42AE-A752-5F6FC2B45D57" target="contentwin">33.30</a>
+- REVOKE_USER_CONSENT_FOR_ALL procedure
+  - APEX_AI <a href="APEX_AI.REVOKE_USER_CONSENT_FOR_ALL-Procedure.html#GUID-2001B178-D757-40A0-A345-426C07B33E75" target="contentwin">3.15</a>
+- REVOKE_USER_CONSENT procedure
+  - APEX_AI <a href="APEX_AI.REVOKE_USER_CONSENT-Procedure.html#GUID-8B84569F-81CB-4A49-BEC9-1E0B80B1EE36" target="contentwin">3.14</a>
+
+------------------------------------------------------------------------
+
+## S
+
+- SAML_CALLBACK procedure
+  - APEX_AUTHENTICATION <a href="SAML_CALLBACK-Procedure.html#GUID-8FF3F8FD-7029-469E-A8A4-3CFF30DDECBD" target="contentwin">10.15</a>
+- SAML_METADATA procedure
+  - APEX_AUTHENTICATION <a href="SAML_METADATA-Procedure.html#GUID-E13F39D2-CDB0-46B4-A842-4291A98F4247" target="contentwin">10.16</a>
+- SAVEKEY_NUM function
+  - APEX_UTIL <a href="SAVEKEY_NUM-Function.html#GUID-55E57A86-708A-4B00-AAE4-5D8549432914" target="contentwin">61.113</a>
+- SAVEKEY_VC2 function
+  - APEX_UTIL <a href="SAVEKEY_VC2-Function.html#GUID-20EDB17C-2E8B-456D-AB98-7201BA8F27A8" target="contentwin">61.114</a>
+- SCAN procedure
+  - APEX_APP_OBJECT_DEPENDENCY <a href="APEX_APP_OBJECT_DEPENDENCY.SCAN-Procedure.html#GUID-1E2AE34E-EB71-4581-9B7E-3C26DCD2430C" target="contentwin">4.3</a>
+- SEARCH function
+  - APEX_LDAP <a href="APEX_LDAP.SEARCH-Function.html#GUID-A4A143A2-DFD9-4AF1-B871-16123339905B" target="contentwin">42.7</a>
+  - APEX_SEARCH <a href="APEX_SEARCH.SEARCH-Function.html#GUID-B593640D-93BF-435D-AC7A-CAB49991DF67" target="contentwin">52.3</a>
+- SEED_TRANSLATIONS procedure
+  - APEX_LANG <a href="SEED_TRANSLATIONS-Procedure.html#GUID-0CB1D45D-3C21-4859-8B41-381F31D1A204" target="contentwin">41.17</a>
+- SELECT_LIST_FROM_LOV_XL function
+  - APEX_ITEM <a href="SELECT_LIST_FROM_LOV_XL-Function.html#GUID-5962BADC-3A43-4579-9A9A-942661029D5B" target="contentwin">37.15</a>
+- SELECT_LIST_FROM_LOV function
+  - APEX_ITEM <a href="SELECT_LIST_FROM_LOV-Function.html#GUID-B34786DE-675E-415F-97A1-BDD7C4A1CBAE" target="contentwin">37.14</a>
+- SELECT_LIST_FROM_QUERY_XL function
+  - APEX_ITEM <a href="SELECT_LIST_FROM_QUERY_XL-Function.html#GUID-8231047F-FB9E-4DDB-89A5-E4AD8BFB49BB" target="contentwin">37.17</a>
+- SELECT_LIST_FROM_QUERY function
+  - APEX_ITEM <a href="SELECT_LIST_FROM_QUERY-Function.html#GUID-A4E36237-2B18-4CE5-A455-9771919A32F9" target="contentwin">37.16</a>
+- SELECT_LIST function
+  - APEX_ITEM <a href="SELECT_LIST-Function.html#GUID-7F55E7A5-29A8-4644-89A7-1F00A083ADAE" target="contentwin">37.13</a>
+- SEND_LOGIN_USERNAME_COOKIE procedure
+  - APEX_AUTHENTICATION <a href="SEND_LOGIN_USERNAME_COOKIE-Procedure.html#GUID-CF193954-1F7C-4045-9148-EA9D42C6FC28" target="contentwin">10.17</a>
+- SEND_PUSH_NOTIFICATION procedure
+  - APEX_PWA <a href="APEX_PWA.SEND_PUSH_NOTIFICATION-Procedure.html#GUID-5F2CBF6B-7D13-4A97-8E7D-EE955DECAF50" target="contentwin">49.4</a>
+- SEND function
+  - APEX_MAIL <a href="SEND-Function-Signature-2.html#GUID-9E630ED9-C896-4163-BEA1-9F52A110986B" target="contentwin">43.9</a>
+- SEND function signature 1
+  - APEX_MAIL <a href="SEND-Function-Signature-1.html#GUID-760A11B9-3CB9-435C-9289-C2F2791BB80C" target="contentwin">43.8</a>
+- sending email in queue
+  - APEX_MAIL_QUEUE <a href="PUSH_QUEUE-Procedure.html#GUID-A17CEA4E-B667-4657-AC0E-F2C0833010EC" target="contentwin">43.7</a>
+- SEND procedure signature 1
+  - APEX_MAIL <a href="SEND-Procedure-Signature-1.html#GUID-B1CD726B-EABE-4A9D-A7A4-3A973E84262D" target="contentwin">43.10</a>
+- SEND procedure signature 2
+  - APEX_MAIL <a href="SEND-Procedure-Signature-2.html#GUID-579D3770-3164-42C9-8EDD-69A61CB3207C" target="contentwin">43.11</a>
+- SESSION_ID_EXISTS function
+  - APEX_CUSTOM_AUTH <a href="SESSION_ID_EXISTS-Function.html#GUID-10D0470F-29A5-4920-924D-3BF231887413" target="contentwin">18.17</a>
+- session cookies <a href="GET_COOKIE_PROPS-Procedure.html#GUID-F21A8AC5-49DE-4E9D-BF33-0E1F3CACB7EA" target="contentwin">18.4</a>
+- session state
+  - fetching for current application <a href="FETCH_APP_ITEM-Function.html#GUID-308BAC59-9DAA-44A6-9227-3996B07AD6D0" target="contentwin">61.33</a>
+  - removing for current page <a href="CLEAR_PAGE_CACHE-Procedure.html#GUID-BFD48CCC-DC58-4B83-A8E1-3A49A5133C42" target="contentwin">61.12</a>
+  - removing for current session <a href="CLEAR_APP_CACHE-Procedure.html#GUID-174C5EA5-43C1-4DBE-8C28-14E162CF59E8" target="contentwin">61.11</a>
+  - setting <a href="SET_SESSION_LIFETIME_SECONDS-Procedure.html#GUID-BEB0E3A9-5E87-476D-B670-9C62D4CFF19E" target="contentwin">61.135</a>, <a href="SET_SESSION_STATE-Procedure.html#GUID-ECF66FA6-91DF-4463-A7DC-EFFB3E49A5D1" target="contentwin">61.139</a>
+- SET_ACTIVITY_DUE_DATE procedure
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.SET_ACTIVITY_DUE_DATE-Procedure.html#GUID-9E0CEC5F-A126-44DB-829D-B2433E3499AB" target="contentwin">63.19</a>
+- SET_ALLOWED_URLS procedure
+  - APEX_CREDENTIAL <a href="SET_ALLOWED_URLS-Procedure.html#GUID-7CCA4D3B-732A-4B11-9DDF-F82A2112CA1B" target="contentwin">16.5</a>
+- SET_APP_BUILD_STATUS Procedure
+  - APEX_UTIL <a href="SET_APP_BUILD_STATUS_Procedure.html#GUID-A0D47557-5870-444C-A06A-55C167370F52" target="contentwin">61.115</a>
+- SET_APPLICATION_ALIAS procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_APPLICATION_ALIAS-Procedure.html#GUID-E934C513-8996-4F84-AE4C-933207F0B980" target="contentwin">7.18</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_APPLICATION_ALIAS-Procedure.html#GUID-4201E565-179F-4743-95AC-3FEBE084C30E" target="contentwin">8.44</a>
+- SET_APPLICATION_ID procedure
+  - APEX_APPLICATION_INSTALL <a href="SET_APPLICATION_ID-Procedure.html#GUID-D938108A-6F87-4D29-971E-3B0BD9EE3B77" target="contentwin">8.45</a>
+- SET_APPLICATION_NAME procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_APPLICATION_NAME-Procedure.html#GUID-A61D4C27-432E-4476-B77E-B1BBD6A70561" target="contentwin">7.19</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_APPLICATION_NAME-Procedure.html#GUID-C7D67472-6027-446D-9FD4-EE50949906C4" target="contentwin">8.46</a>
+- SET_APPLICATION_STATUS procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_APPLICATION_STATUS-Procedure.html#GUID-F6BA64DC-63D6-4BCD-8307-E10CA94E9CC0" target="contentwin">7.20</a>
+  - APEX_UTIL <a href="SET_APPLICATION_STATUS-Procedure.html#GUID-59E0FE99-8911-41B3-823A-36D4C705ACA4" target="contentwin">61.116</a>
+- SET_APPLICATION_VERSION procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_APPLICATION_VERSION-Procedure.html#GUID-44612130-8DB8-46A2-901D-08FBAC35A385" target="contentwin">7.21</a>
+- SET_ARRAY_CURRENT_ROW procedure
+  - APEX_EXEC <a href="APEX_EXEC.SET_ARRAY_CURRENT_ROW-Procedure.html#GUID-A4C59BF3-E31A-46E0-9156-93CC14214905" target="contentwin">28.64</a>
+- SET_ARRAY_ROW_VERSION_CHECKSUM procedure
+  - APEX_EXEC <a href="APEX_EXEC.SET_ARRAY_ROW_VERSION_CHECKSUM-Procedure.html#GUID-F36780BF-8857-4BAA-B9D7-FAED159B741A" target="contentwin">28.65</a>
+- SET_ATTRIBUTE procedure
+  - APEX_UTIL <a href="SET_ATTRIBUTE-Procedure.html#GUID-9EF508D0-1518-4CAB-9BE2-E07174441CA3" target="contentwin">61.117</a>
+- SET_AUTHENTICATION_RESULT procedure
+  - APEX_UTIL <a href="SET_AUTHENTICATION_RESULT-Procedure.html#GUID-971E9C8A-17D1-4D7C-B885-28F47402AD06" target="contentwin">61.118</a>
+- SET_AUTHENTICATION_SCHEME procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_AUTHENTICATION_SCHEME-Procedure.html#GUID-2A6F4D02-1784-4C03-9390-655DF77CFBB6" target="contentwin">7.22</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_AUTHENTICATION_SCHEME-Procedure.html#GUID-F3F7D641-C5F8-4BF7-8A66-D3590A9735AA" target="contentwin">8.47</a>
+- SET_AUTO_INSTALL_SUP_OBJ procedure
+  - APEX_APPLICATION_INSTALL <a href="SET_AUTO_INSTALL_SUP_OBJ-Procedure.html#GUID-8B412FF8-3A51-45C2-B2B9-40532F65EFD1" target="contentwin">8.48</a>
+- SET_BUILD_OPTION_STATUS procedure
+  - APEX_UTIL <a href="SET_BUILD_OPTION_STATUS-Procedure.html#GUID-98403494-2FDD-4C72-BA59-886F03C1A9A3" target="contentwin">61.119</a>
+- SET_BUILD_OPTION_STATUS procedure signature 1
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure-Signature-1.html#GUID-EA4B6939-510C-43D7-A6AB-3EBA2D72598E" target="contentwin">7.23</a>
+- SET_BUILD_OPTION_STATUS procedure signature 2
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure-Signature-2.html#GUID-5508276E-32F4-45C3-9ECB-EBB4DA9FC2E2" target="contentwin">7.24</a>
+- SET_BUILD_STATUS function
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_BUILD_STATUS-Function.html#GUID-D75D7CED-7447-4458-A655-0DEDE8458527" target="contentwin">8.49</a>
+- SET_BUILD_STATUS procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_BUILD_STATUS-Procedure.html#GUID-C5B6C4BB-12EF-4F45-9284-B6BD71C098F4" target="contentwin">7.25</a>
+- SET_COMPONENT_VALUES procedure
+  - APEX_PLUGIN_UTIL <a href="SET_COMPONENT_VALUES-Procedure.html#GUID-D49DBBA3-9BCA-4B48-A154-7B0E8F408A86" target="contentwin">47.53</a>
+- SET_CSV_PARAMETERS procedure
+  - APEX_ESCAPE <a href="SET_CSV_PARAMETERS-Procedure.html#GUID-1733DE2C-6014-462D-BF3E-DDE709CE125B" target="contentwin">27.24</a>
+- SET_CURRENT_ROW procedure
+  - APEX_EXEC <a href="APEX_EXEC.SET_CURRENT_ROW-Procedure.html#GUID-0D7239E7-D7A5-4205-84D1-DF7499BC7D4B" target="contentwin">28.66</a>
+- SET_CURRENT_STYLE procedure
+  - APEX_THEME <a href="SET_CURRENT_STYLE-Procedure.html#GUID-1E8901B5-A0A1-40A0-9606-4AF738B68BA4" target="contentwin">59.6</a>
+- SET_CURRENT_THEME_STYLE procedure
+  - APEX_UTIL <a href="SET_CURRENT_THEME_STYLE-Procedure.html#GUID-0480BC8D-0C88-4800-911F-162DD6E0ACB3" target="contentwin">61.120</a>
+- SET_CUSTOM_AUTH_STATUS procedure
+  - APEX_UTIL <a href="SET_CUSTOM_AUTH_STATUS-Procedure.html#GUID-1374CDB1-7E13-49B0-823D-2999F9366C79" target="contentwin">61.121</a>
+- SET_DATABASE_CREDENTIAL procedure
+  - APEX_CREDENTIAL <a href="SET_DATABASE_CREDENTIAL-Procedure.html#GUID-19DE0E3E-BBFB-4F42-AA53-FA59862D863D" target="contentwin">16.6</a>
+- SET_DATASET_IMPORT_MODE procedure
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_DATASET_IMPORT_MODE-Function.html#GUID-F4D53593-B292-43C4-813D-273B300C7F23" target="contentwin">8.50</a>
+- SET_DEBUG procedure
+  - APEX_SESSION <a href="SET_DEBUG-Procedure.html#GUID-9E5FC479-1B37-4B77-B992-E82720CB95FE" target="contentwin">53.5</a>
+- SET_EDITION procedure
+  - APEX_UTIL <a href="SET_EDITION-Procedure.html#GUID-11FD0711-2503-48CB-97A2-4FF5A5271D3E" target="contentwin">61.122</a>
+- SET_EMAIL procedure
+  - APEX_UTIL <a href="SET_EMAIL-Procedure.html#GUID-02386891-586E-49E2-847A-A5504E65095E" target="contentwin">61.123</a>
+- SET_FILE_STORAGE procedure
+  - APEX_APPLICATION_ADMIN <a href="SET_FILE_STORAGE-Procedure.html#GUID-FB536D09-EE54-487F-9ACC-FFBEFA75A126" target="contentwin">7.26</a>
+- SET_FIRST_NAME procedure
+  - APEX_UTIL <a href="SET_FIRST_NAME-Procedure.html#GUID-BC4570FB-1201-490B-8D8A-4651D613D856" target="contentwin">61.124</a>
+- SET_GLOBAL_NOTIFICATION procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_GLOBAL_NOTIFICATION-Procedure.html#GUID-71C6F727-A74C-4853-8172-2F3AF402E55E" target="contentwin">7.27</a>
+  - APEX_UTIL <a href="SET_GLOBAL_NOTIFICATION-Procedure.html#GUID-9EA87E45-8B07-4A72-B628-7DB023E6489C" target="contentwin">61.125</a>
+- SET_GROUP_GROUP_GRANTS procedure
+  - APEX_UTIL <a href="SET_GROUP_GROUP_GRANTS-Procedure.html#GUID-3B063E08-1B35-4955-B4C1-4845CBF7655F" target="contentwin">61.126</a>
+- SET_GROUP_USER_GRANTS procedure
+  - APEX_UTIL <a href="SET_GROUP_USER_GRANTS-Procedure.html#GUID-A4997FF4-D807-498C-8AA4-4590E60CA6B5" target="contentwin">61.127</a>
+- SET_HTML_ESCAPING_MODE procedure
+  - APEX_ESCAPE <a href="SET_HTML_ESCAPING_MODE-Procedure.html#GUID-29152A21-03A9-4607-A03E-2D6F8BEBFFFA" target="contentwin">27.25</a>
+- SET_IMAGE_PREFIX procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_IMAGE_PREFIX-Procedure.html#GUID-2538791C-D9AF-46F8-946E-C373EDB50DCA" target="contentwin">7.28</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_IMAGE_PREFIX-Procedure.html#GUID-8F39E8E2-41A4-4B47-A116-9F3E95DABE15" target="contentwin">8.51</a>
+- SET_INITIATOR_CAN_COMPLETE procedure
+  - APEX_APPROVAL <a href="SET_INITIATOR_CAN_COMPLETE-Procedure.html#GUID-EAA186C8-D743-412F-844A-C4E908294E43" target="contentwin">9.30</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.SET_INITIATOR_CAN_COMPLETE-Procedure.html#GUID-A1BC6163-DD26-4411-A8DD-6C6FE60D9111" target="contentwin">32.34</a>
+- SET_KEEP_BACKGROUND_EXECS procedure
+  - APEX_APPLICATION_INSTALLf <a href="SET_KEEP_BACKGROUND_EXECS-Procedure.html#GUID-7256F0F4-F017-4687-BC23-830D57EC1BDF" target="contentwin">8.52</a>
+- SET_KEEP_SESSIONS procedure
+  - APEX_APPLICATION_INSTALL <a href="SET_KEEP_SESSIONS-Procedure.html#GUID-3FF4CA7A-413D-4901-8291-11EEA8141EBE" target="contentwin">8.53</a>
+- SET_LAST_NAME procedure
+  - APEX_UTIL <a href="SET_LAST_NAME-Procedure.html#GUID-E892B650-A885-4D73-84D2-344BC62C5F85" target="contentwin">61.128</a>
+- SET_LOG_LEVEL procedure
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.SET_LOG_LEVEL-Procedure.html#GUID-54EF2D64-6DDE-440B-BFF5-E1C040129E88" target="contentwin">63.20</a>
+- SET_LOG_SWITCH_INTERVAL procedure
+  - APEX_INSTANCE_ADMIN <a href="SET_LOG_SWITCH_INTERVAL-Procedure.html#GUID-2E79A8AC-79EB-445C-BFC3-77A73CD7166B" target="contentwin">33.31</a>
+- SET_MAX_SCHEDULER_JOBS procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_MAX_SCHEDULER_JOBS-Procedure.html#GUID-21447A6C-C1DE-4AB4-BCC0-E554524854C0" target="contentwin">7.29</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_MAX_SCHEDULER_JOBS-Procedure.html#GUID-8DAED95A-D0C7-4EF8-81CC-E5CE7287A45B" target="contentwin">8.54</a>
+- SET_NULL procedure
+  - APEX_EXEC <a href="APEX_EXEC.SET_NULL-Procedure.html#GUID-659FE8D4-B561-4DBA-9BA6-8F0BAC820593" target="contentwin">28.67</a>
+- SET_OFFSET procedure
+  - APEX_APPLICATION_INSTALL <a href="SET_OFFSET-Procedure.html#GUID-22E45DC6-DACC-4B1B-AAB1-BCCAC8499D12" target="contentwin">8.55</a>
+- SET_PARAMETER procedure
+  - APEX_INSTANCE_ADMIN <a href="SET_PARAMETER-Procedure.html#GUID-A6D8CA93-798D-4582-97B9-C7D3ED709AC5" target="contentwin">33.32</a>
+- SET_PARSER_FLAGS procedure
+  - APEX_DATA_PARSER <a href="APEX_DATA_PARSER.SET_PARSER_FLAGS-Procedure.html#GUID-CDCF2A86-AEEA-4483-A574-014967F0CC90" target="contentwin">22.11</a>
+- SET_PARSING_SCHEMA_FOR \_REQUEST procedure
+  - APEX_UTIL <a href="SET_PARSING_SCHEMA_FOR_REQUEST-Procedure.html#GUID-2DB16C9E-6238-4DF9-A920-20D8E8FA93C0" target="contentwin">61.129</a>
+- SET_PARSING_SCHEMA procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_PARSING_SCHEMA-Procedure.html#GUID-E7774F5A-43CF-4DCD-825F-8AB78E8B8347" target="contentwin">7.30</a>
+- SET_PASS_ECID procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_PASS_ECID-Procedure.html#GUID-BD6B8557-D02A-4216-9017-98BB48A4F956" target="contentwin">7.31</a>
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_PASS_ECID-Procedure.html#GUID-23CB31CB-7281-4DED-AA80-F8BA34E38DD3" target="contentwin">8.56</a>
+- SET_PERSISTENT_CREDENTIALS procedure
+  - APEX_CREDENTIAL <a href="SET_PERSISTENT_CREDENTIAL-Procedure-Signature-1.html#GUID-98E9B643-4BE7-46F0-AAFB-BF9B48C427E5" target="contentwin">16.7</a>, <a href="APEX_CREDENTIAL.SET_PERSISTENT_CREDENTIALS-Procedure-Signature-3.html#GUID-CEC2A6F5-961C-4DDE-80F5-51EE75C1C3E2" target="contentwin">16.9</a>
+- SET_PERSISTENT_CREDENTIALS procedure signature 2
+  - APEX_CREDENTIAL <a href="SET_PERSISTENT_CREDENTIAL-Procedure-Signature-2.html#GUID-24A756EC-BCE9-4875-A42F-46A84F0C4E10" target="contentwin">16.8</a>
+- SET_PERSISTENT_TOKEN procedure
+  - APEX_CREDENTIAL <a href="SET_PERSISTENT_TOKEN-Procedure.html#GUID-4BDCAD5D-8666-4BA8-972C-301894371FC2" target="contentwin">16.10</a>
+- SET_PREFERENCE procedure
+  - APEX_UTIL <a href="SET_PREFERENCE-Procedure.html#GUID-7B4C2BED-93BA-477D-82AA-23493B7B0549" target="contentwin">61.130</a>
+- SET_PROGRESS procedure
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS.SET_PROGRESS-Procedure.html#GUID-505AA39D-2619-4DCA-A7C1-65939448E0B8" target="contentwin">13.7</a>
+- SET_PROXY_SERVER procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_PROXY_SERVER-Procedure.html#GUID-9DEC0F1F-E727-4A49-8E71-BDB787CD2F7D" target="contentwin">7.32</a>
+- SET_PROXY procedure
+  - APEX_APPLICATION_INSTALL <a href="SET_PROXY-Procedure.html#GUID-E880E9BC-1068-4382-9153-7951EC7AB018" target="contentwin">8.57</a>
+- SET_REMOTE_SERVER procedure
+  - APEX_APPLICATION_ADMIN <a href="APEX_APPLICATION_ADMIN.SET_REMOTE_SERVER-Procedure.html#GUID-6D3B66D3-824A-4E01-900C-BE91C7F2BCF2" target="contentwin">7.33</a>
+  - APEX_APPLICATION_INSTALL <a href="SET_REMOTE_SERVER-Procedure.html#GUID-B71B95DF-2362-4E79-9E95-F4CE68D95ACA" target="contentwin">8.58</a>
+- SET_REQUEST_ECID_CONTEXT procedure
+  - APEX_WEB_SERVICE <a href="SET_REQUEST_ECID_CONTEXT-Procedure.html#GUID-6C58EA0D-CA44-4671-AD50-618C67269F56" target="contentwin">62.29</a>
+- SET_REQUEST_HEADERS procedure
+  - APEX_WEB_SERVICE <a href="SET_REQUEST_HEADERS-Procedure.html#GUID-506EE2D1-B1EF-490F-ABA4-B40832EACC35" target="contentwin">62.30</a>
+- SET_REST_SOURCE_CATALOG_GROUP procedure
+  - APEX_APPLICATION_INSTALL <a href="SET_REST_SOURCE_CATALOG_GROUP-Procedure.html#GUID-3A7D636D-67DF-4635-9BFC-DA0277458F56" target="contentwin">8.59</a>
+- SET_ROW_VERSION_CHECKSUM procedure
+  - APEX_EXEC <a href="APEX_EXEC.SET_ROW_VERSION_CHECKSUM-Procedure.html#GUID-DE0D6BB4-1D37-4026-9A27-49EB072523E4" target="contentwin">28.68</a>
+- SET_SCHEMA procedure
+  - APEX_APPLICATION_INSTALL <a href="SET_SCHEMA-Procedure.html#GUID-91E19233-28AA-4668-94EB-55A67BA4D564" target="contentwin">8.60</a>
+- SET_SCOPE procedure
+  - APEX_CREDENTIAL <a href="APEX_CREDENTIAL.SET_SCOPE-Procedure.html#GUID-9EC004FD-88B8-4100-9CE9-DEA760CA2782" target="contentwin">16.11</a>
+- SET_SECURITY_GROUP_ID procedure
+  - APEX_UTIL <a href="SET_SECURITY_GROUP_ID-Procedure.html#GUID-8A6265B5-BDC6-4178-A550-260CCA5216F3" target="contentwin">61.131</a>, <a href="SET_SESSION_LANG-Procedure.html#GUID-CCF94B9A-4903-4AC5-8142-62D51A8777DC" target="contentwin">61.134</a>
+- SET_SECURITY_HIGH_CONTRAST_OFF procedure
+  - APEX_UTIL <a href="SET_SESSION_HIGH_CONTRAST_OFF-Procedure.html#GUID-17620028-285E-425C-AE63-76597B432216" target="contentwin">61.132</a>
+- SET_SESSION_CREDENTIALS procedure signature 1
+  - APEX_CREDENTIAL <a href="SET_SESSION_CREDENTIALS-Procedure-Signature-1.html#GUID-CE603CDC-2DA7-4358-BD7F-411690E50EDD" target="contentwin">16.12</a>
+- SET_SESSION_CREDENTIALS procedure signature 2
+  - APEX_CREDENTIAL <a href="SET_SESSION_CREDENTIALS-Procedure-Signature-2.html#GUID-44DF7B44-B792-43B2-B033-384F675EC323" target="contentwin">16.13</a>
+- SET_SESSION_CREDENTIALS procedure signature 3
+  - APEX_CREDENTIAL <a href="SET_SESSION_CREDENTIALS-Procedure-Signature-3.html#GUID-24062E55-2261-4AA4-8BE7-E643DA626602" target="contentwin">16.14</a>
+- SET_SESSION_ID_TO_NEXT_VALUE procedure
+  - APEX_CUSTOM_AUTH <a href="SET_SESSION_ID_TO_NEXT_VALUE-Procedure.html#GUID-0B9D256F-84E1-46B6-B9C1-BA6D16E567E5" target="contentwin">18.19</a>
+- SET_SESSION_ID procedure
+  - APEX_CUSTOM_AUTH <a href="SET_SESSION_ID-Procedure.html#GUID-3FE8E03F-EDE3-48A3-8192-FEB154E32CD7" target="contentwin">18.18</a>
+- SET_SESSION_MAX_IDLE_SECONDS procedure
+  - APEX_UTIL <a href="SET_SESSION_MAX_IDLE_SECONDS-Procedure.html#GUID-5E334713-706C-4AA1-A856-4711271C0929" target="contentwin">61.136</a>
+- SET_SESSION_SCREEN_READER_OFF procedure
+  - APEX_UTIL <a href="SET_SESSION_SCREEN_READER_OFF-Procedure.html#GUID-8057B11D-67C4-4F02-A70B-F0CFAB7FADA0" target="contentwin">61.137</a>
+- SET_SESSION_SCREEN_READER_ON procedure
+  - APEX_UTIL <a href="SET_SESSION_SCREEN_READER_ON-Procedure.html#GUID-3D6F7B4B-091B-49AF-941D-52EA8C8F2FCC" target="contentwin">61.138</a>
+- SET_SESSION_STATE procedure
+  - APEX_UTIL <a href="SET_SESSION_LIFETIME_SECONDS-Procedure.html#GUID-BEB0E3A9-5E87-476D-B670-9C62D4CFF19E" target="contentwin">61.135</a>
+- SET_SESSION_STYLE_CSS procedure
+  - APEX_THEME <a href="SET_SESSION_STYLE_CSS-Procedure.html#GUID-A43A6973-FC15-4747-9635-56747434A778" target="contentwin">59.8</a>
+- SET_SESSION_STYLE procedure
+  - APEX_THEME <a href="SET_SESSION_STYLE-Procedure.html#GUID-0C3C364E-381C-4F4A-BFDE-37B792FB62A1" target="contentwin">59.7</a>
+- SET_SESSION_TERRITORY procedure
+  - APEX_UTIL <a href="SET_SESSION_TERRITORY-Procedure.html#GUID-AE1B8888-CBE5-4447-9263-74E63FDC462F" target="contentwin">61.140</a>
+- SET_SESSION_TIME_ZONE procedure
+  - APEX_UTIL <a href="SET_SESSION_TIME_ZONE-Procedure.html#GUID-B3BCA991-3799-41C6-840F-1A57CADC39AC" target="contentwin">61.141</a>
+- SET_SESSION_TOKEN procedure
+  - APEX_CREDENTIAL <a href="SET_SESSION_TOKEN-Procedure.html#GUID-7752251E-AB3A-4E84-8366-E7786AEDD7ED" target="contentwin">16.15</a>
+- SET_STATUS procedure
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS.SET_STATUS-Procedure.html#GUID-C992D7EC-FE31-46BA-BA40-F5F47089F0BD" target="contentwin">13.8</a>
+- SET_SUBSCRIPTION_MAPPING procedure
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_SUBSCRIPTION_MAPPING-Procedure.html#GUID-93AE8771-378E-4832-B215-9C111DC1F52E" target="contentwin">8.61</a>
+- SET_SUBSCRIPTION_MODE procedure
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_SUBSCRIPTION_MODE-Procedure.html#GUID-2FBC9790-8F45-4FE3-B5BA-0DD055050E2C" target="contentwin">8.62</a>
+- SET_TASK_DUE procedure
+  - APEX_APPROVAL <a href="SET_TASK_DUE-Procedure.html#GUID-951A567E-CF0D-4B0B-9189-CE46EF4C1CF4" target="contentwin">9.31</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.SET_TASK_DUE-Procedure.html#GUID-1CE0D732-F0DA-47EC-ABF9-37BFDAA9AE15" target="contentwin">32.35</a>
+- SET_TASK_PARAMETER_VALUES procedure
+  - APEX_APPROVAL <a href="SET_TASK_PARAMETER_VALUES-Procedure.html#GUID-7270BA5A-127A-4A7A-9E7D-0EF1BA0583D0" target="contentwin">9.32</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.SET_TASK_PARAMETER_VALUES-Procedure.html#GUID-5FC5EDED-62DD-4F89-A7B9-4EEA64A1FA7E" target="contentwin">32.36</a>
+- SET_TASK_PRIORITY procedure
+  - APEX_APPROVAL <a href="SET_TASK_PRIORITY-Procedure.html#GUID-11B98BBF-0305-4896-AD45-A4E5ED621ED4" target="contentwin">9.33</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.SET_TASK_PRIORITY-Procedure.html#GUID-6AA5F9A8-1F2E-4CFC-A72B-1ACAC240213C" target="contentwin">32.37</a>
+- SET_TENANT_ID procedure
+  - APEX_SESSION <a href="SET_TENANT_ID.html#GUID-8FBB2B94-11A0-4A11-80DA-BA0FCA504503" target="contentwin">53.6</a>
+- SET_THEME_ID procedure
+  - APEX_APPLICATION_INSTALL <a href="SET_THEME_ID-Procedure.html#GUID-D2801033-602C-40C0-9EE4-E7B1A4BBF1B4" target="contentwin">8.63</a>
+- SET_TOOL_RESULT procedure signature 1
+  - APEX_AI <a href="APEX_AI.SET_TOOL_RESULT-Procedure-Signature-1.html#GUID-2C356F88-1A7A-4971-AF59-04CC0C1346A6" target="contentwin">3.16</a>
+- SET_TOOL_RESULT procedure signature 2
+  - APEX_AI <a href="APEX_AI.SET_TOOL_RESULT-Procedure-Signature-2.html#GUID-4EC94ADF-3C18-4946-8F5C-9B4E32704263" target="contentwin">3.17</a>
+- SET_TRACE procedure
+  - APEX_SESSION <a href="SET_TRACE-Procedure.html#GUID-5C2CADBE-A9A4-4B67-9863-D655CEA0E962" target="contentwin">53.7</a>
+- SET_USER_CONSENT procedure
+  - APEX_AI <a href="APEX_AI.SET_USER_CONSENT-Procedure.html#GUID-C26E45F9-E0E5-4667-8983-0CAFB6DF47BA" target="contentwin">3.18</a>
+- SET_USER_STYLE procedure
+  - APEX_THEME <a href="SET_USER_STYLE-Procedure.html#GUID-5A24E1AB-E19F-4EB4-A604-2AEEEA2CF85A" target="contentwin">59.9</a>
+- SET_USERNAME procedure
+  - APEX_UTIL <a href="SET_USERNAME-Procedure.html#GUID-011204BC-D14B-4F1B-BF89-EB5AA454D5D9" target="contentwin">61.142</a>
+- SET_USER procedure
+  - APEX_CUSTOM_AUTH <a href="SET_USER-Procedure.html#GUID-19B6B91C-9471-4DFB-993F-A767F70909F1" target="contentwin">18.20</a>
+- SET_VALUE procedure
+  - APEX_APP_SETTING <a href="APEX_APP_SETTING.SET_VALUE-Procedure.html#GUID-55FC3585-DE0F-494C-8F57-A8F7F51EA29D" target="contentwin">5.2</a>
+  - APEX_EXEC <a href="APEX_EXEC.SET_VALUE-Procedure.html#GUID-377EA347-647F-479B-B407-53B9C397EC20" target="contentwin">28.69</a>
+- SET_VALUE procedure signature 1
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE.SET_VALUE-Procedure-Signature-1.html#GUID-0E356D89-C74B-4427-9C39-F5DEDC4D2FB3" target="contentwin">54.9</a>
+- SET_VALUE procedure signature 2
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE.SET_VALUE-Procedure-Signature-2.html#GUID-A662720F-70B8-4A69-B49B-9E0412BB1518" target="contentwin">54.10</a>
+- SET_VALUE procedure signature 3
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE.SET_VALUE-Procedure-Signature-3.html#GUID-60B77E48-D1BD-4ECB-A91B-37ABE892A280" target="contentwin">54.11</a>
+- SET_VALUE procedure signature 4
+  - APEX_SESSION_STATE <a href="APEX_SESSION_STATE.SET_VALUE-Procedure-Signature-4.html#GUID-2ED41D4B-68E8-4027-86A0-1EF98E495F14" target="contentwin">54.12</a>
+- SET_VALUES procedure
+  - APEX_EXEC <a href="APEX_EXEC.SET_VALUES-Procedure.html#GUID-E5152786-4376-4DFB-9856-A77562AF2C09" target="contentwin">28.70</a>
+- SET_WORKSPACE_CONSUMER_GROUP procedure
+  - APEX_INSTANCE_ADMIN <a href="SET_WORKSPACE_CONSUMER_GROUP-Procedure.html#GUID-C49A426F-D81E-41BE-BCCC-20C85226A731" target="contentwin">33.33</a>
+- SET_WORKSPACE_ID procedure
+  - APEX_APPLICATION_INSTALL <a href="SET_WORKSPACE_ID-Procedure.html#GUID-3A865D87-BD45-4492-9076-BFB88FF22B8C" target="contentwin">8.64</a>
+- SET_WORKSPACE_PARAMETER procedure
+  - APEX_INSTANCE_ADMIN <a href="SET_WORKSPACE_PARAMETER.html#GUID-410868A9-01CC-409F-965E-5F76A00B585B" target="contentwin">33.34</a>
+- SET_WORKSPACE procedure
+  - APEX_APPLICATION_INSTALL <a href="APEX_APPLICATION_INSTALL.SET_WORKSPACE_Procedure.html#GUID-71BA5D9B-3139-45C5-8612-CD827FA631DD" target="contentwin">8.65</a>
+  - APEX_UTIL <a href="APEX_UTIL.SET_WORKSPACE_Procedure-2.html#GUID-20B79E1B-6F00-4E07-9278-9E5A45586D1F" target="contentwin">61.143</a>
+- SET_WORKSPACE procedure signature 1
+  - APEX_EXTENSION <a href="APEX_EXTENSION.SET_WORKSPACE-Procedure-Signature-1.html#GUID-7D953564-5E40-42F2-BA02-37023A985A4B" target="contentwin">30.5</a>
+- SET_WORKSPACE procedure signature 2
+  - APEX_EXTENSION <a href="APEX_EXTENSION.SET_WORKSPACE-Procedure-Signature-2.html#GUID-ABC96254-68BE-4455-8A2A-A8065DEDDC23" target="contentwin">30.6</a>
+- Setting Cookies and HTTP Headers
+  - APEX_WEB_SERVICE <a href="Setting-Cookies-and-HTTP-Headers.html#GUID-7F49060A-3359-47ED-B18B-AD34A1885E92" target="contentwin">62.1.3</a>
+- SHOW_HIGH_CONTRAST_MODE_TOGGLE procedure
+  - APEX_UTIL <a href="SHOW_HIGH_CONTRAST_MODE_TOGGLE-Procedure.html#GUID-B75336A2-FE32-4BB2-B73D-2C5DE0DB4DEA" target="contentwin">61.144</a>
+- SHOW_SCREEN_READER_MODE_TOGGLE procedure
+  - APEX_UTIL <a href="SHOW_SCREEN_READER_MODE_TOGGLE-Procedure.html#GUID-9744AC5C-3782-4B40-B091-33EAA6C117BB" target="contentwin">61.145</a>
+- SHUFFLE function
+  - APEX_STRING <a href="SHUFFLE-Function.html#GUID-0CECEC57-C5C7-4C38-8BCA-077B185ED858" target="contentwin">57.28</a>
+- SHUFFLE procedure
+  - APEX_STRING <a href="SHUFFLE-Procedure.html#GUID-EF3BB8AD-33D6-41C5-A509-964C3ACCE23E" target="contentwin">57.29</a>
+- SKIP_CURRENT_ROW procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_SKIP_CURRENT_ROW-Procedure.html#GUID-5C32EC9E-B0EC-4C4C-B5AE-59D90CB89250" target="contentwin">12.16</a>
+- SOAP web service <a href="Invoking-a-SOAP-Style-Web-Service.html#GUID-172535D9-552E-4403-BE79-2EE92DB4AFCE" target="contentwin">62.1.1</a>
+- SORT_MEMBERS procedure
+  - APEX_COLLECTION <a href="SORT_MEMBERS-Procedure.html#GUID-523A647A-58E6-419A-A817-C982D2402F25" target="contentwin">15.28</a>
+- SPATIAL_IS_AVAILABLE function
+  - APEX_SPATIAL <a href="SPATIAL_IS_AVAILABLE-Function.html#GUID-8E6B82FC-1035-4775-840C-7A6BDAB5B328" target="contentwin">56.9</a>
+- special characters, encoding <a href="URL_ENCODE-Function.html#GUID-47DB18F3-133B-43F0-B045-F19C09190357" target="contentwin">61.155</a>
+- SPLIT_CLOBS function
+  - APEX_STRING <a href="SPLIT_CLOBS-Function.html#GUID-48A497C0-C044-430C-B7C8-35410F6645C4" target="contentwin">57.32</a>
+- SPLIT_MUTLIPLE_VALUE_TO_TABLE function
+  - APEX_PLUGIN_UTIL <a href="SPLIT_MUTLIPLE_VALUE_TO_TABLE-Function.html#GUID-633C277F-6C1B-48FE-8EBF-D33640B95D67" target="contentwin">47.54</a>
+- SPLIT_NUMBERS function
+  - APEX_STRING <a href="SPLIT_NUMBERS-Function.html#GUID-729E046F-4E95-45DF-8B9F-5FBEA0C08DE5" target="contentwin">57.33</a>
+- SPLIT function signature 1
+  - APEX_STRING <a href="SPLIT-Function-Signature-1.html#GUID-3BE7FF37-E54F-4503-91B8-94F374E243E6" target="contentwin">57.30</a>
+- SPLIT function signature 2
+  - APEX_STRING <a href="SPLIT-Function-Signature-2.html#GUID-A476D7F6-902E-450E-9287-CBA0D046AED8" target="contentwin">57.31</a>
+- START_WORKFLOW function
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.START_WORKFLOW-Function.html#GUID-EC513C91-8A56-46FD-A25D-16A9BF071804" target="contentwin">63.21</a>
+- STOP_APEX_ENGINE Procedure
+  - APEX_APPLICATION <a href="STOP_APEX_ENGINE-Procedure.html#GUID-88F4A028-4759-433D-94F9-B7F38BFD4203" target="contentwin">6.4</a>
+- STOP_DATA_GENERATION procedure
+  - APEX_DG_DATA_GEN <a href="STOP_DATA_GENERATION-Procedure.html#GUID-6EE72FDF-64A9-410C-9A89-067BA9B1F80C" target="contentwin">25.22</a>
+- STRING_TO_TABLE function
+  - APEX_STRING <a href="STRING_TO_TABLE-1-Function.html#GUID-8EE18F03-968D-4141-B5B9-149B12F4F6CF" target="contentwin">57.34</a>
+- STRING_TO_TABLE function (deprecated)
+  - APEX_UTIL <a href="STRING_TO_TABLE-Function.html#GUID-67FBC2AB-5E0A-447D-8FF6-0512512210AC" target="contentwin">61.146</a>
+- STRINGIFY function signature 1
+  - APEX_JSON <a href="STRINGIFY-Function-Signature-1.html#GUID-5F5197FC-EE7A-4555-A130-9115927872AD" target="contentwin">39.29</a>
+- STRINGIFY function signature 2
+  - APEX_JSON <a href="STRINGIFY-Function-Signature-2.html#GUID-0920AFBD-60E5-40F7-BDFB-422F03712E54" target="contentwin">39.30</a>
+- STRINGIFY function signature 3
+  - APEX_JSON <a href="STRINGIFY-Function-Signature-3.html#GUID-EC91F85E-2C12-471C-83BE-92CA0CE7C05E" target="contentwin">39.31</a>
+- STRINGIFY function signature 4
+  - APEX_JSON <a href="STRINGIFY-Function-Signature-4.html#GUID-4BAB8902-824E-4BE7-BC8C-A9AFCF576DB6" target="contentwin">39.32</a>
+- STRINGIFY function signature 5
+  - APEX_JSON <a href="STRINGIFY-Function-Signature-5.html#GUID-969B08BA-2901-48DE-A413-14AF77A62880" target="contentwin">39.33</a>
+- STRIPHTML function signature 1
+  - APEX_ESCAPE <a href="STRIPHTML-Function-Signature-1.html#GUID-347F8DAD-5CC4-444C-A2C0-B102D1CC95FD" target="contentwin">27.26</a>
+- STRIPHTML function signature 2
+  - APEX_ESCAPE <a href="STRIPHTML-Function-Signature-2.html#GUID-D829A44A-597C-4DDF-87D6-ADAFCEC7C07A" target="contentwin">27.27</a>
+- STRONG_PASSWORD_CHECK procedure
+  - APEX_UTIL <a href="STRONG_PASSWORD_CHECK-Procedure.html#GUID-5EECBD3D-C82E-49A3-985D-2DC32DE9C642" target="contentwin">61.147</a>
+- STRONG_PASSWORD_VALIDATION function
+  - APEX_UTIL <a href="STRONG_PASSWORD_VALIDATION-Function.html#GUID-9E1EB5D3-DEB4-4C11-8233-E7589CA561F7" target="contentwin">61.148</a>
+- SUBMIT_FEEDBACK_FOLLOWUP procedure
+  - APEX_UTIL <a href="SUBMIT_FEEDBACK_FOLLOWUP-Procedure.html#GUID-C6F4E4A8-7E40-498F-8E8F-7D99D98527B0" target="contentwin">61.150</a>
+- SUBMIT_FEEDBACK procedure
+  - APEX_UTIL <a href="SUBMIT_FEEDBACK-Procedure.html#GUID-94353F7F-E1CA-409C-A673-D38AF6D1EFDE" target="contentwin">61.149</a>
+- SUBMIT_INFORMATION procedure
+  - APEX_APPROVAL <a href="SUBMIT_INFORMATION-Procedure.html#GUID-30A21FB0-6C5E-447C-BF8E-16C8C2CCCC4E" target="contentwin">9.34</a>
+  - APEX_HUMAN_TASK <a href="APEX_HUMAN_TASK.SUBMIT_INFORMATION-Procedure.html#GUID-A4178419-AC6C-467F-9E7E-498E89A07B93" target="contentwin">32.38</a>
+- SUBSCRIBE_PUSH_NOTIFICATIONS procedure
+  - APEX_PWA <a href="APEX_PWA.SUBSCRIBE_PUSH_NOTIFICATIONS-Procedure.html#GUID-9E2BF965-20D1-4D15-B375-66ACABCB8E2D" target="contentwin">49.5</a>
+- SUSPEND_BACKGROUND_EXECS procedure
+  - APEX_APPLICATION_INSTALL <a href="SUSPEND_BACKGROUND_EXECS-Procedure.html#GUID-F856D8DF-D5FD-460F-9DF6-91E447983D97" target="contentwin">8.66</a>
+- SUSPEND procedure
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.SUSPEND-Procedure.html#GUID-7D298306-4337-41FB-8186-57C61DC5995A" target="contentwin">63.22</a>
+- SWITCH function
+  - APEX_ITEM <a href="SWITCH-Function.html#GUID-5A3E1DAD-3038-4662-BA77-EA20E7B334B9" target="contentwin">37.18</a>
+- SYNCH_TABLE procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="SYNCH_TABLE-Procedure.html#GUID-58BCB991-C2C2-4687-85B0-66AEF14E15D9" target="contentwin">60.8</a>
+- SYNCHRONIZE_DATA procedure
+  - APEX_REST_SOURCE_SYNC <a href="SYNCHRONIZE_DATA-Procedure.html#GUID-660DE4D1-4BAF-405A-A871-6B8C201969C9" target="contentwin">51.8</a>
+- SYNCHRONIZE_TABLE_DEFINITION procedure
+  - APEX_REST_SOURCE_SYNC <a href="SYNCHRONIZE_TABLE_DEFINITION-Procedure.html#GUID-62CE1A41-B1BA-493D-AA74-A65538B35E97" target="contentwin">51.9</a>
+
+------------------------------------------------------------------------
+
+## T
+
+- t_dir_entries
+  - APEX_ZIP <a href="APEX_ZIP.Data-Types.html#GUID-30834CEE-92B3-4A75-BCED-E219B54796E6" target="contentwin">64.1</a>
+- t_dir_entry
+  - APEX_ZIP <a href="APEX_ZIP.Data-Types.html#GUID-30834CEE-92B3-4A75-BCED-E219B54796E6" target="contentwin">64.1</a>
+- t_files
+  - APEX_ZIP <a href="APEX_ZIP.Data-Types.html#GUID-30834CEE-92B3-4A75-BCED-E219B54796E6" target="contentwin">64.1</a>
+- t_token
+  - APEX_JWT <a href="T_TOKEN.html#GUID-1271B571-1959-4421-A9F0-ABA44905E175" target="contentwin">40.1</a>
+- TABLE_TO_CLOB function
+  - APEX_STRING <a href="TABLE_TO_CLOB-Function.html#GUID-76665E23-D9E8-4C18-A7BB-FBA5507BBAD9" target="contentwin">57.35</a>
+- TABLE_TO_STRING function
+  - APEX_STRING <a href="TABLE_TO_STRING-1-Function.html#GUID-93B4AD2A-704C-4D9C-B48C-5E8F21CB6616" target="contentwin">57.36</a>
+- TABLE_TO_STRING function (deprecated)
+  - APEX_UTIL <a href="TABLE_TO_STRING-Function.html#GUID-4F4C59D1-E8B7-4CC1-87C7-DCFD5AF4DCC0" target="contentwin">61.151</a>
+- TERMINATE_FAULTED_WORKFLOWS procedure
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.TERMINATE_FAULTED_WORKFLOWS-Procedure.html#GUID-D9289E89-E93E-4DC8-911E-906AFA8E714C" target="contentwin">63.24</a>
+- TERMINATE procedure
+  - APEX_AUTOMATION <a href="APEX_AUTOMATION_TERMINATE-Procedure.html#GUID-1E2C0DA9-64A1-452A-B5E4-F9BA0132206C" target="contentwin">12.17</a>
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.TERMINATE-Procedure.html#GUID-457E9783-B876-4294-80E8-66EA4174A330" target="contentwin">63.23</a>
+- TERMINATE procedure signature 1
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS.TERMINATE-Procedure-Signature-1.html#GUID-ECEE1B03-FC3F-4D4E-A949-D2C5B879CDCF" target="contentwin">13.9</a>
+- TERMINATE procedure signature 2
+  - APEX_BACKGROUND_PROCESS <a href="APEX_BACKGROUND_PROCESS.TERMINATE-Procedure-Signature-2.html#GUID-AFCFBAD4-5D1A-4479-8D26-F4009EA36DDA" target="contentwin">13.10</a>
+- TEXT_FROM_LOV_QUERY function
+  - APEX_ITEM <a href="TEXT_FROM_LOV_QUERY-Function.html#GUID-32B3E0A9-DBE9-471E-AD62-7C665D0D0176" target="contentwin">37.22</a>
+- TEXT_FROM_LOV function
+  - APEX_ITEM <a href="TEXT_FROM_LOV-Function.html#GUID-69E77BBE-D7D4-4839-B4F2-7B5D69B97DB7" target="contentwin">37.21</a>
+- TEXTAREA function
+  - APEX_ITEM <a href="TEXTAREA-Function.html#GUID-9C378304-647B-41AD-97C1-F368AA765D2E" target="contentwin">37.20</a>
+- TEXT function
+  - APEX_ITEM <a href="TEXT-Function.html#GUID-E63A7E4A-C015-4175-845C-A4501026F9D9" target="contentwin">37.19</a>
+- TO_DISPLAY_FILESIZE function
+  - APEX_STRING_UTIL <a href="TO_DISPLAY_FILESIZE-Function.html#GUID-6C8865DB-C739-4B87-9465-118F74070B82" target="contentwin">58.14</a>
+- TO_HTML function
+  - APEX_MARKDOWN <a href="TO_HTML-Function.html#GUID-725F009A-53AA-4168-896E-EE6038BDE102" target="contentwin">44.2</a>
+- TO_MEMBER_NAME function
+  - APEX_JSON <a href="To_MEMBER_NAME-Function.html#GUID-98EDFE64-EAB0-4D5D-BA73-AE7E3A649550" target="contentwin">39.34</a>
+- TO_XMLTYPE_SQL function
+  - APEX_JSON <a href="TO_XMLTYPE_SQL-Function.html#GUID-383DC894-A99A-41EB-9699-53330B5E0B9C" target="contentwin">39.36</a>
+- TO_XMLTYPE function
+  - APEX_JSON <a href="TO_XMLTYPE-Function.html#GUID-33E317C6-6FD5-42A5-9336-8D334CDBD256" target="contentwin">39.35</a>
+- TOCHAR function
+  - APEX_DEBUG <a href="TOCHAR-Function.html#GUID-58AD87A5-7C6F-4B80-9191-0ECC98CF109D" target="contentwin">24.20</a>
+- TRACE procedure
+  - APEX_DEBUG <a href="TRACE-Procedure.html#GUID-B2EC13C4-C3EF-4941-AD75-EBBB202190B5" target="contentwin">24.21</a>
+- TRUNCATE_COLLECTION procedure
+  - APEX_COLLECTION <a href="TRUNCATE_COLLECTION-Procedure.html#GUID-F7066966-21B9-4AB1-817B-3C942E2FA24F" target="contentwin">15.29</a>
+- TRUNCATE_LOG procedure
+  - APEX_INSTANCE_ADMIN <a href="TRUNCATE_LOG-Procedure.html#GUID-D3DA33E1-F5BC-4674-822D-90C8463D3733" target="contentwin">33.35</a>
+
+------------------------------------------------------------------------
+
+## U
+
+- UNEXPIRE_END_USER_ACCOUNT procedure
+  - APEX_UTIL <a href="UNEXPIRE_END_USER_ACCOUNT-Procedure.html#GUID-ABF5D38E-5156-436D-814A-B38A13DA8FA8" target="contentwin">61.152</a>
+- UNEXPIRE_WORKSPACE_ACCOUNT procedure
+  - APEX_UTIL <a href="UNEXPIRE_WORKSPACE_ACCOUNT-Procedure.html#GUID-8CAD70A4-B7D7-4431-80E3-17195986258B" target="contentwin">61.153</a>
+- UNLOCK_USER procedure
+  - APEX_INSTANCE_ADMIN <a href="UNLOCK_USER-Procedure.html#GUID-3C5473E0-2D50-49E5-866A-6AB3174D22E7" target="contentwin">33.36</a>
+- UNRESTRICT_SCHEMA procedure
+  - APEX_INSTANCE_ADMIN <a href="UNRESTRICT_SCHEMA-Procedure.html#GUID-2DD387A4-E20B-4A9C-8750-31D050F12908" target="contentwin">33.37</a>
+- UNSUBSCRIBE_PUSH_NOTIFICATIONS procedure
+  - APEX_PWA <a href="APEX_PWA.UNSUBSCRIBE_PUSH_NOTIFICATIONS-Procedure.html#GUID-FDCAFEAA-E409-458B-85D5-ED821F348C92" target="contentwin">49.6</a>
+- UNZIP function
+  - APEX_EXPORT <a href="UNZIP-Function.html#GUID-F0C453FF-E884-4F24-9399-0A349B8BA370" target="contentwin">29.6</a>
+- UPD_AD_COLUMN procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_AD_COLUMN-Procedure.html#GUID-22061513-3666-4432-80AC-05561A320CA4" target="contentwin">60.9</a>
+- UPD_AD_SYNONYM procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_AD_SYNONYM-Procedure.html#GUID-C1CA704E-4171-4B28-B7D3-1363BEDB0356" target="contentwin">60.10</a>
+- UPD_COLUMN procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_COLUMN-Procedure.html#GUID-6C4D2A6B-816F-4EBC-A1BB-80670808BD5A" target="contentwin">60.11</a>
+- UPD_DISPLAY_IN_FORM procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_DISPLAY_IN_FORM-Procedure.html#GUID-9EAC94C8-FB59-4315-BE0A-C292E704DEEF" target="contentwin">60.12</a>
+- UPD_DISPLAY_IN_REPORT procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_DISPLAY_IN_REPORT-Procedure.html#GUID-1C719A2F-8E3A-4AE3-8D01-E91466AD36FE" target="contentwin">60.13</a>
+- UPD_FORM_REGION_TITLE procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_FORM_REGION_TITLE-Procedure.html#GUID-FD1F596F-0333-4B87-9827-B9C32C9D3E78" target="contentwin">60.14</a>
+- UPD_GROUP procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_GROUP-Procedure.html#GUID-F052864B-0F62-4CB2-B525-DA3F2B76CB60" target="contentwin">60.15</a>
+- UPD_ITEM_DISPLAY_HEIGHT procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_ITEM_DISPLAY_HEIGHT-Procedure.html#GUID-0912CF69-D9F3-4620-B5BC-25B7384535DD" target="contentwin">60.16</a>
+- UPD_ITEM_DISPLAY_WIDTH procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_ITEM_DISPLAY_WIDTH-Procedure.html#GUID-F4FBE46F-0FFB-4CF8-874A-E103AF60984D" target="contentwin">60.17</a>
+- UPD_ITEM_FORMAT_MASK procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_ITEM_FORMAT_MASK-Procedure.html#GUID-B5D14D6C-0BFA-4EEA-9A2B-3163C2F88359" target="contentwin">60.18</a>
+- UPD_ITEM_HELP procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_ITEM_HELP-Procedure.html#GUID-E0873D2A-8ED9-41C6-8994-86D67EA31561" target="contentwin">60.19</a>
+- UPD_ITEM_LABEL procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_LABEL-Procedure.html#GUID-8698DA92-16C0-4CE5-904E-9691CE05AAA8" target="contentwin">60.20</a>
+- UPD_REPORT_ALIGNMENT procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_REPORT_ALIGNMENT-Procedure.html#GUID-C76124C3-54E2-4290-9633-6D2F23822D7A" target="contentwin">60.21</a>
+- UPD_REPORT_FORMAT_MASK procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_REPORT_FORMAT_MASK-Procedure.html#GUID-ABDF4CE8-A0D2-452E-AEBD-77781BCB283F" target="contentwin">60.22</a>
+- UPD_REPORT_REGION_TITLE procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_REPORT_REGION_TITLE-Procedure.html#GUID-4B49C853-754A-49CA-BE5D-5D7B4BB26C19" target="contentwin">60.23</a>
+- UPD_TABLE procedure
+  - APEX_UI_DEFAULT_UPDATE <a href="UPD_TABLE-Procedure.html#GUID-F4F1DAC7-1D8A-4C7E-8265-D402167A6564" target="contentwin">60.24</a>
+- UPDATE_BLUEPRINT procedure
+  - APEX_DG_DATA_GEN <a href="UPDATE_BLUEPRINT-Procedure.html#GUID-FC4F14D8-384C-44D5-8384-DD34AD1E4597" target="contentwin">25.23</a>
+- UPDATE_COLUMN procedure
+  - APEX_DG_DATA_GEN <a href="UPDATE_COLUMN-Procedure.html#GUID-82BDCDE8-F303-4F9C-846E-AEF5060C4C85" target="contentwin">25.24</a>
+- UPDATE_DATA_SOURCE procedure
+  - APEX_DG_DATA_GEN <a href="UPDATE_DATA_SOURCE-Procedure.html#GUID-5FADF761-D1E0-4844-88D0-D8AF1AAE7425" target="contentwin">25.25</a>
+- UPDATE_LANGUAGE_MAPPING procedure
+  - APEX_LANG <a href="UPDATE_LANGUAGE_MAPPING-Procedure.html#GUID-9864C51A-3404-4BDE-BF89-A89462C844DC" target="contentwin">41.18</a>
+- UPDATE_MEMBER_ATTRIBUTE procedure signature 1
+  - APEX_COLLECTION <a href="UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-1.html#GUID-DF709BF7-4B32-4713-88FA-E03F89609FEA" target="contentwin">15.32</a>
+- UPDATE_MEMBER_ATTRIBUTE procedure signature 2
+  - APEX_COLLECTION <a href="UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-2.html#GUID-202605C5-AEF1-4871-B0DB-62F3F01D43D8" target="contentwin">15.33</a>
+- UPDATE_MEMBER_ATTRIBUTE procedure signature 3
+  - APEX_COLLECTION <a href="UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-3.html#GUID-F31010E3-C88B-4750-B5EB-D3B0DEE7851F" target="contentwin">15.34</a>
+- UPDATE_MEMBER_ATTRIBUTE procedure signature 4
+  - APEX_COLLECTION <a href="UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-4.html#GUID-CC912D16-16EF-4945-A19F-846277791058" target="contentwin">15.35</a>
+- UPDATE_MEMBER_ATTRIBUTE procedure signature 5
+  - APEX_COLLECTION <a href="UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-5.html#GUID-B39AD809-F1E1-4E12-9D80-DFEF9AC26E50" target="contentwin">15.36</a>
+- UPDATE_MEMBER_ATTRIBUTE procedure signature 6
+  - APEX_COLLECTION <a href="UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-6.html#GUID-66674EE4-7CD0-4DC1-A49B-36DD30245AE0" target="contentwin">15.37</a>
+- UPDATE_MEMBER procedure
+  - APEX_COLLECTION <a href="UPDATE_MEMBER-Procedure.html#GUID-FF926A72-D196-4D6F-BD41-EEA24E54D580" target="contentwin">15.30</a>
+- UPDATE_MEMBERS procedure
+  - APEX_COLLECTION <a href="UPDATE_MEMBERS-Procedure.html#GUID-DD03C9D6-884F-425C-91DC-72C407ABCA6C" target="contentwin">15.31</a>
+- UPDATE_MESSAGE procedure signature 1
+  - APEX_LANG <a href="APEX_LANG.UPDATE_MESSAGE-Procedure-Signature-1.html#GUID-47C6C7BC-165A-4445-A787-D062CE94D2A0" target="contentwin">41.19</a>
+- UPDATE_MESSAGE procedure signature 2
+  - APEX_LANG <a href="APEX_LANG.UPDATE_MESSAGE-Procedure-Signature-2.html#GUID-0C57D486-634B-4350-888E-CCA537E246BB" target="contentwin">41.20</a>
+- UPDATE_TABLE procedure
+  - APEX_DG_DATA_GEN <a href="UPDATE_TABLE-Procedure.html#GUID-945BA0D2-08F9-4465-A916-7A8D73932A82" target="contentwin">25.26</a>
+- UPDATE_TRANSLATED_STRING procedure
+  - APEX_LANG <a href="UPDATE_TRANSLATED_STRING-Procedure.html#GUID-9ED57702-E859-442E-BBC0-A3C076B1F03A" target="contentwin">41.21</a>
+- UPDATE_VARIABLES procedure
+  - APEX_WORKFLOW <a href="APEX_WORKFLOW.UPDATE_VARIABLES-Procedure.html#GUID-515FBAC9-5EC6-4D14-BBF4-2708A0B5CDDB" target="contentwin">63.25</a>
+- UPLOAD_TEMPLATE function
+  - APEX_PRINT <a href="APEX_PRINT.UPLOAD_TEMPLATE-Function.html#GUID-40C64A74-7D17-4ACA-997F-7B943C0F8D8E" target="contentwin">48.9</a>
+- URL_ENCODE function
+  - APEX_UTIL <a href="URL_ENCODE-Function.html#GUID-47DB18F3-133B-43F0-B045-F19C09190357" target="contentwin">61.155</a>
+- user
+  - get e-mail address <a href="GET_EMAIL-Function.html#GUID-4C914173-426C-4D40-A11F-FA51EF63C0DA" target="contentwin">61.50</a>
+  - remove preference <a href="REMOVE_PREFERENCE-Procedure.html#GUID-79BB456C-A6EA-40D3-8F54-F0667CC17D39" target="contentwin">61.105</a>
+- user account
+  - altering <a href="EDIT_USER-Procedure.html#GUID-4AD804FC-F209-489F-9F46-A79327F3632E" target="contentwin">61.27</a>
+  - creating new <a href="CREATE_USER-Procedure.html#GUID-95721E36-4DAB-4BCA-A6F3-AC2BACC52A66" target="contentwin">61.15</a>
+  - fetching <a href="FETCH_USER-Procedure-Signature-1.html#GUID-573FAD5B-59AB-47D2-B68C-EC92E313D5BD" target="contentwin">61.34</a>, <a href="FETCH_USER-Procedure-Signature-2.html#GUID-58B47D6B-ED40-425D-9E1A-E9990A01C56B" target="contentwin">61.35</a>, <a href="FETCH_USER-Procedure-Signature-3.html#GUID-C7483EF7-D7B7-4476-8DF4-FCEDFCE4CA9F" target="contentwin">61.36</a>
+  - removing <a href="REMOVE_USER-Signature-1-Procedure.html#GUID-BC7FB468-AC36-49E2-A36A-E594751B9468" target="contentwin">61.107</a>, <a href="REMOVE_USER-Signature-2-Procedure.html#GUID-01450749-F187-4DB5-8A65-F5427FB7B061" target="contentwin">61.108</a>
+  - update email address <a href="SET_EMAIL-Procedure.html#GUID-02386891-586E-49E2-847A-A5504E65095E" target="contentwin">61.123</a>
+  - updating FIRST_NAME <a href="SET_FIRST_NAME-Procedure.html#GUID-BC4570FB-1201-490B-8D8A-4651D613D856" target="contentwin">61.124</a>
+  - updating LAST_NAME value <a href="SET_LAST_NAME-Procedure.html#GUID-E892B650-A885-4D73-84D2-344BC62C5F85" target="contentwin">61.128</a>
+  - updating USER_NAME value <a href="SET_USERNAME-Procedure.html#GUID-011204BC-D14B-4F1B-BF89-EB5AA454D5D9" target="contentwin">61.142</a>
+
+------------------------------------------------------------------------
+
+## V
+
+- VALIDATE_BLUEPRINT procedure
+  - APEX_DG_DATA_GEN <a href="VALIDATE_BLUEPRINT-Procedure.html#GUID-B1C84237-D5AA-47F7-9578-E76ABA2B693C" target="contentwin">25.27</a>
+- VALIDATE_EMAIL_CONFIG Procedure
+  - APEX_INSTANCE_ADMIN <a href="VALIDATE_EMAIL_CONFIG-Procedure.html#GUID-6367C7AE-AF48-42A6-AA60-951B055B244D" target="contentwin">33.38</a>
+- VALIDATE_INSTANCE_SETTING procedure
+  - APEX_DG_DATA_GEN <a href="VALIDATE_INSTANCE_SETTING-Procedure.html#GUID-C39734DC-7B1F-4FA3-BF34-70D30139C957" target="contentwin">25.28</a>
+- VALIDATE procedure
+  - APEX_JWT <a href="VALIDATE.html#GUID-2EB85906-34C3-432A-90FD-EE9201857CFE" target="contentwin">40.4</a>
+- variables
+  - APEX_APPLICATION <a href="APEX_APPLICATION-Global-Variables.html#GUID-5164592B-6864-4E2B-8DE3-64B463687A41" target="contentwin">6.2</a>
+  - APEX_WEB_SERVICE <a href="APEX_WEB_SERVICE.Global-Variables.html#GUID-3A4D9CE9-0418-4EB5-AA2B-5EC5B9AF0617" target="contentwin">62.4</a>
+
+------------------------------------------------------------------------
+
+## W
+
+- WARN procedure
+  - APEX_DEBUG <a href="WARN-Procedure.html#GUID-97BA4A04-A342-45DE-8524-893AF3AD49AA" target="contentwin">24.22</a>
+- Web Credentials
+  - APEX_WEB_SERVICE <a href="about-web-credentials-APEX_WEB_SERVICE.html#GUID-4146FDBA-7256-4CA4-9316-2ED536BC1267" target="contentwin">62.2</a>
+- workspace
+  - export file <a href="EXPORT_USERS-Procedure.html#GUID-2BC13E3E-6093-4C01-9238-E9223C0EAD50" target="contentwin">61.31</a>
+  - numeric security group ID <a href="FIND_SECURITY_GROUP_ID-Function.html#GUID-F8532F5E-BB69-4E5F-8D7C-3115ED59323B" target="contentwin">61.37</a>
+- WORKSPACE_ACCOUNT_DAYS_LEFT function
+  - APEX_UTIL <a href="WORKSPACE_ACCOUNT_DAYS_LEFT-Function.html#GUID-E536CBC4-8FEC-4644-B1E1-19E4E0BBF327" target="contentwin">61.156</a>
+- WRITE_CONTEXT procedure
+  - APEX_JSON <a href="WRITE_CONTEXT-Procedure.html#GUID-8C3BA2F1-36E0-45B1-B095-5B4492650838" target="contentwin">39.58</a>
+- WRITE procedure
+  - APEX_JSON <a href="WRITE-Procedure-Signature-21.html#GUID-F4F0CE27-674A-401D-936B-E78C245F77B5" target="contentwin">39.57</a>
+- WRITE procedure signature 1
+  - APEX_JSON <a href="WRITE-Procedure-Signature-1.html#GUID-58D8250D-F197-4A3F-8B07-BC2BFB8669C8" target="contentwin">39.37</a>
+- WRITE procedure signature 10
+  - APEX_JSON <a href="WRITE-Procedure-Signature-10.html#GUID-BA89B9AF-F60D-43CB-8F03-71F993FC1861" target="contentwin">39.46</a>
+- WRITE procedure signature 11
+  - APEX_JSON <a href="WRITE-Procedure-Signature-11.html#GUID-32EA8889-C3B3-4003-AF22-2432258FC35F" target="contentwin">39.47</a>
+- WRITE procedure signature 12
+  - APEX_JSON <a href="WRITE-Procedure-Signature-12.html#GUID-80EFE40C-F9E4-43C5-8D39-0694248C0248" target="contentwin">39.48</a>
+- WRITE procedure signature 13
+  - APEX_JSON <a href="WRITE-Procedure-Signature-13.html#GUID-F1B594DF-1B2E-4BDA-804C-B16334135B96" target="contentwin">39.49</a>
+- WRITE procedure signature 14
+  - APEX_JSON <a href="WRITE-Procedure-Signature-14.html#GUID-B066CE5A-225D-4A79-ABD3-B1A341FB789D" target="contentwin">39.50</a>
+- WRITE procedure signature 15
+  - APEX_JSON <a href="WRITE-Procedure-Signature-15.html#GUID-78E9663F-1EFA-4793-A9ED-EB0F728D2B77" target="contentwin">39.51</a>
+- WRITE procedure signature 16
+  - APEX_JSON <a href="WRITE-Procedure-Signature-16.html#GUID-00D45BF0-17D5-4310-B822-6E9D9AC3AFF4" target="contentwin">39.52</a>
+- WRITE procedure signature 17
+  - APEX_JSON <a href="WRITE-Procedure-Signature-17.html#GUID-FA6E300C-0346-4D03-9DC5-2A83F8AA4D69" target="contentwin">39.53</a>
+- WRITE procedure signature 18
+  - APEX_JSON <a href="WRITE-Procedure-Signature-18.html#GUID-780CD430-5A8A-49B8-AD20-259B60E9798E" target="contentwin">39.54</a>
+- WRITE procedure signature 19
+  - APEX_JSON <a href="WRITE-Procedure-Signature-19.html#GUID-B01064B0-5072-4061-8B23-5680619F75BE" target="contentwin">39.55</a>
+- WRITE procedure signature 2
+  - APEX_JSON <a href="WRITE-Procedure-Signature-2.html#GUID-065C91C6-B7E5-44FE-8B90-493BB715A6F5" target="contentwin">39.38</a>
+- WRITE procedure signature 20
+  - APEX_JSON <a href="WRITE-Procedure-Signature-20.html#GUID-ED758CF5-C942-4B8B-8BA5-CF1A63B69EB2" target="contentwin">39.56</a>
+- WRITE procedure signature 3
+  - APEX_JSON <a href="WRITE-Procedure-Signature-3.html#GUID-58B2916A-8900-4101-B6F7-DBABD86D3710" target="contentwin">39.39</a>
+- WRITE procedure signature 4
+  - APEX_JSON <a href="WRITE-Procedure-Signature-4.html#GUID-28FBF1A3-BF92-4246-86FF-3C2174DDB0A8" target="contentwin">39.40</a>
+- WRITE procedure signature 5
+  - APEX_JSON <a href="WRITE-Procedure-Signature-5.html#GUID-C7313A58-03A4-4E68-84D3-4018367D924E" target="contentwin">39.41</a>
+- WRITE procedure signature 6
+  - APEX_JSON <a href="WRITE-Procedure-Signature-6.html#GUID-BFA54B24-4B57-4837-9B1B-80EF67458164" target="contentwin">39.42</a>
+- WRITE procedure signature 7
+  - APEX_JSON <a href="WRITE-Procedure-Signature-7.html#GUID-24AE7B10-8A77-41E8-A7DC-505E6556DD22" target="contentwin">39.43</a>
+- WRITE Procedure Signature 8
+  - APEX_JSON <a href="WRITE-Procedure-Signature-8.html#GUID-EFEFA40A-64E5-4AD2-BCF5-55566BE4784A" target="contentwin">39.44</a>
+- WRITE procedure signature 9
+  - APEX_JSON <a href="WRITE-Procedure-Signature-9.html#GUID-E1BE2CD7-8300-4E1F-9B4E-2501A9D8F68A" target="contentwin">39.45</a>
+
+------------------------------------------------------------------------
+
+## Z
+
+- ZIP function
+  - APEX_EXPORT <a href="ZIP-Function.html#GUID-B7A390FC-ED71-4605-9C0A-8503E4DED82A" target="contentwin">29.7</a>

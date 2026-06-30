@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Desk Ticketing System — Project Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1f3864; --navy2:#15294a; --blue:#2e5496; --blue-l:#4f7fd6;
+  --accent:#22d3ee; --green:#22a06b; --amber:#d9a400; --red:#e0603a;
+  --ink:#1a2233; --muted:#5b6779; --line:#e3e8f0; --bg:#f4f7fc; --card:#ffffff;
+  --shadow:0 10px 30px -12px rgba(31,56,100,.28);
+  --shadow-sm:0 4px 14px -8px rgba(31,56,100,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);
+  background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{line-height:1.2;font-weight:700;color:var(--navy)}
+a{color:var(--blue);text-decoration:none}
+section{padding:64px 0;border-bottom:1px solid var(--line)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue-l);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:26px;height:3px;background:var(--accent);border-radius:2px}
+h2.sec{font-size:32px;margin-bottom:8px}
+.lead{color:var(--muted);font-size:17px;max-width:760px;margin-bottom:34px}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:8px;height:60px}
+.brand{font-weight:800;color:var(--navy);margin-right:auto;font-size:16px;display:flex;align-items:center;gap:9px}
+.brand .dot{width:11px;height:11px;border-radius:3px;background:linear-gradient(135deg,var(--accent),var(--blue))}
+.nav a.link{font-size:14px;font-weight:600;color:var(--muted);padding:8px 12px;border-radius:8px}
+.nav a.link:hover{color:var(--navy);background:#eef3fb}
+@media(max-width:880px){.nav a.link{display:none}}
+
+/* HERO */
+.hero{background:radial-gradient(1200px 500px at 80% -10%,rgba(34,211,238,.18),transparent),
+  linear-gradient(160deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;border:none;
+  position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.07) 1px,transparent 0);
+  background-size:26px 26px;opacity:.6}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{color:#fff;font-size:46px;font-weight:800;letter-spacing:-.02em;margin:14px 0 12px}
+.hero h1 span{background:linear-gradient(90deg,var(--accent),#8be9fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sub{font-size:20px;color:#cdd8ee;max-width:680px}
+.hero .pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#eaf1ff;
+  padding:7px 14px;border-radius:999px;font-size:13.5px;font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:42px}
+@media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:34px}}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:16px;
+  padding:20px;backdrop-filter:blur(6px)}
+.stat .n{font-size:40px;font-weight:800;color:#fff;line-height:1}
+.stat .l{font-size:13px;color:#b9c7e4;margin-top:8px;font-weight:600;letter-spacing:.02em}
+
+/* cards / grid */
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:880px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow-sm)}
+.card h3{font-size:18px;margin-bottom:6px}
+.card p{color:var(--muted);font-size:15px}
+
+/* judge requirement chips */
+.reqgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:880px){.reqgrid{grid-template-columns:1fr 1fr}}
+.jchip{background:linear-gradient(160deg,var(--blue),var(--navy));color:#fff;border-radius:16px;
+  padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.jchip .ico{font-size:26px;margin-bottom:10px}
+.jchip h4{color:#fff;font-size:16px}
+.jchip p{color:#c9d6f2;font-size:13px;margin-top:6px}
+.jchip::after{content:"";position:absolute;right:-30px;bottom:-30px;width:90px;height:90px;
+  background:radial-gradient(circle,rgba(34,211,238,.4),transparent 70%)}
+
+/* callout */
+.callout{display:flex;gap:16px;align-items:flex-start;background:#fff4f0;border:1px solid #f6cdbe;
+  border-left:5px solid var(--red);border-radius:14px;padding:20px 22px;margin-top:26px}
+.callout .ico{font-size:26px}
+.callout b{color:#b5421f}
+.callout.good{background:#eefaf4;border-color:#bfe6d4;border-left-color:var(--green)}
+.callout.good b{color:#157a4f}
+
+/* MoSCoW scope */
+.scopewrap{display:grid;grid-template-columns:300px 1fr;gap:34px;align-items:center}
+@media(max-width:880px){.scopewrap{grid-template-columns:1fr}}
+.donut{width:240px;height:240px;border-radius:50%;margin:0 auto;position:relative;
+  background:conic-gradient(var(--green) 0 244.8deg,var(--amber) 244.8deg 302.4deg,var(--red) 302.4deg 360deg)}
+.donut::after{content:"";position:absolute;inset:30px;background:var(--card);border-radius:50%;box-shadow:inset 0 2px 10px rgba(0,0,0,.05)}
+.donut .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2}
+.donut .center .big{font-size:42px;font-weight:800;color:var(--navy);line-height:1}
+.donut .center .sm{font-size:12px;color:var(--muted);font-weight:600}
+.legend{display:flex;flex-direction:column;gap:14px}
+.lrow{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:14px 16px}
+.lrow .sw{width:14px;height:14px;border-radius:4px;flex:none}
+.lrow .name{font-weight:700;width:84px}
+.lrow .desc{color:var(--muted);font-size:14px;flex:1}
+.lrow .cnt{font-weight:800;font-size:20px;color:var(--navy)}
+.sw.must{background:var(--green)}.sw.should{background:var(--amber)}.sw.could{background:var(--red)}
+
+/* roles */
+.role{border-radius:16px;padding:20px;color:#fff;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.role.client{background:linear-gradient(160deg,#2e5496,#1f3864)}
+.role.vendor{background:linear-gradient(160deg,#0f766e,#134e4a)}
+.role .tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.role h3{color:#fff;font-size:19px;margin:4px 0 12px}
+.role .ln{font-size:13.5px;color:rgba(255,255,255,.92);margin:7px 0;display:flex;gap:8px}
+.role .ln b{color:#fff}.role .k{opacity:.7;font-weight:700;width:46px;flex:none}
+
+/* filter buttons + req table */
+.fbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;align-items:center}
+.fbtn{border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:600;font-size:13.5px;
+  padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s}
+.fbtn:hover{border-color:var(--blue-l)}
+.fbtn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.fbtn .b{display:inline-block;min-width:20px;text-align:center;margin-left:6px;font-size:12px;
+  background:rgba(255,255,255,.25);border-radius:6px;padding:0 5px}
+.rtable{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;font-size:14.5px}
+.rtable th{background:var(--navy);color:#fff;text-align:left;padding:13px 16px;font-size:13px;letter-spacing:.03em}
+.rtable td{padding:12px 16px;border-top:1px solid var(--line);vertical-align:top}
+.rtable tr:nth-child(even) td{background:#fafbfe}
+.rtable .id{font-weight:700;color:var(--blue);white-space:nowrap}
+.badge{font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;color:#fff;white-space:nowrap}
+.badge.MUST{background:var(--green)}.badge.SHOULD{background:var(--amber)}.badge.COULD{background:var(--red)}
+.cat{font-size:12px;color:var(--muted);font-weight:600}
+
+/* state pipeline */
+.pipe{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin:10px 0 8px}
+.pstep{flex:1;min-width:120px;background:linear-gradient(160deg,var(--blue),var(--navy));color:#fff;
+  padding:16px 12px;text-align:center;position:relative;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%);
+  font-weight:700;font-size:15px;margin-right:-10px}
+.pstep:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%)}
+.pstep:last-child{clip-path:polygon(0 0,100% 0,100% 100%,0 100%,16px 50%);margin-right:0}
+.pstep small{display:block;font-weight:500;font-size:11.5px;opacity:.8;margin-top:3px}
+.opt{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.opt span{font-size:13px;background:#eef3fb;border:1px dashed var(--blue-l);color:var(--blue);
+  padding:6px 12px;border-radius:8px;font-weight:600}
+
+/* transitions table */
+.tt{width:100%;border-collapse:collapse;font-size:14px;margin-top:20px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tt th{background:#eef3fb;color:var(--navy);text-align:left;padding:10px 14px;font-size:13px}
+.tt td{padding:10px 14px;border-top:1px solid var(--line)}
+.tt .mv{font-weight:600}
+
+/* data model */
+.erd{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:880px){.erd{grid-template-columns:1fr}}
+.tbl{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.tbl .hd{background:linear-gradient(160deg,var(--blue),var(--navy));color:#fff;padding:12px 16px;font-weight:700;
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+.tbl .hd .pk{font-size:10px;background:rgba(255,255,255,.2);padding:2px 7px;border-radius:5px;font-family:Inter}
+.tbl ul{list-style:none;padding:10px 16px}
+.tbl li{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--ink);padding:4px 0;
+  border-bottom:1px dashed #eef1f6;display:flex;justify-content:space-between}
+.tbl li:last-child{border:none}
+.tbl li .t{color:var(--muted);font-size:11px}
+.tbl li .fk{color:var(--blue-l);font-weight:700}
+
+/* pages table */
+.ptable{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;font-size:14px}
+.ptable th{background:var(--navy);color:#fff;text-align:left;padding:12px 14px;font-size:12.5px;letter-spacing:.03em}
+.ptable td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+.ptable .gr td{background:#eef3fb;font-weight:800;color:var(--navy);font-size:12px;letter-spacing:.06em;
+  text-transform:uppercase;padding:8px 14px}
+.ptable .num{font-weight:800;color:var(--blue);text-align:center;white-space:nowrap}
+.ptable .pname{font-weight:700;color:var(--navy);white-space:nowrap}
+.ptable .ptype{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--muted)}
+.ptable tr.row:hover td{background:#fafbfe}
+.scopetag{font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap;
+  background:#eef3fb;color:var(--blue)}
+.scopetag.role{background:#fdeee8;color:var(--red)}
+.notpages{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+@media(max-width:880px){.notpages{grid-template-columns:1fr}}
+.npc{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue-l);border-radius:12px;padding:14px 16px}
+.npc b{color:var(--navy);font-size:13.5px}.npc p{color:var(--muted);font-size:13px;margin-top:4px}
+
+/* timeline */
+.tl{position:relative;margin-top:10px}
+.tl::before{content:"";position:absolute;left:24px;top:8px;bottom:8px;width:3px;background:linear-gradient(var(--accent),var(--blue))}
+.tlrow{position:relative;padding:0 0 26px 70px}
+.tlrow .node{position:absolute;left:13px;top:2px;width:25px;height:25px;border-radius:50%;
+  background:#fff;border:4px solid var(--blue);box-shadow:0 0 0 4px #eef3fb}
+.tlrow h4{font-size:18px}
+.tlrow .wk{font-size:12px;font-weight:800;color:var(--blue-l);letter-spacing:.08em;text-transform:uppercase}
+.tlrow ul{margin:8px 0 0 18px;color:var(--muted);font-size:14.5px}
+.tlrow .goal{display:inline-block;margin-top:8px;background:#eefaf4;color:#157a4f;border:1px solid #bfe6d4;
+  font-size:13px;font-weight:600;padding:5px 12px;border-radius:8px}
+
+/* owners */
+.owner{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.owner .av{width:42px;height:42px;border-radius:11px;flex:none;display:flex;align-items:center;justify-content:center;
+  font-size:20px;background:linear-gradient(160deg,var(--blue),var(--navy));color:#fff}
+.owner .w{font-weight:700;color:var(--navy)}
+.owner .who{font-size:12.5px;color:var(--blue-l);font-weight:600}
+.owner .d{font-size:13.5px;color:var(--muted);margin-left:auto;max-width:46%;text-align:right}
+@media(max-width:680px){.owner .d{display:none}}
+
+/* decisions */
+.dec{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;
+  display:flex;gap:16px;align-items:flex-start}
+.dec .k{width:34px;height:34px;border-radius:9px;background:var(--navy);color:#fff;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex:none}
+.dec .q{font-weight:600}
+.dec .rec{font-size:13px;color:var(--green);font-weight:600;margin-top:3px}
+
+/* mermaid box — hidden until Mermaid actually loads (clean offline fallback) */
+.mbox{display:none;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;overflow-x:auto;margin-top:16px}
+.mcap{display:none;font-size:12.5px;color:var(--muted);text-align:center;margin-top:6px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:.6s cubic-bezier(.2,.7,.2,1)}
+.reveal.vis{opacity:1;transform:none}
+
+footer{background:var(--navy);color:#cdd8ee;padding:34px 0;border:none}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:14px}
+.note{font-size:13px;color:var(--muted);margin-top:14px;font-style:italic}
+@media print{.nav{display:none}.reveal{opacity:1;transform:none}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav"><div class="wrap">
+  <div class="brand"><span class="dot"></span>Service Desk · APEX</div>
+  <a class="link" href="#overview">Overview</a>
+  <a class="link" href="#roles">Roles</a>
+  <a class="link" href="#req">Requirements</a>
+  <a class="link" href="#flow">Workflow</a>
+  <a class="link" href="#data">Database</a>
+  <a class="link" href="#pages">Pages</a>
+  <a class="link" href="#plan">Plan</a>
+  <a class="link" href="#decisions">Decisions</a>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero"><div class="wrap" style="padding-top:70px;padding-bottom:74px">
+  <div class="eyebrow" style="color:#9fe9f5">Hackathon Project Brief · Oracle APEX 26.1</div>
+  <h1>Service Desk <span>Ticketing System</span></h1>
+  <p class="sub">A multi-tenant support desk we build, own and brand — a self-hosted alternative to expensive tools like Jira Service Management.</p>
+  <div class="pills">
+    <span class="pill">🔐 Role-based access</span>
+    <span class="pill">🏢 Multiple companies</span>
+    <span class="pill">🎯 Ticket assignment</span>
+    <span class="pill">📊 Dashboard</span>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n" data-count="3">3</div><div class="l">WEEK TIMEBOX</div></div>
+    <div class="stat"><div class="n" data-count="25">25</div><div class="l">REQUIREMENTS</div></div>
+    <div class="stat"><div class="n" data-count="6">6</div><div class="l">DATA TABLES</div></div>
+    <div class="stat"><div class="n" data-count="4">4</div><div class="l">USER ROLES</div></div>
+  </div>
+</div></header>
+
+<!-- OVERVIEW -->
+<section id="overview"><div class="wrap reveal">
+  <div class="eyebrow">The Big Picture</div>
+  <h2 class="sec">Why we're building this</h2>
+  <p class="lead">Our company is a vendor that supports multiple client companies. Instead of paying recurring per-agent fees, we build our own service desk — on a platform that hands us auth, roles and reporting for free.</p>
+  <div class="grid g3">
+    <div class="card"><h3>💸 Kill the licence cost</h3><p>Tools like Jira / Zendesk charge per agent, forever. We build once and own it.</p></div>
+    <div class="card"><h3>🧩 APEX is the right fit</h3><p>Built-in login, role-based access control and charts. We build <em>with</em> the platform, not against it.</p></div>
+    <div class="card"><h3>🏆 A real pitch for judges</h3><p>Genuine business value, multi-tenant architecture, production-grade story — not a toy app.</p></div>
+  </div>
+  <div class="eyebrow" style="margin-top:40px">What the judges asked for</div>
+  <h2 class="sec" style="font-size:24px;margin-bottom:22px">Four non-negotiable requirements</h2>
+  <div class="reqgrid">
+    <div class="jchip"><div class="ico">🔐</div><h4>Role-based access</h4><p>Different users can do different things.</p></div>
+    <div class="jchip"><div class="ico">🏢</div><h4>Multiple companies</h4><p>Clients are isolated from each other.</p></div>
+    <div class="jchip"><div class="ico">🎯</div><h4>Ticket assignment</h4><p>Assign a ticket to a support agent.</p></div>
+    <div class="jchip"><div class="ico">📊</div><h4>Dashboard</h4><p>Visual overview of all tickets.</p></div>
+  </div>
+  <div class="callout"><div class="ico">⚠️</div><div><b>The one hill to die on:</b> a client must <b>never</b> see another client's tickets. That single guarantee is what makes a judge believe “production-level.” Everything else is negotiable.</div></div>
+</div></section>
+
+<!-- SCOPE -->
+<section id="scope"><div class="wrap reveal">
+  <div class="eyebrow">Scope · MoSCoW</div>
+  <h2 class="sec">What's in, what's out</h2>
+  <p class="lead">Features are ranked so we <b>always have a working demo</b>, even if later items slip. Protecting the demo beats adding features — every time.</p>
+  <div class="scopewrap">
+    <div class="donut"><div class="center"><div class="big">29</div><div class="sm">requirements</div></div></div>
+    <div class="legend">
+      <div class="lrow"><span class="sw must"></span><span class="name">MUST</span><span class="desc">This <b>is</b> the product. The demo dies without these.</span><span class="cnt">17</span></div>
+      <div class="lrow"><span class="sw should"></span><span class="name">SHOULD</span><span class="desc">Earns the “breadth + polish” points with judges.</span><span class="cnt">8</span></div>
+      <div class="lrow"><span class="sw could"></span><span class="name">COULD</span><span class="desc">Only if we finish early. We commit to none of these.</span><span class="cnt">4</span></div>
+    </div>
+  </div>
+  <p class="note">Lead's recommendation: cut AI entirely; keep SLA as COULD in its cheap declarative form only (a breach <em>highlight</em>, never timers). The four new SHOULD items — CSAT, dashboard analytics, auto-ack email, escalate — all verified feasible in APEX 26.1 and low-cost.</p>
+</div></section>
+
+<!-- ROLES -->
+<section id="roles"><div class="wrap reveal">
+  <div class="eyebrow">Roles &amp; Access</div>
+  <h2 class="sec">Four roles, two sides</h2>
+  <p class="lead">The <b>client side</b> (our customers) and the <b>vendor side</b> (our company). Multi-company isolation lives in the jump from Client Admin (one company) to System Admin (all companies).</p>
+  <div class="grid g4">
+    <div class="role client"><div class="tag">Client side</div><h3>Client User</h3>
+      <div class="ln"><span class="k">Sees</span><span>Only <b>their own</b> tickets</span></div>
+      <div class="ln"><span class="k">Does</span><span>Raise a ticket, comment, track status</span></div></div>
+    <div class="role client"><div class="tag">Client side</div><h3>Client Admin</h3>
+      <div class="ln"><span class="k">Sees</span><span><b>All</b> of their company's tickets</span></div>
+      <div class="ln"><span class="k">Does</span><span>Oversee staff, raise on behalf, company dashboard</span></div></div>
+    <div class="role vendor"><div class="tag">Our side</div><h3>Support Agent</h3>
+      <div class="ln"><span class="k">Sees</span><span>Assigned tickets + the open queue</span></div>
+      <div class="ln"><span class="k">Does</span><span>Work tickets: status, comment, resolve</span></div></div>
+    <div class="role vendor"><div class="tag">Our side</div><h3>System Admin</h3>
+      <div class="ln"><span class="k">Sees</span><span><b>Everything</b>, across all companies</span></div>
+      <div class="ln"><span class="k">Does</span><span>Manage companies/users, <b>assign</b>, configure</span></div></div>
+  </div>
+</div></section>
+
+<!-- REQUIREMENTS -->
+<section id="req"><div class="wrap reveal">
+  <div class="eyebrow">Functional Requirements · discuss first</div>
+  <h2 class="sec">What the system must do</h2>
+  <p class="lead">25 concrete requirements. Filter by priority to focus the conversation. These drive the workflow and the database that follow.</p>
+  <div class="fbar">
+    <button class="fbtn active" data-f="all">All <span class="b">25</span></button>
+    <button class="fbtn" data-f="MUST">Must <span class="b">17</span></button>
+    <button class="fbtn" data-f="SHOULD">Should <span class="b">4</span></button>
+    <button class="fbtn" data-f="COULD">Could <span class="b">4</span></button>
+  </div>
+  <table class="rtable"><thead><tr><th>ID</th><th>Requirement</th><th>Category</th><th>Priority</th></tr></thead>
+  <tbody id="reqbody"></tbody></table>
+</div></section>
+
+<!-- WORKFLOW -->
+<section id="flow"><div class="wrap reveal">
+  <div class="eyebrow">Workflow</div>
+  <h2 class="sec">The life of a ticket</h2>
+  <p class="lead">The requirements center on one entity — the ticket. It moves through states, and only certain roles can trigger each move. Every change is written to history.</p>
+  <div class="pipe">
+    <div class="pstep">New<small>client raises</small></div>
+    <div class="pstep">Assigned<small>admin assigns</small></div>
+    <div class="pstep">In Progress<small>agent works</small></div>
+    <div class="pstep">Resolved<small>agent fixes</small></div>
+    <div class="pstep">Closed<small>client confirms</small></div>
+  </div>
+  <div class="opt"><span>+ On Hold (pause — waiting)</span><span>+ Reopen (client: not fixed)</span><span>decide today: include in v1?</span></div>
+
+  <div class="mbox"><pre class="mermaid">
+stateDiagram-v2
+    [*] --> New: Client raises
+    New --> Assigned: Admin assigns
+    Assigned --> InProgress: Agent starts
+    InProgress --> OnHold: Pause
+    OnHold --> InProgress: Resume
+    InProgress --> Resolved: Fixed
+    Resolved --> Closed: Client confirms
+    Resolved --> InProgress: Reopen
+    Closed --> [*]
+  </pre></div>
+  <div class="mcap">Full state machine (renders if online; the pipeline above is the offline-safe version)</div>
+
+  <table class="tt"><thead><tr><th>Transition</th><th>From → To</th><th>Who triggers it</th></tr></thead><tbody>
+    <tr><td class="mv">Raise ticket</td><td>— → New</td><td>Client User / Admin</td></tr>
+    <tr><td class="mv">Assign</td><td>New → Assigned</td><td>System Admin <em>or Support Agent self-assign from the open queue (decision A — confirmed)</em></td></tr>
+    <tr><td class="mv">Start work</td><td>Assigned → In Progress</td><td>Support Agent</td></tr>
+    <tr><td class="mv">Put on hold / resume</td><td>In Progress ↔ On Hold</td><td>Support Agent</td></tr>
+    <tr><td class="mv">Resolve</td><td>In Progress → Resolved</td><td>Support Agent</td></tr>
+    <tr><td class="mv">Close</td><td>Resolved → Closed</td><td>Client confirm / System Admin</td></tr>
+    <tr><td class="mv">Reopen</td><td>Resolved → In Progress</td><td>Client User / Admin</td></tr>
+  </tbody></table>
+</div></section>
+
+<!-- DATA -->
+<section id="data"><div class="wrap reveal">
+  <div class="eyebrow">Database · the foundation</div>
+  <h2 class="sec">Six tables</h2>
+  <p class="lead">APEX is database-first: get these right and the screens almost build themselves. Every ticket carries a <code>company_id</code> — that column is how we keep clients isolated.</p>
+  <div class="erd">
+    <div class="tbl"><div class="hd">COMPANIES <span class="pk">PK company_id</span></div><ul>
+      <li><span>company_name</span><span class="t">text</span></li>
+      <li><span>company_type</span><span class="t">VENDOR/CLIENT</span></li>
+      <li><span>status</span><span class="t">text</span></li></ul></div>
+    <div class="tbl"><div class="hd">APP_USERS <span class="pk">PK user_id</span></div><ul>
+      <li><span class="fk">company_id</span><span class="t">FK</span></li>
+      <li><span>full_name · email</span><span class="t">text</span></li>
+      <li><span>role · status</span><span class="t">text</span></li></ul></div>
+    <div class="tbl"><div class="hd">TICKETS <span class="pk">PK ticket_id</span></div><ul>
+      <li><span>ticket_ref</span><span class="t">TKT-00001</span></li>
+      <li><span class="fk">company_id</span><span class="t">FK · tenant key</span></li>
+      <li><span>subject · description</span><span class="t">text</span></li>
+      <li><span class="fk">category_id</span><span class="t">FK</span></li>
+      <li><span>priority · status</span><span class="t">text</span></li>
+      <li><span class="fk">created_by · assigned_to</span><span class="t">FK user</span></li>
+      <li><span>created/updated/resolved_at</span><span class="t">date</span></li></ul></div>
+    <div class="tbl"><div class="hd">TICKET_COMMENTS <span class="pk">PK comment_id</span></div><ul>
+      <li><span class="fk">ticket_id · user_id</span><span class="t">FK</span></li>
+      <li><span>comment_text</span><span class="t">text</span></li>
+      <li><span>is_internal</span><span class="t">Y/N</span></li>
+      <li><span>created_at</span><span class="t">date</span></li></ul></div>
+    <div class="tbl"><div class="hd">TICKET_HISTORY <span class="pk">PK history_id</span></div><ul>
+      <li><span class="fk">ticket_id · user_id</span><span class="t">FK</span></li>
+      <li><span>action</span><span class="t">text</span></li>
+      <li><span>old_value · new_value</span><span class="t">text</span></li>
+      <li><span>created_at</span><span class="t">date</span></li></ul></div>
+    <div class="tbl"><div class="hd">CATEGORIES <span class="pk">PK category_id</span></div><ul>
+      <li><span>category_name</span><span class="t">text</span></li>
+      <li><span class="t">Bug · Request · Question…</span></li></ul></div>
+  </div>
+
+  <div class="mbox"><pre class="mermaid">
+erDiagram
+    COMPANIES ||--o{ APP_USERS : employs
+    COMPANIES ||--o{ TICKETS : owns
+    APP_USERS ||--o{ TICKETS : creates
+    TICKETS ||--o{ TICKET_COMMENTS : has
+    TICKETS ||--o{ TICKET_HISTORY : has
+    CATEGORIES ||--o{ TICKETS : classifies
+  </pre></div>
+  <div class="mcap">Entity relationships (renders if online; the table cards above are the offline-safe version)</div>
+
+  <div class="callout good"><div class="ico">🛡️</div><div><b>Tenant isolation plan (v1):</b> at login, store the user's <code>company_id</code> + role in an APEX application item. Every client-facing report filters <code>WHERE company_id = :APP_COMPANY_ID</code>, with APEX authorization schemes layered on top. In the demo, <b>show</b> a client logging in and seeing only their tickets — that proves it live.</div></div>
+</div></section>
+
+<!-- PAGES -->
+<section id="pages"><div class="wrap reveal">
+  <div class="eyebrow">APEX Page Architecture</div>
+  <h2 class="sec">The screens we'll build</h2>
+  <p class="lead">From "what it does" to "who builds which page." The trick that keeps this small: <b>one page serves many roles</b> — a Client User and a System Admin open the <em>same</em> Ticket List, but authorization schemes + a <code>WHERE company_id</code> filter change what they see. <b>12 pages → 10 MUST, 2 SHOULD.</b></p>
+  <table class="ptable"><thead><tr><th>#</th><th>Page</th><th>APEX page type</th><th>What it's for / who</th><th>Scope</th><th>Priority</th></tr></thead><tbody>
+    <tr class="gr"><td colspan="6">Auth &amp; Shell</td></tr>
+    <tr class="row"><td class="num">1</td><td class="pname">Login</td><td class="ptype">Login Page (built-in)</td><td>Email + password; post-auth stamps company_id/role into app items · <b>All roles</b></td><td><span class="scopetag">Shared</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="row"><td class="num">2</td><td class="pname">Home / Landing</td><td class="ptype">Blank (redirect) or Cards</td><td>Routes user after login; can redirect to Dashboard · <b>All roles</b></td><td><span class="scopetag">Shared</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="gr"><td colspan="6">Dashboard</td></tr>
+    <tr class="row"><td class="num">3</td><td class="pname">Dashboard</td><td class="ptype">Cards + Chart regions</td><td>Counts by status / priority / company + bar/pie charts; role-filtered · <b>All roles</b></td><td><span class="scopetag">Shared · filtered</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="gr"><td colspan="6">Tickets — the core</td></tr>
+    <tr class="row"><td class="num">4</td><td class="pname">Ticket List / Queue</td><td class="ptype">Faceted Search (or IR)</td><td>Browse / filter / search; rows scoped by role + company · <b>All roles</b></td><td><span class="scopetag">Shared · filtered</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="row"><td class="num">5</td><td class="pname">Ticket Detail</td><td class="ptype">Form + Comments &amp; History regions</td><td>View/edit one ticket; the hub. Buttons gated by role · <b>All roles</b></td><td><span class="scopetag">Shared · gated</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="row"><td class="num">6</td><td class="pname">Create / Raise Ticket</td><td class="ptype">Form (Modal Dialog)</td><td>Client raises a ticket (subject, description, category, priority) · <b>Client User / Admin</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="row"><td class="num">7</td><td class="pname">Assign / Reassign</td><td class="ptype">Form (Modal Dialog)</td><td>Put an agent on a ticket; writes history + (SHOULD) email · <b>System Admin</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="row"><td class="num">8</td><td class="pname">Add Comment</td><td class="ptype">Form (Modal Dialog)</td><td>Add a comment; internal-note flag for agents · <b>All roles · toggle gated</b></td><td><span class="scopetag">Shared · gated</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="gr"><td colspan="6">Admin</td></tr>
+    <tr class="row"><td class="num">9</td><td class="pname">Companies (manage)</td><td class="ptype">Interactive Grid</td><td>Create/edit/deactivate client companies (CRUD) · <b>System Admin only</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="row"><td class="num">10</td><td class="pname">Users (manage)</td><td class="ptype">Interactive Grid</td><td>Create/edit/deactivate users; assign role + company · <b>System Admin only</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="gr"><td colspan="6">Supporting</td></tr>
+    <tr class="row"><td class="num">11</td><td class="pname">Categories (manage)</td><td class="ptype">Interactive Grid</td><td>Maintain ticket categories / priorities · <b>System Admin</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge SHOULD">SHOULD</span></td></tr>
+    <tr class="row"><td class="num">12</td><td class="pname">My Profile</td><td class="ptype">Form</td><td>View/change own details / password · <b>All roles</b></td><td><span class="scopetag">Shared</span></td><td><span class="badge SHOULD">SHOULD</span></td></tr>
+  </tbody></table>
+
+  <div class="callout good"><div class="ico">🎯</div><div><b>The demo needs only the 10 MUST pages.</b> If time runs short, the irreducible spine is pages 1, 3, 4, 5, 6, 7, 9, 10 — that alone hits all four judge non-negotiables (role-based access, multiple companies, assignment, dashboard).</div></div>
+
+  <div class="eyebrow" style="margin-top:36px">Keep it small</div>
+  <h2 class="sec" style="font-size:22px;margin-bottom:6px">Things that are deliberately NOT pages</h2>
+  <div class="notpages">
+    <div class="npc"><b>Status transitions &amp; Escalate</b><p>New→Assigned→In Progress→On Hold→Resolved→Closed→Reopen, plus Escalate (FR-26) = buttons + processes on Ticket Detail, each writing a TICKET_HISTORY row. Zero extra pages.</p></div>
+    <div class="npc"><b>Comments &amp; History</b><p>Regions embedded inside Ticket Detail (page 5), not standalone pages.</p></div>
+    <div class="npc"><b>Navigation, theme &amp; branding</b><p>Menu, breadcrumbs and the branded look are Shared Components — not pages.</p></div>
+    <div class="npc"><b>Emails (FR-21, FR-29)</b><p>Assignment + auto-acknowledgement emails are APEX_MAIL processes on the Assign / Create actions — not pages.</p></div>
+    <div class="npc"><b>CSAT rating (FR-27)</b><p>A native Star Rating item on Ticket Detail, shown when status = Closed — not a page.</p></div>
+  </div>
+</div></section>
+
+<!-- PLAN -->
+<section id="plan"><div class="wrap reveal">
+  <div class="eyebrow">Delivery</div>
+  <h2 class="sec">The 3-week plan</h2>
+  <p class="lead">Each week ends with something that works. Foundation first, core features second, polish and demo rehearsal last.</p>
+  <div class="tl">
+    <div class="tlrow"><div class="node"></div><div class="wk">Week 1</div><h4>Foundation</h4>
+      <ul><li>Data model, login, roles</li><li>Tenant isolation</li><li>One end-to-end slice: raise → view a ticket</li></ul>
+      <span class="goal">Goal: prove the architecture works</span></div>
+    <div class="tlrow"><div class="node"></div><div class="wk">Week 2</div><h4>Core features</h4>
+      <ul><li>Assignment + full workflow</li><li>Comments + history</li><li>Ticket lists + dashboard</li></ul>
+      <span class="goal">Goal: every MUST is done</span></div>
+    <div class="tlrow"><div class="node"></div><div class="wk">Week 3</div><h4>Polish &amp; demo</h4>
+      <ul><li>Categories, filtering, branded theme</li><li>Notifications</li><li>Hard testing — hammer tenant isolation</li></ul>
+      <span class="goal">Goal: rehearse a flawless demo</span></div>
+  </div>
+
+  <div class="eyebrow" style="margin-top:42px">Who owns what</div>
+  <h2 class="sec" style="font-size:24px;margin-bottom:18px">A lane for everyone</h2>
+  <div class="owner"><div class="av">🗄️</div><div><div class="w">Data model &amp; security</div><div class="who">Strongest dev(s)</div></div><div class="d">Tables, login, roles, isolation — built first; everything depends on it</div></div>
+  <div class="owner"><div class="av">🎫</div><div><div class="w">Ticket screens &amp; workflow</div><div class="who">Dev(s)</div></div><div class="d">Create/view/edit, assign, status changes, comments, history</div></div>
+  <div class="owner"><div class="av">📊</div><div><div class="w">Dashboard &amp; reporting</div><div class="who">Dev or confident non-dev</div></div><div class="d">Charts + filtered lists — largely declarative in APEX</div></div>
+  <div class="owner"><div class="av">🎨</div><div><div class="w">UI/UX, theme &amp; test data</div><div class="who">Non-dev(s)</div></div><div class="d">Branding, navigation, realistic sample data, click-through testing</div></div>
+  <div class="owner"><div class="av">✅</div><div><div class="w">Demo &amp; QA</div><div class="who">Lead + rotating</div></div><div class="d">Demo script, hammer tenant isolation, keep scope honest</div></div>
+</div></section>
+
+<!-- DECISIONS -->
+<section id="decisions"><div class="wrap reveal">
+  <div class="eyebrow">Make the call</div>
+  <h2 class="sec">Decisions for today's meeting</h2>
+  <p class="lead">Each one has a recommended default — if the room goes quiet, propose the default and ask for objections. That keeps momentum.</p>
+  <div class="dec"><div class="k">A</div><div><div class="q">Does a Support Agent self-assign, or does only the System Admin assign?</div><div class="rec">✓ Decided: agents self-assign from the queue <strong>and</strong> System Admin assigns/reassigns</div></div></div>
+  <div class="dec"><div class="k">B</div><div><div class="q">Include On Hold + Reopen states in v1, or keep the lifecycle minimal?</div><div class="rec">✓ Recommend: minimal first, add if time</div></div></div>
+  <div class="dec"><div class="k">C</div><div><div class="q">Tenant isolation = application item + WHERE clause + authorization schemes?</div><div class="rec">✓ Recommend: yes</div></div></div>
+  <div class="dec"><div class="k">D</div><div><div class="q">Confirm the MUST / SHOULD / COULD scope — move anything?</div><div class="rec">✓ Recommend: accept as drafted</div></div></div>
+  <div class="dec"><div class="k">E</div><div><div class="q">Confirm the workstream split and who owns what.</div><div class="rec">✓ Decided (5 devs): P1 Foundation/Login + QA · P2 Ticket Detail + Add Comment · P3 Queue/Create/Assign · P4 Dashboard + test data · P5 Admin grids + theme</div></div></div>
+  <div class="dec"><div class="k">F</div><div><div class="q">Confirm the 3-week milestone shape.</div><div class="rec">✓ Recommend: Wk1 foundation · Wk2 core · Wk3 polish + demo</div></div></div>
+  <div class="dec"><div class="k">G</div><div><div class="q">Escalation: add the lightweight “Escalate” action only (reassign + raise priority, logged), or also add Tier-2/Team-Lead roles?</div><div class="rec">✓ Recommend: action only — models tiered escalation without growing the role matrix</div></div></div>
+  <div class="dec"><div class="k">H</div><div><div class="q">Confirm the four new SHOULD items (CSAT, dashboard analytics, auto-ack email, escalate) — all verified feasible in APEX 26.1. Keep SLA as COULD, highlight only?</div><div class="rec">✓ Recommend: yes — adopt the four; SLA stays COULD (no timers)</div></div></div>
+</div></section>
+
+<footer><div class="wrap">
+  <div><b style="color:#fff">Service Desk Ticketing System</b> · Project Brief · Oracle APEX 26.1</div>
+  <div>Living document — updated as decisions are made · 2026-06-30</div>
+</div></footer>
+
+<!-- DATA + INTERACTIVITY -->
+<script>
+const REQS=[
+ ["FR-1","A user can log in with email + password.","Auth & Access","MUST"],
+ ["FR-2","After login, the system knows the user's role and company.","Auth & Access","MUST"],
+ ["FR-3","A user only sees pages and actions allowed for their role.","Auth & Access","MUST"],
+ ["FR-4","A client user only sees data belonging to their own company (tenant isolation).","Auth & Access","MUST"],
+ ["FR-5","System Admin can create / edit / deactivate companies.","Companies & Users","MUST"],
+ ["FR-6","System Admin can create / edit / deactivate users and assign role + company.","Companies & Users","MUST"],
+ ["FR-7","A client can raise a ticket (subject, description, category, priority).","Tickets","MUST"],
+ ["FR-8","Each ticket gets a unique human-friendly reference (e.g. TKT-00001).","Tickets","MUST"],
+ ["FR-9","A user can view a ticket's full detail, incl. comments and history.","Tickets","MUST"],
+ ["FR-10","System Admin can assign / reassign a ticket to a support agent.","Tickets","MUST"],
+ ["FR-11","A support agent can change a ticket's status per workflow rules.","Tickets","MUST"],
+ ["FR-12","Any state change is recorded in ticket history (who / what / when).","Tickets","MUST"],
+ ["FR-13","Users can add comments to a ticket.","Tickets","MUST"],
+ ["FR-14","Agents can mark a comment as internal (not visible to the client).","Tickets","SHOULD"],
+ ["FR-15","See a list of permitted tickets, filterable by status, priority, company, assignee.","Find & Filter","MUST"],
+ ["FR-16","Users can search tickets by reference or keyword.","Find & Filter","SHOULD"],
+ ["FR-17","Dashboard shows ticket counts by status.","Dashboard","MUST"],
+ ["FR-18","Dashboard shows counts by priority and by client company.","Dashboard","MUST"],
+ ["FR-19","Dashboard respects the viewer's role (own company vs all).","Dashboard","MUST"],
+ ["FR-20","Dashboard shows simple charts (bar / pie), not just numbers.","Dashboard","SHOULD"],
+ ["FR-21","When a ticket is assigned, the agent is notified (email or in-app).","Notifications","SHOULD"],
+ ["FR-29","When a ticket is created, the requester gets an automatic acknowledgement email.","Notifications","SHOULD"],
+ ["FR-22","When a client's ticket changes status, they are notified.","Notifications","COULD"],
+ ["FR-26","A support agent/lead can escalate a ticket (reassign + raise priority), written to history.","Tickets","SHOULD"],
+ ["FR-27","After a ticket is closed, the requester rates support via CSAT (star rating).","Feedback","SHOULD"],
+ ["FR-28","Dashboard shows analytics: average resolution time and tickets handled per agent.","Dashboard","SHOULD"],
+ ["FR-23","SLA target per priority with declarative breach highlighting (no timers).","Stretch","COULD"],
+ ["FR-24","AI auto-suggests category / priority from the description (APEX_AI).","Stretch","COULD"],
+ ["FR-25","File attachments on tickets.","Stretch","COULD"],
+];
+const body=document.getElementById('reqbody');
+function render(f){
+  body.innerHTML='';
+  REQS.filter(r=>f==='all'||r[3]===f).forEach(r=>{
+    body.insertAdjacentHTML('beforeend',
+     `<tr><td class="id">${r[0]}</td><td>${r[1]}</td><td class="cat">${r[2]}</td><td><span class="badge ${r[3]}">${r[3]}</span></td></tr>`);
+  });
+}
+render('all');
+document.querySelectorAll('.fbtn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); render(b.dataset.f);
+}));
+
+// reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// count-up stats
+function countUp(el){
+  const t=+el.dataset.count; let n=0; const step=Math.max(1,Math.round(t/30));
+  const tick=()=>{n=Math.min(t,n+step);el.textContent=n;if(n<t)requestAnimationFrame(tick);};
+  tick();
+}
+document.querySelectorAll('.stat .n').forEach(countUp);
+</script>
+
+<!-- Mermaid (enhancement only; page is fully usable without it) -->
+<script type="module">
+try{
+  const m=await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+  // only reveal the diagram boxes once the library is confirmed loaded
+  document.querySelectorAll('.mbox,.mcap').forEach(b=>b.style.display='block');
+  m.default.initialize({startOnLoad:false,theme:'base',themeVariables:{
+    primaryColor:'#eef3fb',primaryBorderColor:'#2e5496',primaryTextColor:'#1f3864',
+    lineColor:'#4f7fd6',fontFamily:'Inter'}});
+  await m.default.run({querySelector:'.mermaid'});
+}catch(e){ /* offline: diagram boxes stay hidden; CSS pipeline + table cards carry the content */ }
+</script>
+</body>
+</html>

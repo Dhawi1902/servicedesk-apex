@@ -1,0 +1,33 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Office lock/temp files (OneDrive)
+~$*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Scratch / local
+scratch/
+tmp/
+*.log
+
+# Playwright MCP browser-session artifacts (not project content)
+.playwright-mcp/
+
+# Raw HTML cache for regenerating reference/ (re-crawled by tools/ on demand)
+_backup/
+
+# Stray scratch screenshot
+login.png
