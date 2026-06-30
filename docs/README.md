@@ -9,6 +9,7 @@ different formats — keep them in sync when decisions change.
 | [`ticketing-system.html`](ticketing-system.html) | Interactive HTML | **Share / screen-share.** Visual, self-contained (works offline); filterable requirements, charts, timeline. Open by double-clicking. |
 | `Ticketing-Kickoff.pptx` | PowerPoint | **Present.** 12-slide kickoff deck. |
 | `Ticketing-Requirements.xlsx` | Excel | **Track live.** 25 requirements with priority/status dropdowns + auto-filter; tabs for scope, roles, and the A–F decisions. |
+| [`claude-code-cheatsheet.md`](claude-code-cheatsheet.md) | Markdown | **One-page, no jargon.** How to use Claude Code on this project — copy-paste prompts for non-devs. |
 
 ## Meeting flow
 1. Present the deck (`.pptx`) — it ends on the six decisions (A–F).

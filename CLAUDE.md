@@ -58,7 +58,8 @@ Every state change is written to `TICKET_HISTORY` (who/what/when).
 ### Scope (MoSCoW) — protect the demo over adding features
 - **MUST (17):** companies/users/roles, login + isolation, ticket CRUD + lifecycle, assignment, comments + history, dashboard.
 - **SHOULD (8):** categories/priorities + filtering, branded theme, assignment notification, CSAT rating (Star Rating item), dashboard analytics (avg resolution time + per-agent counts), auto-acknowledgement email (`APEX_MAIL`), escalate action (reassign + raise priority, logged).
-- **COULD (4, do not commit):** SLA breach *highlight* only (declarative, no timers), AI category suggest (`APEX_AI`), attachments, knowledge base.
+- **COULD (4, do not commit):** SLA breach *highlight* only (declarative, no timers), AI category suggest (`APEX_AI`), file/screenshot attachments (`TICKET_ATTACHMENTS` BLOB, tenant-scoped — brief §5.1), knowledge base.
+- **FUTURE / WON'T (this time):** out of scope for the 3 weeks, kept as the roadmap — VPD/RLS isolation, real SLA engine, object-storage attachments, Project Lead role (`is_lead`), email-to-ticket intake, SSO, KB portal. Park "could we also…" ideas here, not in the build (brief §1).
 
 ## APEX APIs most relevant to this build
 Look these up in the reference before implementing:
@@ -107,7 +108,9 @@ Use it to agree on layout/flow and to demo RBAC + tenant isolation before buildi
   queries / bind variables always (never string-concatenate user input into SQL).
 - **APEX:** prefer declarative (low-code) features over hand-written code where they exist —
   it suits the mixed team and is faster. Reach for PL/SQL only when declarative can't do it.
-- **Docs are living documents.** Keep the four `docs/` artifacts in sync with reality.
+- **Docs are living documents.** The brief (`docs/ticketing-system-brief.md`) is the single source
+  of truth; after editing it, run **`/sync-docs`** to propagate the change to the HTML/`.xlsx`/`.pptx`,
+  this `CLAUDE.md`, and memory, then `python tools/sync_docs.py verify` to confirm they all agree.
 - **Temp/scratch work** does not belong in the repo — use the session scratchpad.
 
 ## Bundled Claude Code tooling (clone-and-go)
@@ -129,7 +132,14 @@ who clones it — no per-machine setup:
   paste-ready CSS + where it goes; doesn't edit the APEX app).
 - **`apex` skill** (`.claude/skills/apex/`) — the APEXlang low-code generation workflow
   (component registry, templates, generation workflow) used for scaffolding apps/pages.
+- **`/sync-docs` command** (`.claude/commands/sync-docs.md` + `tools/sync_docs.py`) — propagates a
+  brief change across every project artifact (HTML one-pager, requirements `.xlsx`, kickoff `.pptx`,
+  this `CLAUDE.md`, project memory) and **verifies** they all agree with the brief. The brief is the
+  single source of truth; run `/sync-docs <what changed>` whenever you edit it. `python tools/sync_docs.py
+  verify` is the drift gate (exit 1 on mismatch); `… inspect` shows every scope value side by side.
 
 ## Tooling
 - `tools/` holds the Python crawlers that (re)generate the reference (Python 3 + pandoc). See `README.md`.
 - Generating the docs deck/sheet uses Python with `openpyxl` and `python-pptx`.
+- `tools/sync_docs.py` keeps the project docs aligned with the brief (`inspect` / `verify` / binary-doc
+  writers); it's the engine behind the `/sync-docs` command. Needs `openpyxl` + `python-pptx`.

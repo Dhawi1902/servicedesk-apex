@@ -102,7 +102,7 @@ h2.sec{font-size:32px;margin-bottom:8px}
 .lrow .name{font-weight:700;width:84px}
 .lrow .desc{color:var(--muted);font-size:14px;flex:1}
 .lrow .cnt{font-weight:800;font-size:20px;color:var(--navy)}
-.sw.must{background:var(--green)}.sw.should{background:var(--amber)}.sw.could{background:var(--red)}
+.sw.must{background:var(--green)}.sw.should{background:var(--amber)}.sw.could{background:var(--red)}.sw.future{background:#8a93a6}
 
 /* roles */
 .role{border-radius:16px;padding:20px;color:#fff;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
@@ -298,6 +298,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       <div class="lrow"><span class="sw must"></span><span class="name">MUST</span><span class="desc">This <b>is</b> the product. The demo dies without these.</span><span class="cnt">17</span></div>
       <div class="lrow"><span class="sw should"></span><span class="name">SHOULD</span><span class="desc">Earns the “breadth + polish” points with judges.</span><span class="cnt">8</span></div>
       <div class="lrow"><span class="sw could"></span><span class="name">COULD</span><span class="desc">Only if we finish early. We commit to none of these.</span><span class="cnt">4</span></div>
+      <div class="lrow"><span class="sw future"></span><span class="name">FUTURE</span><span class="desc">Explicitly out of scope now — recorded as the post-hackathon roadmap (WON'T-have this time).</span><span class="cnt">—</span></div>
     </div>
   </div>
   <p class="note">Lead's recommendation: cut AI entirely; keep SLA as COULD in its cheap declarative form only (a breach <em>highlight</em>, never timers). The four new SHOULD items — CSAT, dashboard analytics, auto-ack email, escalate — all verified feasible in APEX 26.1 and low-cost.</p>
@@ -329,11 +330,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 <section id="req"><div class="wrap reveal">
   <div class="eyebrow">Functional Requirements · discuss first</div>
   <h2 class="sec">What the system must do</h2>
-  <p class="lead">25 concrete requirements. Filter by priority to focus the conversation. These drive the workflow and the database that follow.</p>
+  <p class="lead">29 concrete requirements. Filter by priority to focus the conversation. These drive the workflow and the database that follow.</p>
   <div class="fbar">
-    <button class="fbtn active" data-f="all">All <span class="b">25</span></button>
+    <button class="fbtn active" data-f="all">All <span class="b">29</span></button>
     <button class="fbtn" data-f="MUST">Must <span class="b">17</span></button>
-    <button class="fbtn" data-f="SHOULD">Should <span class="b">4</span></button>
+    <button class="fbtn" data-f="SHOULD">Should <span class="b">8</span></button>
     <button class="fbtn" data-f="COULD">Could <span class="b">4</span></button>
   </div>
   <table class="rtable"><thead><tr><th>ID</th><th>Requirement</th><th>Category</th><th>Priority</th></tr></thead>
@@ -552,7 +553,7 @@ const REQS=[
  ["FR-28","Dashboard shows analytics: average resolution time and tickets handled per agent.","Dashboard","SHOULD"],
  ["FR-23","SLA target per priority with declarative breach highlighting (no timers).","Stretch","COULD"],
  ["FR-24","AI auto-suggests category / priority from the description (APEX_AI).","Stretch","COULD"],
- ["FR-25","File attachments on tickets.","Stretch","COULD"],
+ ["FR-25","File / screenshot attachments on a ticket (proof/evidence); stored in TICKET_ATTACHMENTS, tenant-scoped. See brief §5.1.","Stretch","COULD"],
 ];
 const body=document.getElementById('reqbody');
 function render(f){

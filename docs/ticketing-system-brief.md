@@ -76,9 +76,23 @@ We organize features by priority so we **always have a working demo**, even if l
 **COULD — only if we finish MUST + SHOULD early. Do NOT commit to these.**
 - SLA breach **highlighting** (declarative, evaluated at query time — *no* timers/jobs)
 - AI assist (APEX has a built-in `APEX_AI` package — e.g. auto-suggest a ticket's category/priority). Strong demo moment *if* time allows.
-- File attachments, knowledge base
+- **File / screenshot attachments** on tickets (proof/evidence) — almost entirely declarative; build-ready DDL + isolation plan in §5.1
+- Knowledge base
 
 > **Lead's recommendation:** cut AI entirely. SLA stays COULD, but only in its cheap declarative form — a breach *highlight* on the ticket list, never background timers. The four new SHOULD items above all verified feasible in APEX 26.1 and are low-cost, so they're worth committing to.
+
+**FUTURE / WON'T (this time) — explicitly out of scope for the hackathon; recorded for the roadmap.**
+*The MoSCoW "Won't-have-this-time" tier: not built in these 3 weeks, but captured so the vision is on record and the ideas don't leak into the build. This is the post-hackathon product direction, not a backlog we commit to.*
+- **Production-grade tenant isolation via VPD / RLS** — graduate from app-item + `WHERE company_id` (§5) to database-enforced row security.
+- **Real SLA engine** — business-hours calendars, background jobs, automatic escalation on breach (the COULD item is only a declarative *highlight*; this is the engine behind it).
+- **Attachments at scale** — store files in OCI Object Storage instead of DB BLOBs, plus virus/malware scanning (the COULD item is the DB-BLOB MVP; see §5.1).
+- **Project Lead role** — the deferred `is_lead` flag on `AGENT_COMPANIES` (§2): assign teammates' work within a project *and* work tickets.
+- **Email-to-ticket intake** — clients raise tickets by emailing a support address (inbound mail → `TICKETS`), complementing the outbound `APEX_MAIL` notifications.
+- **SSO / corporate directory login** — SAML/OAuth instead of email + password.
+- **Self-service knowledge base & portal** — graduates the COULD knowledge base into a searchable, public-facing help centre.
+- **Chat / integrations** — Slack/Teams webhooks, native mobile app, customer satisfaction & SLA trend analytics over time.
+
+> **Why have this tier at all:** it's the firewall against scope creep. Every "ooh, could we also…" idea gets parked here instead of derailing the demo — and it doubles as the slide that answers a judge's "where would you take this next?"
 
 ---
 
@@ -154,7 +168,7 @@ Concrete "the system must…" statements, grouped by area. In the meeting, confi
 ### Stretch (do not commit)
 - FR-23: SLA target per priority with **declarative breach highlighting** (computed at query time — no timers/jobs). *(COULD)*
 - FR-24: AI auto-suggests category/priority from the description (`APEX_AI`). *(COULD)*
-- FR-25: File attachments on tickets. *(COULD)*
+- FR-25: **File / screenshot attachments** on a ticket (and optionally on a comment) as proof/evidence, so an agent can view or download them while working the ticket. Uploaded via a declarative *File Browse* item, stored in a `TICKET_ATTACHMENTS` BLOB table, displayed as a download link (and inline preview for images). **Subject to the same `company_id` tenant scoping as everything else** (see §5.1). *(COULD)*
 
 ---
 
@@ -221,8 +235,17 @@ Now that we know the requirements and workflow, we can model the data to support
 | **TICKET_HISTORY** | Audit trail of every change | `history_id` (PK), `ticket_id` (FK), `user_id` (FK), `action`, `old_value`, `new_value`, `created_at` |
 | **CATEGORIES** | Ticket types (Bug, Request, Question…) | `category_id` (PK), `category_name` |
 | **AGENT_COMPANIES** | Which clients (projects) each support agent covers — *the agent-scoping key (decision I)* | `user_id` (FK), `company_id` (FK); together the PK. *(Optional later: `is_lead` Y/N for the deferred Project Lead.)* |
+| **TICKET_ATTACHMENTS** *(COULD — FR-25)* | Files/screenshots attached to a ticket as evidence | `attachment_id` (PK), `ticket_id` (FK), `company_id` (FK — *tenant key, denormalized on purpose; see §5.1*), `comment_id` (FK, nullable — null = ticket-level), `file_name`, `mime_type`, `file_blob` (BLOB), `uploaded_by`, `uploaded_at` |
 
 > Priorities and statuses can start as simple fixed lists (Low/Medium/High/Critical; the states above). If we have time, promote them to lookup tables — cleaner, but not required for the demo.
+
+> **Convention — timestamps & history vocabulary (enables aging / SLA / FRT metrics with no schema change):**
+> The derived dashboard metrics — ticket **aging**, **"stale" / time-since-last-activity**, **first-response-time (FRT)**, **backlog trend**, **reopen rate** — are all pure queries over data we already store, *provided* three small rules hold. Decide these now, before the tables are built:
+> 1. **One timestamp type everywhere.** `created_at`, `updated_at`, `resolved_at`, `closed_at` on every table use `TIMESTAMP WITH LOCAL TIME ZONE` (matching `TICKET_ATTACHMENTS`, §5.1). Don't mix `DATE` and `TIMESTAMP` — it complicates the age arithmetic and the display formatting.
+> 2. **`TICKETS.updated_at` is bumped on *every* change** — every comment insert and every `TICKET_HISTORY` write also touches `updated_at`. "Last activity" = `GREATEST(updated_at, MAX(comment.created_at), MAX(history.created_at))`; keep the `GREATEST` form as a backstop so a ticket that's being actively commented on never falsely reads as *stale*.
+> 3. **`TICKET_HISTORY.action` is a fixed enum, not free text** — `STATUS_CHANGE`, `ASSIGN`, `ESCALATE`, `PRIORITY_CHANGE`, `COMMENT`, `CSAT` (extend as needed, but pin the list). A *Reopen* is a `STATUS_CHANGE` transitioning **from** `'Resolved'` back to an active status — detect it via `old_value = 'Resolved'` (matches the Reopen button on Page 5 of the build guide, which sets status to *In Progress*). A fixed vocabulary makes every history-driven metric a single, reliable predicate instead of guessing at spellings.
+>
+> Metric tiers (build only after the MUST spine demos with real isolation): **stale flag** + **overdue highlight** (age × priority — the declarative cousin of the SLA-highlight COULD) are the recommended picks; **FRT**, **backlog trend**, **reopen rate** are bonus.
 
 ### How the tables relate
 ```mermaid
@@ -237,7 +260,12 @@ erDiagram
     APP_USERS ||--o{ TICKET_COMMENTS : "writes"
     APP_USERS ||--o{ AGENT_COMPANIES : "covers"
     COMPANIES ||--o{ AGENT_COMPANIES : "is covered by"
+    TICKETS ||--o{ TICKET_ATTACHMENTS : "has"
+    TICKET_COMMENTS ||--o{ TICKET_ATTACHMENTS : "may carry"
+    COMPANIES ||--o{ TICKET_ATTACHMENTS : "owns"
 ```
+
+> **Note:** `TICKET_ATTACHMENTS` is a COULD feature (FR-25). It carries its **own** `company_id` (copied from the parent ticket at upload) so every BLOB-download query can filter on the tenant key directly — without a join — closing the IDOR gap on file downloads. Build-ready DDL and the full isolation plan are in §5.1.
 
 > **Note:** `AGENT_COMPANIES` is a many-to-many bridge — one agent covers several clients, one client is covered by several agents. It's what scopes an agent's queue to only their projects (decision I). It does **not** weaken client isolation: clients are still locked to their own `company_id`; this table only *narrows* what an agent sees on the vendor side.
 
@@ -250,6 +278,43 @@ How we enforce it (from simplest to most robust — pick based on comfort):
 3. **VPD (Virtual Private Database):** database-enforced row security. Most robust, but advanced — a stretch goal, not a starting point.
 
 > **Open decision for the meeting (C):** confirm we go with approach **1 + 2** for v1. (Note for the demo: explicitly *show* a client logging in and seeing only their tickets — that proves the requirement live.)
+
+### 5.1 File / screenshot attachments (FR-25 — COULD, build-ready)
+
+A client raising a ticket — or anyone commenting — can attach a file or screenshot as proof/evidence; a support agent views or downloads it while working the ticket. This is **almost entirely declarative** in APEX (verified against the offline 26.1 reference) and is a **half-day to one-day** build, so it stays a **COULD** — only built if MUST + SHOULD finish early — but is documented here ready to go.
+
+**How it works (declarative path, minimal PL/SQL):**
+- **Upload:** a built-in **File Browse** page item. Uploads first land in APEX's session-scoped temp table (`APEX_APPLICATION_TEMP_FILES`, auto-purged at end of session) — so we point the item at a **BLOB column** instead, and APEX persists the file, filename, and mime type into `TICKET_ATTACHMENTS` with **no code** (an Interactive Grid / Form on the table).
+- **Download:** a declarative **"Download BLOB" column** in a report/grid (binds filename + mime type; opens inline or forces download). No code.
+- **Image preview (optional):** one `CASE` expression emitting an `<img>` via `APEX_UTIL.GET_BLOB_FILE_SRC` for image mime types, falling back to a download link otherwise. (That column must have *Escape special characters = No*, which makes filename escaping mandatory — see below.)
+
+**The DDL** (`company_id` denormalized onto the row — load-bearing for isolation, see below):
+```sql
+CREATE TABLE TICKET_ATTACHMENTS (
+  ATTACHMENT_ID  NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY PRIMARY KEY,
+  TICKET_ID      NUMBER NOT NULL REFERENCES TICKETS(TICKET_ID),
+  COMPANY_ID     NUMBER NOT NULL REFERENCES COMPANIES(COMPANY_ID),  -- tenant key, copied from the ticket at upload
+  COMMENT_ID     NUMBER REFERENCES TICKET_COMMENTS(COMMENT_ID),     -- null = ticket-level attachment
+  FILE_NAME      VARCHAR2(255) NOT NULL,
+  MIME_TYPE      VARCHAR2(255),
+  FILE_BLOB      BLOB,
+  UPLOADED_BY    VARCHAR2(255) DEFAULT SYS_CONTEXT('APEX$SESSION','APP_USER'),
+  UPLOADED_AT    TIMESTAMP WITH LOCAL TIME ZONE DEFAULT SYSTIMESTAMP
+);
+CREATE INDEX TICKET_ATTACH_TICKET_IX  ON TICKET_ATTACHMENTS(TICKET_ID);
+CREATE INDEX TICKET_ATTACH_COMPANY_IX ON TICKET_ATTACHMENTS(COMPANY_ID);
+```
+
+**The isolation plan — the one rule that cannot break (§5) applied to BLOBs.** A download URL carries the row's PK, and a malicious client can tamper with it to fetch another tenant's file (IDOR). *Hiding the link is not enough — the BLOB-fetch query itself must be tenant-scoped.* Guards, layered:
+1. **Filter every attachment region/column on `company_id`** — `WHERE company_id = :APP_COMPANY_ID` (or join to `TICKETS` on its `company_id`). The declarative Download BLOB column derives its fetch from the region's SQL, so this predicate scopes the *actual download*, not just the visible link. **This is the single most important guard.**
+2. **Session State Protection on** — so the PK in the URL carries a checksum and can't be freely edited; set the page items holding ticket/attachment IDs to *Restricted — may not be set from browser*.
+3. **Authorization scheme per role** layered on top (`IS_CLIENT_USER` / `IS_AGENT` / etc.), consistent with §6.
+4. If we use `GET_BLOB_FILE_SRC` for previews, its underlying `FILE` item's query **must also** carry the `company_id` predicate — don't rely on the report filter alone.
+5. *(Stretch)* a **VPD/RLS policy** on `TICKET_ATTACHMENTS` keyed to `APP_COMPANY_ID` enforces isolation at the DB regardless of query path — the most robust option.
+
+**Validation & XSS:** re-validate file size and mime type **server-side** in a page Validation (the client-side `accept` filter is convenience only); allowlist types (e.g. `image/*`, `application/pdf`). Filenames are user-controlled and rendered in reports, so escape with `APEX_ESCAPE.HTML(...)` (and `HTML_ATTRIBUTE(...)` inside attributes) — keep *Escape special characters = Yes* on every column except the deliberate `<img>` preview, where you escape each interpolated value yourself.
+
+> **Run the `tenant-isolation-auditor` agent** over the attachment region SQL and every download path before demoing — attachments add a fresh IDOR surface, and a leaked file is as fatal to the "production-level" claim as a leaked ticket.
 
 ---
 

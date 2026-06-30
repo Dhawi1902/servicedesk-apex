@@ -64,12 +64,12 @@ CREATE TABLE TICKETS (
                CHECK (STATUS IN ('New','Assigned','In Progress','On Hold','Resolved','Closed')),
   CREATED_BY   NUMBER REFERENCES APP_USERS(USER_ID),
   ASSIGNED_TO  NUMBER REFERENCES APP_USERS(USER_ID),
-  CREATED_AT   TIMESTAMP DEFAULT SYSTIMESTAMP,
-  UPDATED_AT   TIMESTAMP DEFAULT SYSTIMESTAMP,
-  RESOLVED_AT  TIMESTAMP,
-  CLOSED_AT    TIMESTAMP,
+  CREATED_AT   TIMESTAMP WITH LOCAL TIME ZONE DEFAULT SYSTIMESTAMP,
+  UPDATED_AT   TIMESTAMP WITH LOCAL TIME ZONE DEFAULT SYSTIMESTAMP,
+  RESOLVED_AT  TIMESTAMP WITH LOCAL TIME ZONE,
+  CLOSED_AT    TIMESTAMP WITH LOCAL TIME ZONE,
   CSAT_SCORE   NUMBER CHECK (CSAT_SCORE BETWEEN 1 AND 5),
-  SLA_DUE      TIMESTAMP
+  SLA_DUE      TIMESTAMP WITH LOCAL TIME ZONE
 );
 
 CREATE TABLE TICKET_COMMENTS (
@@ -78,7 +78,7 @@ CREATE TABLE TICKET_COMMENTS (
   USER_ID      NUMBER NOT NULL REFERENCES APP_USERS(USER_ID),
   COMMENT_TEXT CLOB NOT NULL,
   IS_INTERNAL  VARCHAR2(1) DEFAULT 'N' NOT NULL CHECK (IS_INTERNAL IN ('Y','N')),
-  CREATED_AT   TIMESTAMP DEFAULT SYSTIMESTAMP
+  CREATED_AT   TIMESTAMP WITH LOCAL TIME ZONE DEFAULT SYSTIMESTAMP
 );
 
 CREATE TABLE TICKET_HISTORY (
@@ -88,7 +88,7 @@ CREATE TABLE TICKET_HISTORY (
   ACTION     VARCHAR2(100) NOT NULL,
   OLD_VALUE  VARCHAR2(100),
   NEW_VALUE  VARCHAR2(100),
-  CREATED_AT TIMESTAMP DEFAULT SYSTIMESTAMP
+  CREATED_AT TIMESTAMP WITH LOCAL TIME ZONE DEFAULT SYSTIMESTAMP
 );
 
 -- Which CLIENT companies (projects) each Support Agent covers.
@@ -911,6 +911,135 @@ scopes an agent's queue (decision I, A.7). Build it as a **second Interactive Gr
   cannot load or save another user's profile.
 - **Test it:** each user sees only their own details; changing the name persists; Email/Role/Company can't
   be edited; URL-tampering the id has no effect because the query is keyed off the session item.
+
+---
+
+## Add-on — Ticket aging: stale flag & overdue highlight (SHOULD / bonus)
+
+> **Build only after the MUST spine demos with real isolation.** No schema change — pure query + a
+> declarative highlight. Lives best as a region on **Page 3 (Dashboard)** or as a variant of the
+> **Page 4 (Queue)** report. Grounded against `reference/ui/universal-theme-classes.md` (§9, §12).
+
+### The date-math idiom (use everywhere you show "days")
+
+`*_AT` columns are `TIMESTAMP WITH LOCAL TIME ZONE`. Subtracting two timestamps yields an awkward
+`INTERVAL` (day part caps at 99). For whole days, cast both sides to `DATE` first — `CAST(... AS DATE)`
+normalizes to the **session** zone, the same zone APEX renders in, and `LOCALTIMESTAMP` is "now" in
+that zone:
+
+```sql
+FLOOR( CAST(LOCALTIMESTAMP AS DATE) - CAST(last_activity AS DATE) )
+```
+
+### Region SQL (one Interactive Report source, drives both features)
+
+`:P3_STALE_DAYS` is a page item holding N (default 3) — the native IR Highlight can't read a page
+item, so the configurable threshold must live in SQL.
+
+```sql
+SELECT  d.ticket_id, d.ticket_ref, d.subject, d.priority, d.status,
+        d.assigned_to_name, d.last_activity, d.days_idle,
+        CASE WHEN d.days_idle > :P3_STALE_DAYS THEN 'Y' ELSE 'N' END AS is_stale,
+        CASE WHEN d.days_idle > :P3_STALE_DAYS THEN 'st-stale' ELSE 'st-fresh' END AS stale_css,
+        CASE
+          WHEN d.priority = 'Critical' AND d.days_idle >= 1 THEN 'OVERDUE'
+          WHEN d.priority = 'High'     AND d.days_idle >= 2 THEN 'OVERDUE'
+          WHEN d.priority = 'Medium'   AND d.days_idle >= 4 THEN 'OVERDUE'
+          WHEN d.priority = 'Low'      AND d.days_idle >= 7 THEN 'OVERDUE'
+          ELSE 'OK'
+        END AS overdue_level,
+        CASE
+          WHEN d.priority = 'Critical' AND d.days_idle >= 1 THEN 'ov-crit'
+          WHEN d.priority = 'High'     AND d.days_idle >= 2 THEN 'ov-high'
+          WHEN d.priority = 'Medium'   AND d.days_idle >= 4 THEN 'ov-med'
+          WHEN d.priority = 'Low'      AND d.days_idle >= 7 THEN 'ov-low'
+          ELSE 'ov-none'
+        END AS overdue_css
+FROM (
+    SELECT a.*, FLOOR( CAST(LOCALTIMESTAMP AS DATE) - CAST(a.last_activity AS DATE) ) AS days_idle
+    FROM (
+        SELECT  t.ticket_id, t.ticket_ref, t.subject, t.priority, t.status,
+                asg.full_name AS assigned_to_name,
+                GREATEST(
+                    t.updated_at,
+                    NVL((SELECT MAX(c.created_at) FROM ticket_comments c WHERE c.ticket_id = t.ticket_id), t.updated_at),
+                    NVL((SELECT MAX(h.created_at) FROM ticket_history  h WHERE h.ticket_id = t.ticket_id), t.updated_at)
+                ) AS last_activity
+        FROM    tickets t
+        LEFT JOIN app_users asg ON asg.user_id = t.assigned_to   -- assignee join: NO company filter (see notes)
+        WHERE ( :APP_ROLE = 'System Admin'                                                                                    -- §A.7 canonical
+             OR ( :APP_ROLE = 'Support Agent' AND ( t.COMPANY_ID IN (SELECT ac.COMPANY_ID FROM AGENT_COMPANIES ac WHERE ac.USER_ID = :APP_USER_ID) OR t.ASSIGNED_TO = :APP_USER_ID ) )
+             OR ( :APP_ROLE = 'Client Admin'  AND t.COMPANY_ID  = :APP_COMPANY_ID )
+             OR ( :APP_ROLE = 'Client User'   AND t.COMPANY_ID  = :APP_COMPANY_ID AND t.CREATED_BY = :APP_USER_ID ) )       -- role-aware; copy verbatim, do not paraphrase
+          AND   t.status NOT IN ('Resolved','Closed')
+    ) a
+) d
+```
+
+- `GREATEST` returns NULL if **any** arg is NULL → each sub-select is wrapped `NVL(..., t.updated_at)`,
+  so a ticket with no comments/history still resolves to `updated_at`.
+- The priority×idle rule spans **two columns**, which the native IR Highlight can't express — so it's
+  collapsed into the single `OVERDUE_LEVEL` flag in SQL, then highlighted off that one column.
+
+### Render — most declarative route first
+
+**Stale (Route A, zero code):** run the page as developer → IR **Actions (cog) → Format → Highlight** →
+Name `Stale`, **Type** `Row`, Background `#FEF9C3`, Text `#92740A`, **Condition** `IS_STALE = Y` →
+**Apply** → **Actions → Save Report → As Default Report Settings → Primary** (persists for all users).
+
+**Overdue (Route A):** same path → Name `Overdue`, Background `#FEE2E2`, Text `#B91C1C`,
+**Condition** `OVERDUE_LEVEL = OVERDUE`. One rule covers all four priorities.
+
+**Badge variant (Route B, developer-controlled):** Page Designer → column (`DAYS_IDLE` or `PRIORITY`) →
+**Column Formatting → HTML Expression**:
+
+```html
+<span class="sd-badge #STALE_CSS#">#DAYS_IDLE# d idle</span>
+```
+
+Set the `STALE_CSS` / `OVERDUE_CSS` columns to **Type = Hidden** (they only feed the expression).
+
+### CSS (paste once: page root → Appearance → CSS → Inline, or a Static App File)
+
+Colors are the project tokens from `reference/ui/universal-theme-classes.md` §12. Uses a custom
+`.sd-badge` hook — **not** `.t-Badge` (that's UT's Badge-List tile class, reusing it would drift).
+
+```css
+.sd-badge{ display:inline-block; padding:2px 8px; border-radius:4px;
+  font-size:11px; font-weight:600; line-height:1.6; white-space:nowrap; }
+.st-stale{ background:#FEF9C3; color:#92740A; }  .st-fresh{ background:#DCFCE7; color:#15803D; }
+.ov-crit{ background:#FEE2E2; color:#B91C1C; }   .ov-high{ background:#FFEDD5; color:#C2410C; }
+.ov-med { background:#E0F2FE; color:#0369A1; }   .ov-low { background:#F1F5F9; color:#475569; }
+.ov-none{ background:#F3F4F6; color:#6B7280; }
+```
+
+### Tenant-isolation notes (read before demoing)
+
+1. **Use the §A.7 canonical role-aware `WHERE` verbatim** — not a bare `company_id = :APP_COMPANY_ID`.
+   A plain `company_id` filter would show a **Client User** their whole company's tickets (the role
+   matrix scopes them to `CREATED_BY = :APP_USER_ID`) and would blank the Agent/SysAdmin views on this
+   shared page. The canonical predicate encodes all four role branches correctly.
+2. `TICKET_COMMENTS` / `TICKET_HISTORY` carry **no** `company_id` — the sub-selects are safe **only**
+   because they correlate to a `ticket_id` from an already role/tenant-filtered `TICKETS`. Never drop
+   the outer predicate, never reuse the sub-selects standalone.
+3. **Do NOT** add `:APP_COMPANY_ID` to the `app_users asg` assignee join — agents belong to the
+   **vendor** company, not the client tenant; filtering it would blank every assignee name. Tenant
+   scope belongs on `TICKETS.company_id` only; the assignee is a safe by-PK lookup. *(Defense-in-depth:
+   ensure `TICKETS.ASSIGNED_TO` can only ever hold an agent-role user, so this join can't surface a
+   client user's name.)*
+4. **Styling is not security.** The highlight/badge runs in the browser on rows already returned.
+   `:APP_COMPANY_ID` (and `:APP_ROLE`, `:APP_USER_ID`) must be **Application Items** with Session State
+   Protection = *Restricted — may not be set from browser*, stamped server-side at login (§A.5) and
+   never exposed as a submittable page item. That — not this query — is the cross-tenant kill-switch.
+
+### Test it (per role — this is the part the isolation audit cares about)
+- [ ] **Client User** sees only the open tickets *they raised* — not a colleague's at the same company.
+- [ ] **Client Admin** (same company) sees all of that company's open tickets.
+- [ ] **Support Agent** sees only open tickets for the client companies they cover (`AGENT_COMPANIES`).
+- [ ] **System Admin** sees open tickets across all companies; cross-tenant rows render correctly.
+- [ ] A ticket idle > N days shows the stale highlight; add a comment → highlight clears next refresh.
+- [ ] A Critical ticket idle ≥ 1 day shows Overdue; a Low one at the same age does not.
+- [ ] Assignee name renders (proves note #3 — assignee join not tenant-filtered).
 
 ---
 
