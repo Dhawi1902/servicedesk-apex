@@ -103,6 +103,23 @@ Use it to agree on layout/flow and to demo RBAC + tenant isolation before buildi
 - ⚠️ **Client-side simulation only — NOT real auth/security.** Real auth + isolation are built in APEX.
 - **Redeploy after editing `docs/mockups/`:** copy folder to a staging dir, keep `CNAME`/`.nojekyll`/`README`, commit + push to the repo.
 
+## Database & auth foundation (`sql/`)
+Build-ready SQL scripts to stand up the schema, seed data, auth, and tenant isolation in the
+APEX workspace. Full run order + App Builder wiring in [`sql/README.md`](sql/README.md).
+- **Run order (SQL Workshop → SQL Scripts):** `01_schema` → `02_seed_data` → `03_attachments`
+  (optional, FR-25) → `05_isolation_views` → `04_apex_accounts`. `00_drop_all` resets everything.
+- **Auth = APEX Accounts** (built-in salted hashing/lockout; no password column in `APP_USERS`).
+  A post-auth process stamps `APP_COMPANY_ID`/`APP_USER_ID`/`APP_ROLE` app items — that split is
+  what carries tenant context; the auth scheme never does. `04_apex_accounts.sql` auto-creates a
+  `demo`-password login per seeded user. (Reference-verified: `APEX_UTIL.CREATE_USER`.)
+- **Tenant isolation = tenant-scoped views** (`V_MY_TICKETS` / `V_MY_COMMENTS` / `V_MY_HISTORY` /
+  `V_MY_ATTACHMENTS` in `05_isolation_views.sql`). They encode the full role matrix once (via
+  `V()`/`NV()` session functions, fail-closed outside a session). **Rule for the whole team:**
+  every ticket-data region selects `FROM V_MY_*` (never base tables); every write first verifies
+  `SELECT COUNT(*) FROM V_MY_TICKETS WHERE TICKET_ID = :Pn_TICKET_ID > 0`. Passed a
+  `tenant-isolation-auditor` foundation review (2026-07-01) — findings were build-time guardrails,
+  now enforced by the views. Re-run the auditor over each page before demoing.
+
 ## Conventions
 - **SQL/PLSQL:** UPPER_SNAKE_CASE tables/columns; singular-purpose objects; parameterized
   queries / bind variables always (never string-concatenate user input into SQL).
@@ -130,6 +147,13 @@ who clones it — no per-machine setup:
   Template Options → component CSS Classes → custom CSS) and grounds every selector in
   `reference/ui/universal-theme-classes.md` — never invents class names. Advisory (outputs
   paste-ready CSS + where it goes; doesn't edit the APEX app).
+- **`apex-ba-analyst` agent** (`.claude/agents/apex-ba-analyst.md`) — business-analyst /
+  scope guardian. Use it to turn a committed requirement into user stories + acceptance
+  criteria, to triage a "could we also…" idea against the MoSCoW line, or to check every
+  judge non-negotiable maps to a demoable feature. Grounds everything in the source-of-truth
+  brief (FR-numbers, A–F/I decisions). Advisory (reports stories/verdicts/gaps; hands any
+  requirement change to `/sync-docs` — doesn't edit docs). Owns *what/why/order*; defers
+  *how-to-build* to `apex-expert`, isolation to `tenant-isolation-auditor`, UI to `apex-ui-stylist`.
 - **`apex` skill** (`.claude/skills/apex/`) — the APEXlang low-code generation workflow
   (component registry, templates, generation workflow) used for scaffolding apps/pages.
 - **`/sync-docs` command** (`.claude/commands/sync-docs.md` + `tools/sync_docs.py`) — propagates a
