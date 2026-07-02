@@ -66,6 +66,7 @@ We organize features by priority so we **always have a working demo**, even if l
 - **Assign** a ticket to a support agent
 - Comments + activity history on each ticket
 - **Dashboard** (judge-requested)
+- **SSO / Microsoft login** — Social Sign-In with Microsoft Entra ID (Azure AD) via APEX's declarative OAuth2/OpenID Connect scheme. Company uses M365; SSO-only auth (no dual-auth needed for demo). Post-auth process stamps `APP_COMPANY_ID`/`APP_ROLE`/`APP_USER_ID` as before. *(Promoted from P3 FUTURE.)*
 
 **SHOULD — this is where we earn "breadth + polish" points. (18 FRs)**
 - Categories & priorities with filtering and search
@@ -107,7 +108,7 @@ We organize features by priority so we **always have a working demo**, even if l
 - **Email-to-ticket intake + reply-via-email** — clients raise tickets by emailing a support address (inbound mail → `TICKETS`); replies to notification emails append as comments. Without inbound email, 40-60% of support requests are lost. *(Promoted from P4 — essential for real-world adoption.)*
 - **Hierarchical escalation** — management notification when SLA is at risk or a major incident occurs (distinct from functional escalation / reassignment). Separate thresholds from functional escalation (e.g. notify at 50% SLA, reassign at 80%).
 - **Major Incident process** — dedicated workflow for Critical/P1 issues: separate communication cadence, post-incident review (PIR), ability to link child/related tickets to a major incident parent. Includes **duplicate/related ticket linking** (`TICKET_RELATIONS` table or `duplicate_of` FK).
-- **Two-level categorization** — `parent_category_id` self-referential FK on CATEGORIES for Category → Subcategory hierarchy. Enables trend analysis and feeds problem management.
+- **Two-level categorization** — `parent_category_id` self-referential FK on CATEGORIES for Category → Subcategory hierarchy. Composes naturally with the hybrid model (a company-specific subcategory can hang off a global parent). Enables trend analysis and feeds problem management.
 - **Service Request catalog / ticket templates** — pre-defined request types with pre-populated fields and specific SLAs. Reduces ticket creation time, standardizes requests.
 - **Auto-close after timeout** — tickets in "Resolved" for >5 business days auto-close with notification. Configurable period.
 - **Advanced SLA engine** — business-hours calendars, configurable escalation policies per tier, SLA reporting by client (per-client SLA compliance breakdown, response vs. resolution SLA split, breach count by severity). The SHOULD items cover per-company targets + auto-escalation; this is the full enterprise engine. Include SLA review scheduling for ISO 20000 §8.6.3.
@@ -118,7 +119,6 @@ We organize features by priority so we **always have a working demo**, even if l
 - **"Needs Attention" smart queue** — computed facet on Page 4 surfacing SLA-at-risk, awaiting-response, and stale tickets. Gives agents a pre-breach intervention window.
 
 **P3 — Medium:**
-- **SSO / corporate directory login** — SAML/OAuth instead of email + password. Strengthens ISO 20000 §6.6 access control posture for a multi-tenant production system. APEX supports SAML/OAuth2 declaratively. *(Promoted from P4 — ISO 20000 §6.6 access control.)*
 - **CSAT enhancement** — free-text comment field alongside score, low-score alerts to management, CSAT trend reporting on dashboard, aggregate per-company CSAT for relationship management.
 - **Full ITIL KPI dashboard** — reopen rate, backlog aging, first-response time chart, CSAT average, incident volume trend (sparkline/time-series), top-N categories over time, repeat-incident identification.
 - **Urgency field + Impact × Urgency = Priority matrix** — the textbook ITIL priority model; auto-suggests priority from severity (impact) + urgency. Removes subjectivity.
@@ -191,7 +191,7 @@ Two sides: the **client side** (our customers) and the **vendor side** (our comp
 Concrete "the system must…" statements, grouped by area. In the meeting, confirm each tag as **MUST / SHOULD / COULD**. These requirements are what the workflow (§4) and database (§5) must then support.
 
 ### Authentication & access
-- FR-1: A user can log in with email + password. *(MUST)*
+- FR-1: A user can log in via **Microsoft SSO** (Entra ID / Azure AD) using APEX Social Sign-In. *(MUST)* ← promoted from P3 FUTURE; SSO-only for demo (company uses M365)
 - FR-2: After login, the system knows the user's role and company. *(MUST)*
 - FR-3: A user only sees pages and actions allowed for their role. *(MUST)*
 - FR-4: A client user only sees data belonging to their own company and **department** (decision N). A Client Admin sees all company data cross-department. *(MUST)*
@@ -313,7 +313,7 @@ Now that we know the requirements and workflow, we can model the data to support
 | **TICKETS** | The support requests | `ticket_id` (PK), `ticket_ref` (e.g. TKT-00001), `company_id` (FK — *the tenant key*), `department_id` (FK — stamped from creator's department, decision N), **`ticket_type`** (`INCIDENT` / `SERVICE_REQUEST` — default `INCIDENT`, FR-30), `subject`, `description`, `category_id` (FK, **required** — prevents uncategorized tickets), **`severity`** (Critical/Major/Minor/Low — client-set at creation), **`priority`** (P1–P4 — support-set, nullable until triaged; **required before In Progress** per FR-37), `status`, `created_by` (FK user), `assigned_to` (FK user, nullable), `created_at`, `updated_at`, **`first_response_at`** (TIMESTAMP — stamped on first agent response, FR-31), `resolved_at`, `closed_at`, **`resolution_code`** (VARCHAR2 — required on Resolve, FR-36: `FIXED`/`WORKAROUND`/`KNOWN_ERROR`/`CANNOT_REPRODUCE`/`DUPLICATE`/`USER_EDUCATION`/`NOT_AN_INCIDENT`), **`resolution_summary`** (VARCHAR2(4000) — required on Resolve, FR-36), **`reopen_count`** (NUMBER DEFAULT 0 — incremented on Reopen), `csat_score` (NUMBER, nullable — set at closure, one-time only, FR-27), **`sla_due_date`** (DATE — stamped at creation from `SLA_TARGETS` based on severity, FR-23) |
 | **TICKET_COMMENTS** | The conversation on a ticket | `comment_id` (PK), `ticket_id` (FK), `user_id` (FK), `comment_text`, `is_internal` (Y/N — internal note vs client-visible), `created_at` |
 | **TICKET_HISTORY** | Audit trail of every change | `history_id` (PK), `ticket_id` (FK), `user_id` (FK, **NOT NULL** — system actions use a designated system user), `action`, `old_value`, `new_value`, `created_at` |
-| **CATEGORIES** | Ticket types (Bug, Request, Question…) | `category_id` (PK), `category_name` |
+| **CATEGORIES** | Ticket categories — global (vendor-managed) or per-company (hybrid model) | `category_id` (PK), `category_name`, `company_id` (FK, **nullable** — `NULL` = global/standard category visible to all clients, set = company-specific category visible only to that client + their agents), `description` (VARCHAR2(500) — guidance text shown in the LOV, e.g. "Hardware — physical device faults, peripherals, docking stations") |
 | **AGENT_COMPANIES** | Which clients (projects) each support agent covers — *the agent-scoping key (decision I)* | `user_id` (FK), `company_id` (FK); together the PK. *(Optional later: `is_lead` Y/N for the deferred Project Lead.)* |
 | **SLA_TARGETS** | SLA resolution targets per severity **per company** — vendor-managed (FR-23) | `sla_target_id` (PK), `company_id` (FK — each client gets their own targets), `severity` (matches `TICKETS.severity`), `response_hours` (NUMBER), `resolution_days` (NUMBER), **`escalation_pct`** (NUMBER, default 80 — % of SLA elapsed that triggers auto-escalation, per-company/severity, FR-35); unique on `(company_id, severity)` |
 | **TICKET_ATTACHMENTS** *(COULD — FR-25)* | Files/screenshots attached to a ticket as evidence | `attachment_id` (PK), `ticket_id` (FK), `company_id` (FK — *tenant key, denormalized on purpose; see §5.1*), `comment_id` (FK, nullable — null = ticket-level), `file_name`, `mime_type`, `file_blob` (BLOB), `uploaded_by`, `uploaded_at` |
@@ -423,7 +423,7 @@ So we build the Ticket List *once*: a Client User sees only their tickets, a Sys
 | # | Page | APEX page type | What it's for / who uses it | Shared vs role-specific | Priority |
 |---|---|---|---|---|---|
 | **Auth & Shell** ||||||
-| 1 | **Login** | Login Page (built-in) | Email + password sign-in; post-auth process stamps company_id/role into app items. *All roles.* | Shared | **MUST** |
+| 1 | **Login** | Login Page (built-in) | **Microsoft SSO** (Social Sign-In / Entra ID); post-auth process stamps company_id/role into app items. *All roles.* | Shared | **MUST** |
 | 2 | **Home / Landing** | Blank (redirect) or Cards | Routes user after login; can redirect straight to Dashboard. *All roles.* | Shared | **MUST** |
 | **Dashboard** ||||||
 | 3 | **Dashboard** | Cards + Chart regions | Ticket counts by status / priority / company + bar/pie charts; role-filtered. *All roles.* | Shared (role-filtered) | **MUST** |
