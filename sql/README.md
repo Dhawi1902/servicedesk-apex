@@ -8,8 +8,8 @@ grounded in `reference/plsql/061-APEX_UTIL.md` and `018-APEX_CUSTOM_AUTH.md`.
 
 | Step | Script | Required? | What it does |
 |---|---|---|---|
-| 1 | `01_schema.sql` | ✅ | 7 core tables, `TKT-` sequence + trigger, FKs, checks, indexes |
-| 2 | `02_seed_data.sql` | ✅ | 4 companies, 8 users, agent scoping, 5 categories, 8 tickets, comments, history |
+| 1 | `01_schema.sql` | ✅ | 9 core tables (incl. `DEPARTMENTS`, `SLA_TARGETS`), `TKT-` sequence + trigger, FKs, checks, indexes |
+| 2 | `02_seed_data.sql` | ✅ | 4 companies, 6 departments, 10 users (with tiers), agent scoping, 6 categories, SLA targets, 10 tickets (with severity/priority split, ticket_type), comments, history |
 | 3 | `03_attachments.sql` | optional (FR-25) | `TICKET_ATTACHMENTS` BLOB table + tenant-key enforcement trigger |
 | 4 | `05_isolation_views.sql` | ✅ | Tenant-scoped views (`V_MY_TICKETS` etc.) — the isolation firewall pages build on |
 | 5 | `04_apex_accounts.sql` | ✅ (auth) | Creates one APEX Accounts login per seeded user (password `demo`) |
@@ -20,19 +20,23 @@ after `03` so the attachments view is created; `04` can run any time after `02`.
 
 ## Accounts (all password `demo`)
 
-| Email | Role | Company |
-|---|---|---|
-| `sara@northwind.example` | SYSTEM_ADMIN | Northwind Support (vendor) |
-| `mike@northwind.example` | SUPPORT_AGENT | covers Acme + Globex |
-| `lena@northwind.example` | SUPPORT_AGENT | covers Globex + Initech |
-| `anna@acme.example` | CLIENT_USER | Acme Corp |
-| `aaron@acme.example` | CLIENT_ADMIN | Acme Corp |
-| `george@globex.example` | CLIENT_USER | Globex Inc |
-| `gina@globex.example` | CLIENT_ADMIN | Globex Inc |
-| `ivan@initech.example` | CLIENT_USER | Initech |
+| Email | Role | Tier | Company / Dept |
+|---|---|---|---|
+| `sara@northwind.example` | SYSTEM_ADMIN | — | Northwind Support (vendor) |
+| `mike@northwind.example` | SUPPORT_AGENT | L1 | covers Acme + Globex |
+| `lena@northwind.example` | SUPPORT_AGENT | L2 | covers Globex + Initech |
+| `tom@northwind.example` | SUPPORT_AGENT | L3 | covers Acme + Globex + Initech |
+| `anna@acme.example` | CLIENT_USER | — | Acme Corp / Engineering |
+| `aaron@acme.example` | CLIENT_ADMIN | — | Acme Corp / Engineering |
+| `amy@acme.example` | CLIENT_USER | — | Acme Corp / Finance |
+| `george@globex.example` | CLIENT_USER | — | Globex Inc / Operations |
+| `gina@globex.example` | CLIENT_ADMIN | — | Globex Inc / Operations |
+| `ivan@initech.example` | CLIENT_USER | — | Initech / IT |
 
-Isolation test baked in: Initech tickets must be invisible to Mike (he only covers
-Acme + Globex). Lena is the only agent who sees Initech.
+Isolation tests baked in:
+- **Cross-company:** Initech tickets must be invisible to Mike (he only covers Acme + Globex).
+- **Cross-department:** Amy (Acme/Finance) must NOT see Anna's tickets (Acme/Engineering). Aaron (Client Admin) sees both.
+- **Tier scoping:** Client assignment LOV shows only L1 agents (Mike), not L2+ (Lena, Tom).
 
 ---
 

@@ -293,10 +293,10 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
   <h2 class="sec">What's in, what's out</h2>
   <p class="lead">Features are ranked so we <b>always have a working demo</b>, even if later items slip. Protecting the demo beats adding features &mdash; every time.</p>
   <div class="scopewrap">
-    <div class="donut"><div class="center"><div class="big">35</div><div class="sm">requirements</div></div></div>
+    <div class="donut"><div class="center"><div class="big">38</div><div class="sm">requirements</div></div></div>
     <div class="legend">
-      <div class="lrow"><span class="sw must"></span><span class="name">MUST</span><span class="desc">This <b>is</b> the product. The demo dies without these.</span><span class="cnt">17</span></div>
-      <div class="lrow"><span class="sw should"></span><span class="name">SHOULD</span><span class="desc">Earns the "breadth + polish" points with judges.</span><span class="cnt">16</span></div>
+      <div class="lrow"><span class="sw must"></span><span class="name">MUST</span><span class="desc">This <b>is</b> the product. The demo dies without these.</span><span class="cnt">18</span></div>
+      <div class="lrow"><span class="sw should"></span><span class="name">SHOULD</span><span class="desc">Earns the "breadth + polish" points with judges.</span><span class="cnt">18</span></div>
       <div class="lrow"><span class="sw could"></span><span class="name">COULD</span><span class="desc">Only if we finish early. We commit to none of these.</span><span class="cnt">2</span></div>
       <div class="lrow"><span class="sw future"></span><span class="name">FUTURE</span><span class="desc">Explicitly out of scope now &mdash; recorded as the post-hackathon roadmap (WON'T-have this time).</span><span class="cnt">&mdash;</span></div>
     </div>
@@ -311,8 +311,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
   <p class="lead">The <b>client side</b> (our customers) and the <b>vendor side</b> (our company). Multi-company isolation lives in the jump from Client Admin (one company) to System Admin (all companies).</p>
   <div class="grid g4">
     <div class="role client"><div class="tag">Client side</div><h3>Client User</h3>
-      <div class="ln"><span class="k">Sees</span><span>Only <b>their own</b> tickets</span></div>
-      <div class="ln"><span class="k">Does</span><span>Raise a ticket, comment, track status, <b>assign agent</b> (from mapped agents)</span></div></div>
+      <div class="ln"><span class="k">Sees</span><span>All tickets in <b>their department</b> (never other depts or companies)</span></div>
+      <div class="ln"><span class="k">Does</span><span>Raise a ticket, comment, track status, <b>assign L1 agent</b> (from mapped agents)</span></div></div>
     <div class="role client"><div class="tag">Client side</div><h3>Client Admin</h3>
       <div class="ln"><span class="k">Sees</span><span><b>All</b> of their company's tickets</span></div>
       <div class="ln"><span class="k">Does</span><span>Oversee staff, raise on behalf, company dashboard, <b>assign/reassign agents</b></span></div></div>
@@ -323,18 +323,18 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       <div class="ln"><span class="k">Sees</span><span><b>Everything</b>, across all companies</span></div>
       <div class="ln"><span class="k">Does</span><span>Manage companies/users, <b>assign</b>, configure</span></div></div>
   </div>
-  <div class="callout good"><div class="ico">👥</div><div><b>Four roles are enough (decision I).</b> The things you'd expect to be extra roles aren't: a <b>Manager</b> who only watches is just an Admin/overseer who doesn't click the work buttons; <b>L1/L2/L3</b> tiers are the <b>Escalate</b> action (reassign + raise priority, logged) &mdash; no per-agent level field; a <b>Project Lead</b> is deferred (returns later as an <code>is_lead</code> flag, not a role). Agents are <b>scoped to their assigned projects</b> via the <code>AGENT_COMPANIES</code> table below.</div></div>
+  <div class="callout good"><div class="ico">👥</div><div><b>Four roles + L1&ndash;L4 agent tiers (decisions I, M, N).</b> Agents carry an explicit <b>tier</b> (L1/L2/L3/L4) &mdash; clients assign L1 only; higher tiers via reassignment. Client Users are <b>department-scoped</b>; Client Admins see cross-department. A <b>Manager</b> is an Admin who doesn't click work buttons; a <b>Project Lead</b> is deferred. Agents are <b>scoped to their assigned projects</b> via <code>AGENT_COMPANIES</code>.</div></div>
 </div></section>
 
 <!-- REQUIREMENTS -->
 <section id="req"><div class="wrap reveal">
   <div class="eyebrow">Functional Requirements · discuss first</div>
   <h2 class="sec">What the system must do</h2>
-  <p class="lead">35 concrete requirements. Filter by priority to focus the conversation. These drive the workflow and the database that follow.</p>
+  <p class="lead">38 concrete requirements. Filter by priority to focus the conversation. These drive the workflow and the database that follow.</p>
   <div class="fbar">
-    <button class="fbtn active" data-f="all">All <span class="b">35</span></button>
-    <button class="fbtn" data-f="MUST">Must <span class="b">17</span></button>
-    <button class="fbtn" data-f="SHOULD">Should <span class="b">16</span></button>
+    <button class="fbtn active" data-f="all">All <span class="b">38</span></button>
+    <button class="fbtn" data-f="MUST">Must <span class="b">18</span></button>
+    <button class="fbtn" data-f="SHOULD">Should <span class="b">18</span></button>
     <button class="fbtn" data-f="COULD">Could <span class="b">2</span></button>
   </div>
   <table class="rtable"><thead><tr><th>ID</th><th>Requirement</th><th>Category</th><th>Priority</th></tr></thead>
@@ -552,14 +552,17 @@ const REQS=[
  ["FR-27","After a ticket is closed, the requester rates support via CSAT (star rating).","Feedback","SHOULD"],
  ["FR-28","Dashboard shows analytics: average resolution time and tickets handled per agent.","Dashboard","SHOULD"],
  ["FR-23","SLA target per severity, per project (company) with breach highlighting &mdash; SLA_TARGETS keyed on (company_id, severity), colour-coded indicators.","SLA & Aging","SHOULD"],
- ["FR-35","Auto-escalation on SLA breach &mdash; scheduled job reassigns to higher-tier agent + notifies management when SLA is at risk. System-driven (distinct from manual reassign FR-26).","SLA & Aging","SHOULD"],
+ ["FR-35","Auto-escalation on SLA breach &mdash; two-stage (warning at 75%, reassign at 90%), per-company threshold via SLA_TARGETS.escalation_pct, workload-based agent selection, 5-min scheduler, hierarchical fallback when no higher tier. ITIL 4 + ISO 20000-1 &sect;8.6.3 grounded.","SLA & Aging","SHOULD"],
  ["FR-24","AI auto-suggests category / priority from the description (APEX_AI).","Stretch","COULD"],
  ["FR-25","File / screenshot attachments on a ticket (proof/evidence); stored in TICKET_ATTACHMENTS, tenant-scoped. See brief §5.1.","Stretch","COULD"],
- ["FR-30","Each ticket has a ticket type: INCIDENT (break-fix) or SERVICE_REQUEST (pre-defined request). ITIL foundational distinction.","ITIL Alignment","SHOULD"],
+ ["FR-30","Each ticket has a ticket type: INCIDENT (break-fix) or SERVICE_REQUEST (pre-defined request). ITIL foundational distinction.","ITIL Alignment","MUST"],
  ["FR-31","First-response time tracking &mdash; first_response_at timestamp + response SLA breach indicator.","ITIL Alignment","SHOULD"],
  ["FR-32","Dashboard SLA Compliance % KPI card (resolved within SLA / total resolved). The #1 ITIL metric.","ITIL Alignment","SHOULD"],
  ["FR-33","Assignment LOV shows each agent's open ticket count (workload visibility for load-balancing).","ITIL Alignment","SHOULD"],
  ["FR-34","Create Ticket form shows severity guidance text (e.g. 'Critical &mdash; complete outage') to reduce inflation.","ITIL Alignment","SHOULD"],
+ ["FR-36","Resolution code + summary required on Resolve &mdash; records how it was resolved (FIXED, WORKAROUND, KNOWN_ERROR, etc.) for trend analysis and future KB.","ITIL Alignment","SHOULD"],
+ ["FR-37","Triage gate &mdash; priority required before moving to In Progress. Enforces ITIL categorization/prioritization step (page validation, no new state).","ITIL Alignment","SHOULD"],
+ ["FR-38","Comment notification &mdash; notify the other party when a comment is added (agent comments notify requester; client comments notify assigned agent). Completes communication lifecycle.","Notifications","SHOULD"],
 ];
 const body=document.getElementById('reqbody');
 function render(f){

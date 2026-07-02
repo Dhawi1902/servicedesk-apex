@@ -18,8 +18,8 @@
 --   V_MY_TICKETS, so they inherit the exact same matrix automatically.
 --
 -- ROLE MATRIX (who sees which tickets)
---   CLIENT_USER   -> own company AND created_by = me     (my tickets only)
---   CLIENT_ADMIN  -> own company (all of it)
+--   CLIENT_USER   -> own company AND own department (decision N: dept-scoped)
+--   CLIENT_ADMIN  -> own company (all departments)
 --   SUPPORT_AGENT -> only companies in AGENT_COMPANIES for me (decision I)
 --   SYSTEM_ADMIN  -> everything
 --
@@ -41,6 +41,8 @@
 
 --------------------------------------------------------------------------------
 -- V_MY_TICKETS — the single source of truth for "which tickets can I see".
+-- CLIENT_USER is now department-scoped (decision N, 2026-07-02):
+--   they see all tickets from their department, not just their own.
 --------------------------------------------------------------------------------
 CREATE OR REPLACE VIEW V_MY_TICKETS AS
 SELECT t.*
@@ -53,7 +55,9 @@ WHERE  CASE
               THEN 1
          WHEN V('APP_ROLE') = 'CLIENT_USER'
               AND t.COMPANY_ID = NV('APP_COMPANY_ID')
-              AND t.CREATED_BY = NV('APP_USER_ID')
+              AND t.DEPARTMENT_ID = (SELECT DEPARTMENT_ID
+                                     FROM   APP_USERS
+                                     WHERE  USER_ID = NV('APP_USER_ID'))
               THEN 1
          WHEN V('APP_ROLE') = 'SUPPORT_AGENT'
               AND t.COMPANY_ID IN (SELECT ac.COMPANY_ID
