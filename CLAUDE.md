@@ -41,14 +41,16 @@ A client must **never** see another client's tickets. Every tenant-scoped table 
 the entire "production-level" claim. Test this harder than anything else.
 
 ### Roles (4)
-- **Client User** — sees only their own tickets; raises/comments.
-- **Client Admin** — sees all of their own company's tickets.
+- **Client User** — sees only their own tickets; raises/comments; **assigns agent** from agents mapped to their company (decision J).
+- **Client Admin** — sees all of their own company's tickets; **assigns/reassigns agents** for any company ticket.
 - **Support Agent** — works tickets for their **assigned projects only** (status/comments/resolve); no user/company admin. (Manager, L1/L2/L3, Project Lead are *not* separate roles — see brief decision I.)
 - **System Admin** — everything across all companies; manages users/companies; **assigns** tickets.
 
-### Data model (7 tables)
+### Data model (8 tables)
 `COMPANIES` · `APP_USERS` · `TICKETS` · `TICKET_COMMENTS` · `TICKET_HISTORY` · `CATEGORIES` ·
-`AGENT_COMPANIES` (which clients each agent covers — scopes an agent's queue to their projects).
+`AGENT_COMPANIES` (which clients each agent covers — scopes an agent's queue to their projects) ·
+`SLA_TARGETS` (global SLA resolution targets per severity — vendor-managed, FR-23).
+`TICKETS.severity` is client-set (business impact); `TICKETS.priority` is support-set (work order); `TICKETS.sla_due_date` is stamped at creation from `SLA_TARGETS`.
 `TICKETS.company_id` is the tenant key. Full schema + ERD in the brief.
 
 ### Ticket lifecycle
@@ -56,9 +58,9 @@ the entire "production-level" claim. Test this harder than anything else.
 Every state change is written to `TICKET_HISTORY` (who/what/when).
 
 ### Scope (MoSCoW) — protect the demo over adding features
-- **MUST (17):** companies/users/roles, login + isolation, ticket CRUD + lifecycle, assignment, comments + history, dashboard.
-- **SHOULD (8):** categories/priorities + filtering, branded theme, assignment notification, CSAT rating (Star Rating item), dashboard analytics (avg resolution time + per-agent counts), auto-acknowledgement email (`APEX_MAIL`), escalate action (reassign + raise priority, logged).
-- **COULD (4, do not commit):** SLA breach *highlight* only (declarative, no timers), AI category suggest (`APEX_AI`), file/screenshot attachments (`TICKET_ATTACHMENTS` BLOB, tenant-scoped — brief §5.1), knowledge base.
+- **MUST (17):** companies/users/roles, login + isolation, ticket CRUD + lifecycle (severity = client-set, priority = support-set), assignment (admin + agent self-assign + client from mapped agents), comments + history, dashboard.
+- **SHOULD (9):** categories/priorities + filtering, branded theme, assignment notification, CSAT rating (Star Rating item), dashboard analytics (avg resolution time + per-agent counts), auto-acknowledgement email (`APEX_MAIL`), escalate action (reassign + raise priority, logged), SLA per severity with breach highlighting (global `SLA_TARGETS` table, colour-coded indicators, no timers).
+- **COULD (3, do not commit):** AI category suggest (`APEX_AI`), file/screenshot attachments (`TICKET_ATTACHMENTS` BLOB, tenant-scoped — brief §5.1), knowledge base.
 - **FUTURE / WON'T (this time):** out of scope for the 3 weeks, kept as the roadmap — VPD/RLS isolation, real SLA engine, object-storage attachments, Project Lead role (`is_lead`), email-to-ticket intake, SSO, KB portal. Park "could we also…" ideas here, not in the build (brief §1).
 
 ## APEX APIs most relevant to this build

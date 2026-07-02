@@ -30,6 +30,8 @@
   }
   function save() { localStorage.setItem(LS_DATA, JSON.stringify(DB)); }
   var DB = loadData();
+  // Backfill attachments array for users with cached v4 data (before FR-25)
+  if (!DB.attachments) { DB.attachments = []; save(); }
 
   /* ---------- session ---------- */
   function getSession() { var r = localStorage.getItem(LS_SESSION); return r ? JSON.parse(r) : null; }
@@ -105,6 +107,72 @@
     html += '</span>';
     if (score) html += ' <span class="muted">(' + score + '/5)</span>';
     return html;
+  }
+
+  /* ---------- attachments (FR-25) ---------- */
+  function fileIcon(mime) {
+    if (!mime) return '&#128196;';
+    if (mime.indexOf('image/') === 0) return '&#128247;';
+    if (mime.indexOf('application/pdf') === 0) return '&#128462;';
+    if (mime.indexOf('text/') === 0) return '&#128196;';
+    return '&#128206;';
+  }
+  function fileSize(bytes) {
+    if (!bytes) return '';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return Math.round(bytes / 1024) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+  function ticketAttachments(ticketId) {
+    return (DB.attachments || []).filter(function (a) { return a.ticketId === ticketId; });
+  }
+  function commentAttachments(commentId) {
+    return (DB.attachments || []).filter(function (a) { return a.commentId === commentId; });
+  }
+  // Pending attachments for create/comment forms (simulated — cleared on submit)
+  var pendingFiles = [];
+  function renderPendingFiles() {
+    var el = document.getElementById('pending-files');
+    if (!el) return;
+    if (!pendingFiles.length) { el.innerHTML = ''; return; }
+    el.innerHTML = pendingFiles.map(function (f, i) {
+      return '<div class="attach-item"><span class="ai-icon">' + fileIcon(f.type) + '</span>' +
+        '<span class="ai-name">' + esc(f.name) + '</span>' +
+        '<span class="ai-meta">' + fileSize(f.size) + '</span>' +
+        '<span class="ai-remove" onclick="sd.removePending(' + i + ')">&#10005;</span></div>';
+    }).join('');
+  }
+  // Render inline previews: images as <img>, non-images as download chips
+  function inlineAttachHtml(files) {
+    if (!files.length) return '';
+    var images = files.filter(function (a) { return a.mimeType && a.mimeType.indexOf('image/') === 0; });
+    var others = files.filter(function (a) { return !a.mimeType || a.mimeType.indexOf('image/') !== 0; });
+    var html = '';
+    if (images.length) {
+      html += '<div class="inline-previews">' + images.map(function (a) {
+        // Simulated: use a placeholder gradient since we don't have real file data
+        return '<div class="img-preview"><div class="img-placeholder">' + fileIcon(a.mimeType) +
+          '<span>' + esc(a.fileName) + '</span></div>' +
+          '<div class="img-caption">' + esc(a.fileName) + ' &middot; ' + fileSize(a.fileSize) + '</div></div>';
+      }).join('') + '</div>';
+    }
+    if (others.length) {
+      html += '<div class="file-chips">' + others.map(function (a) {
+        return '<span class="file-chip"><span class="fc-icon">' + fileIcon(a.mimeType) + '</span>' +
+          esc(a.fileName) + ' <span class="muted" style="font-size:10px;">' + fileSize(a.fileSize) + '</span></span>';
+      }).join('') + '</div>';
+    }
+    return html;
+  }
+  function attachZoneHtml() {
+    return '<div class="field full"><label>Attachments</label>' +
+      '<div class="attach-zone" onclick="document.getElementById(\'file-input\').click()">' +
+        '<div class="az-icon">&#128206;</div>' +
+        '<div class="az-text">Click to browse files</div>' +
+        '<div class="az-hint">Images, PDFs, logs — max 10 MB per file (simulated)</div>' +
+      '</div>' +
+      '<input type="file" id="file-input" multiple style="display:none" onchange="sd.addFiles(this)">' +
+      '<div id="pending-files" class="attach-list"></div></div>';
   }
 
   /* ---------- authorization / tenant isolation ---------- */
@@ -529,10 +597,11 @@
       .sort(function (a, b) { return new Date(a.createdAt) - new Date(b.createdAt); });
     var cHtml = comments.map(function (c) {
       var au = user(c.userId) || { name: '?' };
+      var cFiles = commentAttachments(c.id);
       return '<div class="comment ' + (c.isInternal ? 'internal' : '') + '"><div class="av">' + initials(au.name) + '</div>' +
         '<div style="flex:1;"><div class="head"><b>' + esc(au.name) + '</b> &middot; ' + esc(au.role || '') +
         (c.isInternal ? ' &middot; <span class="badge st-progress">&#128274; Internal note</span>' : '') + ' &middot; ' + timeAgo(c.createdAt) + '</div>' +
-        '<div class="body">' + esc(c.text) + '</div></div></div>';
+        '<div class="body">' + esc(c.text) + '</div>' + inlineAttachHtml(cFiles) + '</div></div>';
     }).join('') || '<div class="muted">No comments yet.</div>';
 
     var hist = DB.history.filter(function (h) { return h.ticketId === t.id; })
@@ -564,6 +633,7 @@
       '<div class="content" style="display:grid;grid-template-columns:1fr 300px;gap:16px;">' +
         '<div><div class="card"><div class="card-hd">' + t.ref + ' ' + statusBadge(t.status) + ' ' + sevBadge(t.severity) + ' ' + prioBadge(t.priority) + ' ' + slaBadge(t) + '</div>' +
           '<div class="card-bd"><p style="margin-top:0;">' + esc(t.description) + '</p>' +
+          inlineAttachHtml(ticketAttachments(t.id).filter(function (a) { return !a.commentId; })) +
           '<div class="grid cols-4" style="gap:8px;margin-top:8px;">' +
             '<div><div class="muted" style="font-size:11.5px;">Category</div><div>' + esc(category(t.categoryId).name) + '</div></div>' +
             '<div><div class="muted" style="font-size:11.5px;">Raised by</div><div>' + esc(cu.name) + '</div></div>' +
@@ -572,7 +642,20 @@
           '</div></div></div>' +
           '<div class="card" style="margin-top:16px;"><div class="card-hd">Conversation' +
             '<a class="btn btn-sm btn-primary" style="margin-left:auto;" href="08-add-comment.html?id=' + t.id + '">&#128172; Add Comment</a></div>' +
-            '<div class="card-bd">' + cHtml + '</div></div></div>' +
+            '<div class="card-bd">' + cHtml + '</div></div>' +
+          (function () {
+            var allFiles = ticketAttachments(t.id);
+            if (!allFiles.length) return '';
+            return '<div class="card" style="margin-top:16px;"><div class="card-hd">&#128206; Attachments <span class="sub">' + allFiles.length + ' file' + (allFiles.length > 1 ? 's' : '') + '</span></div>' +
+              '<div class="card-bd"><div class="attach-grid">' + allFiles.map(function (a) {
+                var up = user(a.uploadedBy) || { name: '?' };
+                var context = a.commentId ? 'on comment' : 'on ticket';
+                return '<div class="attach-row"><span class="ar-icon">' + fileIcon(a.mimeType) + '</span>' +
+                  '<div class="ar-info"><div class="ar-name">' + esc(a.fileName) + '</div>' +
+                  '<div class="ar-meta">' + fileSize(a.fileSize) + ' &middot; ' + esc(up.name) + ' &middot; ' + timeAgo(a.uploadedAt) + ' &middot; ' + context + '</div></div>' +
+                  '<span class="ar-dl">&#8595; Download</span></div>';
+              }).join('') + '</div></div></div>';
+          })() + '</div>' +
         '<div><div class="card"><div class="card-hd">Properties</div><div class="card-bd form-grid">' +
             '<div class="field"><label>Status</label><input value="' + esc(t.status) + '" disabled></div>' +
             '<div class="field"><label>Severity</label><div>' + sevBadge(t.severity) + '</div></div>' +
@@ -613,10 +696,20 @@
 
   function renderCreate(u) {
     if (!canCreate(u)) { renderShell(u, 'queue', notFound('Only client users can raise tickets.'), ''); return; }
+    pendingFiles = [];
     var cats = DB.categories.map(function (c) { return '<option value="' + c.id + '">' + esc(c.name) + '</option>'; }).join('');
-    // FR-7 / Decision K: client sets SEVERITY at creation (not priority)
+    // Client sets both severity AND priority at creation
     var sevs = (DB.severities || ['Critical', 'Major', 'Minor', 'Cosmetic']).map(function (s) {
       return '<option' + (s === 'Minor' ? ' selected' : '') + '>' + s + '</option>';
+    }).join('');
+    var prios = '<option value="">— Select —</option>' + (DB.priorities || ['P1', 'P2', 'P3', 'P4']).map(function (p) {
+      return '<option>' + p + '</option>';
+    }).join('');
+    // Decision J: agents mapped to the client's company
+    var agentPool = DB.users.filter(function (x) { return x.role === 'Support Agent' && agentCovers(x.id, u.companyId); });
+    var agentOpts = '<option value="">— Unassigned —</option>' + agentPool.map(function (a) {
+      var load = DB.tickets.filter(function (x) { return x.assignedTo === a.id && x.status !== 'Closed'; }).length;
+      return '<option value="' + a.id + '">' + esc(a.name) + ' \u00b7 ' + load + ' open</option>';
     }).join('');
     var modal = '<div class="modal lg"><div class="m-hd"><h2>Raise a Ticket</h2><span class="x" onclick="location.href=\'04-ticket-list.html\'">&#10005;</span></div>' +
       '<div class="m-bd"><div class="tenant-banner" style="border-radius:4px;margin-bottom:16px;">&#128274; Filed under <b>' + esc(company(u.companyId).name) + '</b> automatically (your company).</div>' +
@@ -626,6 +719,11 @@
         '<div class="field"><label>Category</label><select id="cat">' + cats + '</select></div>' +
         '<div class="field"><label>Severity <span class="req">*</span></label><select id="sev">' + sevs + '</select>' +
           '<span class="hint">Business impact — how badly does this affect your work?</span></div>' +
+        '<div class="field"><label>Priority</label><select id="prio">' + prios + '</select>' +
+          '<span class="hint">How urgently should this be handled?</span></div>' +
+        '<div class="field"><label>Assign to</label><select id="createAgent">' + agentOpts + '</select>' +
+          '<span class="hint">Pick a support agent (optional).</span></div>' +
+        attachZoneHtml() +
       '</div></div><div class="m-ft"><a class="btn" href="04-ticket-list.html">Cancel</a>' +
       '<button class="btn btn-primary" onclick="sd.createTicket()">&#10133; Submit Ticket</button></div></div>';
     renderModalPage(u, 'create', queueBehind(u), modal);
@@ -664,9 +762,10 @@
     if (!t || !canSee(u, t)) { renderShell(u, 'queue', notFound('Not allowed, or ticket missing.'), ''); return; }
     var internalToggle = canInternalNote(u) ?
       '<div class="field"><label class="switch" id="intSw" onclick="this.classList.toggle(\'on\')"><span class="track"></span> &#128274; Internal note (hidden from client)</label></div>' : '';
+    pendingFiles = [];
     var modal = '<div class="modal"><div class="m-hd"><h2>Add Comment &middot; ' + t.ref + '</h2><span class="x" onclick="location.href=\'05-ticket-detail.html?id=' + t.id + '\'">&#10005;</span></div>' +
       '<div class="m-bd"><div class="form-grid"><div class="field"><label>Comment <span class="req">*</span></label><textarea id="ctext" placeholder="Type your reply\u2026"></textarea></div>' +
-      internalToggle + '</div></div><div class="m-ft"><a class="btn" href="05-ticket-detail.html?id=' + t.id + '">Cancel</a>' +
+      internalToggle + attachZoneHtml() + '</div></div><div class="m-ft"><a class="btn" href="05-ticket-detail.html?id=' + t.id + '">Cancel</a>' +
       '<button class="btn btn-primary" onclick="sd.addComment(\'' + t.id + '\')">&#128172; Post Comment</button></div></div>';
     renderModalPage(u, 'queue', detailBehind(t), modal);
   }
@@ -768,14 +867,23 @@
         d.setDate(d.getDate() + sla.resolutionDays);
         slaDue = d.toISOString();
       }
+      var priority = document.getElementById('prio').value || null;
+      var agentId = document.getElementById('createAgent').value || null;
       var r = nextRef();
+      var initStatus = agentId ? 'Assigned' : 'New';
       var t = { id: 't' + r.n, ref: r.ref, companyId: u.companyId, subject: subject, description: desc,
-        categoryId: document.getElementById('cat').value, severity: severity, priority: null,
-        status: 'New', createdBy: u.id, assignedTo: null,
+        categoryId: document.getElementById('cat').value, severity: severity, priority: priority,
+        status: initStatus, createdBy: u.id, assignedTo: agentId,
         createdAt: nowIso(), updatedAt: nowIso(), resolvedAt: null, closedAt: null,
         slaDueDate: slaDue, csatScore: null };
       DB.tickets.push(t);
-      pushHistory(t.id, u.id, 'STATUS_CHANGE', '', 'New');
+      pushHistory(t.id, u.id, 'STATUS_CHANGE', '', initStatus);
+      if (agentId) pushHistory(t.id, u.id, 'ASSIGN', '', user(agentId).name);
+      // FR-25: save pending attachments
+      pendingFiles.forEach(function (f) {
+        DB.attachments.push({ id: 'a' + NOW() + Math.floor(Math.random() * 1000), ticketId: t.id, companyId: u.companyId, commentId: null, fileName: f.name, mimeType: f.type, fileSize: f.size, uploadedBy: u.id, uploadedAt: nowIso() });
+      });
+      pendingFiles = [];
       save();
       // FR-29: simulated auto-acknowledgement email
       sessionStorage.setItem('flash', '&#9989; Ticket ' + r.ref + ' created. &#128231; Auto-acknowledgement email sent (simulated).');
@@ -816,8 +924,15 @@
       if (!text) { alert('Comment cannot be empty.'); return; }
       var internalEl = document.getElementById('intSw');
       var internal = internalEl ? internalEl.classList.contains('on') : false;
-      DB.comments.push({ id: 'c' + NOW(), ticketId: id, userId: u.id, text: text, isInternal: internal, createdAt: nowIso() });
-      var t = DB.tickets.find(function (x) { return x.id === id; }); t.updatedAt = nowIso();
+      var cId = 'c' + NOW();
+      DB.comments.push({ id: cId, ticketId: id, userId: u.id, text: text, isInternal: internal, createdAt: nowIso() });
+      // FR-25: save pending attachments on the comment
+      var t = DB.tickets.find(function (x) { return x.id === id; });
+      pendingFiles.forEach(function (f) {
+        DB.attachments.push({ id: 'a' + NOW() + Math.floor(Math.random() * 1000), ticketId: id, companyId: t.companyId, commentId: cId, fileName: f.name, mimeType: f.type, fileSize: f.size, uploadedBy: u.id, uploadedAt: nowIso() });
+      });
+      pendingFiles = [];
+      t.updatedAt = nowIso();
       save();
       sessionStorage.setItem('flash', internal ? '&#128274; Internal note added.' : 'Comment posted.');
       location.href = '05-ticket-detail.html?id=' + id;
@@ -921,6 +1036,19 @@
       sessionStorage.setItem('flash', '&#11088; Thank you for your feedback! (' + val + '/5)');
       renderDetail(u);
       var f = sessionStorage.getItem('flash'); if (f) { toast(f); sessionStorage.removeItem('flash'); }
+    },
+
+    // FR-25: Attachment file handling (simulated)
+    addFiles: function (input) {
+      for (var i = 0; i < input.files.length; i++) {
+        pendingFiles.push({ name: input.files[i].name, size: input.files[i].size, type: input.files[i].type || 'application/octet-stream' });
+      }
+      input.value = '';
+      renderPendingFiles();
+    },
+    removePending: function (idx) {
+      pendingFiles.splice(idx, 1);
+      renderPendingFiles();
     },
 
     closeModal: function () {
