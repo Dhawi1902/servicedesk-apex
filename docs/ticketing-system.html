@@ -293,11 +293,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
   <h2 class="sec">What's in, what's out</h2>
   <p class="lead">Features are ranked so we <b>always have a working demo</b>, even if later items slip. Protecting the demo beats adding features &mdash; every time.</p>
   <div class="scopewrap">
-    <div class="donut"><div class="center"><div class="big">29</div><div class="sm">requirements</div></div></div>
+    <div class="donut"><div class="center"><div class="big">34</div><div class="sm">requirements</div></div></div>
     <div class="legend">
       <div class="lrow"><span class="sw must"></span><span class="name">MUST</span><span class="desc">This <b>is</b> the product. The demo dies without these.</span><span class="cnt">17</span></div>
-      <div class="lrow"><span class="sw should"></span><span class="name">SHOULD</span><span class="desc">Earns the "breadth + polish" points with judges.</span><span class="cnt">9</span></div>
-      <div class="lrow"><span class="sw could"></span><span class="name">COULD</span><span class="desc">Only if we finish early. We commit to none of these.</span><span class="cnt">3</span></div>
+      <div class="lrow"><span class="sw should"></span><span class="name">SHOULD</span><span class="desc">Earns the "breadth + polish" points with judges.</span><span class="cnt">15</span></div>
+      <div class="lrow"><span class="sw could"></span><span class="name">COULD</span><span class="desc">Only if we finish early. We commit to none of these.</span><span class="cnt">2</span></div>
       <div class="lrow"><span class="sw future"></span><span class="name">FUTURE</span><span class="desc">Explicitly out of scope now &mdash; recorded as the post-hackathon roadmap (WON'T-have this time).</span><span class="cnt">&mdash;</span></div>
     </div>
   </div>
@@ -330,12 +330,12 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 <section id="req"><div class="wrap reveal">
   <div class="eyebrow">Functional Requirements · discuss first</div>
   <h2 class="sec">What the system must do</h2>
-  <p class="lead">29 concrete requirements. Filter by priority to focus the conversation. These drive the workflow and the database that follow.</p>
+  <p class="lead">34 concrete requirements. Filter by priority to focus the conversation. These drive the workflow and the database that follow.</p>
   <div class="fbar">
-    <button class="fbtn active" data-f="all">All <span class="b">29</span></button>
+    <button class="fbtn active" data-f="all">All <span class="b">34</span></button>
     <button class="fbtn" data-f="MUST">Must <span class="b">17</span></button>
-    <button class="fbtn" data-f="SHOULD">Should <span class="b">9</span></button>
-    <button class="fbtn" data-f="COULD">Could <span class="b">3</span></button>
+    <button class="fbtn" data-f="SHOULD">Should <span class="b">15</span></button>
+    <button class="fbtn" data-f="COULD">Could <span class="b">2</span></button>
   </div>
   <table class="rtable"><thead><tr><th>ID</th><th>Requirement</th><th>Category</th><th>Priority</th></tr></thead>
   <tbody id="reqbody"></tbody></table>
@@ -547,13 +547,18 @@ const REQS=[
  ["FR-20","Dashboard shows simple charts (bar / pie), not just numbers.","Dashboard","SHOULD"],
  ["FR-21","When a ticket is assigned, the agent is notified (email or in-app).","Notifications","SHOULD"],
  ["FR-29","When a ticket is created, the requester gets an automatic acknowledgement email.","Notifications","SHOULD"],
- ["FR-22","When a client's ticket changes status, they are notified.","Notifications","COULD"],
+ ["FR-22","When a client's ticket changes status, they are notified via email (ITIL: communication at every lifecycle touchpoint).","Notifications","SHOULD"],
  ["FR-26","A support agent/lead can escalate a ticket (reassign + raise priority), written to history.","Tickets","SHOULD"],
  ["FR-27","After a ticket is closed, the requester rates support via CSAT (star rating).","Feedback","SHOULD"],
  ["FR-28","Dashboard shows analytics: average resolution time and tickets handled per agent.","Dashboard","SHOULD"],
  ["FR-23","SLA target per severity with breach highlighting &mdash; global SLA_TARGETS table, colour-coded indicators (no timers).","SLA & Aging","SHOULD"],
  ["FR-24","AI auto-suggests category / priority from the description (APEX_AI).","Stretch","COULD"],
  ["FR-25","File / screenshot attachments on a ticket (proof/evidence); stored in TICKET_ATTACHMENTS, tenant-scoped. See brief §5.1.","Stretch","COULD"],
+ ["FR-30","Each ticket has a ticket type: INCIDENT (break-fix) or SERVICE_REQUEST (pre-defined request). ITIL foundational distinction.","ITIL Alignment","SHOULD"],
+ ["FR-31","First-response time tracking &mdash; first_response_at timestamp + response SLA breach indicator.","ITIL Alignment","SHOULD"],
+ ["FR-32","Dashboard SLA Compliance % KPI card (resolved within SLA / total resolved). The #1 ITIL metric.","ITIL Alignment","SHOULD"],
+ ["FR-33","Assignment LOV shows each agent's open ticket count (workload visibility for load-balancing).","ITIL Alignment","SHOULD"],
+ ["FR-34","Create Ticket form shows severity guidance text (e.g. 'Critical &mdash; complete outage') to reduce inflation.","ITIL Alignment","SHOULD"],
 ];
 const body=document.getElementById('reqbody');
 function render(f){

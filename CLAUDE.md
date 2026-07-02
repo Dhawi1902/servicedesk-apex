@@ -29,9 +29,10 @@ Do not edit `_backup/` (source HTML caches, used to regenerate the reference).
 ## The project at a glance
 
 A vendor (our company) runs a support desk for **multiple client companies** (tenants).
-Self-hosted alternative to Jira Service Management. Judged on: **working demo → feature
-breadth → UI polish**, in that order. Timebox: **3 weeks**. Team: **mixed (some non-devs),
-all new to APEX**. Environment: **company APEX instance**.
+Self-hosted alternative to Jira Service Management, following **ITIL 4** (Incident Management +
+Service Request Management). Judged on: **working demo → feature breadth → UI polish**, in that
+order. **Hackathon demo: 16 July 2026**; system continues as **production** afterward.
+Team: **mixed (some non-devs), all new to APEX**. Environment: **company APEX instance**.
 
 **Judge's non-negotiables:** role-based access · multiple companies · ticket assignment · dashboard.
 
@@ -50,7 +51,8 @@ the entire "production-level" claim. Test this harder than anything else.
 `COMPANIES` · `APP_USERS` · `TICKETS` · `TICKET_COMMENTS` · `TICKET_HISTORY` · `CATEGORIES` ·
 `AGENT_COMPANIES` (which clients each agent covers — scopes an agent's queue to their projects) ·
 `SLA_TARGETS` (global SLA resolution targets per severity — vendor-managed, FR-23).
-`TICKETS.severity` is client-set (business impact); `TICKETS.priority` is support-set (work order); `TICKETS.sla_due_date` is stamped at creation from `SLA_TARGETS`.
+`TICKETS.ticket_type` is `INCIDENT` or `SERVICE_REQUEST` (FR-30, ITIL distinction).
+`TICKETS.severity` is client-set (business impact, renamed: Critical/Major/Minor/**Low**); `TICKETS.priority` is support-set (work order); `TICKETS.first_response_at` tracks first agent response (FR-31); `TICKETS.sla_due_date` is stamped at creation from `SLA_TARGETS`.
 `TICKETS.company_id` is the tenant key. Full schema + ERD in the brief.
 
 ### Ticket lifecycle
@@ -59,9 +61,9 @@ Every state change is written to `TICKET_HISTORY` (who/what/when).
 
 ### Scope (MoSCoW) — protect the demo over adding features
 - **MUST (17):** companies/users/roles, login + isolation, ticket CRUD + lifecycle (severity = client-set, priority = support-set), assignment (admin + agent self-assign + client from mapped agents), comments + history, dashboard.
-- **SHOULD (9):** categories/priorities + filtering, branded theme, assignment notification, CSAT rating (Star Rating item), dashboard analytics (avg resolution time + per-agent counts), auto-acknowledgement email (`APEX_MAIL`), escalate action (reassign + raise priority, logged), SLA per severity with breach highlighting (global `SLA_TARGETS` table, colour-coded indicators, no timers).
-- **COULD (3, do not commit):** AI category suggest (`APEX_AI`), file/screenshot attachments (`TICKET_ATTACHMENTS` BLOB, tenant-scoped — brief §5.1), knowledge base.
-- **FUTURE / WON'T (this time):** out of scope for the 3 weeks, kept as the roadmap — VPD/RLS isolation, real SLA engine, object-storage attachments, Project Lead role (`is_lead`), email-to-ticket intake, SSO, KB portal. Park "could we also…" ideas here, not in the build (brief §1).
+- **SHOULD (15):** categories/priorities + filtering, branded theme, assignment notification, CSAT rating (Star Rating item), dashboard analytics (avg resolution time + per-agent counts), auto-acknowledgement email (`APEX_MAIL`), escalate action (reassign + raise priority, logged), SLA per severity with breach highlighting, **status-change notification** (FR-22, promoted per ITIL), **ticket type INCIDENT/SERVICE_REQUEST** (FR-30), **first-response tracking** (FR-31), **SLA Compliance % KPI** (FR-32), **workload in assignment LOV** (FR-33), **severity guidance text** (FR-34).
+- **COULD (2, do not commit):** AI category suggest (`APEX_AI`), file/screenshot attachments (`TICKET_ATTACHMENTS` BLOB, tenant-scoped — brief §5.1).
+- **FUTURE:** ITIL-prioritized production roadmap (P1–P4) — per-client SLA, separate incident/SR workflows, VPD/RLS, hierarchical escalation, major incident process, two-level categories, auto-close, urgency field, problem management, KB, and more. Park "could we also…" ideas here, not in the build (brief §1).
 
 ## APEX APIs most relevant to this build
 Look these up in the reference before implementing:
@@ -156,6 +158,12 @@ who clones it — no per-machine setup:
   brief (FR-numbers, A–F/I decisions). Advisory (reports stories/verdicts/gaps; hands any
   requirement change to `/sync-docs` — doesn't edit docs). Owns *what/why/order*; defers
   *how-to-build* to `apex-expert`, isolation to `tenant-isolation-auditor`, UI to `apex-ui-stylist`.
+- **`itil-advisor` agent** (`.claude/agents/itil-advisor.md`) — ITIL 4 advisor scoped
+  to Incident Management and Service Request Management. Use it to validate ticket
+  lifecycle, categorization, escalation, SLA, or role design against ITIL best practices,
+  or to get ITIL-aligned talking points for the demo. Advisory (reports alignment gaps
+  and terminology; doesn't edit docs or code). Defers scope decisions to `apex-ba-analyst`,
+  implementation to `apex-expert`.
 - **`apex` skill** (`.claude/skills/apex/`) — the APEXlang low-code generation workflow
   (component registry, templates, generation workflow) used for scaffolding apps/pages.
 - **`/sync-docs` command** (`.claude/commands/sync-docs.md` + `tools/sync_docs.py`) — propagates a
