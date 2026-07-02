@@ -70,11 +70,17 @@ We organize features by priority so we **always have a working demo**, even if l
 - Categories & priorities with filtering and search
 - Clean, branded UI theme
 - Email (or in-app) notification when a ticket is assigned
+- **Status-change notification** to client on every lifecycle transition (FR-22, ITIL)
 - **CSAT rating** after a ticket is closed (native APEX *Star Rating* item)
-- **Dashboard analytics:** average resolution time + tickets handled per agent (plain SQL on the dashboard we're already building)
+- **Dashboard analytics:** average resolution time + tickets handled per agent + **SLA Compliance %** (FR-32)
 - **Auto-acknowledgement email** when a ticket is raised (`APEX_MAIL.SEND`)
-- **"Escalate" action** on a ticket — reassign + raise priority, written to history (declarative button + process)
-- **SLA per severity** with breach highlighting — global `SLA_TARGETS` table, colour-coded indicators on the ticket list (declarative, query-time — *no* timers/jobs)
+- **"Reassign" action** on a ticket — reassign to higher-tier agent + optionally raise priority, written to history (FR-26)
+- **Auto-escalation** on SLA breach — system-driven reassignment + management notification via `DBMS_SCHEDULER` (FR-35)
+- **SLA per severity, per project (company)** with breach highlighting — `SLA_TARGETS` table keyed on `(company_id, severity)`, colour-coded indicators (FR-23)
+- **Ticket type** (Incident / Service Request) — ITIL foundational distinction (FR-30)
+- **First-response tracking** with response SLA breach indicator (FR-31)
+- **Workload visibility** in assignment LOV (FR-33)
+- **Severity guidance** text on Create Ticket form (FR-34)
 
 **COULD — only if we finish MUST + SHOULD early. Do NOT commit to these.**
 - AI assist (APEX has a built-in `APEX_AI` package — e.g. auto-suggest a ticket's category/priority). Strong demo moment *if* time allows.
@@ -87,8 +93,7 @@ We organize features by priority so we **always have a working demo**, even if l
 *The MoSCoW "Won't-have-this-time" tier: not built before the 16 July demo, but captured so the vision is on record and the ideas don't leak into the build. Unlike a typical hackathon, this system continues as a **production product** — these items form the real backlog, prioritized by ITIL importance.*
 
 **P1 — Critical (first production sprint after hackathon):**
-- **Separate Incident and Service Request workflows** — distinct lifecycles and approval gates per ticket type (the hackathon SHOULD adds the field; this adds the differentiated process). ITIL's foundational distinction.
-- **Per-client SLA tiers** — add `company_id` to `SLA_TARGETS`; different clients get different response/resolution targets per their contract. Core to multi-tenant service delivery.
+- **Separate Incident and Service Request workflows** — distinct lifecycles and approval gates per ticket type (the SHOULD adds the field; this adds the differentiated process). ITIL's foundational distinction.
 - **SLA pause on On Hold + business-hours calendar** — stop the SLA clock when waiting on the client; measure SLA in business hours, not wall-clock time. Without these, SLA metrics are inaccurate.
 - **Production-grade tenant isolation via VPD / RLS** — graduate from app-item + `WHERE company_id` (§5) to database-enforced row security.
 
@@ -98,7 +103,7 @@ We organize features by priority so we **always have a working demo**, even if l
 - **Two-level categorization** — `parent_category_id` self-referential FK on CATEGORIES for Category → Subcategory hierarchy. Enables trend analysis and feeds problem management.
 - **Service Request catalog / ticket templates** — pre-defined request types with pre-populated fields and specific SLAs. Reduces ticket creation time, standardizes requests.
 - **Auto-close after timeout** — tickets in "Resolved" for >5 business days auto-close with notification. Configurable period.
-- **Real SLA engine** — background jobs, automatic escalation on breach. The SHOULD items are declarative *highlights*; this is the full engine.
+- **Advanced SLA engine** — business-hours calendars, configurable escalation policies per tier, SLA reporting by client. The SHOULD items cover per-company targets + auto-escalation; this is the full enterprise engine.
 
 **P3 — Medium:**
 - **CSAT enhancement** — free-text comment field alongside score, low-score alerts to management, CSAT trend reporting on dashboard.
@@ -131,21 +136,27 @@ Two sides: the **client side** (our customers) and the **vendor side** (our comp
 
 | Role | Who they are | Can **see** | Can **do** |
 |---|---|---|---|
-| **Client User** | Everyday employee at a client company (has the problem) | Only **their own** tickets | Raise a ticket, comment, view status, **assign an agent** from agents mapped to their company (decision J) |
-| **Client Admin** | Coordinator/manager at a client company | **All tickets for their own company** (never other companies') | Everything a Client User can + oversee their company's tickets, raise on behalf of staff, see their company dashboard, **assign/reassign agents** for any company ticket |
-| **Support Agent** | Our support staff who do the work | Tickets in **their assigned projects** (the clients they cover) — never clients they're not on | Work tickets: change status, comment, resolve. Cannot manage users/companies |
+| **Client User** | Everyday employee at a client company (has the problem) | All tickets in **their department** (never other departments or companies) | Raise a ticket, comment, view status, **assign an L1 agent** from agents mapped to their company (decision J/L) |
+| **Client Admin** | Coordinator/manager at a client company | **All tickets for their own company** (cross-department — never other companies') | Everything a Client User can + oversee their company's tickets, raise on behalf of staff, see their company dashboard, **assign/reassign agents** for any company ticket |
+| **Support Agent** | Our support staff who do the work (tiered L1–L4, decision M) | Tickets in **their assigned projects** (the clients they cover) — never clients they're not on | Work tickets: change status, comment, resolve, **reassign to higher tier**. Cannot manage users/companies |
 | **System Admin** | Our manager/lead (likely the team lead) | **Everything**, across all companies | Manage companies & users, **assign/reassign** tickets, configure system, see global dashboard |
 
 - **Multi-company isolation** lives in the jump from *Client Admin* (one company) to *System Admin* (all companies).
-- **Assignment** can come from three sources: *System Admin* (any agent), *Support Agent* self-assign (from the open queue), or *Client User / Client Admin* (from agents mapped to their company via `AGENT_COMPANIES` — decision J).
+- **Assignment** can come from three sources: *System Admin* (any agent), *Support Agent* self-assign (from the open queue), or *Client User / Client Admin* (from **L1 agents only** mapped to their company via `AGENT_COMPANIES` — decisions J/L).
 
 > **Decision (A) — ✅ confirmed:** A Support Agent **can self-assign** from the open queue, **and** the System Admin assigns/reassigns anyone. (Self-assign = an `IS_AGENT`-gated button on the queue/detail that sets `assigned_to = :APP_USER_ID`, moves status to *Assigned*, and writes a `TICKET_HISTORY` row — the same process the Admin's assign action uses.)
 
 > **Decision (I) — ✅ confirmed: agents are scoped to their projects.** Our staff each work specific clients, not all of them. So a Support Agent only sees tickets for the **client companies (projects) they're assigned to** — never clients they're not on. This kills cross-project "noise". Mechanism: a small join table **`AGENT_COMPANIES`** (`user_id` + `company_id`); the queue/dashboard filter `WHERE company_id IN (the agent's covered companies)`. System Admin is exempt (sees every company by role). *Within* a covered project an agent sees the whole project's tickets (team visibility), but can only change status on tickets assigned to them or unassigned.
 
+> **Decision (L) — ✅ confirmed: clients assign L1 agents only.** Clients (Client User / Client Admin) can assign from agents mapped to their company, but the LOV is filtered to `tier = 'L1'` only. Higher tiers are reached via reassignment by support staff. Rationale: clients go to first-line support, not directly to senior specialists.
+
+> **Decision (M) — ✅ confirmed: agents have explicit L1–L4 tiers.** Each support agent carries a `tier` field (L1/L2/L3/L4) on `APP_USERS`. L1 = first-line (general triage), L2 = specialist, L3 = senior/escalation, L4 = expert/vendor. Tiers drive assignment visibility (clients see L1 only) and reassignment flow. *(Reverses earlier Decision I which said "no per-agent level field" — manager feedback 2026-07-02.)*
+
+> **Decision (N) — ✅ confirmed: client visibility is department-scoped.** A Client User sees all tickets from **their department**, not just their own and not the whole company. A Client Admin sees cross-department (all company tickets). Rationale: team awareness without cross-department sensitive info leakage. Mechanism: `DEPARTMENTS` table + `department_id` on `APP_USERS` and `TICKETS`.
+
 > **Four roles are enough — these are *not* extra roles:**
 > - **Manager** (sees everything, never works tickets) = a System Admin/overseer who simply doesn't use the action buttons. We don't hard-block them, so no separate role is needed.
-> - **L1 / L2 / L3 tiers** = handled by the **Escalate** action (FR-26: reassign to a more senior agent + raise priority, logged). Like the big tools (ServiceNow/Zendesk use "assignment groups"), tiering is just reassignment — **no per-agent "level" field**. The labels are how the team talks, not a database column.
+> - **L1 / L2 / L3 / L4 tiers** = a `tier` column on `APP_USERS` (decision M). Reassignment between tiers is a manual action (FR-26); automatic escalation on SLA breach is system-driven (FR-35).
 > - **Project Lead** (assigns teammates' work within a project *and* works tickets) = deferred. For v1, assigning is the System Admin's job (plus agents self-assign). If wanted later, it returns as a **"lead" flag on `AGENT_COMPANIES`**, not a new role.
 
 ---
@@ -158,7 +169,7 @@ Concrete "the system must…" statements, grouped by area. In the meeting, confi
 - FR-1: A user can log in with email + password. *(MUST)*
 - FR-2: After login, the system knows the user's role and company. *(MUST)*
 - FR-3: A user only sees pages and actions allowed for their role. *(MUST)*
-- FR-4: A client user only sees data belonging to their own company. *(MUST)*
+- FR-4: A client user only sees data belonging to their own company and **department** (decision N). A Client Admin sees all company data cross-department. *(MUST)*
 
 ### Companies & users (admin)
 - FR-5: System Admin can create/edit/deactivate companies. *(MUST)*
@@ -168,12 +179,12 @@ Concrete "the system must…" statements, grouped by area. In the meeting, confi
 - FR-7: A client can raise a ticket (subject, description, category, **severity**). **Severity** (Critical/Major/Minor/Low) is set by the client to describe business impact; **Priority** (P1–P4 / Urgent/High/Medium/Low) is set by the support team to determine work order. Both fields live on the ticket; only severity is required at creation. *(MUST)*
 - FR-8: Each ticket gets a unique human-friendly reference (e.g. TKT-00001). *(MUST)*
 - FR-9: A user can view a ticket's full detail, including its comments and history. *(MUST)*
-- FR-10: A ticket can be assigned/reassigned to a support agent. System Admin can assign any agent; **clients (Client User or Client Admin) can assign from agents mapped to their company** via `AGENT_COMPANIES` (on-site support model — see decision J); Support Agents can self-assign from the open queue (decision A). *(MUST)*
+- FR-10: A ticket can be assigned/reassigned to a support agent. System Admin can assign any agent; **clients (Client User or Client Admin) can assign from L1 agents only** mapped to their company via `AGENT_COMPANIES` (decisions J/L); Support Agents can self-assign from the open queue (decision A). *(MUST)*
 - FR-11: A support agent can change a ticket's status per the workflow rules. *(MUST)*
 - FR-12: Any state change is recorded in ticket history (who/what/when). *(MUST)*
 - FR-13: Users can add comments to a ticket. *(MUST)*
 - FR-14: Agents can mark a comment as internal (not visible to the client). *(SHOULD)*
-- FR-26: A support agent/lead can **escalate** a ticket (reassign to a higher tier + raise priority); the escalation is written to history. *(SHOULD)*
+- FR-26: A support agent/lead can **reassign** a ticket to a higher-tier agent (e.g. L1→L2) and optionally raise priority; the reassignment is written to history. *(SHOULD)*
 
 ### Feedback & closure
 - FR-27: After a ticket is **Closed**, the requester can rate the support experience (CSAT, e.g. 1–5 stars). *(SHOULD)*
@@ -202,7 +213,8 @@ Concrete "the system must…" statements, grouped by area. In the meeting, confi
 - FR-34: The Create Ticket form shows a **one-line severity guidance** next to each option (e.g. "Critical — Complete service outage affecting all users") to reduce severity inflation. *(SHOULD)*
 
 ### SLA & aging
-- FR-23: **SLA target per severity** with declarative breach highlighting (computed at query time — no timers/jobs). A global `SLA_TARGETS` table maps each severity to `response_hours` and `resolution_days`; on ticket creation, `sla_due_date` is stamped (`created_at + resolution_days`). The ticket list shows a colour-coded breach indicator (🟢 On track / 🟡 At risk / 🔴 Breached). Vendor-managed (System Admin configures), global for all companies in v1. *(SHOULD)*
+- FR-23: **SLA target per severity, per project (company)** with declarative breach highlighting (computed at query time). The `SLA_TARGETS` table maps each `company_id` + `severity` combination to `response_hours` and `resolution_days`; on ticket creation, `sla_due_date` is stamped (`created_at + resolution_days` from the matching target). The ticket list shows a colour-coded breach indicator (🟢 On track / 🟡 At risk / 🔴 Breached). Vendor-managed (System Admin configures per client). *(SHOULD)*
+- FR-35: **Auto-escalation on SLA breach.** A scheduled job (`DBMS_SCHEDULER`) checks tickets approaching their `sla_due_date`. At a configurable threshold (e.g. 80% of SLA elapsed), the system automatically reassigns the ticket to a higher-tier agent and notifies the System Admin. Written to `TICKET_HISTORY` as an `ESCALATION` action. This is **system-driven escalation** (distinct from manual reassignment in FR-26). *(SHOULD)*
 
 ### Stretch (do not commit)
 - FR-24: AI auto-suggests category/priority from the description (`APEX_AI`). *(COULD)*
@@ -249,9 +261,10 @@ stateDiagram-v2
 | Resolve | In Progress → Resolved | Support Agent |
 | Close | Resolved → Closed | Client (confirm) or System Admin |
 | Reopen | Resolved → In Progress | Client User, Client Admin |
-| **Escalate** | In Progress → In Progress *(reassign + raise priority)* | Support Agent / System Admin *(decision G)* |
+| **Reassign (tier transfer)** | In Progress → In Progress *(reassign to higher tier + optionally raise priority)* | Support Agent / System Admin *(FR-26)* |
+| **Escalation (auto)** | Any open state *(system reassigns + notifies management on SLA breach)* | System (`DBMS_SCHEDULER` job, FR-35) |
 
-> **Escalate** is not a new state — it's an action on an in-progress ticket that reassigns it (to a higher-tier agent) and raises its priority, writing a `TICKET_HISTORY` row. It models the senior's "Tier 1 → Tier 2/3" escalation without adding new pages or roles. See decision **G**.
+> **Reassign** (FR-26) is a manual action — a support agent or admin moves a ticket to a higher-tier agent (e.g. L1→L2), optionally raising priority. It writes a `TICKET_HISTORY` row with action `REASSIGN`. **Escalation** (FR-35) is system-driven — when SLA is at risk (e.g. 80% elapsed), the system automatically reassigns to a higher tier and notifies management, logged as `ESCALATION`.
 
 > **Open decision for the meeting (B):** Do we want **On Hold** and **Reopen** in v1, or is the simpler `New → Assigned → In Progress → Resolved → Closed` enough for the demo? Fewer states = faster build. We can always add them back.
 
@@ -267,13 +280,14 @@ Now that we know the requirements and workflow, we can model the data to support
 | Table | What it holds | Key columns |
 |---|---|---|
 | **COMPANIES** | Every company — our vendor company *and* each client | `company_id` (PK), `company_name`, `company_type` (VENDOR / CLIENT), `status` |
-| **APP_USERS** | Every person who logs in | `user_id` (PK), `company_id` (FK), `full_name`, `email`, `role`, `status` |
-| **TICKETS** | The support requests | `ticket_id` (PK), `ticket_ref` (e.g. TKT-00001), `company_id` (FK — *the tenant key*), **`ticket_type`** (`INCIDENT` / `SERVICE_REQUEST` — default `INCIDENT`, FR-30), `subject`, `description`, `category_id` (FK), **`severity`** (Critical/Major/Minor/Low — client-set at creation), **`priority`** (P1–P4 — support-set, nullable until triaged), `status`, `created_by` (FK user), `assigned_to` (FK user, nullable), `created_at`, `updated_at`, **`first_response_at`** (TIMESTAMP — stamped on first agent response, FR-31), `resolved_at`, `closed_at`, `csat_score` (NUMBER, nullable — set at closure, FR-27), **`sla_due_date`** (DATE — stamped at creation from `SLA_TARGETS` based on severity, FR-23) |
+| **DEPARTMENTS** | Departments within a company (decision N) | `department_id` (PK), `company_id` (FK), `department_name` |
+| **APP_USERS** | Every person who logs in | `user_id` (PK), `company_id` (FK), `department_id` (FK, nullable — vendor staff may not need one), `full_name`, `email`, `role`, **`tier`** (L1/L2/L3/L4 — for Support Agents, decision M), `status` |
+| **TICKETS** | The support requests | `ticket_id` (PK), `ticket_ref` (e.g. TKT-00001), `company_id` (FK — *the tenant key*), `department_id` (FK — stamped from creator's department, decision N), **`ticket_type`** (`INCIDENT` / `SERVICE_REQUEST` — default `INCIDENT`, FR-30), `subject`, `description`, `category_id` (FK), **`severity`** (Critical/Major/Minor/Low — client-set at creation), **`priority`** (P1–P4 — support-set, nullable until triaged), `status`, `created_by` (FK user), `assigned_to` (FK user, nullable), `created_at`, `updated_at`, **`first_response_at`** (TIMESTAMP — stamped on first agent response, FR-31), `resolved_at`, `closed_at`, `csat_score` (NUMBER, nullable — set at closure, FR-27), **`sla_due_date`** (DATE — stamped at creation from `SLA_TARGETS` based on severity, FR-23) |
 | **TICKET_COMMENTS** | The conversation on a ticket | `comment_id` (PK), `ticket_id` (FK), `user_id` (FK), `comment_text`, `is_internal` (Y/N — internal note vs client-visible), `created_at` |
 | **TICKET_HISTORY** | Audit trail of every change | `history_id` (PK), `ticket_id` (FK), `user_id` (FK), `action`, `old_value`, `new_value`, `created_at` |
 | **CATEGORIES** | Ticket types (Bug, Request, Question…) | `category_id` (PK), `category_name` |
 | **AGENT_COMPANIES** | Which clients (projects) each support agent covers — *the agent-scoping key (decision I)* | `user_id` (FK), `company_id` (FK); together the PK. *(Optional later: `is_lead` Y/N for the deferred Project Lead.)* |
-| **SLA_TARGETS** | Global SLA resolution targets per severity — vendor-managed (FR-23) | `severity` (PK — matches `TICKETS.severity`), `response_hours` (NUMBER), `resolution_days` (NUMBER) |
+| **SLA_TARGETS** | SLA resolution targets per severity **per company** — vendor-managed (FR-23) | `sla_target_id` (PK), `company_id` (FK — each client gets their own targets), `severity` (matches `TICKETS.severity`), `response_hours` (NUMBER), `resolution_days` (NUMBER); unique on `(company_id, severity)` |
 | **TICKET_ATTACHMENTS** *(COULD — FR-25)* | Files/screenshots attached to a ticket as evidence | `attachment_id` (PK), `ticket_id` (FK), `company_id` (FK — *tenant key, denormalized on purpose; see §5.1*), `comment_id` (FK, nullable — null = ticket-level), `file_name`, `mime_type`, `file_blob` (BLOB), `uploaded_by`, `uploaded_at` |
 
 > **Severity vs Priority (ITIL-aligned, Decision K):** Severity (Critical/Major/Minor/Low) maps to ITIL's **Impact** — the client's assessment of business disruption, set at ticket creation, required. Priority (P1/P2/P3/P4) maps to ITIL's **Priority** — the support team's work-order decision, set during triage, nullable until then. Both can start as simple fixed lists (check constraints). SLA targets key off severity, not priority. *(Post-hackathon: add an **Urgency** dimension to complete the ITIL Impact × Urgency = Priority matrix — see FUTURE P3.)*
@@ -284,15 +298,18 @@ Now that we know the requirements and workflow, we can model the data to support
 > The derived dashboard metrics — ticket **aging**, **"stale" / time-since-last-activity**, **first-response-time (FRT)**, **backlog trend**, **reopen rate** — are all pure queries over data we already store, *provided* three small rules hold. Decide these now, before the tables are built:
 > 1. **One timestamp type everywhere.** `created_at`, `updated_at`, `resolved_at`, `closed_at` on every table use `TIMESTAMP WITH LOCAL TIME ZONE` (matching `TICKET_ATTACHMENTS`, §5.1). Don't mix `DATE` and `TIMESTAMP` — it complicates the age arithmetic and the display formatting.
 > 2. **`TICKETS.updated_at` is bumped on *every* change** — every comment insert and every `TICKET_HISTORY` write also touches `updated_at`. "Last activity" = `GREATEST(updated_at, MAX(comment.created_at), MAX(history.created_at))`; keep the `GREATEST` form as a backstop so a ticket that's being actively commented on never falsely reads as *stale*.
-> 3. **`TICKET_HISTORY.action` is a fixed enum, not free text** — `STATUS_CHANGE`, `ASSIGN`, `ESCALATE`, `PRIORITY_CHANGE`, `COMMENT`, `CSAT` (extend as needed, but pin the list). A *Reopen* is a `STATUS_CHANGE` transitioning **from** `'Resolved'` back to an active status — detect it via `old_value = 'Resolved'` (matches the Reopen button on Page 5 of the build guide, which sets status to *In Progress*). A fixed vocabulary makes every history-driven metric a single, reliable predicate instead of guessing at spellings.
+> 3. **`TICKET_HISTORY.action` is a fixed enum, not free text** — `STATUS_CHANGE`, `ASSIGN`, `REASSIGN`, `ESCALATION`, `PRIORITY_CHANGE`, `COMMENT`, `CSAT` (extend as needed, but pin the list). A *Reopen* is a `STATUS_CHANGE` transitioning **from** `'Resolved'` back to an active status — detect it via `old_value = 'Resolved'` (matches the Reopen button on Page 5 of the build guide, which sets status to *In Progress*). A fixed vocabulary makes every history-driven metric a single, reliable predicate instead of guessing at spellings.
 >
 > Metric tiers (build only after the MUST spine demos with real isolation): **stale flag** + **overdue highlight** (age × priority — the declarative cousin of the SLA-highlight COULD) are the recommended picks; **FRT**, **backlog trend**, **reopen rate** are bonus.
 
 ### How the tables relate
 ```mermaid
 erDiagram
+    COMPANIES ||--o{ DEPARTMENTS : "has"
     COMPANIES ||--o{ APP_USERS : "employs"
+    DEPARTMENTS ||--o{ APP_USERS : "contains"
     COMPANIES ||--o{ TICKETS : "owns"
+    DEPARTMENTS ||--o{ TICKETS : "scopes"
     APP_USERS ||--o{ TICKETS : "creates"
     APP_USERS ||--o{ TICKETS : "is assigned"
     TICKETS ||--o{ TICKET_COMMENTS : "has"
@@ -301,10 +318,10 @@ erDiagram
     APP_USERS ||--o{ TICKET_COMMENTS : "writes"
     APP_USERS ||--o{ AGENT_COMPANIES : "covers"
     COMPANIES ||--o{ AGENT_COMPANIES : "is covered by"
+    COMPANIES ||--o{ SLA_TARGETS : "has targets"
     TICKETS ||--o{ TICKET_ATTACHMENTS : "has"
     TICKET_COMMENTS ||--o{ TICKET_ATTACHMENTS : "may carry"
     COMPANIES ||--o{ TICKET_ATTACHMENTS : "owns"
-    SLA_TARGETS ||--o{ TICKETS : "sets deadline for"
 ```
 
 > **Note:** `TICKET_ATTACHMENTS` is a COULD feature (FR-25). It carries its **own** `company_id` (copied from the parent ticket at upload) so every BLOB-download query can filter on the tenant key directly — without a join — closing the IDOR gap on file downloads. Build-ready DDL and the full isolation plan are in §5.1.
@@ -470,11 +487,14 @@ Balanced by **effort, not page count** (Ticket Detail alone is ~5× a Categories
 - **D.** Confirm the MUST/SHOULD/COULD scope — anyone want to move an item?
 - **E.** Confirm the workstream split and who owns what.
 - **F.** Confirm the 3-week milestone shape.
-- **G.** Escalation depth: add the lightweight **"Escalate" action** only (reassign + raise priority, logged), or also add Tier-2/Team-Lead **roles**? *(recommend: action only — models the senior's tiered escalation without growing the role matrix)*
-- **H.** Confirm the SHOULD items (CSAT, dashboard analytics, auto-ack email, escalate, **SLA per severity**) — all verified feasible in APEX 26.1 and low-cost. SLA promoted from COULD → **SHOULD** as a global severity-based breach highlight (no timers). *(recommend: yes)*
-- **I.** ✅ **Decided: agents are scoped to their projects.** A Support Agent sees only tickets for the client companies they're assigned to (`AGENT_COMPANIES` join + `WHERE company_id IN (...)`). Four roles stay; **Manager** = an overseer who doesn't take tickets (no separate role), **L1/L2/L3** = the Escalate action (no level field), **Project Lead** = deferred (`is_lead` flag later). See §2.
-- **J.** ✅ **Decided: clients can assign agents directly.** Both Client User and Client Admin can assign a support agent to their ticket — the agent LOV is scoped to `AGENT_COMPANIES` for the client's `company_id`, so no cross-tenant info leak. Rationale: on-site support model where the client knows the support staff. System Admin can still assign/reassign anyone. See updated FR-10.
+- **G.** ✅ **Decided (revised): "Reassign" (manual) vs "Escalation" (automatic).** Manual tier transfer (FR-26) = agent/admin reassigns to a higher-tier agent + optionally raises priority, logged as `REASSIGN`. Automatic escalation (FR-35) = system-driven on SLA breach, logged as `ESCALATION`. The word "escalation" is reserved for system-driven actions.
+- **H.** Confirm the SHOULD items (CSAT, dashboard analytics, auto-ack email, reassign, **SLA per severity per company**, auto-escalation) — all verified feasible in APEX 26.1. *(recommend: yes)*
+- **I.** ✅ **Decided (revised): agents are scoped to their projects, with explicit L1–L4 tiers (decision M).** A Support Agent sees only tickets for the client companies they're assigned to (`AGENT_COMPANIES` join + `WHERE company_id IN (...)`). Each agent carries a `tier` column (L1/L2/L3/L4). Four roles stay; **Manager** = an overseer who doesn't take tickets (no separate role), **Project Lead** = deferred (`is_lead` flag later). See §2 and decision M.
+- **J.** ✅ **Decided (refined with L): clients can assign L1 agents directly.** Both Client User and Client Admin can assign a support agent to their ticket — the agent LOV is scoped to `AGENT_COMPANIES` for the client's `company_id` **and filtered to `tier = 'L1'` only** (decision L). Higher tiers are reached via reassignment by support staff. System Admin can still assign/reassign anyone.
 - **K.** ✅ **Decided: severity and priority are separate fields.** Severity (Critical/Major/Minor/Low) is set by the client at ticket creation to describe business impact. Priority (P1–P4) is set by the support team during triage to determine work order. SLA targets key off severity. See updated FR-7.
+- **L.** ✅ **Decided (2026-07-02): clients assign L1 only.** Client assignment LOV filtered to `tier = 'L1'`. See §2 and updated FR-10.
+- **M.** ✅ **Decided (2026-07-02): agents have explicit L1–L4 tiers.** `APP_USERS.tier` column. L1=first-line, L2=specialist, L3=senior, L4=expert/vendor. Reverses earlier "no level field" stance. See §2.
+- **N.** ✅ **Decided (2026-07-02): client visibility is department-scoped.** Client User sees all tickets from their department; Client Admin sees cross-department. New `DEPARTMENTS` table + `department_id` on `APP_USERS` and `TICKETS`. See §2 and FR-4.
 
 ---
 

@@ -41,19 +41,19 @@ A client must **never** see another client's tickets. Every tenant-scoped table 
 `company_id`; every client-facing query filters on it. A cross-tenant data leak invalidates
 the entire "production-level" claim. Test this harder than anything else.
 
-### Roles (4)
-- **Client User** — sees only their own tickets; raises/comments; **assigns agent** from agents mapped to their company (decision J).
-- **Client Admin** — sees all of their own company's tickets; **assigns/reassigns agents** for any company ticket.
-- **Support Agent** — works tickets for their **assigned projects only** (status/comments/resolve); no user/company admin. (Manager, L1/L2/L3, Project Lead are *not* separate roles — see brief decision I.)
+### Roles (4) + agent tiers (L1–L4)
+- **Client User** — sees all tickets in **their department** (decision N); raises/comments; **assigns L1 agent only** from agents mapped to their company (decisions J/L).
+- **Client Admin** — sees all of their own company's tickets (cross-department); **assigns/reassigns agents** for any company ticket.
+- **Support Agent** — works tickets for their **assigned projects only** (status/comments/resolve); tiered L1–L4 (decision M); can **reassign to higher tier** (FR-26). No user/company admin.
 - **System Admin** — everything across all companies; manages users/companies; **assigns** tickets.
 
-### Data model (8 tables)
-`COMPANIES` · `APP_USERS` · `TICKETS` · `TICKET_COMMENTS` · `TICKET_HISTORY` · `CATEGORIES` ·
+### Data model (9 tables)
+`COMPANIES` · `DEPARTMENTS` (per-company departments, decision N) · `APP_USERS` (with `tier` L1–L4 for agents, `department_id` for clients) · `TICKETS` · `TICKET_COMMENTS` · `TICKET_HISTORY` · `CATEGORIES` ·
 `AGENT_COMPANIES` (which clients each agent covers — scopes an agent's queue to their projects) ·
-`SLA_TARGETS` (global SLA resolution targets per severity — vendor-managed, FR-23).
+`SLA_TARGETS` (SLA targets per severity **per company** — vendor-managed, FR-23).
 `TICKETS.ticket_type` is `INCIDENT` or `SERVICE_REQUEST` (FR-30, ITIL distinction).
-`TICKETS.severity` is client-set (business impact, renamed: Critical/Major/Minor/**Low**); `TICKETS.priority` is support-set (work order); `TICKETS.first_response_at` tracks first agent response (FR-31); `TICKETS.sla_due_date` is stamped at creation from `SLA_TARGETS`.
-`TICKETS.company_id` is the tenant key. Full schema + ERD in the brief.
+`TICKETS.severity` is client-set (business impact: Critical/Major/Minor/**Low**); `TICKETS.priority` is support-set (work order); `TICKETS.first_response_at` tracks first agent response (FR-31); `TICKETS.sla_due_date` is stamped at creation from `SLA_TARGETS`.
+`TICKETS.company_id` is the tenant key; `TICKETS.department_id` scopes client-user visibility. Full schema + ERD in the brief.
 
 ### Ticket lifecycle
 `New → Assigned → In Progress → Resolved → Closed` (optional `On Hold`, `Reopen`).
@@ -61,9 +61,9 @@ Every state change is written to `TICKET_HISTORY` (who/what/when).
 
 ### Scope (MoSCoW) — protect the demo over adding features
 - **MUST (17):** companies/users/roles, login + isolation, ticket CRUD + lifecycle (severity = client-set, priority = support-set), assignment (admin + agent self-assign + client from mapped agents), comments + history, dashboard.
-- **SHOULD (15):** categories/priorities + filtering, branded theme, assignment notification, CSAT rating (Star Rating item), dashboard analytics (avg resolution time + per-agent counts), auto-acknowledgement email (`APEX_MAIL`), escalate action (reassign + raise priority, logged), SLA per severity with breach highlighting, **status-change notification** (FR-22, promoted per ITIL), **ticket type INCIDENT/SERVICE_REQUEST** (FR-30), **first-response tracking** (FR-31), **SLA Compliance % KPI** (FR-32), **workload in assignment LOV** (FR-33), **severity guidance text** (FR-34).
+- **SHOULD (16):** categories/priorities + filtering, branded theme, assignment notification, status-change notification (FR-22), CSAT rating, dashboard analytics + **SLA Compliance % KPI** (FR-32), auto-ack email, **reassign to higher tier** (FR-26, renamed from escalate), **auto-escalation on SLA breach** (FR-35, `DBMS_SCHEDULER`), **SLA per severity per company** (FR-23), ticket type INCIDENT/SERVICE_REQUEST (FR-30), first-response tracking (FR-31), workload in assignment LOV (FR-33), severity guidance text (FR-34).
 - **COULD (2, do not commit):** AI category suggest (`APEX_AI`), file/screenshot attachments (`TICKET_ATTACHMENTS` BLOB, tenant-scoped — brief §5.1).
-- **FUTURE:** ITIL-prioritized production roadmap (P1–P4) — per-client SLA, separate incident/SR workflows, VPD/RLS, hierarchical escalation, major incident process, two-level categories, auto-close, urgency field, problem management, KB, and more. Park "could we also…" ideas here, not in the build (brief §1).
+- **FUTURE:** ITIL-prioritized production roadmap (P1–P4) — separate incident/SR workflows, SLA pause + business-hours, VPD/RLS, hierarchical escalation, major incident process, two-level categories, auto-close, urgency field, problem management, KB, and more. Park "could we also…" ideas here, not in the build (brief §1).
 
 ## APEX APIs most relevant to this build
 Look these up in the reference before implementing:
