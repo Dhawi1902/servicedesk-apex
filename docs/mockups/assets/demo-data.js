@@ -34,14 +34,17 @@ window.DEMO_SEED = {
   // Decision O: PROJECTS layer between COMPANIES and TICKETS.
   // Each company has one or more service-engagement projects.
   // Tickets, SLA targets, agent mappings, and client access are all scoped to projects.
+  // Decision Q: visibility = 'OPEN' (whole company sees it) or 'RESTRICTED'
+  // (invitation-only via userProjects — e.g. an app still in testing, or HR/payroll).
   projects: [
-    { id: 'P1', companyId: 'C1', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Acme Corp',              isActive: true, createdAt: '2026-01-15T00:00:00' },
-    { id: 'P2', companyId: 'C1', projectName: 'ERP Systems',     projectKey: 'ERP',   description: 'ERP platform maintenance and support',          isActive: true, createdAt: '2026-03-01T00:00:00' },
-    { id: 'P3', companyId: 'C2', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Globex Ltd',              isActive: true, createdAt: '2026-03-15T00:00:00' },
-    { id: 'P4', companyId: 'C2', projectName: 'CRM Platform',    projectKey: 'CRM',   description: 'CRM integration and support',                   isActive: true, createdAt: '2026-04-01T00:00:00' },
-    { id: 'P5', companyId: 'C3', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Initech',                 isActive: true, createdAt: '2026-06-01T00:00:00' },
-    { id: 'P6', companyId: 'C0', projectName: 'Internal Apps',   projectKey: 'INTAP', description: 'Internal application support for Northwind IT',  isActive: true, createdAt: '2026-01-01T00:00:00' },
-    { id: 'P7', companyId: 'C0', projectName: 'Infrastructure',  projectKey: 'INFRA', description: 'Network and server infrastructure',              isActive: true, createdAt: '2026-01-01T00:00:00' }
+    { id: 'P1', companyId: 'C1', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Acme Corp',              visibility: 'OPEN',       isActive: true, createdAt: '2026-01-15T00:00:00' },
+    { id: 'P2', companyId: 'C1', projectName: 'ERP Systems',     projectKey: 'ERP',   description: 'ERP platform maintenance and support',          visibility: 'OPEN',       isActive: true, createdAt: '2026-03-01T00:00:00' },
+    { id: 'P3', companyId: 'C2', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Globex Ltd',              visibility: 'OPEN',       isActive: true, createdAt: '2026-03-15T00:00:00' },
+    { id: 'P4', companyId: 'C2', projectName: 'CRM Platform',    projectKey: 'CRM',   description: 'CRM integration and support',                   visibility: 'OPEN',       isActive: true, createdAt: '2026-04-01T00:00:00' },
+    { id: 'P5', companyId: 'C3', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Initech',                 visibility: 'OPEN',       isActive: true, createdAt: '2026-06-01T00:00:00' },
+    { id: 'P6', companyId: 'C0', projectName: 'Internal Apps',   projectKey: 'INTAP', description: 'Internal application support for Northwind IT',  visibility: 'OPEN',       isActive: true, createdAt: '2026-01-01T00:00:00' },
+    { id: 'P7', companyId: 'C0', projectName: 'Infrastructure',  projectKey: 'INFRA', description: 'Network and server infrastructure',              visibility: 'OPEN',       isActive: true, createdAt: '2026-01-01T00:00:00' },
+    { id: 'P8', companyId: 'C0', projectName: 'HR System Pilot', projectKey: 'HRPIL', description: 'New HR platform — pilot phase, invited testers only', visibility: 'RESTRICTED', isActive: true, createdAt: '2026-06-20T00:00:00' }
   ],
 
   // Decision N: departments per company (metadata only — not a visibility filter)
@@ -84,12 +87,14 @@ window.DEMO_SEED = {
   ],
 
   // Decision P: multi-role support. Each user can hold multiple roles.
-  // Northwind agents get both SUPPORT_AGENT and CLIENT_USER (they are also
-  // internal users of the Northwind company).
+  // Decision Q: every Northwind (provider) user is auto-granted CLIENT_USER at
+  // creation — every employee is a potential internal requester. That's why all
+  // Northwind agents (and Sara) carry CLIENT_USER alongside their work role.
   // The user's `role` field above is the default/landing role at login;
   // the nav-bar role-switcher uses this array to offer alternatives.
   userRoles: [
     { userId: 'u1',  role: 'SYSTEM_ADMIN' },
+    { userId: 'u1',  role: 'CLIENT_USER' },
     { userId: 'u2',  role: 'SUPPORT_AGENT' },
     { userId: 'u2',  role: 'CLIENT_USER' },
     { userId: 'u3',  role: 'SUPPORT_AGENT' },
@@ -128,7 +133,12 @@ window.DEMO_SEED = {
     { userId: 'u3',  projectId: 'P5' },   // Lee covers Initech IT Support
     { userId: 'u3',  projectId: 'P6' },   // Lee covers Northwind Internal Apps
     { userId: 'u9',  projectId: 'P1' },   // Nora covers Acme IT Support
+    { userId: 'u9',  projectId: 'P2' },   // Nora (L1) — first-line on Acme ERP (L1 gate, Flow 3)
+    { userId: 'u9',  projectId: 'P3' },   // Nora (L1) — first-line on Globex IT Support
     { userId: 'u9',  projectId: 'P5' },   // Nora covers Initech IT Support
+    { userId: 'u9',  projectId: 'P6' },   // Nora (L1) — first-line on Northwind Internal Apps
+    { userId: 'u9',  projectId: 'P7' },   // Nora (L1) — first-line on Northwind Infrastructure
+    // NOTE: P4 (Globex CRM) deliberately has NO L1 — demos the red "no L1" gate badge
     { userId: 'u10', projectId: 'P3' },   // Raj covers Globex IT Support
     { userId: 'u10', projectId: 'P4' },   // Raj covers Globex CRM
     { userId: 'u10', projectId: 'P5' },   // Raj covers Initech IT Support
@@ -141,14 +151,19 @@ window.DEMO_SEED = {
     { userId: 'u12', projectId: 'P4' },
     { userId: 'u12', projectId: 'P5' },   // Omar covers Initech
     { userId: 'u2',  projectId: 'P7' },   // Mike covers Northwind Infrastructure
-    { userId: 'u3',  projectId: 'P7' }    // Lee covers Northwind Infrastructure
+    { userId: 'u3',  projectId: 'P7' },   // Lee covers Northwind Infrastructure
+    { userId: 'u9',  projectId: 'P8' }    // Nora (L1) covers the HR System Pilot (L1 gate — Flow 3)
   ],
 
-  // Decision N revised: client-side project access control.
-  // Empty array = open default (all client users see all of their company's projects).
-  // Rows restrict a specific user to specific projects (managed by Client Admin).
-  // In APEX this is USER_PROJECTS: user_id + project_id.
-  userProjects: [],
+  // Decision Q: USER_PROJECTS is an INVITATION list (semantic flip from decision N).
+  // A client-side user sees all OPEN projects of their company automatically,
+  // plus any RESTRICTED projects they have a row for here. Rows GRANT access
+  // (never restrict). Managed by the Client Admin.
+  // Nick is an invited tester on the restricted HR System Pilot (P8);
+  // Northwind agents are NOT invited — in client mode they can't see it.
+  userProjects: [
+    { userId: 'u18', projectId: 'P8' }
+  ],
 
   // Categories: companyId null = global, set = company-specific (hybrid model per brief §5)
   // projectId: null = available to all projects in that company (or globally); set = project-specific
@@ -213,7 +228,12 @@ window.DEMO_SEED = {
     { projectId: 'P7', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 90 },
     { projectId: 'P7', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 90 },
     { projectId: 'P7', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 90 },
-    { projectId: 'P7', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 90 }
+    { projectId: 'P7', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 90 },
+    // P8: Northwind HR System Pilot (defaults seeded at creation — Flow 3)
+    { projectId: 'P8', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 80 },
+    { projectId: 'P8', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 80 },
+    { projectId: 'P8', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 80 },
+    { projectId: 'P8', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 }
   ],
 
   // createdAt/updatedAt are ISO strings; relative time is computed at runtime.

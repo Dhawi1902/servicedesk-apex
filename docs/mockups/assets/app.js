@@ -10,7 +10,10 @@
    - Decision N revised: project-scoped client visibility (not department-scoped)
    - Decision P: multi-role support (userRoles array)
    - AGENT_PROJECTS replaces AGENT_COMPANIES
-   - USER_PROJECTS for client access control (empty = all company projects)
+   - Decision Q: PROJECTS.visibility OPEN/RESTRICTED; USER_PROJECTS is an
+     INVITATION list (client sees OPEN projects + invited RESTRICTED ones);
+     provider-company users auto-granted CLIENT_USER
+   - Project Detail hub (Page 19): Details | Support Team | SLA | Categories | Invitations
    - SLA targets keyed on projectId (not companyId)
    - Severity (client-set) vs Priority (support-set) — Decision K / FR-7
    - Severity values: Critical/Major/Minor/Low
@@ -35,7 +38,7 @@
    ========================================================================= */
 (function () {
   'use strict';
-  var LS_DATA = 'sd_demo_data_v7', LS_SESSION = 'sd_demo_session_v7';
+  var LS_DATA = 'sd_demo_data_v8', LS_SESSION = 'sd_demo_session_v8';
 
   /* ---------- store ---------- */
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
@@ -58,6 +61,8 @@
 
   // Backfill projects from seed if missing
   if (!DB.projects) { DB.projects = (window.DEMO_SEED && window.DEMO_SEED.projects) ? clone(window.DEMO_SEED.projects) : []; }
+  // Backfill visibility (Decision Q) on projects cached before v8
+  DB.projects.forEach(function (p) { if (p.visibility === undefined) p.visibility = 'OPEN'; });
   // Backfill userRoles from seed if missing
   if (!DB.userRoles) { DB.userRoles = (window.DEMO_SEED && window.DEMO_SEED.userRoles) ? clone(window.DEMO_SEED.userRoles) : []; }
   // Backfill userProjects from seed if missing
@@ -127,7 +132,31 @@
 
   /* ---------- session ---------- */
   function getSession() { var r = localStorage.getItem(LS_SESSION); return r ? JSON.parse(r) : null; }
-  function currentUser() { var s = getSession(); return s ? DB.users.find(function (u) { return u.id === s.userId; }) : null; }
+  // Decision P: the session may carry an activeRole override (nav-bar role switcher).
+  // currentUser() returns the user AS the active role — the rest of the app just reads u.role.
+  function currentUser() {
+    var s = getSession(); if (!s) return null;
+    var u = DB.users.find(function (x) { return x.id === s.userId; });
+    if (!u) return null;
+    if (s.activeRole && s.activeRole !== u.role) {
+      var copy = clone(u); copy.role = s.activeRole; copy._baseRole = u.role;
+      return copy;
+    }
+    return u;
+  }
+  // Roles this user can switch into (decision P), as display labels.
+  // Decision Q rule: hide client mode while the accessible-project set is empty.
+  var ROLE_LABEL = { SYSTEM_ADMIN: 'System Admin', SUPPORT_AGENT: 'Support Agent', CLIENT_ADMIN: 'Client Admin', CLIENT_USER: 'Client User' };
+  function switchableRoles(u) {
+    var labels = (DB.userRoles || []).filter(function (r) { return r.userId === u.id; })
+      .map(function (r) { return ROLE_LABEL[r.role] || r.role; });
+    var base = u._baseRole || u.role;
+    if (labels.indexOf(base) < 0) labels.push(base);
+    return labels.filter(function (l) {
+      if (l === 'Client User' && userAccessibleProjectIds(u).length === 0 && labels.length > 1) return false;
+      return true;
+    });
+  }
 
   /* ---------- lookups + utils ---------- */
   function company(id) { return DB.companies.find(function (c) { return c.id === id; }) || {}; }
@@ -183,11 +212,53 @@
     return compIds;
   }
 
-  // Client user's accessible projects
+  // Client user's accessible projects (Decision Q):
+  // all OPEN projects of their company + RESTRICTED projects they're invited to.
+  // USER_PROJECTS rows GRANT access to restricted projects (invitation list).
   function userAccessibleProjectIds(u) {
-    var up = (DB.userProjects || []).filter(function (r) { return r.userId === u.id; });
-    if (up.length === 0) return companyProjects(u.companyId).map(function (p) { return p.id; });
-    return up.map(function (r) { return r.projectId; });
+    var invited = (DB.userProjects || []).filter(function (r) { return r.userId === u.id; })
+      .map(function (r) { return r.projectId; });
+    return companyProjects(u.companyId).filter(function (p) {
+      return (p.visibility || 'OPEN') === 'OPEN' || invited.indexOf(p.id) >= 0;
+    }).map(function (p) { return p.id; });
+  }
+
+  /* ---------- support-team helpers (Flows 3/4: L1 gate, removal guards) ---------- */
+  function projectTeam(projectId) {
+    return (DB.agentProjects || []).filter(function (ap) { return ap.projectId === projectId; })
+      .map(function (ap) { return DB.users.find(function (x) { return x.id === ap.userId; }); })
+      .filter(function (a) { return !!a; });
+  }
+  function agentOpenCountInProject(agentId, projectId) {
+    return DB.tickets.filter(function (t) {
+      return t.assignedTo === agentId && t.projectId === projectId &&
+        t.status !== 'Resolved' && t.status !== 'Closed';
+    }).length;
+  }
+  // Returns a blocking message if the agent cannot be removed from the project, else null.
+  function teamRemovalBlock(agentId, projectId) {
+    var openN = agentOpenCountInProject(agentId, projectId);
+    var a = DB.users.find(function (x) { return x.id === agentId; });
+    var p = project(projectId);
+    if (openN > 0) {
+      return (a ? a.name : 'This agent') + ' still holds ' + openN + ' open ticket' + (openN > 1 ? 's' : '') +
+        ' in ' + (p.projectName || 'this project') + '. Reassign them first (Flow 4).';
+    }
+    var l1s = projectTeam(projectId).filter(function (x) { return x.tier === 'L1' && x.status === 'Active'; });
+    if (p.isActive && a && a.tier === 'L1' && l1s.length === 1 && l1s[0].id === agentId) {
+      return 'Cannot remove the last L1 agent from an active project — clients could assign nobody (FR-10). Map another L1 first.';
+    }
+    return null;
+  }
+  // Coverage warnings for a project's team (Flow 3 gates made visible)
+  function teamCoverageBadges(projectId) {
+    var team = projectTeam(projectId).filter(function (a) { return a.status === 'Active'; });
+    var hasL1 = team.some(function (a) { return a.tier === 'L1'; });
+    var hasHigher = team.some(function (a) { return a.tier && a.tier !== 'L1'; });
+    var out = '';
+    if (!hasL1) out += ' <span class="tag-inactive" title="Clients could assign nobody (FR-10)">&#9888; no L1 agent</span>';
+    if (hasL1 && !hasHigher) out += ' <span class="muted" style="font-size:11px;" title="Auto-escalation has no higher tier to go to (FR-35)">&#9888; no L2+ — escalation dead-ends</span>';
+    return out;
   }
 
   /* ---------- SLA (FR-23) — now by projectId ---------- */
@@ -386,11 +457,12 @@
       items.push({ key: 'projects', label: 'Projects', icon: '&#128194;', href: '11-projects.html', section: 'Administration' });
       items.push({ key: 'users', label: 'Users', icon: '&#128101;', href: '10-users.html', section: 'Administration' });
       items.push({ key: 'categories', label: 'Categories', icon: '&#127991;&#65039;', href: '11-categories.html', section: 'Administration' });
+      items.push({ key: 'sla', label: 'SLA Targets', icon: '&#9202;', href: '13-sla-targets.html', section: 'Administration' });
       items.push({ key: 'agent-projects', label: 'Agent-Project Mapping', icon: '&#128279;', href: '14-agent-companies.html', section: 'Administration' });
       items.push({ key: 'audit-log', label: 'Audit Log', icon: '&#128220;', href: '16-audit-log.html', section: 'Administration' });
     }
     if (isClientAdmin(u)) {
-      items.push({ key: 'user-projects', label: 'User Access', icon: '&#128274;', href: '18-user-projects.html', section: 'Administration' });
+      items.push({ key: 'user-projects', label: 'Project Invitations', icon: '&#9993;&#65039;', href: '18-user-projects.html', section: 'Administration' });
     }
     items.push({ key: 'profile', label: 'My Profile', icon: '&#128100;', href: '12-profile.html', section: 'Account' });
     return items;
@@ -403,11 +475,22 @@
         return '<a class="nav-item' + (it.key === activeKey ? ' active' : '') + '" href="' + it.href + '"><span class="ic">' + it.icon + '</span> ' + esc(it.label) + '</a>';
       }).join('');
     }).join('');
+    // Decision P: nav-bar role switcher for multi-role users (no re-login).
+    var roles = switchableRoles(u);
+    var rolePillHtml;
+    if (roles.length > 1) {
+      rolePillHtml = '<span class="role-pill" title="You hold multiple roles (decision P) — switch without re-login" style="padding:0;">' +
+        '<select onchange="sd.switchRole(this.value)" style="border:none;background:transparent;font:inherit;color:inherit;padding:3px 6px;cursor:pointer;">' +
+        roles.map(function (r) { return '<option' + (r === u.role ? ' selected' : '') + '>' + esc(r) + '</option>'; }).join('') +
+        '</select></span>';
+    } else {
+      rolePillHtml = '<span class="role-pill">' + esc(u.role) + '</span>';
+    }
     var header =
       '<div class="brand"><div class="logo">&#127915;</div> ServiceDesk</div>' +
       '<div class="spacer"></div>' +
       '<div class="hdr-item" title="Reset demo data" onclick="sd.reset()">&#8634; Reset demo</div>' +
-      '<div class="hdr-item"><span class="role-pill">' + esc(u.role) + '</span></div>' +
+      '<div class="hdr-item">' + rolePillHtml + '</div>' +
       '<div class="hdr-item"><span class="avatar">' + initials(u.name) + '</span> ' + esc(u.name) +
       ' &nbsp;<a href="#" onclick="sd.logout();return false;" style="font-size:12px;">Sign out</a></div>';
     document.body.className = '';
@@ -881,7 +964,7 @@
       var colSpan = showCompany ? 11 : 9;
       rows = '<tr><td colspan="' + colSpan + '" class="muted">No tickets visible to you.</td></tr>';
     }
-    var actions = canCreate(u) ? '<a class="btn btn-primary" href="06-create-ticket.html">&#10133; New Ticket</a>' : '';
+    var actions = canCreate(u) ? '<a class="btn btn-primary" href="06-create-ticket.html' + (projectFilter ? '?project=' + encodeURIComponent(projectFilter) : '') + '">&#10133; New Ticket</a>' : '';
     window._facetState = {};
 
     var html = pageBar('Tickets / Queue', isClient(u) ? 'My Tickets' : 'Ticket Queue', actions) +
@@ -1067,18 +1150,25 @@
       var accessIds = userAccessibleProjectIds(u);
       userProjs = userProjs.filter(function (p) { return accessIds.indexOf(p.id) >= 0; });
     }
-    var projOpts = userProjs.map(function (p, i) {
-      return '<option value="' + p.id + '"' + (i === 0 ? ' selected' : '') + '>' + esc(p.projectName) + '</option>';
-    }).join('');
-    var defaultProjId = userProjs.length ? userProjs[0].id : null;
+    // Never guess the project: pre-fill only from explicit ?project= context
+    // (dashboard tile / filtered list) or when there is exactly one choice.
+    // With 2+ projects and no context, force an explicit pick.
+    var ctxProj = qs('project');
+    if (ctxProj && !userProjs.some(function (p) { return p.id === ctxProj; })) ctxProj = null;
+    var defaultProjId = ctxProj || (userProjs.length === 1 ? userProjs[0].id : null);
+    var projOpts = (defaultProjId ? '' : '<option value="" selected disabled>— Select a project —</option>') +
+      userProjs.map(function (p) {
+        return '<option value="' + p.id + '"' + (p.id === defaultProjId ? ' selected' : '') + '>' + esc(p.projectName) + '</option>';
+      }).join('');
 
-    // Categories filtered by project
-    var cats = DB.categories.filter(function (c) {
+    // Categories filtered by project; empty until a project is chosen
+    var cats = defaultProjId ? DB.categories.filter(function (c) {
       if (c.status !== 'Active') return false;
       if (c.projectId && c.projectId !== defaultProjId) return false;
       if (c.companyId && c.companyId !== u.companyId) return false;
       return true;
-    }).map(function (c) { return '<option value="' + c.id + '">' + esc(c.name) + '</option>'; }).join('');
+    }).map(function (c) { return '<option value="' + c.id + '">' + esc(c.name) + '</option>'; }).join('')
+      : '<option value="" selected disabled>— Select a project first —</option>';
 
     var sevs = (DB.severities || ['Critical', 'Major', 'Minor', 'Low']).map(function (s) {
       return '<option' + (s === 'Minor' ? ' selected' : '') + '>' + s + '</option>';
@@ -1096,12 +1186,13 @@
       return '<option value="' + a.id + '">' + esc(a.name) + (aTier ? ' [' + aTier + ']' : '') + ' \u00b7 ' + load + ' open</option>';
     }).join('');
     var dept = department(u.departmentId);
-    var projLabel = userProjs.length > 1 ? '' : ' style="display:none;"';
+    var bannerProj = defaultProjId ? ', project <b>' + esc(project(defaultProjId).projectName || '') + '</b>'
+      : (userProjs.length > 1 ? ' — <b>choose a project below</b>' : '');
     var modal = '<div class="modal lg"><div class="m-hd"><h2>Raise a Ticket</h2><span class="x" onclick="location.href=\'04-ticket-list.html\'">&#10005;</span></div>' +
-      '<div class="m-bd"><div class="tenant-banner" style="border-radius:4px;margin-bottom:16px;">&#128274; Filed under <b>' + esc(company(u.companyId).name) + '</b>' + (dept.name ? ' / <b>' + esc(dept.name) + '</b>' : '') + ' automatically.</div>' +
+      '<div class="m-bd"><div class="tenant-banner" style="border-radius:4px;margin-bottom:16px;">&#128274; Filed under <b>' + esc(company(u.companyId).name) + '</b>' + (dept.name ? ' / <b>' + esc(dept.name) + '</b>' : '') + '<span id="bannerProj">' + bannerProj + '</span>.</div>' +
       '<div class="form-grid cols-2">' +
         '<div class="field"><label>Project <span class="req">*</span></label><select id="createProject" onchange="sd.onCreateProjectChange()">' + projOpts + '</select>' +
-          '<span class="hint">Service engagement / project scope.</span></div>' +
+          '<span class="hint">Decides which support team, categories and SLA apply.</span></div>' +
         '<div class="field full"><label>Ticket Type <span class="req">*</span></label><select id="ticketType">' + typeOpts + '</select>' +
           '<span class="hint">Incident = something is broken. Service Request = a standard request.</span></div>' +
         '<div class="field full"><label>Subject <span class="req">*</span></label><input id="subject" placeholder="Short summary"></div>' +
@@ -1203,14 +1294,19 @@
       var tk = DB.tickets.filter(function (t) { return t.projectId === p.id; }).length;
       var agCount = (DB.agentProjects || []).filter(function (ap) { return ap.projectId === p.id; }).length;
       var statusClass = p.isActive ? 'tag-active' : 'tag-inactive';
+      var visBadge = (p.visibility || 'OPEN') === 'RESTRICTED'
+        ? '<span class="tag-inactive" title="Invitation-only (decision Q)">&#128274; Restricted</span>'
+        : '<span class="tag-active" title="Visible to the whole company">&#127758; Open</span>';
       return '<tr data-proj-company="' + esc(p.companyId) + '"><td><span class="ig-row-check"></span></td>' +
         '<td><b>' + esc(p.projectName) + '</b></td><td>' + esc(p.projectKey) + '</td><td>' + esc(c.name) + '</td>' +
         '<td class="muted" style="font-size:12px;">' + esc(p.description || '') + '</td>' +
+        '<td>' + visBadge + '</td>' +
         '<td><span class="' + statusClass + '">&#9679; ' + (p.isActive ? 'Active' : 'Inactive') + '</span></td>' +
-        '<td>' + tk + '</td><td>' + agCount + '</td>' +
-        '<td><button class="btn btn-sm" onclick="sd.showEditProject(\'' + p.id + '\')">&#9998; Edit</button></td></tr>';
+        '<td>' + tk + '</td><td>' + agCount + teamCoverageBadges(p.id) + '</td>' +
+        '<td><a class="btn btn-sm btn-primary" href="19-project-detail.html?id=' + p.id + '">&#9881; Manage</a> ' +
+        '<button class="btn btn-sm" onclick="sd.showEditProject(\'' + p.id + '\')">&#9998; Edit</button></td></tr>';
     }).join('');
-    if (!rows) rows = '<tr><td colspan="9" class="muted">No projects yet.</td></tr>';
+    if (!rows) rows = '<tr><td colspan="10" class="muted">No projects yet.</td></tr>';
     var html = pageBar('Administration / Projects', 'Projects', '') +
       '<div class="content"><div class="card" style="overflow:hidden;" id="ig-projects-wrap">' +
       '<div class="ig-toolbar">' +
@@ -1222,60 +1318,79 @@
           '<span class="ir-count" id="projects-row-count">' + allProjects.length + ' rows</span>' +
         '</div>' +
       '</div>' +
-      '<table class="t ig-table" id="ig-projects"><thead><tr><th style="width:30px;"></th><th class="sortable">Project Name</th><th class="sortable">Key</th><th class="sortable">Company</th><th>Description</th><th class="sortable">Status</th><th class="sortable">Tickets</th><th class="sortable">Agents</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Decision O \u2014 PROJECTS layer between COMPANIES and TICKETS. Each company has one or more service-engagement projects.</p></div>';
+      '<table class="t ig-table" id="ig-projects"><thead><tr><th style="width:30px;"></th><th class="sortable">Project Name</th><th class="sortable">Key</th><th class="sortable">Company</th><th>Description</th><th class="sortable">Visibility</th><th class="sortable">Status</th><th class="sortable">Tickets</th><th class="sortable">Agents</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Decision O \u2014 PROJECTS layer between COMPANIES and TICKETS. Decision Q \u2014 visibility: Open (whole company) vs Restricted (invitation-only). Manage opens the Project Detail hub (team, SLA, categories, invitations).</p></div>';
     renderShell(u, 'projects', html, tenantBanner(u));
   }
 
-  /* ---------- page: USER-PROJECTS (Page 18) ---------- */
+  /* ---------- page: PROJECT INVITATIONS (Page 18) ----------
+     Decision Q: USER_PROJECTS is an invitation list. Open projects need no setup;
+     Restricted projects are invisible except to invited users. */
   function renderUserProjects(u) {
     if (!isClientAdmin(u)) { renderShell(u, 'home', notFound('Client Admin only.'), ''); return; }
     var cProjs = companyProjects(u.companyId);
-    var companyUsers = DB.users.filter(function (x) { return x.companyId === u.companyId && x.role === 'Client User' && x.status === 'Active'; });
-    var currentMappings = (DB.userProjects || []).filter(function (up) { return companyUsers.some(function (cu) { return cu.id === up.userId; }); });
 
     var projRows = cProjs.map(function (p) {
-      var mapped = currentMappings.filter(function (m) { return m.projectId === p.id; });
-      var accessHtml;
-      if (mapped.length === 0) {
-        accessHtml = '<span class="muted">All users (open default)</span>';
+      var isRestricted = (p.visibility || 'OPEN') === 'RESTRICTED';
+      var visBadge = isRestricted
+        ? '<span class="tag-inactive">&#128274; Restricted</span>'
+        : '<span class="tag-active">&#127758; Open</span>';
+      var accessHtml, actionHtml;
+      if (!isRestricted) {
+        accessHtml = '<span class="muted">Everyone at ' + esc(company(u.companyId).name) + ' \u2014 no setup needed</span>';
+        actionHtml = '<span class="muted" style="font-size:11px;">\u2014</span>';
       } else {
-        accessHtml = mapped.map(function (m) {
+        var invitedRows = (DB.userProjects || []).filter(function (m) { return m.projectId === p.id; });
+        accessHtml = invitedRows.map(function (m) {
           var usr = user(m.userId);
           return '<span class="cover-tag">' + esc(usr ? usr.name : m.userId) +
-            ' <span style="cursor:pointer;color:#b91c1c;" onclick="sd.removeUserProject(\'' + m.userId + '\',\'' + p.id + '\')">&times;</span></span>';
+            ' <span style="cursor:pointer;color:#b91c1c;" title="Revoke invitation" onclick="sd.removeUserProject(\'' + m.userId + '\',\'' + p.id + '\')">&times;</span></span>';
         }).join(' ');
+        if (!accessHtml) accessHtml = '<span class="muted">Nobody invited \u2014 invisible to all users</span>';
+        actionHtml = '<button class="btn btn-sm btn-primary" onclick="sd.showAddUserProject(\'' + p.id + '\')">&#9993;&#65039; Invite User</button>';
       }
-      return '<tr><td><b>' + esc(p.projectName) + '</b></td><td>' + esc(p.projectKey) + '</td><td>' + accessHtml + '</td>' +
-        '<td><button class="btn btn-sm" onclick="sd.showAddUserProject(\'' + p.id + '\')">&#10133; Add User</button></td></tr>';
+      return '<tr><td><b>' + esc(p.projectName) + '</b></td><td>' + esc(p.projectKey) + '</td><td>' + visBadge + '</td><td>' + accessHtml + '</td>' +
+        '<td>' + actionHtml + '</td></tr>';
     }).join('');
-    if (!projRows) projRows = '<tr><td colspan="4" class="muted">No active projects for your company.</td></tr>';
+    if (!projRows) projRows = '<tr><td colspan="5" class="muted">No active projects for your company.</td></tr>';
 
-    var html = pageBar('Administration / User Access', 'User-Project Access', '') +
+    var html = pageBar('Administration / Project Invitations', 'Project Invitations', '') +
       '<div class="content">' +
       '<div class="card" style="margin-bottom:16px;"><div class="card-bd">' +
-      '<p style="margin:0;font-size:13px;"><b>Open default:</b> If no users are explicitly listed for a project, <i>all</i> client users in your company can see that project\u2019s tickets. ' +
-      'Add specific users below to restrict access to only those users. Managed by Client Admin (Decision N revised).</p></div></div>' +
+      '<p style="margin:0;font-size:13px;"><b>Decision Q:</b> <b>Open</b> projects are visible to everyone in your company automatically. ' +
+      '<b>Restricted</b> projects (apps in testing, sensitive systems) are invisible except to users you <b>invite</b> below. ' +
+      'When a restricted project goes live, ask the service provider to flip it to Open \u2014 no per-user cleanup needed.</p></div></div>' +
       '<div class="card" style="overflow:hidden;">' +
       '<div class="card-hd">Projects &mdash; ' + esc(company(u.companyId).name) + '</div>' +
-      '<table class="t"><thead><tr><th>Project</th><th>Key</th><th>Users with Access</th><th>Actions</th></tr></thead><tbody>' + projRows + '</tbody></table></div>' +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 18 \u2014 USER_PROJECTS management. Client Admin scopes which client users can see which projects.</p></div>';
+      '<table class="t"><thead><tr><th>Project</th><th>Key</th><th>Visibility</th><th>Who can see it</th><th>Actions</th></tr></thead><tbody>' + projRows + '</tbody></table></div>' +
+      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 18 \u2014 USER_PROJECTS as an invitation list (decision Q). Client Admin invites users into Restricted projects; rows grant (never restrict) access.</p></div>';
     renderShell(u, 'user-projects', html, tenantBanner(u));
   }
 
   function renderUsers(u) {
     if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
+    var ROLE_LABELS = { SYSTEM_ADMIN: 'System Admin', SUPPORT_AGENT: 'Support Agent', CLIENT_ADMIN: 'Client Admin', CLIENT_USER: 'Client User' };
     var rows = DB.users.map(function (x) {
       var dept = department(x.departmentId);
       var statusClass = (x.status || 'Active') === 'Active' ? 'tag-active' : 'tag-inactive';
       var lastLoginStr = x.lastLogin ? new Date(x.lastLogin).toLocaleDateString() : '<span class="muted">Never</span>';
       var tierCell = x.tier ? x.tier : '<span class="muted">\u2014</span>';
-      return '<tr><td><span class="ig-row-check"></span></td><td><b>' + esc(x.name) + '</b></td><td>' + esc(x.email) + '</td><td><span class="role-pill">' + esc(x.role) + '</span></td>' +
+      // Decision P: role chips \u2014 all roles held, landing role first/bold.
+      // Decision Q: provider users always include CLIENT_USER (auto-granted).
+      var held = (DB.userRoles || []).filter(function (r) { return r.userId === x.id; })
+        .map(function (r) { return ROLE_LABELS[r.role] || r.role; });
+      if (!held.length) held = [x.role];
+      var roleChips = '<span class="role-pill">' + esc(x.role) + '</span>' +
+        held.filter(function (r) { return r !== x.role; }).map(function (r) {
+          return ' <span class="role-pill" style="opacity:.65;" title="Also holds this role (decision P) \u2014 switchable in the nav bar">' + esc(r) + '</span>';
+        }).join('');
+      return '<tr><td><span class="ig-row-check"></span></td><td><b>' + esc(x.name) + '</b></td><td>' + esc(x.email) + '</td><td>' + roleChips + '</td>' +
         '<td>' + esc(company(x.companyId).name) + '</td><td>' + tierCell + '</td>' +
         '<td>' + (dept.name ? esc(dept.name) : '<span class="muted">\u2014</span>') + '</td>' +
         '<td><span class="' + statusClass + '">&#9679; ' + (x.status || 'Active') + '</span></td>' +
         '<td>' + lastLoginStr + '</td>' +
-        '<td><button class="btn btn-sm" onclick="sd.showEditUser(\'' + x.id + '\')">&#9998; Edit</button></td></tr>';
+        '<td><button class="btn btn-sm" onclick="sd.showEditUser(\'' + x.id + '\')">&#9998; Edit</button> ' +
+        '<button class="btn btn-sm" onclick="sd.resetPassword(\'' + x.id + '\')" title="Reset the APEX account password">&#128273; Reset</button></td></tr>';
     }).join('');
     var allCompanies = DB.companies.filter(function(c) { return c.status === 'Active'; });
     var userCompanySelect = '<select id="users-company-filter" class="ig-filter-select" onchange="sd.filterUsersByCompany(this.value)">' +
@@ -1297,7 +1412,7 @@
         '</div>' +
       '</div>' +
       '<table class="t ig-table" id="ig-users"><thead><tr><th style="width:30px;"></th><th class="sortable">Name</th><th class="sortable">Email</th><th class="sortable">Role</th><th class="sortable">Company</th><th class="sortable">Tier</th><th class="sortable">Dept</th><th class="sortable">Status</th><th class="sortable">Last Login</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 10 \u2014 APEX Interactive Grid. FR-6: create/edit/deactivate users. ISO \u00a76.6: access lifecycle.</p></div>';
+      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 10 \u2014 APEX Interactive Grid. FR-6: create/edit/deactivate users (never delete \u2014 history keeps its authors) + password reset. Role chips = all roles held (decision P); provider users always include Client User (decision Q auto-grant). ISO \u00a76.6: access lifecycle.</p></div>';
     renderShell(u, 'users', html, tenantBanner(u));
   }
   function renderCategories(u) {
@@ -1390,32 +1505,51 @@
     renderShell(u, 'sla', html, tenantBanner(u));
   }
 
-  /* ---------- page: AGENT-PROJECT MAPPING (Page 14) ---------- */
+  /* ---------- page: AGENT-PROJECT MAPPING (Page 14) ----------
+     Reshaped (admin-console spec 2026-07-03): grouped-by-project team cards with
+     agent chips \u2014 makes the L1 gate and tier coverage visible per project.
+     Same AGENT_PROJECTS table as the Project Detail "Support Team" tab (two doors). */
   function renderAgentProjects(u) {
     if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
-    var mappings = (DB.agentProjects || []);
-    var rows = mappings.map(function (m, idx) {
-      var a = user(m.userId);
-      var p = project(m.projectId);
-      var c = company(p.companyId || '');
-      if (!a) return '';
-      var aTier = agentTier(m.userId);
-      return '<tr><td><span class="ig-row-check"></span></td><td><b>' + esc(a.name) + '</b></td><td>' + esc(a.email) + '</td><td>' + (aTier || '<span class="muted">&mdash;</span>') + '</td><td>' + esc(p.projectName || m.projectId) + '</td><td>' + esc(c.name || '\u2014') + '</td>' +
-        '<td><button class="btn btn-sm" style="color:#b91c1c;" onclick="sd.removeAgentProject(' + idx + ')">&#10005; Remove</button></td></tr>';
+    var activeProjects = (DB.projects || []).filter(function (p) { return p.isActive; });
+
+    var companySelect = '<select id="ap-company-filter" class="ig-filter-select" onchange="sd.filterAgentMapByCompany(this.value)">' +
+      '<option value="all">All Companies</option>' +
+      DB.companies.filter(function (c) { return c.status === 'Active'; }).map(function (c) {
+        return '<option value="' + c.id + '">' + esc(c.name) + '</option>';
+      }).join('') + '</select>';
+
+    var cards = activeProjects.map(function (p) {
+      var c = company(p.companyId);
+      var team = projectTeam(p.id);
+      var chips = team.map(function (a) {
+        var openN = agentOpenCountInProject(a.id, p.id);
+        return '<span class="cover-tag" title="' + esc(a.email) + ' \u2014 ' + openN + ' open ticket' + (openN === 1 ? '' : 's') + ' here">' +
+          esc(a.name) + ' <b>(' + (a.tier || '\u2014') + ')</b>' +
+          ' <span style="cursor:pointer;color:#b91c1c;" onclick="sd.removeTeamAgent(\'' + p.id + '\',\'' + a.id + '\')" title="Remove from project">&times;</span></span>';
+      }).join(' ');
+      if (!chips) chips = '<span class="muted">No agents mapped</span>';
+      return '<div class="card" data-ap-company="' + esc(p.companyId) + '" style="margin-bottom:12px;overflow:hidden;">' +
+        '<div class="card-hd"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' +
+        esc(p.projectName) + ' <span class="muted" style="font-size:12px;font-weight:400;">' + esc(c.name || '') + ' &middot; ' + esc(p.projectKey) + '</span>' +
+        teamCoverageBadges(p.id) + '</span>' +
+        '<span style="float:right;display:flex;gap:8px;align-items:center;">' +
+        '<button class="btn btn-sm btn-primary" onclick="sd.showAddTeamAgent(\'' + p.id + '\')">+ Add Agent</button>' +
+        '<a class="btn btn-sm" href="19-project-detail.html?id=' + p.id + '">&#9881; Manage</a></span></div>' +
+        '<div class="card-bd" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">' + chips + '</div>' +
+        '</div>';
     }).join('');
-    if (!rows) rows = '<tr><td colspan="7" class="muted">No agent-project mappings yet.</td></tr>';
+    if (!cards) cards = '<p class="muted">No active projects.</p>';
+
     var html = pageBar('Administration / Agent Mapping', 'Agent-Project Mapping', '') +
-      '<div class="content"><div class="card" style="overflow:hidden;" id="ig-ac-wrap">' +
-      '<div class="ig-toolbar">' +
-        '<button class="ir-btn primary" onclick="sd.showAddAgentProject()">+ Add Row</button>' +
-        '<div class="ir-search">&#128270; <input placeholder="Search\u2026" oninput="sd.igSearch(\'ig-ac\')"></div>' +
-        '<div class="ir-actions" style="margin-left:auto;">' +
-          '<button class="ir-btn">Actions &#9662;</button>' +
-          '<span class="ir-count">' + mappings.length + ' rows</span>' +
-        '</div>' +
-      '</div>' +
-      '<table class="t ig-table" id="ig-ac"><thead><tr><th style="width:30px;"></th><th class="sortable">Agent</th><th class="sortable">Email</th><th class="sortable">Tier</th><th class="sortable">Project</th><th class="sortable">Company</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 14 &mdash; APEX Interactive Grid. Maps support agents to projects they cover (Decision O).</p></div>';
+      '<div class="content">' +
+      '<div class="card" style="margin-bottom:16px;"><div class="card-bd">' +
+      '<p style="margin:0;font-size:13px;"><b>Who covers what</b> \u2014 one card per project (Flows 3/4). ' +
+      'An active project must keep <b>&ge;1 L1</b> (clients assign L1 only, FR-10); no L2+ means auto-escalation dead-ends (FR-35). ' +
+      'Removing an agent is blocked while they hold open tickets in that project.</p></div></div>' +
+      '<div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;"><label style="font-weight:600;font-size:13px;white-space:nowrap;">Filter by Company:</label>' + companySelect + '</div>' +
+      '<div id="ap-cards">' + cards + '</div>' +
+      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 14 &mdash; AGENT_PROJECTS grouped by project (admin-console spec). Same table as the Project Detail Support Team tab &mdash; two doors, one truth.</p></div>';
     renderShell(u, 'agent-projects', html, tenantBanner(u));
   }
 
@@ -1456,8 +1590,10 @@
   function renderCompanyDetail(u) {
     if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
     var cid = qs('id');
-    var c = cid ? DB.companies.find(function (x) { return x.id === cid; }) : null;
-    if (!c || c.status !== 'Active') { renderShell(u, 'companies', notFound('Company not found or not active.'), ''); return; }
+    if (!cid) { renderShell(u, 'companies', notFound('No company id in the URL — this page expects 17-company-detail.html?id=Cn. Open it via a Manage button on the Companies page.'), ''); return; }
+    var c = DB.companies.find(function (x) { return x.id === cid; });
+    if (!c) { renderShell(u, 'companies', notFound('Company "' + esc(cid) + '" is not in your demo data (stale localStorage?). Click "Reset demo" in the header and try again.'), ''); return; }
+    if (c.status !== 'Active') { renderShell(u, 'companies', notFound('Company "' + esc(c.name) + '" is inactive — reactivate it from the Companies page to manage it.'), ''); return; }
 
     var activeTab = window._companyDetailTab || 'projects';
 
@@ -1616,6 +1752,156 @@
     renderShell(u, 'companies', html, tenantBanner(u));
   }
 
+  /* ---------- page: PROJECT DETAIL HUB (Page 19) ----------
+     Admin-console spec (2026-07-03): flat pages browse, this hub configures.
+     Tabs: Details | Support Team | SLA Targets | Categories | Invitations (Restricted only) */
+  function userHoldsRole(uid, role) {
+    return (DB.userRoles || []).some(function (r) { return r.userId === uid && r.role === role; });
+  }
+  function renderProjectDetail(u) {
+    if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
+    var pid = qs('id');
+    if (!pid) { renderShell(u, 'projects', notFound('No project id in the URL — this page expects 19-project-detail.html?id=Pn. Open it via a Manage button on the Projects page.'), ''); return; }
+    var p = (DB.projects || []).find(function (x) { return x.id === pid; });
+    if (!p) { renderShell(u, 'projects', notFound('Project "' + esc(pid) + '" is not in your demo data (stale localStorage?). Click "Reset demo" in the header and try again.'), ''); return; }
+    var c = company(p.companyId);
+    var isRestricted = (p.visibility || 'OPEN') === 'RESTRICTED';
+    var activeTab = window._projectDetailTab || 'details';
+    if (activeTab === 'invites' && !isRestricted) activeTab = 'details';
+
+    // --- Stats ---
+    var projTickets = DB.tickets.filter(function (t) { return t.projectId === pid; });
+    var openCount = projTickets.filter(function (t) { return t.status !== 'Closed' && t.status !== 'Resolved'; }).length;
+    var breachedCount = projTickets.filter(function (t) { return slaStatus(t) === 'breached'; }).length;
+    var team = projectTeam(pid);
+    var invited = (DB.userProjects || []).filter(function (r) { return r.projectId === pid; });
+
+    // --- Header ---
+    var visBadge = isRestricted
+      ? '<span class="tag-inactive">&#128274; Restricted</span>'
+      : '<span class="tag-active">&#127758; Open</span>';
+    var statusClass = p.isActive ? 'tag-active' : 'tag-inactive';
+    var header = '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">' +
+      '<div><span style="font-size:13px;color:#666;">' + esc(c.name || '') + ' / Project</span>' +
+      '<h2 style="margin:0;">' + esc(p.projectName) + ' <span class="muted" style="font-size:13px;font-weight:400;">' + esc(p.projectKey) + '</span> ' +
+      visBadge + ' <span class="' + statusClass + '" style="font-size:13px;">&#9679; ' + (p.isActive ? 'Active' : 'Inactive') + '</span></h2></div>' +
+      '<div style="margin-left:auto;display:flex;gap:16px;flex-wrap:wrap;">' +
+      '<div class="stat-card" style="text-align:center;padding:8px 16px;"><div class="stat-val">' + openCount + '</div><div class="stat-lbl">Open Tickets</div></div>' +
+      (breachedCount ? '<div class="stat-card" style="text-align:center;padding:8px 16px;border-color:#fecaca;"><div class="stat-val" style="color:#b91c1c;">' + breachedCount + '</div><div class="stat-lbl">SLA Breached</div></div>' : '') +
+      '<div class="stat-card" style="text-align:center;padding:8px 16px;"><div class="stat-val">' + team.length + '</div><div class="stat-lbl">Team Agents</div></div>' +
+      (isRestricted ? '<div class="stat-card" style="text-align:center;padding:8px 16px;"><div class="stat-val">' + invited.length + '</div><div class="stat-lbl">Invited Users</div></div>' : '') +
+      '</div></div>';
+
+    // --- Tabs ---
+    var tabs = '<div class="cd-tabs" style="display:flex;gap:0;border-bottom:2px solid var(--c-border-lt);margin:16px 0 0 0;">' +
+      '<button class="cd-tab' + (activeTab === 'details' ? ' cd-tab-active' : '') + '" data-tab="details" onclick="sd.projectTab(\'details\')">&#128196; Details</button>' +
+      '<button class="cd-tab' + (activeTab === 'team' ? ' cd-tab-active' : '') + '" data-tab="team" onclick="sd.projectTab(\'team\')">&#128101; Support Team</button>' +
+      '<button class="cd-tab' + (activeTab === 'sla' ? ' cd-tab-active' : '') + '" data-tab="sla" onclick="sd.projectTab(\'sla\')">&#9202; SLA Targets</button>' +
+      '<button class="cd-tab' + (activeTab === 'cats' ? ' cd-tab-active' : '') + '" data-tab="cats" onclick="sd.projectTab(\'cats\')">&#127991;&#65039; Categories</button>' +
+      (isRestricted ? '<button class="cd-tab' + (activeTab === 'invites' ? ' cd-tab-active' : '') + '" data-tab="invites" onclick="sd.projectTab(\'invites\')">&#9993;&#65039; Invitations</button>' : '') +
+      '</div>';
+
+    // --- Details tab ---
+    var detailsPanel = '<div class="cd-panel" data-panel="details"' + (activeTab !== 'details' ? ' style="display:none;"' : '') + '>' +
+      '<div class="card"><div class="card-hd"><span>Project Details</span>' +
+      '<button class="btn btn-sm" style="float:right;margin:-4px 0;" onclick="sd.showEditProject(\'' + pid + '\')">&#9998; Edit</button></div>' +
+      '<div class="card-bd"><div class="form-grid cols-2">' +
+      '<div class="field"><label>Project Name</label><input value="' + esc(p.projectName) + '" disabled></div>' +
+      '<div class="field"><label>Key</label><input value="' + esc(p.projectKey) + '" disabled></div>' +
+      '<div class="field"><label>Company</label><input value="' + esc(c.name || '') + '" disabled></div>' +
+      '<div class="field"><label>Created</label><input value="' + esc((p.createdAt || '').slice(0, 10)) + '" disabled></div>' +
+      '<div class="field" style="grid-column:span 2;"><label>Description</label><input value="' + esc(p.description || '') + '" disabled></div>' +
+      '</div>' +
+      (isRestricted
+        ? '<p class="muted" style="font-size:12px;">&#128274; <b>Restricted</b> (decision Q): invisible to the company except invited users (Invitations tab). Flip to Open at go-live via Edit.'
+        : '<p class="muted" style="font-size:12px;">&#127758; <b>Open</b> (decision Q): every ' + esc(c.name || '') + ' user sees this project and can raise tickets in it.') +
+      '</p></div></div></div>';
+
+    // --- Support Team tab ---
+    var teamRows = team.map(function (a) {
+      var openN = agentOpenCountInProject(a.id, pid);
+      var totalProjects = (DB.agentProjects || []).filter(function (ap) { return ap.userId === a.id; }).length;
+      var stCls = (a.status || 'Active') === 'Active' ? 'tag-active' : 'tag-inactive';
+      return '<tr><td><span class="avatar-sm">' + initials(a.name) + '</span> <b>' + esc(a.name) + '</b></td>' +
+        '<td>' + (a.tier || '<span class="muted">—</span>') + '</td>' +
+        '<td><span class="' + stCls + '">&#9679; ' + (a.status || 'Active') + '</span></td>' +
+        '<td>' + openN + '</td><td>' + totalProjects + '</td>' +
+        '<td><button class="btn btn-sm" style="color:#b91c1c;" onclick="sd.removeTeamAgent(\'' + pid + '\',\'' + a.id + '\')">&#10005; Remove</button></td></tr>';
+    }).join('');
+    if (!teamRows) teamRows = '<tr><td colspan="6" class="muted">No agents mapped — this project is in a broken state (FR-10).</td></tr>';
+    var teamPanel = '<div class="cd-panel" data-panel="team"' + (activeTab !== 'team' ? ' style="display:none;"' : '') + '>' +
+      '<div class="card" style="overflow:hidden;">' +
+      '<div class="card-hd"><span>Support Team' + teamCoverageBadges(pid) + '</span>' +
+      '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddTeamAgent(\'' + pid + '\')">+ Add Agent</button></div>' +
+      '<table class="t"><thead><tr><th>Agent</th><th>Tier</th><th>Status</th><th>Open here</th><th>Projects covered</th><th>Actions</th></tr></thead><tbody>' + teamRows + '</tbody></table>' +
+      '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Flow 3/4 gates: an active project keeps &ge;1 L1 (clients assign L1 only, FR-10); removal is blocked while an agent holds open tickets here.</p>' +
+      '</div></div>';
+
+    // --- SLA tab ---
+    var slaRows = (DB.slaTargets || []).filter(function (s) { return s.projectId === pid; }).map(function (s) {
+      var globalIdx = (DB.slaTargets || []).indexOf(s);
+      return '<tr><td>' + sevBadge(s.severity) + '</td><td>' + s.responseHours + 'h</td><td>' + s.resolutionDays + 'd</td><td>' + (s.escalationPct || 80) + '%</td>' +
+        '<td><button class="btn btn-sm" onclick="sd.showEditSla(' + globalIdx + ')">&#9998; Edit</button></td></tr>';
+    }).join('');
+    if (!slaRows) slaRows = '<tr><td colspan="5" class="muted">No SLA targets configured — defaults apply.</td></tr>';
+    var slaPanel = '<div class="cd-panel" data-panel="sla"' + (activeTab !== 'sla' ? ' style="display:none;"' : '') + '>' +
+      '<div class="card" style="overflow:hidden;"><div class="card-hd">SLA Targets per Severity (FR-23 — seeded at creation, tune here)</div>' +
+      '<table class="t"><thead><tr><th>Severity</th><th>Response Time</th><th>Resolution Time</th><th>Escalation %</th><th>Actions</th></tr></thead><tbody>' + slaRows + '</tbody></table>' +
+      '</div></div>';
+
+    // --- Categories tab ---
+    var ownCats = DB.categories.filter(function (x) { return x.projectId === pid; });
+    var inheritedCats = DB.categories.filter(function (x) {
+      return !x.projectId && (x.companyId === null || x.companyId === p.companyId) && (x.status || 'Active') === 'Active';
+    });
+    var catRows = ownCats.map(function (x) {
+      var stCls = (x.status || 'Active') === 'Active' ? 'tag-active' : 'tag-inactive';
+      return '<tr><td><b>' + esc(x.name) + '</b></td><td>Project-specific</td><td class="muted" style="font-size:12px;">' + esc(x.description || '') + '</td>' +
+        '<td><span class="' + stCls + '">&#9679; ' + (x.status || 'Active') + '</span></td>' +
+        '<td><button class="btn btn-sm" onclick="sd.showEditCategory(\'' + x.id + '\')">&#9998; Edit</button></td></tr>';
+    }).join('');
+    catRows += inheritedCats.map(function (x) {
+      return '<tr><td>' + esc(x.name) + '</td><td><span class="muted">' + (x.companyId ? 'Company-wide' : 'Global') + ' (inherited)</span></td>' +
+        '<td class="muted" style="font-size:12px;">' + esc(x.description || '') + '</td>' +
+        '<td><span class="tag-active">&#9679; Active</span></td><td><span class="muted" style="font-size:11px;">managed on Categories page</span></td></tr>';
+    }).join('');
+    if (!catRows) catRows = '<tr><td colspan="5" class="muted">No categories apply to this project.</td></tr>';
+    var catsPanel = '<div class="cd-panel" data-panel="cats"' + (activeTab !== 'cats' ? ' style="display:none;"' : '') + '>' +
+      '<div class="card" style="overflow:hidden;">' +
+      '<div class="card-hd"><span>Categories (hybrid model — two doors, one table)</span>' +
+      '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddCategoryPD(\'' + pid + '\')">+ Add Project Category</button></div>' +
+      '<table class="t"><thead><tr><th>Category</th><th>Scope</th><th>Description</th><th>Status</th><th>Actions</th></tr></thead><tbody>' + catRows + '</tbody></table>' +
+      '</div></div>';
+
+    // --- Invitations tab (Restricted only) ---
+    var invitesPanel = '';
+    if (isRestricted) {
+      var invRows = invited.map(function (r) {
+        var x = user(r.userId);
+        if (!x) return '';
+        var dept = department(x.departmentId);
+        return '<tr><td><span class="avatar-sm">' + initials(x.name) + '</span> <b>' + esc(x.name) + '</b></td><td>' + esc(x.email) + '</td>' +
+          '<td>' + (dept.name ? esc(dept.name) : '<span class="muted">—</span>') + '</td>' +
+          '<td><button class="btn btn-sm" style="color:#b91c1c;" onclick="sd.revokeInvitePD(\'' + pid + '\',\'' + x.id + '\')">&#10005; Revoke</button></td></tr>';
+      }).join('');
+      if (!invRows) invRows = '<tr><td colspan="4" class="muted">Nobody invited yet — this project is invisible to all ' + esc(c.name || '') + ' users.</td></tr>';
+      invitesPanel = '<div class="cd-panel" data-panel="invites"' + (activeTab !== 'invites' ? ' style="display:none;"' : '') + '>' +
+        '<div class="card" style="overflow:hidden;">' +
+        '<div class="card-hd"><span>Invited Users (USER_PROJECTS — decision Q invitation list)</span>' +
+        '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showInvitePD(\'' + pid + '\')">+ Invite User</button></div>' +
+        '<table class="t"><thead><tr><th>User</th><th>Email</th><th>Department</th><th>Actions</th></tr></thead><tbody>' + invRows + '</tbody></table>' +
+        '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Only invited users see this Restricted project. Flip the project to Open (Details &rarr; Edit) at go-live — no per-user cleanup needed.</p>' +
+        '</div></div>';
+    }
+
+    var html = pageBar('Administration / Projects / ' + esc(p.projectName), p.projectName, '<a class="btn btn-sm" href="11-projects.html">&larr; Back to Projects</a>') +
+      '<div class="content">' +
+      '<div class="card" style="overflow:hidden;padding:16px;">' + header + '</div>' +
+      tabs + detailsPanel + teamPanel + slaPanel + catsPanel + invitesPanel +
+      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 19 &mdash; Project-centric admin hub (admin-console spec 2026-07-03). Flat pages browse; this hub configures: team (Flows 3/4), SLA (FR-23), categories (hybrid), invitations (decision Q).</p></div>';
+    renderShell(u, 'projects', html, tenantBanner(u));
+  }
+
   /* ---------- page: AUDIT LOG (Page 16) ---------- */
   function renderAuditLog(u) {
     if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
@@ -1748,16 +2034,20 @@
       var projSel = document.getElementById('createProject');
       var projId = projSel ? projSel.value : null;
       var u = currentUser();
+      // Keep the "Filed under" banner in sync with the chosen project
+      var bp = document.getElementById('bannerProj');
+      if (bp) bp.innerHTML = projId ? ', project <b>' + esc(project(projId).projectName || '') + '</b>' : ' — <b>choose a project below</b>';
       // Refresh category LOV
       var catSel = document.getElementById('cat');
       if (catSel) {
-        var cats = DB.categories.filter(function (c) {
+        var cats = projId ? DB.categories.filter(function (c) {
           if (c.status !== 'Active') return false;
           if (c.projectId && c.projectId !== projId) return false;
           if (c.companyId && c.companyId !== u.companyId) return false;
           return true;
-        });
-        catSel.innerHTML = cats.map(function (c) { return '<option value="' + c.id + '">' + esc(c.name) + '</option>'; }).join('');
+        }).map(function (c) { return '<option value="' + c.id + '">' + esc(c.name) + '</option>'; }).join('')
+          : '<option value="" selected disabled>— Select a project first —</option>';
+        catSel.innerHTML = cats;
       }
       // Refresh agent LOV
       var agentSel = document.getElementById('createAgent');
@@ -1772,17 +2062,29 @@
         }).join('');
       }
     },
+    // Decision P: switch active role without re-login (re-stamps the session, like APP_ROLE)
+    switchRole: function (role) {
+      var s = getSession(); if (!s) return;
+      var u = DB.users.find(function (x) { return x.id === s.userId; });
+      if (!u) return;
+      if (role === u.role) { delete s.activeRole; } else { s.activeRole = role; }
+      localStorage.setItem(LS_SESSION, JSON.stringify(s));
+      location.href = landingFor(currentUser());
+    },
     logout: function () { localStorage.removeItem(LS_SESSION); location.href = '01-login.html'; },
     reset: function () { if (confirm('Reset all demo data and sign out?')) { localStorage.removeItem(LS_DATA); localStorage.removeItem(LS_SESSION); location.href = '01-login.html'; } },
 
     createTicket: function () {
       var u = currentUser();
+      var projectId = document.getElementById('createProject').value;
+      if (!projectId) { alert('Select a project first — it decides which support team and SLA apply to this ticket.'); return; }
       var subject = document.getElementById('subject').value.trim();
       var desc = document.getElementById('desc').value.trim();
       if (!subject || !desc) { alert('Subject and description are required.'); return; }
+      var categoryId = document.getElementById('cat').value;
+      if (!categoryId) { alert('Select a category.'); return; }
       var severity = document.getElementById('sev').value;
       var ticketType = document.getElementById('ticketType').value;
-      var projectId = document.getElementById('createProject').value;
       var sla = slaTarget(projectId, severity);
       var slaDue = null;
       if (sla) {
@@ -1794,7 +2096,7 @@
       var r = nextRef();
       var initStatus = agentId ? 'Assigned' : 'New';
       var t = { id: 't' + r.n, ref: r.ref, companyId: u.companyId, projectId: projectId, departmentId: u.departmentId, subject: subject, description: desc,
-        categoryId: document.getElementById('cat').value, severity: severity, priority: null,
+        categoryId: categoryId, severity: severity, priority: null,
         status: initStatus, ticketType: ticketType, createdBy: u.id, assignedTo: agentId,
         createdAt: nowIso(), updatedAt: nowIso(), resolvedAt: null, closedAt: null,
         slaDueDate: slaDue, csatScore: null, firstResponseAt: null,
@@ -1807,7 +2109,7 @@
       });
       pendingFiles = [];
       save();
-      sessionStorage.setItem('flash', '&#9989; Ticket ' + r.ref + ' created. &#128231; Auto-acknowledgement email sent (simulated).');
+      sessionStorage.setItem('flash', '&#9989; Ticket ' + r.ref + ' created in <b>' + esc(project(projectId).projectName || '') + '</b>. &#128231; Auto-acknowledgement email sent (simulated).');
       location.href = '05-ticket-detail.html?id=' + t.id;
     },
 
@@ -2146,6 +2448,7 @@
         '<div class="field"><label>Project Key <span class="req">*</span></label><input id="projKey" placeholder="e.g. ITSUP" maxlength="10" style="text-transform:uppercase;"></div>' +
         '<div class="field"><label>Company <span class="req">*</span></label><select id="projCompany">' + companies + '</select></div>' +
         '<div class="field"><label>Description</label><input id="projDesc" placeholder="Brief description\u2026"></div>' +
+        '<div class="field"><label>Visibility</label><select id="projVisibility"><option value="OPEN" selected>Open \u2014 whole company sees it</option><option value="RESTRICTED">Restricted \u2014 invitation-only</option></select><span class="hint">Restricted = for pilots/sensitive apps; invite users from the Project Detail page (decision Q)</span></div>' +
         '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
         '<button class="btn btn-primary" onclick="sd.doAddProject()">&#10133; Create Project</button></div></div>';
       var wrap = document.createElement('div');
@@ -2159,6 +2462,7 @@
         '<div class="field"><label>Project Name <span class="req">*</span></label><input id="projName" placeholder="e.g. ERP Systems"></div>' +
         '<div class="field"><label>Project Key <span class="req">*</span></label><input id="projKey" placeholder="e.g. ERP" maxlength="10" style="text-transform:uppercase;"></div>' +
         '<div class="field"><label>Description</label><input id="projDesc" placeholder="Brief description\u2026"></div>' +
+        '<div class="field"><label>Visibility</label><select id="projVisibility"><option value="OPEN" selected>Open \u2014 whole company sees it</option><option value="RESTRICTED">Restricted \u2014 invitation-only</option></select></div>' +
         '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
         '<button class="btn btn-primary" onclick="sd.doAddProject(\'' + companyId + '\')">&#10133; Create Project</button></div></div>';
       var wrap = document.createElement('div');
@@ -2172,8 +2476,10 @@
       if (!name || !key) { alert('Project name and key are required.'); return; }
       var companyId = fixedCompanyId || document.getElementById('projCompany').value;
       var desc = document.getElementById('projDesc').value.trim();
+      var visEl = document.getElementById('projVisibility');
+      var visibility = visEl ? visEl.value : 'OPEN';
       var id = 'P' + Date.now();
-      DB.projects.push({ id: id, companyId: companyId, projectName: name, projectKey: key, description: desc, isActive: true, createdAt: nowIso() });
+      DB.projects.push({ id: id, companyId: companyId, projectName: name, projectKey: key, description: desc, visibility: visibility, isActive: true, createdAt: nowIso() });
       // Create default SLA targets for the new project
       (DB.severities || ['Critical','Major','Minor','Low']).forEach(function(sev) {
         var defaults = { 'Critical': {r:1,d:1}, 'Major': {r:4,d:3}, 'Minor': {r:8,d:7}, 'Low': {r:24,d:14} };
@@ -2196,15 +2502,13 @@
     showEditProject: function(projId) {
       var p = (DB.projects || []).find(function(x) { return x.id === projId; });
       if (!p) return;
-      var companies = DB.companies.filter(function(c) { return c.status === 'Active'; }).map(function(c) {
-        return '<option value="' + c.id + '"' + (c.id === p.companyId ? ' selected' : '') + '>' + esc(c.name) + '</option>';
-      }).join('');
       var modal = '<div class="modal"><div class="m-hd"><h2>Edit Project</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
         '<div class="m-bd"><div class="form-grid">' +
         '<div class="field"><label>Project Name <span class="req">*</span></label><input id="projName" value="' + esc(p.projectName) + '"></div>' +
         '<div class="field"><label>Project Key</label><input id="projKey" value="' + esc(p.projectKey) + '" disabled></div>' +
-        '<div class="field"><label>Company</label><select id="projCompany">' + companies + '</select></div>' +
+        '<div class="field"><label>Company</label><input value="' + esc(company(p.companyId).name || '') + '" disabled><span class="hint">Immutable — a project cannot move between tenants</span></div>' +
         '<div class="field"><label>Description</label><input id="projDesc" value="' + esc(p.description || '') + '"></div>' +
+        '<div class="field"><label>Visibility</label><select id="projVisibility"><option value="OPEN"' + ((p.visibility || 'OPEN') === 'OPEN' ? ' selected' : '') + '>Open — whole company sees it</option><option value="RESTRICTED"' + (p.visibility === 'RESTRICTED' ? ' selected' : '') + '>Restricted — invitation-only</option></select></div>' +
         '<div class="field"><label>Status</label><select id="projStatus"><option value="true"' + (p.isActive ? ' selected' : '') + '>Active</option><option value="false"' + (!p.isActive ? ' selected' : '') + '>Inactive</option></select></div>' +
         '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
         '<button class="btn btn-primary" onclick="sd.doEditProject(\'' + projId + '\')">Save Changes</button></div></div>';
@@ -2219,11 +2523,16 @@
       var name = document.getElementById('projName').value.trim();
       if (!name) { alert('Project name is required.'); return; }
       var oldName = p.projectName;
+      var oldVis = p.visibility || 'OPEN';
+      // companyId is intentionally NOT editable — a project never moves between tenants
       p.projectName = name;
-      p.companyId = document.getElementById('projCompany').value;
       p.description = document.getElementById('projDesc').value.trim();
+      p.visibility = document.getElementById('projVisibility').value;
       p.isActive = document.getElementById('projStatus').value === 'true';
       auditLog(currentUser().id, 'UPDATE', 'Project', p.projectName, oldName, p.projectName + ' (' + (p.isActive ? 'Active' : 'Inactive') + ')');
+      if (oldVis !== p.visibility) {
+        auditLog(currentUser().id, 'VISIBILITY_CHANGE', 'Project', p.projectName, oldVis, p.visibility);
+      }
       save();
       sd.closeModal();
       toast('Project "' + p.projectName + '" updated.');
@@ -2232,6 +2541,8 @@
       if (page === 'company-detail') {
         window._companyDetailTab = 'projects';
         renderCompanyDetail(currentUser());
+      } else if (page === 'project-detail') {
+        renderProjectDetail(currentUser());
       } else {
         renderProjects(currentUser());
       }
@@ -2277,10 +2588,20 @@
       var status = document.getElementById('usrStatus').value;
       var id = 'u' + Date.now();
       DB.users.push({ id: id, name: name, email: email, password: 'demo', role: role, companyId: companyId, departmentId: deptId, tier: tier, status: status, lastLogin: null });
-      auditLog(currentUser().id, 'CREATE', 'User', name + ' (' + email + ')', '', role + ' / ' + company(companyId).name + ' / ' + status);
+      // USER_ROLES rows (decision P) + decision Q auto-grant: every provider-company
+      // (Northwind, C0) user silently gets CLIENT_USER — always a potential requester.
+      var ROLE_ENUM = { 'System Admin': 'SYSTEM_ADMIN', 'Support Agent': 'SUPPORT_AGENT', 'Client Admin': 'CLIENT_ADMIN', 'Client User': 'CLIENT_USER' };
+      if (!DB.userRoles) DB.userRoles = [];
+      DB.userRoles.push({ userId: id, role: ROLE_ENUM[role] || 'CLIENT_USER' });
+      var autoGranted = '';
+      if (companyId === 'C0' && role !== 'Client User') {
+        DB.userRoles.push({ userId: id, role: 'CLIENT_USER' });
+        autoGranted = ' CLIENT_USER auto-granted (decision Q).';
+      }
+      auditLog(currentUser().id, 'CREATE', 'User', name + ' (' + email + ')', '', role + ' / ' + company(companyId).name + ' / ' + status + (autoGranted ? ' / +CLIENT_USER' : ''));
       save();
       sd.closeModal();
-      sessionStorage.setItem('flash', 'User "' + name + '" created with role ' + role + '. Password: demo.');
+      sessionStorage.setItem('flash', 'User "' + name + '" created with role ' + role + '.' + autoGranted + ' Password: demo.');
       renderUsers(currentUser());
       var f = sessionStorage.getItem('flash'); if (f) { toast(f); sessionStorage.removeItem('flash'); }
     },
@@ -2336,71 +2657,45 @@
     },
 
     // Agent-Project Mapping CRUD
-    showAddAgentProject: function() {
-      var agents = DB.users.filter(function(x) { return x.role === 'Support Agent'; });
-      var agentOpts = agents.map(function(a) {
-        var aTier = agentTier(a.id);
-        return '<option value="' + a.id + '">' + esc(a.name) + (aTier ? ' [' + aTier + ']' : '') + '</option>';
-      }).join('');
-      var projOpts = (DB.projects || []).filter(function(p) { return p.isActive; }).map(function(p) {
-        var c = company(p.companyId);
-        return '<option value="' + p.id + '">' + esc(p.projectName) + ' (' + esc(c.name) + ')</option>';
-      }).join('');
-      var modal = '<div class="modal"><div class="m-hd"><h2>Add Agent-Project Mapping</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
-        '<div class="m-bd"><div class="form-grid">' +
-        '<div class="field"><label>Agent <span class="req">*</span></label><select id="acAgent">' + agentOpts + '</select></div>' +
-        '<div class="field"><label>Project <span class="req">*</span></label><select id="acProject">' + projOpts + '</select></div>' +
-        '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
-        '<button class="btn btn-primary" onclick="sd.doAddAgentProject()">&#10133; Add Mapping</button></div></div>';
-      var wrap = document.createElement('div');
-      wrap.className = 'modal-backdrop';
-      wrap.innerHTML = modal;
-      document.body.appendChild(wrap);
-    },
-    doAddAgentProject: function() {
-      var agentId = document.getElementById('acAgent').value;
-      var projectId = document.getElementById('acProject').value;
-      if (!agentId || !projectId) { alert('Agent and project are required.'); return; }
-      var exists = (DB.agentProjects || []).some(function(m) { return m.userId === agentId && m.projectId === projectId; });
-      if (exists) { alert('This mapping already exists.'); return; }
-      DB.agentProjects.push({ userId: agentId, projectId: projectId });
-      var p = project(projectId);
-      auditLog(currentUser().id, 'CREATE', 'Agent-Project', user(agentId).name + ' -> ' + (p.projectName || projectId), '', '');
+    // FR-6 / admin-console spec: reset the (simulated) APEX account password
+    resetPassword: function(uid) {
+      var x = DB.users.find(function (y) { return y.id === uid; });
+      if (!x) return;
+      if (!confirm('Reset password for ' + x.name + '? (Demo: password becomes "demo" again; real build calls APEX_UTIL.RESET_PW.)')) return;
+      x.password = 'demo';
+      auditLog(currentUser().id, 'RESET_PASSWORD', 'User', x.name + ' (' + x.email + ')', '', 'password reset');
       save();
-      sd.closeModal();
-      sessionStorage.setItem('flash', 'Mapping added: ' + user(agentId).name + ' covers ' + (p.projectName || projectId) + '.');
-      renderAgentProjects(currentUser());
-      var f = sessionStorage.getItem('flash'); if (f) { toast(f); sessionStorage.removeItem('flash'); }
+      toast('Password reset for ' + x.name + ' — they must change it at next login.');
     },
-    removeAgentProject: function(idx) {
-      var m = DB.agentProjects[idx];
-      if (!m) return;
-      var p = project(m.projectId);
-      if (!confirm('Remove mapping: ' + (user(m.userId) || {}).name + ' from ' + (p.projectName || m.projectId) + '?')) return;
-      auditLog(currentUser().id, 'DELETE', 'Agent-Project', (user(m.userId) || {}).name + ' -> ' + (p.projectName || m.projectId), '', '');
-      DB.agentProjects.splice(idx, 1);
-      save();
-      sessionStorage.setItem('flash', 'Mapping removed.');
-      renderAgentProjects(currentUser());
-      var f = sessionStorage.getItem('flash'); if (f) { toast(f); sessionStorage.removeItem('flash'); }
+
+    // Agent-Project Mapping page: per-project cards use the guarded team actions
+    // (sd.showAddTeamAgent / sd.removeTeamAgent — Flow 3/4 gates). The old ungated
+    // flat-grid add/remove actions were removed with the reshape (admin-console spec).
+    filterAgentMapByCompany: function(companyId) {
+      document.querySelectorAll('#ap-cards .card').forEach(function(cardEl) {
+        cardEl.style.display = (companyId === 'all' || cardEl.getAttribute('data-ap-company') === companyId) ? '' : 'none';
+      });
     },
 
     // User-Project access CRUD (Client Admin)
+    // Decision Q: invitations into Restricted projects (Client Admin door)
     showAddUserProject: function(projectId) {
       var u = currentUser();
-      var companyUsers = DB.users.filter(function (x) { return x.companyId === u.companyId && x.role === 'Client User' && x.status === 'Active'; });
       var existing = (DB.userProjects || []).filter(function (up) { return up.projectId === projectId; }).map(function (up) { return up.userId; });
-      var available = companyUsers.filter(function (cu) { return existing.indexOf(cu.id) < 0; });
-      if (!available.length) { toast('All client users already have explicit access (or no users to add).'); return; }
+      var available = DB.users.filter(function (x) {
+        return x.companyId === u.companyId && x.status === 'Active' && existing.indexOf(x.id) < 0 &&
+          (userHoldsRole(x.id, 'CLIENT_USER') || x.role === 'Client User');
+      });
+      if (!available.length) { toast('Everyone eligible is already invited.'); return; }
       var userOpts = available.map(function (cu) {
         return '<option value="' + cu.id + '">' + esc(cu.name) + ' (' + esc(cu.email) + ')</option>';
       }).join('');
       var p = project(projectId);
-      var modal = '<div class="modal" style="max-width:440px;"><div class="m-hd"><h2>Add User Access \u2014 ' + esc(p.projectName || projectId) + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
-        '<div class="m-bd"><p class="muted mt-0">Adding specific users restricts this project to only those users (removes open default).</p>' +
+      var modal = '<div class="modal" style="max-width:440px;"><div class="m-hd"><h2>Invite User \u2014 ' + esc(p.projectName || projectId) + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
+        '<div class="m-bd"><p class="muted mt-0">This project is <b>Restricted</b> \u2014 only invited users can see it and raise tickets in it (decision Q).</p>' +
         '<div class="form-grid"><div class="field"><label>User</label><select id="upUser">' + userOpts + '</select></div>' +
         '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
-        '<button class="btn btn-primary" onclick="sd.doAddUserProject(\'' + projectId + '\')">&#10133; Grant Access</button></div></div>';
+        '<button class="btn btn-primary" onclick="sd.doAddUserProject(\'' + projectId + '\')">&#9993;&#65039; Invite</button></div></div>';
       var wrap = document.createElement('div');
       wrap.className = 'modal-backdrop';
       wrap.innerHTML = modal;
@@ -2411,9 +2706,10 @@
       if (!userId) { alert('Select a user.'); return; }
       if (!DB.userProjects) DB.userProjects = [];
       DB.userProjects.push({ userId: userId, projectId: projectId });
+      auditLog(currentUser().id, 'INVITE', 'User-Project', (user(userId) || {}).name + ' -> ' + (project(projectId).projectName || projectId), '', 'invited');
       save();
       sd.closeModal();
-      toast('Access granted to ' + (user(userId) || {}).name + '.');
+      toast((user(userId) || {}).name + ' invited.');
       renderUserProjects(currentUser());
     },
     removeUserProject: function(userId, projectId) {
@@ -2421,8 +2717,9 @@
       var idx = DB.userProjects.findIndex(function (up) { return up.userId === userId && up.projectId === projectId; });
       if (idx >= 0) {
         DB.userProjects.splice(idx, 1);
+        auditLog(currentUser().id, 'REVOKE', 'User-Project', (user(userId) || {}).name + ' -> ' + (project(projectId).projectName || projectId), 'invited', '');
         save();
-        toast('Access removed for ' + (user(userId) || {}).name + '.');
+        toast('Invitation revoked for ' + (user(userId) || {}).name + '.');
         renderUserProjects(currentUser());
       }
     },
@@ -2580,9 +2877,158 @@
       auditLog(currentUser().id, 'UPDATE', 'Category', c.name, oldName + ' / ' + oldStatus, c.name + ' / ' + c.status);
       save();
       sd.closeModal();
+      if (document.body.getAttribute('data-page') === 'project-detail') {
+        toast('Category "' + c.name + '" updated.');
+        window._projectDetailTab = 'cats';
+        renderProjectDetail(currentUser());
+        return;
+      }
       sessionStorage.setItem('flash', 'Category "' + c.name + '" updated.');
       renderCategories(currentUser());
       var f = sessionStorage.getItem('flash'); if (f) { toast(f); sessionStorage.removeItem('flash'); }
+    },
+
+    // Project Detail hub (Page 19) — tabs + team + invitations + categories
+    projectTab: function(tab) {
+      window._projectDetailTab = tab;
+      document.querySelectorAll('.cd-panel').forEach(function (p) {
+        p.style.display = (p.getAttribute('data-panel') === tab) ? '' : 'none';
+      });
+      document.querySelectorAll('.cd-tab').forEach(function (t) {
+        t.classList.toggle('cd-tab-active', t.getAttribute('data-tab') === tab);
+      });
+    },
+    showAddTeamAgent: function(pid) {
+      var team = projectTeam(pid).map(function (a) { return a.id; });
+      var candidates = DB.users.filter(function (x) {
+        return x.role === 'Support Agent' && x.status === 'Active' && team.indexOf(x.id) < 0;
+      });
+      if (!candidates.length) { alert('All active agents are already on this team.'); return; }
+      var opts = candidates.map(function (a) {
+        var load = DB.tickets.filter(function (t) { return t.assignedTo === a.id && t.status !== 'Resolved' && t.status !== 'Closed'; }).length;
+        return '<option value="' + a.id + '">' + esc(a.name) + ' (' + (a.tier || '—') + ') — ' + load + ' open ticket' + (load === 1 ? '' : 's') + '</option>';
+      }).join('');
+      var modal = '<div class="modal" style="max-width:440px;"><div class="m-hd"><h2>Add Agent — ' + esc(project(pid).projectName || '') + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
+        '<div class="m-bd"><div class="form-grid">' +
+        '<div class="field"><label>Agent <span class="req">*</span></label><select id="teamAgent">' + opts + '</select><span class="hint">Tier + current workload shown (FR-33)</span></div>' +
+        '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
+        '<button class="btn btn-primary" onclick="sd.doAddTeamAgent(\'' + pid + '\')">&#10133; Add to Team</button></div></div>';
+      var wrap = document.createElement('div');
+      wrap.className = 'modal-backdrop';
+      wrap.innerHTML = modal;
+      document.body.appendChild(wrap);
+    },
+    doAddTeamAgent: function(pid) {
+      var uid = document.getElementById('teamAgent').value;
+      var a = DB.users.find(function (x) { return x.id === uid; });
+      if (!a) return;
+      DB.agentProjects.push({ userId: uid, projectId: pid });
+      var p = project(pid);
+      auditLog(currentUser().id, 'TEAM_ADD', 'Agent-Project', a.name + ' -> ' + (p.projectName || pid), '', a.tier || '');
+      save();
+      sd.closeModal();
+      toast(a.name + ' added to ' + (p.projectName || 'project') + ' — notification sent (Flow 4).');
+      sd._rerenderTeamContext();
+    },
+    removeTeamAgent: function(pid, uid) {
+      var block = teamRemovalBlock(uid, pid);
+      if (block) { alert(block); return; }
+      var a = DB.users.find(function (x) { return x.id === uid; });
+      var p = project(pid);
+      if (!confirm('Remove ' + (a ? a.name : uid) + ' from ' + (p.projectName || 'this project') + '?')) return;
+      var idx = (DB.agentProjects || []).findIndex(function (ap) { return ap.userId === uid && ap.projectId === pid; });
+      if (idx >= 0) DB.agentProjects.splice(idx, 1);
+      auditLog(currentUser().id, 'TEAM_REMOVE', 'Agent-Project', (a ? a.name : uid) + ' -> ' + (p.projectName || pid), a ? (a.tier || '') : '', '');
+      save();
+      toast((a ? a.name : 'Agent') + ' removed from ' + (p.projectName || 'project') + '.');
+      sd._rerenderTeamContext();
+    },
+    _rerenderTeamContext: function() {
+      var page = document.body.getAttribute('data-page');
+      if (page === 'project-detail') {
+        window._projectDetailTab = 'team';
+        renderProjectDetail(currentUser());
+      } else if (page === 'company-detail') {
+        window._companyDetailTab = 'agents';
+        renderCompanyDetail(currentUser());
+      } else {
+        renderAgentProjects(currentUser());
+      }
+    },
+    showInvitePD: function(pid) {
+      var p = project(pid);
+      var invited = (DB.userProjects || []).filter(function (r) { return r.projectId === pid; }).map(function (r) { return r.userId; });
+      var candidates = DB.users.filter(function (x) {
+        return x.companyId === p.companyId && x.status === 'Active' && invited.indexOf(x.id) < 0 &&
+          (userHoldsRole(x.id, 'CLIENT_USER') || x.role === 'Client User');
+      });
+      if (!candidates.length) { alert('Every eligible ' + (company(p.companyId).name || 'company') + ' user is already invited.'); return; }
+      var opts = candidates.map(function (x) {
+        var dept = department(x.departmentId);
+        return '<option value="' + x.id + '">' + esc(x.name) + (dept.name ? ' — ' + esc(dept.name) : '') + (x.role !== 'Client User' ? ' (' + esc(x.role) + ')' : '') + '</option>';
+      }).join('');
+      var modal = '<div class="modal" style="max-width:440px;"><div class="m-hd"><h2>Invite User — ' + esc(p.projectName || '') + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
+        '<div class="m-bd"><div class="form-grid">' +
+        '<div class="field"><label>User <span class="req">*</span></label><select id="inviteUser">' + opts + '</select><span class="hint">Anyone at ' + esc(company(p.companyId).name || '') + ' holding the Client User role — incl. agents (decision Q auto-grant)</span></div>' +
+        '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
+        '<button class="btn btn-primary" onclick="sd.doInvitePD(\'' + pid + '\')">&#9993;&#65039; Invite</button></div></div>';
+      var wrap = document.createElement('div');
+      wrap.className = 'modal-backdrop';
+      wrap.innerHTML = modal;
+      document.body.appendChild(wrap);
+    },
+    doInvitePD: function(pid) {
+      var uid = document.getElementById('inviteUser').value;
+      var x = DB.users.find(function (y) { return y.id === uid; });
+      if (!x) return;
+      if (!DB.userProjects) DB.userProjects = [];
+      DB.userProjects.push({ userId: uid, projectId: pid });
+      var p = project(pid);
+      auditLog(currentUser().id, 'INVITE', 'User-Project', x.name + ' -> ' + (p.projectName || pid), '', 'invited');
+      save();
+      sd.closeModal();
+      toast(x.name + ' invited to ' + (p.projectName || 'project') + '.');
+      window._projectDetailTab = 'invites';
+      renderProjectDetail(currentUser());
+    },
+    revokeInvitePD: function(pid, uid) {
+      var x = DB.users.find(function (y) { return y.id === uid; });
+      var p = project(pid);
+      if (!confirm('Revoke ' + (x ? x.name : uid) + '’s access to ' + (p.projectName || 'this project') + '?')) return;
+      var idx = (DB.userProjects || []).findIndex(function (r) { return r.userId === uid && r.projectId === pid; });
+      if (idx >= 0) DB.userProjects.splice(idx, 1);
+      auditLog(currentUser().id, 'REVOKE', 'User-Project', (x ? x.name : uid) + ' -> ' + (p.projectName || pid), 'invited', '');
+      save();
+      toast('Invitation revoked.');
+      window._projectDetailTab = 'invites';
+      renderProjectDetail(currentUser());
+    },
+    showAddCategoryPD: function(pid) {
+      var p = project(pid);
+      var modal = '<div class="modal" style="max-width:460px;"><div class="m-hd"><h2>New Category — ' + esc(p.projectName || '') + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
+        '<div class="m-bd"><div class="form-grid">' +
+        '<div class="field"><label>Category Name <span class="req">*</span></label><input id="catName" placeholder="e.g. Payroll Run"></div>' +
+        '<div class="field"><label>Description</label><input id="catDesc" placeholder="Guidance text shown in LOV…"></div>' +
+        '</div><p class="muted" style="font-size:12px;">Scoped to ' + esc(p.projectName || '') + ' (' + esc(company(p.companyId).name || '') + ') — same CATEGORIES table as the global registry.</p>' +
+        '</div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
+        '<button class="btn btn-primary" onclick="sd.doAddCategoryPD(\'' + pid + '\')">&#10133; Create Category</button></div></div>';
+      var wrap = document.createElement('div');
+      wrap.className = 'modal-backdrop';
+      wrap.innerHTML = modal;
+      document.body.appendChild(wrap);
+    },
+    doAddCategoryPD: function(pid) {
+      var name = document.getElementById('catName').value.trim();
+      if (!name) { alert('Category name is required.'); return; }
+      var p = project(pid);
+      var desc = document.getElementById('catDesc').value.trim();
+      DB.categories.push({ id: 'cat' + Date.now(), name: name, companyId: p.companyId, projectId: pid, description: desc, status: 'Active' });
+      auditLog(currentUser().id, 'CREATE', 'Category', name, '', (p.projectName || pid) + ' (project-specific)');
+      save();
+      sd.closeModal();
+      toast('Category "' + name + '" created for ' + (p.projectName || 'project') + '.');
+      window._projectDetailTab = 'cats';
+      renderProjectDetail(currentUser());
     },
 
     // Company Detail tab switching + shuttle
@@ -2629,19 +3075,24 @@
       var selected = document.querySelectorAll('#shuttle-assigned .shuttle-item.shuttle-selected');
       if (!selected.length) { toast('Select agents from the Assigned list first.'); return; }
       var cProjs = companyProjects(companyId);
+      var blocked = [];
+      var removedN = 0;
       selected.forEach(function (el) {
         var agentId = el.getAttribute('data-agent-id');
-        // Remove from all projects in this company
+        // Remove from all projects in this company — same guards as Flow 4
         cProjs.forEach(function (p) {
           var idx2 = DB.agentProjects.findIndex(function (m) { return m.userId === agentId && m.projectId === p.id; });
-          if (idx2 >= 0) {
-            auditLog(currentUser().id, 'DELETE', 'Agent-Project', user(agentId).name + ' -> ' + p.projectName, '', '');
-            DB.agentProjects.splice(idx2, 1);
-          }
+          if (idx2 < 0) return;
+          var block = teamRemovalBlock(agentId, p.id);
+          if (block) { blocked.push(block); return; }
+          auditLog(currentUser().id, 'TEAM_REMOVE', 'Agent-Project', user(agentId).name + ' -> ' + p.projectName, '', '');
+          DB.agentProjects.splice(idx2, 1);
+          removedN++;
         });
       });
       save();
-      toast(selected.length + ' agent(s) removed from ' + company(companyId).name + '.');
+      if (blocked.length) alert('Some removals were blocked (Flow 4):\n\n' + blocked.join('\n'));
+      toast(removedN + ' mapping(s) removed for ' + company(companyId).name + '.');
       window._companyDetailTab = 'agents';
       renderCompanyDetail(currentUser());
     },
@@ -2735,7 +3186,11 @@
       save();
       sd.closeModal();
       toast('SLA target updated for ' + (p.projectName || '') + ' / ' + s.severity + '.');
-      if (fromCompanyDetail) {
+      var slaPage = document.body.getAttribute('data-page');
+      if (slaPage === 'project-detail') {
+        window._projectDetailTab = 'sla';
+        renderProjectDetail(currentUser());
+      } else if (fromCompanyDetail) {
         window._companyDetailTab = 'sla';
         renderCompanyDetail(currentUser());
       } else {
@@ -2888,6 +3343,7 @@
       case 'agent-companies': renderAgentProjects(u); break;
       case 'departments': renderDepartments(u); break;
       case 'company-detail': renderCompanyDetail(u); break;
+      case 'project-detail': renderProjectDetail(u); break;
       case 'audit-log': renderAuditLog(u); break;
       case 'profile': renderProfile(u); break;
       default: renderHome(u);
@@ -2895,5 +3351,18 @@
     var f = sessionStorage.getItem('flash');
     if (f) { toast(f); sessionStorage.removeItem('flash'); }
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+  // Never leave a silent blank page: paint any boot error where the user can see it.
+  function bootSafe() {
+    try { boot(); }
+    catch (e) {
+      document.body.innerHTML =
+        '<div style="max-width:720px;margin:60px auto;padding:24px;border:1px solid #fecaca;background:#fef2f2;border-radius:8px;font:14px/1.5 sans-serif;">' +
+        '<h2 style="margin-top:0;color:#b91c1c;">Demo failed to render</h2>' +
+        '<p><b>' + esc(e.message || String(e)) + '</b></p>' +
+        '<pre style="white-space:pre-wrap;font-size:11px;color:#666;">' + esc(e.stack || '') + '</pre>' +
+        '<p>Try a hard refresh (<b>Ctrl+F5</b>). If that does not help, ' +
+        '<a href="#" onclick="localStorage.clear();location.href=\'01-login.html\';return false;">reset the demo data</a>.</p></div>';
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootSafe); else bootSafe();
 })();
