@@ -270,7 +270,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 <section id="overview"><div class="wrap reveal">
   <div class="eyebrow">The Big Picture</div>
   <h2 class="sec">Why we're building this</h2>
-  <p class="lead">Our company is a vendor that supports multiple client companies. Instead of paying recurring per-agent fees, we build our own service desk &mdash; on a platform that hands us auth, roles and reporting for free.</p>
+  <p class="lead">Our company is a service provider that supports multiple customer companies &mdash; including itself for internal apps. Instead of paying recurring per-agent fees, we build our own service desk on a platform that hands us auth, roles and reporting for free.</p>
   <div class="grid g3">
     <div class="card"><h3>💸 Kill the licence cost</h3><p>Tools like Jira / Zendesk charge per agent, forever. We build once and own it.</p></div>
     <div class="card"><h3>🧩 APEX is the right fit</h3><p>Built-in login, role-based access control and charts. We build <em>with</em> the platform, not against it.</p></div>
@@ -308,22 +308,22 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 <section id="roles"><div class="wrap reveal">
   <div class="eyebrow">Roles &amp; Access</div>
   <h2 class="sec">Four roles, two sides</h2>
-  <p class="lead">The <b>client side</b> (our customers) and the <b>vendor side</b> (our company). Multi-company isolation lives in the jump from Client Admin (one company) to System Admin (all companies).</p>
+  <p class="lead">The <b>customer side</b> (external and internal users) and the <b>support side</b> (our agents &amp; admins). Multi-company isolation lives in the jump from Client Admin (one company) to System Admin (all companies).</p>
   <div class="grid g4">
     <div class="role client"><div class="tag">Client side</div><h3>Client User</h3>
-      <div class="ln"><span class="k">Sees</span><span>All tickets in <b>their department</b> (never other depts or companies)</span></div>
-      <div class="ln"><span class="k">Does</span><span>Raise a ticket, comment, track status, <b>assign L1 agent</b> (from mapped agents)</span></div></div>
+      <div class="ln"><span class="k">Sees</span><span>Tickets in <b>accessible projects</b> (default: all company projects; Client Admin can restrict)</span></div>
+      <div class="ln"><span class="k">Does</span><span>Raise a ticket, comment, track status, <b>assign L1 agent</b> (from project's mapped agents)</span></div></div>
     <div class="role client"><div class="tag">Client side</div><h3>Client Admin</h3>
-      <div class="ln"><span class="k">Sees</span><span><b>All</b> of their company's tickets</span></div>
-      <div class="ln"><span class="k">Does</span><span>Oversee staff, raise on behalf, company dashboard, <b>assign/reassign agents</b></span></div></div>
+      <div class="ln"><span class="k">Sees</span><span><b>All</b> of their company's tickets across all projects</span></div>
+      <div class="ln"><span class="k">Does</span><span>Manage user-project access, raise on behalf, company dashboard &amp; reports, <b>assign/reassign agents</b>, manage users &amp; departments</span></div></div>
     <div class="role vendor"><div class="tag">Our side</div><h3>Support Agent</h3>
-      <div class="ln"><span class="k">Sees</span><span>Tickets for <b>their assigned projects</b> (clients they cover) &mdash; never clients they're not on</span></div>
-      <div class="ln"><span class="k">Does</span><span>Work tickets: status, comment, resolve</span></div></div>
+      <div class="ln"><span class="k">Sees</span><span>Tickets for <b>their assigned projects</b> via <code>AGENT_PROJECTS</code> &mdash; never projects they're not on</span></div>
+      <div class="ln"><span class="k">Does</span><span>Work tickets: status, comment, resolve, <b>reassign to higher tier</b></span></div></div>
     <div class="role vendor"><div class="tag">Our side</div><h3>System Admin</h3>
-      <div class="ln"><span class="k">Sees</span><span><b>Everything</b>, across all companies</span></div>
-      <div class="ln"><span class="k">Does</span><span>Manage companies/users, <b>assign</b>, configure</span></div></div>
+      <div class="ln"><span class="k">Sees</span><span><b>Everything</b>, across all companies and projects</span></div>
+      <div class="ln"><span class="k">Does</span><span>Manage companies/projects/users, <b>assign</b>, configure</span></div></div>
   </div>
-  <div class="callout good"><div class="ico">👥</div><div><b>Four roles + L1&ndash;L4 agent tiers (decisions I, M, N).</b> Agents carry an explicit <b>tier</b> (L1/L2/L3/L4) &mdash; clients assign L1 only; higher tiers via reassignment. Client Users are <b>department-scoped</b>; Client Admins see cross-department. A <b>Manager</b> is an Admin who doesn't click work buttons; a <b>Project Lead</b> is deferred. Agents are <b>scoped to their assigned projects</b> via <code>AGENT_COMPANIES</code>.</div></div>
+  <div class="callout good"><div class="ico">👥</div><div><b>Four roles + L1&ndash;L4 agent tiers (decisions I, M, N, O).</b> Agents carry an explicit <b>tier</b> (L1/L2/L3/L4) &mdash; clients assign L1 only; higher tiers via reassignment. Client Users see <b>project-scoped</b> tickets (Client Admin controls access via <code>USER_PROJECTS</code>); Client Admins see all company projects. A <b>Manager</b> is an Admin who doesn't click work buttons; a <b>Project Lead</b> is deferred. Agents are <b>scoped to their assigned projects</b> via <code>AGENT_PROJECTS</code>.</div></div>
 </div></section>
 
 <!-- REQUIREMENTS -->
@@ -383,23 +383,35 @@ stateDiagram-v2
 <!-- DATA -->
 <section id="data"><div class="wrap reveal">
   <div class="eyebrow">Database · the foundation</div>
-  <h2 class="sec">Seven tables</h2>
-  <p class="lead">APEX is database-first: get these right and the screens almost build themselves. Every ticket carries a <code>company_id</code> &mdash; that column is how we keep clients isolated.</p>
+  <h2 class="sec">Twelve tables</h2>
+  <p class="lead">APEX is database-first: get these right and the screens almost build themselves. Every ticket carries a <code>company_id</code> (tenant key) and a <code>project_id</code> (service engagement) &mdash; those columns are how we keep clients isolated and work organized.</p>
   <div class="erd">
     <div class="tbl"><div class="hd">COMPANIES <span class="pk">PK company_id</span></div><ul>
       <li><span>company_name</span><span class="t">text</span></li>
-      <li><span>company_type</span><span class="t">VENDOR/CLIENT</span></li>
-      <li><span>status</span><span class="t">text</span></li></ul></div>
+      <li><span>status</span><span class="t">ACTIVE/INACTIVE</span></li></ul></div>
+    <div class="tbl"><div class="hd">PROJECTS <span class="pk">PK project_id</span></div><ul>
+      <li><span class="fk">company_id</span><span class="t">FK</span></li>
+      <li><span>project_name · project_key</span><span class="t">text</span></li>
+      <li><span>description · is_active</span><span class="t">text</span></li></ul></div>
+    <div class="tbl"><div class="hd">DEPARTMENTS <span class="pk">PK department_id</span></div><ul>
+      <li><span class="fk">company_id</span><span class="t">FK</span></li>
+      <li><span>department_name</span><span class="t">text</span></li>
+      <li><span class="t">metadata only (routing/reporting)</span></li></ul></div>
     <div class="tbl"><div class="hd">APP_USERS <span class="pk">PK user_id</span></div><ul>
       <li><span class="fk">company_id</span><span class="t">FK</span></li>
       <li><span>full_name · email</span><span class="t">text</span></li>
-      <li><span>role · status</span><span class="t">text</span></li></ul></div>
+      <li><span>default_role · status</span><span class="t">text</span></li></ul></div>
+    <div class="tbl"><div class="hd">USER_ROLES <span class="pk">PK user_id+role</span></div><ul>
+      <li><span class="fk">user_id</span><span class="t">FK</span></li>
+      <li><span>role</span><span class="t">text</span></li>
+      <li><span class="t">multi-role support (decision P)</span></li></ul></div>
     <div class="tbl"><div class="hd">TICKETS <span class="pk">PK ticket_id</span></div><ul>
       <li><span>ticket_ref</span><span class="t">TKT-00001</span></li>
       <li><span class="fk">company_id</span><span class="t">FK · tenant key</span></li>
+      <li><span class="fk">project_id</span><span class="t">FK · service engagement</span></li>
       <li><span>subject · description</span><span class="t">text</span></li>
       <li><span class="fk">category_id</span><span class="t">FK</span></li>
-      <li><span>priority · status</span><span class="t">text</span></li>
+      <li><span>severity · priority · status</span><span class="t">text</span></li>
       <li><span class="fk">created_by · assigned_to</span><span class="t">FK user</span></li>
       <li><span>created/updated/resolved_at</span><span class="t">date</span></li></ul></div>
     <div class="tbl"><div class="hd">TICKET_COMMENTS <span class="pk">PK comment_id</span></div><ul>
@@ -414,34 +426,49 @@ stateDiagram-v2
       <li><span>created_at</span><span class="t">date</span></li></ul></div>
     <div class="tbl"><div class="hd">CATEGORIES <span class="pk">PK category_id</span></div><ul>
       <li><span>category_name</span><span class="t">text</span></li>
-      <li><span class="t">Bug · Request · Question…</span></li></ul></div>
-    <div class="tbl"><div class="hd">AGENT_COMPANIES <span class="pk">PK user_id+company_id</span></div><ul>
+      <li><span class="fk">company_id · project_id</span><span class="t">FK nullable</span></li></ul></div>
+    <div class="tbl"><div class="hd">AGENT_PROJECTS <span class="pk">PK user_id+project_id</span></div><ul>
       <li><span class="fk">user_id</span><span class="t">FK · agent</span></li>
-      <li><span class="fk">company_id</span><span class="t">FK · client/project</span></li>
-      <li><span class="t">which clients an agent covers</span></li></ul></div>
+      <li><span class="fk">project_id</span><span class="t">FK · project</span></li>
+      <li><span class="t">which projects an agent covers</span></li></ul></div>
+    <div class="tbl"><div class="hd">USER_PROJECTS <span class="pk">PK user_id+project_id</span></div><ul>
+      <li><span class="fk">user_id</span><span class="t">FK · client user</span></li>
+      <li><span class="fk">project_id</span><span class="t">FK · project</span></li>
+      <li><span class="t">restricts client visibility (empty=all)</span></li></ul></div>
+    <div class="tbl"><div class="hd">SLA_TARGETS <span class="pk">PK sla_target_id</span></div><ul>
+      <li><span class="fk">project_id</span><span class="t">FK</span></li>
+      <li><span>severity</span><span class="t">text</span></li>
+      <li><span>response_hours · resolution_days</span><span class="t">number</span></li></ul></div>
   </div>
 
   <div class="mbox"><pre class="mermaid">
 erDiagram
+    COMPANIES ||--o{ PROJECTS : has
+    COMPANIES ||--o{ DEPARTMENTS : has
     COMPANIES ||--o{ APP_USERS : employs
-    COMPANIES ||--o{ TICKETS : owns
+    APP_USERS ||--o{ USER_ROLES : hasRoles
+    PROJECTS ||--o{ TICKETS : contains
+    COMPANIES ||--o{ TICKETS : "owns (tenant key)"
     APP_USERS ||--o{ TICKETS : creates
     TICKETS ||--o{ TICKET_COMMENTS : has
     TICKETS ||--o{ TICKET_HISTORY : has
     CATEGORIES ||--o{ TICKETS : classifies
-    APP_USERS ||--o{ AGENT_COMPANIES : covers
-    COMPANIES ||--o{ AGENT_COMPANIES : coveredBy
+    APP_USERS ||--o{ AGENT_PROJECTS : covers
+    PROJECTS ||--o{ AGENT_PROJECTS : coveredBy
+    APP_USERS ||--o{ USER_PROJECTS : canAccess
+    PROJECTS ||--o{ USER_PROJECTS : accessibleTo
+    PROJECTS ||--o{ SLA_TARGETS : hasTargets
   </pre></div>
   <div class="mcap">Entity relationships (renders if online; the table cards above are the offline-safe version)</div>
 
-  <div class="callout good"><div class="ico">🛡️</div><div><b>Tenant isolation plan (v1):</b> at login, store the user's <code>company_id</code> + role in an APEX application item. Every client-facing report filters <code>WHERE company_id = :APP_COMPANY_ID</code>, with APEX authorization schemes layered on top. In the demo, <b>show</b> a client logging in and seeing only their tickets &mdash; that proves it live. <b>Agents</b> are additionally narrowed to their own projects via <code>WHERE company_id IN (their AGENT_COMPANIES)</code> &mdash; a usability filter on the vendor side, separate from the hard client-isolation wall.</div></div>
+  <div class="callout good"><div class="ico">🛡️</div><div><b>Tenant isolation plan (v1):</b> at login, store the user's <code>company_id</code> + role in an APEX application item. Every client-facing report filters <code>WHERE company_id = :APP_COMPANY_ID</code>, with APEX authorization schemes layered on top. In the demo, <b>show</b> a client logging in and seeing only their tickets &mdash; that proves it live. <b>Agents</b> are additionally narrowed to their own projects via <code>WHERE project_id IN (their AGENT_PROJECTS)</code>. <b>Client Users</b> see projects they have access to via <code>USER_PROJECTS</code> (empty = all company projects). Departments are metadata for routing/reporting, not a visibility boundary.</div></div>
 </div></section>
 
 <!-- PAGES -->
 <section id="pages"><div class="wrap reveal">
   <div class="eyebrow">APEX Page Architecture</div>
   <h2 class="sec">The screens we'll build</h2>
-  <p class="lead">From "what it does" to "who builds which page." The trick that keeps this small: <b>one page serves many roles</b> &mdash; a Client User and a System Admin open the <em>same</em> Ticket List, but authorization schemes + a <code>WHERE company_id</code> filter change what they see. <b>12 pages → 10 MUST, 2 SHOULD.</b></p>
+  <p class="lead">From "what it does" to "who builds which page." The trick that keeps this small: <b>one page serves many roles</b> &mdash; a Client User and a System Admin open the <em>same</em> Ticket List, but authorization schemes + a <code>WHERE company_id</code> filter change what they see. <b>15 pages → 12 MUST, 3 SHOULD.</b></p>
   <table class="ptable"><thead><tr><th>#</th><th>Page</th><th>APEX page type</th><th>What it's for / who</th><th>Scope</th><th>Priority</th></tr></thead><tbody>
     <tr class="gr"><td colspan="6">Auth &amp; Shell</td></tr>
     <tr class="row"><td class="num">1</td><td class="pname">Login</td><td class="ptype">Login Page (built-in)</td><td>Email + password; post-auth stamps company_id/role into app items · <b>All roles</b></td><td><span class="scopetag">Shared</span></td><td><span class="badge MUST">MUST</span></td></tr>
@@ -457,12 +484,15 @@ erDiagram
     <tr class="gr"><td colspan="6">Admin</td></tr>
     <tr class="row"><td class="num">9</td><td class="pname">Companies (manage)</td><td class="ptype">Interactive Grid</td><td>Create/edit/deactivate client companies (CRUD) · <b>System Admin only</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge MUST">MUST</span></td></tr>
     <tr class="row"><td class="num">10</td><td class="pname">Users (manage)</td><td class="ptype">Interactive Grid</td><td>Create/edit/deactivate users; assign role + company · <b>System Admin only</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="row"><td class="num">11</td><td class="pname">Projects (manage)</td><td class="ptype">Interactive Grid</td><td>Create/edit/deactivate projects per company; map agents · <b>System Admin only</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge MUST">MUST</span></td></tr>
+    <tr class="row"><td class="num">12</td><td class="pname">User-Project Access</td><td class="ptype">Interactive Grid</td><td>Manage which client users can access which projects · <b>Client Admin only</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge MUST">MUST</span></td></tr>
     <tr class="gr"><td colspan="6">Supporting</td></tr>
-    <tr class="row"><td class="num">11</td><td class="pname">Categories (manage)</td><td class="ptype">Interactive Grid</td><td>Maintain ticket categories / priorities · <b>System Admin</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge SHOULD">SHOULD</span></td></tr>
-    <tr class="row"><td class="num">12</td><td class="pname">My Profile</td><td class="ptype">Form</td><td>View/change own details / password · <b>All roles</b></td><td><span class="scopetag">Shared</span></td><td><span class="badge SHOULD">SHOULD</span></td></tr>
+    <tr class="row"><td class="num">13</td><td class="pname">Categories (manage)</td><td class="ptype">Interactive Grid</td><td>Maintain ticket categories / priorities · <b>System Admin</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge SHOULD">SHOULD</span></td></tr>
+    <tr class="row"><td class="num">14</td><td class="pname">My Profile</td><td class="ptype">Form</td><td>View/change own details / password · <b>All roles</b></td><td><span class="scopetag">Shared</span></td><td><span class="badge SHOULD">SHOULD</span></td></tr>
+    <tr class="row"><td class="num">15</td><td class="pname">SLA Targets (manage)</td><td class="ptype">Interactive Grid</td><td>Configure SLA targets per project per severity · <b>System Admin only</b></td><td><span class="scopetag role">Role-specific</span></td><td><span class="badge SHOULD">SHOULD</span></td></tr>
   </tbody></table>
 
-  <div class="callout good"><div class="ico">🎯</div><div><b>The demo needs only the 10 MUST pages.</b> If time runs short, the irreducible spine is pages 1, 3, 4, 5, 6, 7, 9, 10 &mdash; that alone hits all four judge non-negotiables (role-based access, multiple companies, assignment, dashboard).</div></div>
+  <div class="callout good"><div class="ico">🎯</div><div><b>The demo needs only the 12 MUST pages.</b> If time runs short, the irreducible spine is pages 1, 3, 4, 5, 6, 7, 9, 10, 11 &mdash; that alone hits all four judge non-negotiables (role-based access, multiple companies/projects, assignment, dashboard).</div></div>
 
   <div class="eyebrow" style="margin-top:36px">Keep it small</div>
   <h2 class="sec" style="font-size:22px;margin-bottom:6px">Things that are deliberately NOT pages</h2>

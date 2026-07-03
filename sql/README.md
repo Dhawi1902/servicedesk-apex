@@ -8,8 +8,8 @@ grounded in `reference/plsql/061-APEX_UTIL.md` and `018-APEX_CUSTOM_AUTH.md`.
 
 | Step | Script | Required? | What it does |
 |---|---|---|---|
-| 1 | `01_schema.sql` | ✅ | 9 core tables (incl. `DEPARTMENTS`, `SLA_TARGETS`), `TKT-` sequence + trigger, FKs, checks, indexes |
-| 2 | `02_seed_data.sql` | ✅ | 4 companies, 6 departments, 10 users (with tiers), agent scoping, 6 categories, SLA targets, 10 tickets (with severity/priority split, ticket_type), comments, history |
+| 1 | `01_schema.sql` | ✅ | 10 core tables (incl. `DEPARTMENTS`, `SLA_TARGETS`, `USER_ROLES`), `TKT-` sequence + trigger, FKs, checks, indexes |
+| 2 | `02_seed_data.sql` | ✅ | 4 companies, 6 departments, 12 users, roles in `USER_ROLES` (dual-role for Northwind agents), agent scoping with per-company tiers, 6 categories, SLA targets, 10 tickets (with severity/priority split, ticket_type), comments, history |
 | 3 | `03_attachments.sql` | optional (FR-25) | `TICKET_ATTACHMENTS` BLOB table + tenant-key enforcement trigger |
 | 4 | `05_isolation_views.sql` | ✅ | Tenant-scoped views (`V_MY_TICKETS` etc.) — the isolation firewall pages build on |
 | 5 | `04_apex_accounts.sql` | ✅ (auth) | Creates one APEX Accounts login per seeded user (password `demo`) |
@@ -20,23 +20,25 @@ after `03` so the attachments view is created; `04` can run any time after `02`.
 
 ## Accounts (all password `demo`)
 
-| Email | Role | Tier | Company / Dept |
+| Email | Roles (in `USER_ROLES`) | Company / Dept | Per-company tiers |
 |---|---|---|---|
-| `sara@northwind.example` | SYSTEM_ADMIN | — | Northwind Support (vendor) |
-| `mike@northwind.example` | SUPPORT_AGENT | L1 | covers Acme + Globex |
-| `lena@northwind.example` | SUPPORT_AGENT | L2 | covers Globex + Initech |
-| `tom@northwind.example` | SUPPORT_AGENT | L3 | covers Acme + Globex + Initech |
-| `anna@acme.example` | CLIENT_USER | — | Acme Corp / Engineering |
-| `aaron@acme.example` | CLIENT_ADMIN | — | Acme Corp / Engineering |
-| `amy@acme.example` | CLIENT_USER | — | Acme Corp / Finance |
-| `george@globex.example` | CLIENT_USER | — | Globex Inc / Operations |
-| `gina@globex.example` | CLIENT_ADMIN | — | Globex Inc / Operations |
-| `ivan@initech.example` | CLIENT_USER | — | Initech / IT |
+| `sara@northwind.example` | SYSTEM_ADMIN | Northwind Support (vendor) | — |
+| `mike@northwind.example` | SUPPORT_AGENT + CLIENT_USER | covers Acme + Globex | Acme L1, Globex L2 |
+| `lena@northwind.example` | SUPPORT_AGENT + CLIENT_USER | covers Globex + Initech | Globex L2, Initech L3 |
+| `tom@northwind.example` | SUPPORT_AGENT + CLIENT_USER | covers all three clients | L3 everywhere |
+| `nora@northwind.example` | CLIENT_ADMIN | Northwind / Internal Systems | — |
+| `nick@northwind.example` | CLIENT_USER | Northwind / Internal Systems | — |
+| `anna@acme.example` | CLIENT_USER | Acme Corp / Engineering | — |
+| `aaron@acme.example` | CLIENT_ADMIN | Acme Corp / Engineering | — |
+| `amy@acme.example` | CLIENT_USER | Acme Corp / Finance | — |
+| `george@globex.example` | CLIENT_USER | Globex Inc / Operations | — |
+| `gina@globex.example` | CLIENT_ADMIN | Globex Inc / Operations | — |
+| `ivan@initech.example` | CLIENT_USER | Initech / IT | — |
 
 Isolation tests baked in:
 - **Cross-company:** Initech tickets must be invisible to Mike (he only covers Acme + Globex).
 - **Cross-department:** Amy (Acme/Finance) must NOT see Anna's tickets (Acme/Engineering). Aaron (Client Admin) sees both.
-- **Tier scoping:** Client assignment LOV shows only L1 agents (Mike), not L2+ (Lena, Tom).
+- **Tier scoping:** Client assignment LOV shows only L1 agents for that company (e.g. Mike is L1 for Acme but L2 for Globex).
 
 ---
 
@@ -50,39 +52,62 @@ is the whole point — the auth scheme never carries tenant data.
 App Builder → **Shared Components → Authentication Schemes** → create/select
 **Application Express Accounts** → make it Current.
 
-### 2. Create 3 Application Items
+### 2. Create 4 Application Items
 Shared Components → **Application Items**. For each, set **Session State Protection =
 Restricted — may not be set from browser** (stops URL tampering).
 
-| Name | Scope |
-|---|---|
-| `APP_USER_ID` | Application |
-| `APP_COMPANY_ID` | Application |
-| `APP_ROLE` | Application |
+| Name | Scope | Purpose |
+|---|---|---|
+| `APP_USER_ID` | Application | Logged-in user's PK |
+| `APP_COMPANY_ID` | Application | Tenant key for isolation views |
+| `APP_ROLE` | Application | Active role (from `USER_ROLES`) |
+| `APP_HAS_MULTI_ROLE` | Application | `Y`/`N` — controls nav-bar role-switch visibility |
 
 ### 3. Add the Post-Authentication Process
 On the authentication scheme, set **Post-Authentication Procedure Name** to a process
-running this PL/SQL (looks up the profile and stamps the app items):
+running this PL/SQL (looks up the profile, picks the active role from `USER_ROLES`,
+and stamps the app items):
 
 ```sql
 DECLARE
-    l_user_id     APP_USERS.USER_ID%TYPE;
-    l_company_id  APP_USERS.COMPANY_ID%TYPE;
-    l_role        APP_USERS.ROLE%TYPE;
-    l_status      APP_USERS.STATUS%TYPE;
+    l_user_id      APP_USERS.USER_ID%TYPE;
+    l_company_id   APP_USERS.COMPANY_ID%TYPE;
+    l_default_role APP_USERS.DEFAULT_ROLE%TYPE;
+    l_status       APP_USERS.STATUS%TYPE;
+    l_active_role  USER_ROLES.ROLE%TYPE;
+    l_role_count   PLS_INTEGER;
 BEGIN
-    SELECT USER_ID, COMPANY_ID, ROLE, STATUS
-      INTO l_user_id, l_company_id, l_role, l_status
+    -- 1. Look up profile
+    SELECT USER_ID, COMPANY_ID, DEFAULT_ROLE, STATUS
+      INTO l_user_id, l_company_id, l_default_role, l_status
       FROM APP_USERS
-     WHERE UPPER(EMAIL) = UPPER(:APP_USER);   -- APEX uppercases :APP_USER
+     WHERE UPPER(EMAIL) = UPPER(:APP_USER);
 
     IF l_status <> 'ACTIVE' THEN
         raise_application_error(-20001, 'Account is not active.');
     END IF;
 
-    APEX_UTIL.SET_SESSION_STATE('APP_USER_ID',    l_user_id);
-    APEX_UTIL.SET_SESSION_STATE('APP_COMPANY_ID', l_company_id);
-    APEX_UTIL.SET_SESSION_STATE('APP_ROLE',       l_role);
+    -- 2. Count roles
+    SELECT COUNT(*) INTO l_role_count
+      FROM USER_ROLES WHERE USER_ID = l_user_id;
+
+    -- 3. Pick active role: DEFAULT_ROLE if set, else highest-privilege
+    IF l_default_role IS NOT NULL THEN
+        l_active_role := l_default_role;
+    ELSE
+        SELECT ROLE INTO l_active_role
+          FROM USER_ROLES
+         WHERE USER_ID = l_user_id
+         ORDER BY DECODE(ROLE,'SYSTEM_ADMIN',1,'SUPPORT_AGENT',2,'CLIENT_ADMIN',3,4)
+         FETCH FIRST 1 ROW ONLY;
+    END IF;
+
+    -- 4. Stamp session
+    APEX_UTIL.SET_SESSION_STATE('APP_USER_ID',        l_user_id);
+    APEX_UTIL.SET_SESSION_STATE('APP_COMPANY_ID',     l_company_id);
+    APEX_UTIL.SET_SESSION_STATE('APP_ROLE',           l_active_role);
+    APEX_UTIL.SET_SESSION_STATE('APP_HAS_MULTI_ROLE',
+        CASE WHEN l_role_count > 1 THEN 'Y' ELSE 'N' END);
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         raise_application_error(-20002, 'No application profile for this user.');

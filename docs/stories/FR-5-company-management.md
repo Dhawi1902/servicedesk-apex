@@ -10,7 +10,7 @@
 Underpins **judge non-negotiable #2 (multiple companies)** at the root: every tenant that later
 shows up isolated in tickets/dashboard/assignment first has to exist as a row here. FR-5 is a
 System-Admin-only admin surface (Page 9, Interactive Grid) over the `COMPANIES` table
-(`company_id`, `company_name`, `company_type` ∈ `VENDOR`/`CLIENT`, `status` ∈ `ACTIVE`/`INACTIVE`).
+(`company_id`, `company_name`, `status` ∈ `ACTIVE`/`INACTIVE`).
 Deactivate is a **soft** status flip, not a row delete — `COMPANIES` is referenced by `APP_USERS`,
 `TICKETS`, and `AGENT_COMPANIES` FKs with no `ON DELETE CASCADE` (`sql/01_schema.sql` lines 43, 68,
 94), so a hard delete of any company with data would fail outright; soft-deactivate is the only
@@ -29,17 +29,17 @@ company list (never the raw table).
 ## Acceptance criteria (Given/When/Then)
 
 **AC-1 — Create company (happy path)**
-Given I am a System Admin on the Companies grid (Page 9), When I add a row with `company_name`,
-`company_type` (`VENDOR`/`CLIENT`), and confirm (`status` defaults `ACTIVE`), Then a new
-`COMPANIES` row is inserted and immediately available system-wide — e.g. selectable in the
-company picker on Page 10 (Users) the moment I refresh it. There is no separate company list to
-keep in sync — every consumer reads `COMPANIES` (or its role-scoped LOV) live.
+Given I am a System Admin on the Companies grid (Page 9), When I add a row with `company_name`
+and confirm (`status` defaults `ACTIVE`), Then a new `COMPANIES` row is inserted and immediately
+available system-wide — e.g. selectable in the company picker on Page 10 (Users) the moment I
+refresh it. There is no separate company list to keep in sync — every consumer reads `COMPANIES`
+(or its role-scoped LOV) live.
 
 **AC-2 — Edit company**
-Given an existing company row, When I change `company_name` or `company_type` and save, Then the
-`COMPANIES` row updates and every dependent surface that reads it live (Page 10 user company
-picker, Page 3 dashboard per-company breakdown FR-18, Page 4 ticket list company facet FR-15)
-reflects the new value without any code change.
+Given an existing company row, When I change `company_name` and save, Then the `COMPANIES` row
+updates and every dependent surface that reads it live (Page 10 user company picker, Page 3
+dashboard per-company breakdown FR-18, Page 4 ticket list company facet FR-15) reflects the new
+value without any code change.
 
 **AC-3 — Deactivate is a status flip, not a delete**
 Given an existing company (e.g. seeded Initech), When I set `status = INACTIVE` via the grid, Then
@@ -85,13 +85,13 @@ tenant's company name on a dashboard chart or filter is a leak, not a cosmetic i
 - **Page 3 — Dashboard** (MUST) — per-company ticket breakdown (FR-18); must be role-scoped per AC-7. Owner P4.
 - **Page 4 — Ticket List/Queue** (MUST) — company filter facet (FR-15); must be role-scoped per AC-7. Owner P3.
 
-Data touched: `COMPANIES` (`company_id`, `company_name`, `company_type`, `status`) — all committed
-in `sql/01_schema.sql`; no new columns or tables required.
+Data touched: `COMPANIES` (`company_id`, `company_name`, `status`) — all committed in
+`sql/01_schema.sql`; no new columns or tables required.
 
 ## Demo path
 
-1. Log in as **sara@northwind.example** (System Admin) → open **Companies** (Page 9) → show the seeded 4 companies (Northwind = VENDOR, Acme/Globex/Initech = CLIENT).
-2. **Create:** add a new CLIENT company, e.g. "Umbrella Corp" → row appears in the grid (AC-1).
+1. Log in as **sara@northwind.example** (System Admin) → open **Companies** (Page 9) → show the seeded 4 companies (Northwind Support + Acme/Globex/Initech — all tenants).
+2. **Create:** add a new company, e.g. "Umbrella Corp" → row appears in the grid (AC-1).
 3. **Edit:** rename it → save → confirm the change (AC-2).
 4. **Deactivate:** flip Initech's status to `INACTIVE` → row stays in the grid (not deleted), no delete button ever appears (AC-3).
 5. **Downstream check:** open **Users** (Page 10) → the new "Umbrella Corp" is already selectable in the company picker (AC-1/AC-2).
@@ -115,16 +115,16 @@ role's view of company data is scoped).
   downstream.
 - 🛠 **apex-expert** — the *how*: Interactive Grid config for Page 9 — `edit.allowedOperations`
   configured to drop the delete operation so soft-deactivate is the only removal path (AC-3);
-  independently declared static LOVs for `company_type`/`status` whose values mirror the sets
-  enforced by `COMPANIES_TYPE_CK`/`COMPANIES_STAT_CK` (the checks validate, they don't populate the
-  list); the `IS_SYSTEM_ADMIN` authorization scheme wired at **both** page level and on the Automatic
+  independently declared static LOV for `status` whose values mirror the set enforced by
+  `COMPANIES_STAT_CK` (the check validates, it doesn't populate the list); the `IS_SYSTEM_ADMIN`
+  authorization scheme wired at **both** page level and on the Automatic
   Row Processing (DML) process (AC-5); `APEX_ERROR.EXTRACT_CONSTRAINT_NAME` to map a
   `COMPANIES_NAME_UK` violation to a friendly on-page message (AC-6); role-scoped LOV/query
   predicates for the Page 3/Page 4 company facets (AC-7).
 
 ## Scope notes (no change needed)
 
-- FR-5 traces cleanly to a committed page (9), committed columns (`COMPANIES.company_type`,
+- FR-5 traces cleanly to a committed page (9), committed columns (`COMPANIES.company_name`,
   `status`), and a schema that already enforces "deactivate, don't delete" via FK design (no
   `ON DELETE CASCADE` from `APP_USERS`/`TICKETS`/`AGENT_COMPANIES`). **No brief change required.**
 - Adjacent, not blocking: **Page 11 — Categories (manage, SHOULD)** shares the same
@@ -137,12 +137,11 @@ role's view of company data is scoped).
      checks `APP_USERS.STATUS`, not `COMPANIES.STATUS` — so today a user at a deactivated company
      can still log in and work within their own (now-inactive) tenant-scoped view. Not a
      tenant-isolation leak (still only their own `company_id`), just unspecified.
-  2. **Vendor-row integrity:** nothing currently stops a System Admin from creating a second
-     `VENDOR` row, flipping Northwind (the vendor that houses every agent + admin) to `CLIENT`, or
-     deactivating the vendor company itself — any of which would orphan the entire support side.
-     No AC in this ticket covers it. If the team wants a guard (e.g. block edit/deactivate on the
-     row where `company_type = 'VENDOR'`), that's a small brief patch to FR-5's wording, not a new
-     FR — raise it before Page 9 is built, since it's cheaper to constrain now than to retrofit.
+  2. **Service-provider company protection:** nothing currently stops a System Admin from
+     deactivating the company that houses agents + admins — which would orphan the entire
+     support side. No AC in this ticket covers it. If the team wants a guard (e.g. prevent
+     deactivation of a company that has active SUPPORT_AGENT or SYSTEM_ADMIN users), that's a
+     small brief patch to FR-5's wording, not a new FR — raise it before Page 9 is built.
 
 ---
 _🔒 = tenant-isolation-auditor · 🛠 = apex-expert_

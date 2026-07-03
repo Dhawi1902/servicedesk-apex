@@ -6,28 +6,34 @@
 -- it never depends on generated ID values. Run AFTER 01_schema.sql.
 --
 -- Accounts mirror docs/mockups (password handling is a separate auth step):
---   sara@northwind.example  SYSTEM_ADMIN   (vendor)
---   mike@northwind.example  SUPPORT_AGENT  L1 (covers Acme + Globex)
---   lena@northwind.example  SUPPORT_AGENT  L2 (covers Globex + Initech)
---   tom@northwind.example   SUPPORT_AGENT  L3 (covers Acme + Globex + Initech)
---   anna@acme.example       CLIENT_USER    (Engineering dept)
---   aaron@acme.example      CLIENT_ADMIN   (Engineering dept)
---   amy@acme.example        CLIENT_USER    (Finance dept)
---   george@globex.example   CLIENT_USER    (Operations dept)
---   gina@globex.example     CLIENT_ADMIN   (Operations dept)
---   ivan@initech.example    CLIENT_USER    (IT dept)
+--   sara@northwind.example  SYSTEM_ADMIN                    (Support Operations dept)
+--   mike@northwind.example  SUPPORT_AGENT + CLIENT_USER     (dual-role, Support Operations dept)
+--   lena@northwind.example  SUPPORT_AGENT + CLIENT_USER     (dual-role, Support Operations dept)
+--   tom@northwind.example   SUPPORT_AGENT + CLIENT_USER     (dual-role, Support Operations dept)
+--   nora@northwind.example  CLIENT_ADMIN                    (Internal Systems dept — internal user)
+--   nick@northwind.example  CLIENT_USER                     (Internal Systems dept — internal user)
+--   anna@acme.example       CLIENT_USER                     (Engineering dept)
+--   aaron@acme.example      CLIENT_ADMIN                    (Engineering dept)
+--   amy@acme.example        CLIENT_USER                     (Finance dept)
+--   george@globex.example   CLIENT_USER                     (Operations dept)
+--   gina@globex.example     CLIENT_ADMIN                    (Operations dept)
+--   ivan@initech.example    CLIENT_USER                     (IT dept)
+-- ROLE is in USER_ROLES (decision P), not APP_USERS.
 --------------------------------------------------------------------------------
 
 ----------------------------------------------------------------- COMPANIES ----
-INSERT INTO COMPANIES (COMPANY_NAME, COMPANY_TYPE) VALUES ('Northwind Support', 'VENDOR');
-INSERT INTO COMPANIES (COMPANY_NAME, COMPANY_TYPE) VALUES ('Acme Corp',   'CLIENT');
-INSERT INTO COMPANIES (COMPANY_NAME, COMPANY_TYPE) VALUES ('Globex Inc',  'CLIENT');
-INSERT INTO COMPANIES (COMPANY_NAME, COMPANY_TYPE) VALUES ('Initech',     'CLIENT');
+-- Every company is a tenant — the service provider (Northwind) is also its own customer.
+INSERT INTO COMPANIES (COMPANY_NAME) VALUES ('Northwind Support');
+INSERT INTO COMPANIES (COMPANY_NAME) VALUES ('Acme Corp');
+INSERT INTO COMPANIES (COMPANY_NAME) VALUES ('Globex Inc');
+INSERT INTO COMPANIES (COMPANY_NAME) VALUES ('Initech');
 
 --------------------------------------------------------------- DEPARTMENTS ----
--- Vendor departments
+-- Northwind departments (support ops + internal systems)
 INSERT INTO DEPARTMENTS (COMPANY_ID, DEPARTMENT_NAME)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'), 'Support Operations');
+INSERT INTO DEPARTMENTS (COMPANY_ID, DEPARTMENT_NAME)
+VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'), 'Internal Systems');
 
 -- Acme departments
 INSERT INTO DEPARTMENTS (COMPANY_ID, DEPARTMENT_NAME)
@@ -46,99 +52,167 @@ INSERT INTO DEPARTMENTS (COMPANY_ID, DEPARTMENT_NAME)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Initech'), 'IT');
 
 ------------------------------------------------------------------ APP_USERS ---
--- Vendor staff (department optional for vendor)
-INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, ROLE, TIER)
+-- Northwind — Support Operations (agents + admin)
+-- ROLE is now in USER_ROLES (decision P). TIER on AGENT_COMPANIES (decision M revised).
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, DEFAULT_ROLE)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'),
         (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Support Operations'
            AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support')),
-        'Sara Nolan', 'sara@northwind.example', 'SYSTEM_ADMIN', NULL);
+        'Sara Nolan', 'sara@northwind.example', 'SYSTEM_ADMIN');
 
-INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, ROLE, TIER)
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, DEFAULT_ROLE)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'),
         (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Support Operations'
            AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support')),
-        'Mike Reyes', 'mike@northwind.example', 'SUPPORT_AGENT', 'L1');
+        'Mike Reyes', 'mike@northwind.example', 'SUPPORT_AGENT');
 
-INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, ROLE, TIER)
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, DEFAULT_ROLE)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'),
         (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Support Operations'
            AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support')),
-        'Lena Ortiz', 'lena@northwind.example', 'SUPPORT_AGENT', 'L2');
+        'Lena Ortiz', 'lena@northwind.example', 'SUPPORT_AGENT');
 
-INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, ROLE, TIER)
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, DEFAULT_ROLE)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'),
         (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Support Operations'
            AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support')),
-        'Tom Vance', 'tom@northwind.example', 'SUPPORT_AGENT', 'L3');
+        'Tom Vance', 'tom@northwind.example', 'SUPPORT_AGENT');
+
+-- Northwind — Internal Systems (internal customer users — service provider as its own tenant)
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, DEFAULT_ROLE)
+VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'),
+        (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Internal Systems'
+           AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support')),
+        'Nora Diaz', 'nora@northwind.example', 'CLIENT_ADMIN');
+
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL)
+VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'),
+        (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Internal Systems'
+           AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support')),
+        'Nick Pham', 'nick@northwind.example');
 
 -- Acme — Engineering dept
-INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, ROLE)
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp'),
         (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Engineering'
            AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp')),
-        'Anna Bell', 'anna@acme.example', 'CLIENT_USER');
+        'Anna Bell', 'anna@acme.example');
 
-INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, ROLE)
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp'),
         (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Engineering'
            AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp')),
-        'Aaron Katz', 'aaron@acme.example', 'CLIENT_ADMIN');
+        'Aaron Katz', 'aaron@acme.example');
 
 -- Acme — Finance dept (different department for department-scoping demo)
-INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, ROLE)
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp'),
         (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Finance'
            AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp')),
-        'Amy Chen', 'amy@acme.example', 'CLIENT_USER');
+        'Amy Chen', 'amy@acme.example');
 
 -- Globex
-INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, ROLE)
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Globex Inc'),
         (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Operations'
            AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Globex Inc')),
-        'George Ives', 'george@globex.example', 'CLIENT_USER');
+        'George Ives', 'george@globex.example');
 
-INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, ROLE)
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Globex Inc'),
         (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Operations'
            AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Globex Inc')),
-        'Gina Park', 'gina@globex.example', 'CLIENT_ADMIN');
+        'Gina Park', 'gina@globex.example');
 
 -- Initech
-INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL, ROLE)
+INSERT INTO APP_USERS (COMPANY_ID, DEPARTMENT_ID, FULL_NAME, EMAIL)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Initech'),
         (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='IT'
            AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Initech')),
-        'Ivan Cross', 'ivan@initech.example', 'CLIENT_USER');
+        'Ivan Cross', 'ivan@initech.example');
+
+----------------------------------------------------------------- USER_ROLES ---
+-- Decision P: roles live here, not on APP_USERS. One row per role per user.
+-- Northwind agents get dual roles (SUPPORT_AGENT + CLIENT_USER) for role-switching.
+
+-- Sara — System Admin only
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='sara@northwind.example'), 'SYSTEM_ADMIN');
+
+-- Mike, Lena, Tom — SUPPORT_AGENT + CLIENT_USER (dual-role, can switch in nav bar)
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='mike@northwind.example'), 'SUPPORT_AGENT');
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='mike@northwind.example'), 'CLIENT_USER');
+
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='lena@northwind.example'), 'SUPPORT_AGENT');
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='lena@northwind.example'), 'CLIENT_USER');
+
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='tom@northwind.example'), 'SUPPORT_AGENT');
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='tom@northwind.example'), 'CLIENT_USER');
+
+-- Nora — Client Admin only
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='nora@northwind.example'), 'CLIENT_ADMIN');
+
+-- Nick — Client User only
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='nick@northwind.example'), 'CLIENT_USER');
+
+-- Acme
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='anna@acme.example'), 'CLIENT_USER');
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='aaron@acme.example'), 'CLIENT_ADMIN');
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='amy@acme.example'), 'CLIENT_USER');
+
+-- Globex
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='george@globex.example'), 'CLIENT_USER');
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='gina@globex.example'), 'CLIENT_ADMIN');
+
+-- Initech
+INSERT INTO USER_ROLES (USER_ID, ROLE)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='ivan@initech.example'), 'CLIENT_USER');
 
 ------------------------------------------------------------- AGENT_COMPANIES --
--- Decision I: scope each agent's queue to the clients they cover.
--- Mike (L1) covers Acme + Globex
-INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID)
+-- Decision I + M revised: scope each agent's queue AND tier per client.
+-- Mike: L1 for Acme (newer client), L2 for Globex (knows them better)
+INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID, TIER)
 VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='mike@northwind.example'),
-        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp'));
-INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID)
+        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp'), 'L1');
+INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID, TIER)
 VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='mike@northwind.example'),
-        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Globex Inc'));
+        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Globex Inc'), 'L2');
 
--- Lena (L2) covers Globex + Initech
-INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID)
+-- Lena: L2 for Globex, L3 for Initech (senior on Initech)
+INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID, TIER)
 VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='lena@northwind.example'),
-        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Globex Inc'));
-INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID)
+        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Globex Inc'), 'L2');
+INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID, TIER)
 VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='lena@northwind.example'),
-        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Initech'));
+        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Initech'), 'L3');
 
--- Tom (L3) covers all three clients
-INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID)
+-- Tom: L3 across all three clients + internal (senior generalist)
+INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID, TIER)
 VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='tom@northwind.example'),
-        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp'));
-INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID)
+        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp'), 'L3');
+INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID, TIER)
 VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='tom@northwind.example'),
-        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Globex Inc'));
-INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID)
+        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Globex Inc'), 'L3');
+INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID, TIER)
 VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='tom@northwind.example'),
-        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Initech'));
+        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Initech'), 'L3');
+-- Tom also covers Northwind internal tickets
+INSERT INTO AGENT_COMPANIES (USER_ID, COMPANY_ID, TIER)
+VALUES ((SELECT USER_ID FROM APP_USERS WHERE EMAIL='tom@northwind.example'),
+        (SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'), 'L1');
 
 ----------------------------------------------------------------- CATEGORIES ---
 -- Renamed 'Incident' -> 'System Outage' to avoid clash with ticket_type 'INCIDENT'
@@ -181,6 +255,16 @@ INSERT INTO SLA_TARGETS (COMPANY_ID, SEVERITY, RESPONSE_HOURS, RESOLUTION_DAYS)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Initech'), 'Minor', 12, 7);
 INSERT INTO SLA_TARGETS (COMPANY_ID, SEVERITY, RESPONSE_HOURS, RESOLUTION_DAYS)
 VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Initech'), 'Low', 24, 14);
+
+-- Northwind Support (internal SLA — same team, faster response)
+INSERT INTO SLA_TARGETS (COMPANY_ID, SEVERITY, RESPONSE_HOURS, RESOLUTION_DAYS)
+VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'), 'Critical', 1, 1);
+INSERT INTO SLA_TARGETS (COMPANY_ID, SEVERITY, RESPONSE_HOURS, RESOLUTION_DAYS)
+VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'), 'Major', 2, 2);
+INSERT INTO SLA_TARGETS (COMPANY_ID, SEVERITY, RESPONSE_HOURS, RESOLUTION_DAYS)
+VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'), 'Minor', 4, 5);
+INSERT INTO SLA_TARGETS (COMPANY_ID, SEVERITY, RESPONSE_HOURS, RESOLUTION_DAYS)
+VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'), 'Low', 8, 10);
 
 -------------------------------------------------------------------- TICKETS ---
 -- Now uses SEVERITY (client-set) + PRIORITY (support-set, nullable) + TICKET_TYPE.
@@ -358,6 +442,38 @@ VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Acme Corp'),
         SYSTIMESTAMP - INTERVAL '3' DAY, SYSTIMESTAMP - INTERVAL '6' HOUR,
         SYSTIMESTAMP - INTERVAL '2' DAY + INTERVAL '18' HOUR,
         SYSTIMESTAMP);
+
+-- Northwind internal tickets (service provider as its own customer)
+INSERT INTO TICKETS (COMPANY_ID, DEPARTMENT_ID, TICKET_TYPE, SUBJECT, DESCRIPTION, CATEGORY_ID,
+                     SEVERITY, PRIORITY, STATUS, CREATED_BY, ASSIGNED_TO,
+                     CREATED_AT, UPDATED_AT, FIRST_RESPONSE_AT, SLA_DUE_DATE)
+VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'),
+        (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Internal Systems'
+           AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support')),
+        'INCIDENT',
+        'Internal CRM search returns stale results',
+        'The full-text search on the internal CRM is returning results from the old index. Reindexing does not help.',
+        (SELECT CATEGORY_ID FROM CATEGORIES WHERE CATEGORY_NAME='Bug'),
+        'Major', 'P2', 'In Progress',
+        (SELECT USER_ID FROM APP_USERS WHERE EMAIL='nick@northwind.example'),
+        (SELECT USER_ID FROM APP_USERS WHERE EMAIL='tom@northwind.example'),
+        SYSTIMESTAMP - INTERVAL '2' DAY, SYSTIMESTAMP - INTERVAL '4' HOUR,
+        SYSTIMESTAMP - INTERVAL '1' DAY + INTERVAL '16' HOUR,
+        SYSTIMESTAMP + INTERVAL '1' DAY);
+
+INSERT INTO TICKETS (COMPANY_ID, DEPARTMENT_ID, TICKET_TYPE, SUBJECT, DESCRIPTION, CATEGORY_ID,
+                     SEVERITY, STATUS, CREATED_BY, CREATED_AT, UPDATED_AT, SLA_DUE_DATE)
+VALUES ((SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support'),
+        (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Internal Systems'
+           AND COMPANY_ID=(SELECT COMPANY_ID FROM COMPANIES WHERE COMPANY_NAME='Northwind Support')),
+        'SERVICE_REQUEST',
+        'Add new hire onboarding checklist to HR portal',
+        'HR asked for a digital onboarding checklist that new hires can complete on day one.',
+        (SELECT CATEGORY_ID FROM CATEGORIES WHERE CATEGORY_NAME='Feature Request'),
+        'Low', 'New',
+        (SELECT USER_ID FROM APP_USERS WHERE EMAIL='nora@northwind.example'),
+        SYSTIMESTAMP - INTERVAL '1' DAY, SYSTIMESTAMP - INTERVAL '1' DAY,
+        SYSTIMESTAMP + INTERVAL '13' DAY);
 
 ------------------------------------------------------------- TICKET_COMMENTS --
 INSERT INTO TICKET_COMMENTS (TICKET_ID, USER_ID, COMMENT_TEXT, IS_INTERNAL)

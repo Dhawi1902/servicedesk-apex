@@ -5,13 +5,18 @@
    are built in Oracle APEX (application items + WHERE company_id filters
    + authorization schemes).
 
-   Updated to match the latest brief (2026-07-02):
+   Updated to match the latest brief (2026-07-03):
+   - Decision O: PROJECTS layer between COMPANIES and TICKETS
+   - Decision M revised: tier on APP_USERS (one tier per agent, not per-company)
+   - Decision N revised: project-scoped client visibility (not department-scoped)
+   - Decision P: multi-role support (userRoles array)
+   - AGENT_PROJECTS replaces AGENT_COMPANIES (maps agents to projects, not companies)
+   - USER_PROJECTS for client access control (empty = all company projects)
+   - SLA targets keyed on projectId (not companyId)
    - Severity (client-set) vs Priority (support-set, nullable) — Decision K
-   - Severity values: Critical/Major/Minor/Low (was Cosmetic → Low)
-   - Agent tiers L1–L4 — Decision M
-   - Departments per company — Decision N
+   - Severity values: Critical/Major/Minor/Low
    - Ticket type INCIDENT / SERVICE_REQUEST — FR-30
-   - Per-company SLA targets with escalationPct — FR-23
+   - Per-project SLA targets with escalationPct — FR-23 / FR-35
    - First-response tracking (firstResponseAt) — FR-31
    - Resolution code + summary on resolve — FR-36
    - Reopen count tracking
@@ -19,15 +24,29 @@
    ========================================================================= */
 window.DEMO_SEED = {
   companies: [
-    { id: 'C0', name: 'Northwind IT',  type: 'VENDOR', status: 'Active' },
-    { id: 'C1', name: 'Acme Corp',     type: 'CLIENT', status: 'Active' },
-    { id: 'C2', name: 'Globex Ltd',    type: 'CLIENT', status: 'Active' },
-    { id: 'C3', name: 'Initech',       type: 'CLIENT', status: 'Active' },
-    { id: 'C4', name: 'Umbrella Inc',  type: 'CLIENT', status: 'Inactive' }
+    { id: 'C0', name: 'Northwind IT',  status: 'Active' },
+    { id: 'C1', name: 'Acme Corp',     status: 'Active' },
+    { id: 'C2', name: 'Globex Ltd',    status: 'Active' },
+    { id: 'C3', name: 'Initech',       status: 'Active' },
+    { id: 'C4', name: 'Umbrella Inc',  status: 'Inactive' }
   ],
 
-  // Decision N: departments per company
+  // Decision O: PROJECTS layer between COMPANIES and TICKETS.
+  // Each company has one or more service-engagement projects.
+  // Tickets, SLA targets, agent mappings, and client access are all scoped to projects.
+  projects: [
+    { id: 'P1', companyId: 'C1', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Acme Corp',              isActive: true, createdAt: '2026-01-15T00:00:00' },
+    { id: 'P2', companyId: 'C1', projectName: 'ERP Systems',     projectKey: 'ERP',   description: 'ERP platform maintenance and support',          isActive: true, createdAt: '2026-03-01T00:00:00' },
+    { id: 'P3', companyId: 'C2', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Globex Ltd',              isActive: true, createdAt: '2026-03-15T00:00:00' },
+    { id: 'P4', companyId: 'C2', projectName: 'CRM Platform',    projectKey: 'CRM',   description: 'CRM integration and support',                   isActive: true, createdAt: '2026-04-01T00:00:00' },
+    { id: 'P5', companyId: 'C3', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Initech',                 isActive: true, createdAt: '2026-06-01T00:00:00' },
+    { id: 'P6', companyId: 'C0', projectName: 'Internal Apps',   projectKey: 'INTAP', description: 'Internal application support for Northwind IT',  isActive: true, createdAt: '2026-01-01T00:00:00' },
+    { id: 'P7', companyId: 'C0', projectName: 'Infrastructure',  projectKey: 'INFRA', description: 'Network and server infrastructure',              isActive: true, createdAt: '2026-01-01T00:00:00' }
+  ],
+
+  // Decision N: departments per company (metadata only — not a visibility filter)
   departments: [
+    { id: 'dep0', companyId: 'C0', name: 'Internal Systems' },
     { id: 'dep1', companyId: 'C1', name: 'Finance' },
     { id: 'dep2', companyId: 'C1', name: 'IT' },
     { id: 'dep3', companyId: 'C2', name: 'Operations' },
@@ -37,55 +56,111 @@ window.DEMO_SEED = {
   ],
 
   // password is 'demo' for every account (prefilled on the login screen)
-  // tier: L1–L4 for Support Agents (Decision M), null for non-agents
-  // departmentId: links client users to their department (Decision N), null for vendor users
+  // Decision M revised: tier is on APP_USERS (one tier per agent, not per-company).
+  //   Non-agent users have tier: null.
+  // Decision P: role is the user's default/landing role. Full role list in userRoles[].
+  // departmentId: links client users to their department (metadata), null for vendor users
+  // status: Active/Inactive — FR-6 deactivation support
+  // lastLogin: ISO timestamp of last login — ISO §6.6 access review
   users: [
-    { id: 'u1', name: 'Sara Admin',   email: 'sara@northwind.example',  password: 'demo', role: 'System Admin',  companyId: 'C0', tier: null, departmentId: null },
-    { id: 'u2', name: 'Mike Ops',     email: 'mike@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', tier: 'L1', departmentId: null },
-    { id: 'u3', name: 'Lee Tech',     email: 'lee@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', tier: 'L2', departmentId: null },
-    { id: 'u4', name: 'Anna Nguyen',  email: 'anna@acme.example',       password: 'demo', role: 'Client User',   companyId: 'C1', tier: null, departmentId: 'dep1' },
-    { id: 'u5', name: 'Bob Reyes',    email: 'bob@acme.example',        password: 'demo', role: 'Client Admin',  companyId: 'C1', tier: null, departmentId: 'dep2' },
-    { id: 'u6', name: 'Carla Vidal',  email: 'carla@globex.example',    password: 'demo', role: 'Client Admin',  companyId: 'C2', tier: null, departmentId: 'dep3' },
-    { id: 'u7', name: 'Dan Yu',       email: 'dan@globex.example',      password: 'demo', role: 'Client User',   companyId: 'C2', tier: null, departmentId: 'dep4' },
-    { id: 'u8', name: 'Eve Park',     email: 'eve@initech.example',     password: 'demo', role: 'Client User',   companyId: 'C3', tier: null, departmentId: 'dep5' },
-    { id: 'u9',  name: 'Nora Syed',    email: 'nora@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', tier: 'L1', departmentId: null },
-    { id: 'u10', name: 'Raj Patel',    email: 'raj@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', tier: 'L2', departmentId: null },
-    { id: 'u11', name: 'Kim Tanaka',   email: 'kim@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', tier: 'L3', departmentId: null },
-    { id: 'u12', name: 'Omar Hassan',  email: 'omar@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', tier: 'L4', departmentId: null },
-    { id: 'u13', name: 'Fay Wong',     email: 'fay@acme.example',        password: 'demo', role: 'Client User',   companyId: 'C1', tier: null, departmentId: 'dep2' },
-    { id: 'u14', name: 'Tom Grant',    email: 'tom@globex.example',      password: 'demo', role: 'Client User',   companyId: 'C2', tier: null, departmentId: 'dep3' },
-    { id: 'u15', name: 'Lily Chen',    email: 'lily@initech.example',    password: 'demo', role: 'Client Admin',  companyId: 'C3', tier: null, departmentId: 'dep5' },
-    { id: 'u16', name: 'Zack Osman',   email: 'zack@initech.example',    password: 'demo', role: 'Client User',   companyId: 'C3', tier: null, departmentId: 'dep6' }
+    { id: 'u1', name: 'Sara Admin',   email: 'sara@northwind.example',  password: 'demo', role: 'System Admin',  companyId: 'C0', departmentId: null,   tier: null, status: 'Active', lastLogin: '2026-07-03T08:15:00' },
+    { id: 'u2', name: 'Mike Ops',     email: 'mike@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L2', status: 'Active', lastLogin: '2026-07-03T07:50:00' },
+    { id: 'u3', name: 'Lee Tech',     email: 'lee@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L2', status: 'Active', lastLogin: '2026-07-02T16:30:00' },
+    { id: 'u4', name: 'Anna Nguyen',  email: 'anna@acme.example',       password: 'demo', role: 'Client User',   companyId: 'C1', departmentId: 'dep1', tier: null, status: 'Active', lastLogin: '2026-07-03T09:00:00' },
+    { id: 'u5', name: 'Bob Reyes',    email: 'bob@acme.example',        password: 'demo', role: 'Client Admin',  companyId: 'C1', departmentId: 'dep2', tier: null, status: 'Active', lastLogin: '2026-07-02T14:20:00' },
+    { id: 'u6', name: 'Carla Vidal',  email: 'carla@globex.example',    password: 'demo', role: 'Client Admin',  companyId: 'C2', departmentId: 'dep3', tier: null, status: 'Active', lastLogin: '2026-07-01T11:00:00' },
+    { id: 'u7', name: 'Dan Yu',       email: 'dan@globex.example',      password: 'demo', role: 'Client User',   companyId: 'C2', departmentId: 'dep4', tier: null, status: 'Active', lastLogin: '2026-07-03T08:45:00' },
+    { id: 'u8', name: 'Eve Park',     email: 'eve@initech.example',     password: 'demo', role: 'Client User',   companyId: 'C3', departmentId: 'dep5', tier: null, status: 'Active', lastLogin: '2026-06-30T10:15:00' },
+    { id: 'u9',  name: 'Nora Syed',    email: 'nora@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L1', status: 'Active', lastLogin: '2026-07-03T08:00:00' },
+    { id: 'u10', name: 'Raj Patel',    email: 'raj@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L2', status: 'Active', lastLogin: '2026-07-02T17:00:00' },
+    { id: 'u11', name: 'Kim Tanaka',   email: 'kim@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L3', status: 'Active', lastLogin: '2026-07-01T09:30:00' },
+    { id: 'u12', name: 'Omar Hassan',  email: 'omar@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L4', status: 'Active', lastLogin: '2026-06-28T15:00:00' },
+    { id: 'u13', name: 'Fay Wong',     email: 'fay@acme.example',        password: 'demo', role: 'Client User',   companyId: 'C1', departmentId: 'dep2', tier: null, status: 'Active', lastLogin: '2026-07-02T09:45:00' },
+    { id: 'u14', name: 'Tom Grant',    email: 'tom@globex.example',      password: 'demo', role: 'Client User',   companyId: 'C2', departmentId: 'dep3', tier: null, status: 'Inactive', lastLogin: '2026-06-15T10:00:00' },
+    { id: 'u15', name: 'Lily Chen',    email: 'lily@initech.example',    password: 'demo', role: 'Client Admin',  companyId: 'C3', departmentId: 'dep5', tier: null, status: 'Active', lastLogin: '2026-07-03T07:30:00' },
+    { id: 'u16', name: 'Zack Osman',   email: 'zack@initech.example',    password: 'demo', role: 'Client User',   companyId: 'C3', departmentId: 'dep6', tier: null, status: 'Active', lastLogin: '2026-06-29T14:00:00' },
+    { id: 'u17', name: 'Nora Syed (Int)',  email: 'nora-int@northwind.example', password: 'demo', role: 'Client Admin',  companyId: 'C0', departmentId: 'dep0', tier: null, status: 'Active', lastLogin: '2026-07-03T08:00:00' },
+    { id: 'u18', name: 'Nick Farrow',      email: 'nick@northwind.example',     password: 'demo', role: 'Client User',   companyId: 'C0', departmentId: 'dep0', tier: null, status: 'Active', lastLogin: '2026-07-02T16:00:00' }
   ],
 
-  // Which CLIENT companies (projects) each Support Agent covers.
-  // Agents only see tickets for their assigned projects — this kills the
-  // cross-project "noise" (an agent never sees clients they're not on).
-  // System Admin is intentionally absent: admins see every company by role.
-  // In APEX this is a small join table (AGENT_COMPANIES: user_id + company_id).
-  agentCompanies: [
-    { userId: 'u2', companyId: 'C1' },   // Mike covers Acme
-    { userId: 'u2', companyId: 'C2' },   // Mike covers Globex
-    { userId: 'u3', companyId: 'C1' },   // Lee covers Acme
-    { userId: 'u3', companyId: 'C3' },   // Lee covers Initech (not Globex)
-    { userId: 'u9',  companyId: 'C1' },   // Nora L1 covers Acme
-    { userId: 'u9',  companyId: 'C3' },   // Nora L1 covers Initech
-    { userId: 'u10', companyId: 'C2' },   // Raj L2 covers Globex
-    { userId: 'u10', companyId: 'C3' },   // Raj L2 covers Initech
-    { userId: 'u11', companyId: 'C1' },   // Kim L3 covers Acme
-    { userId: 'u11', companyId: 'C2' },   // Kim L3 covers Globex
-    { userId: 'u11', companyId: 'C3' },   // Kim L3 covers Initech
-    { userId: 'u12', companyId: 'C1' },   // Omar L4 covers Acme
-    { userId: 'u12', companyId: 'C2' },   // Omar L4 covers Globex
-    { userId: 'u12', companyId: 'C3' }    // Omar L4 covers Initech
+  // Decision P: multi-role support. Each user can hold multiple roles.
+  // Northwind agents get both SUPPORT_AGENT and CLIENT_USER (they are also
+  // internal users of the Northwind company).
+  // The user's `role` field above is the default/landing role at login;
+  // the nav-bar role-switcher uses this array to offer alternatives.
+  userRoles: [
+    { userId: 'u1',  role: 'SYSTEM_ADMIN' },
+    { userId: 'u2',  role: 'SUPPORT_AGENT' },
+    { userId: 'u2',  role: 'CLIENT_USER' },
+    { userId: 'u3',  role: 'SUPPORT_AGENT' },
+    { userId: 'u3',  role: 'CLIENT_USER' },
+    { userId: 'u4',  role: 'CLIENT_USER' },
+    { userId: 'u5',  role: 'CLIENT_ADMIN' },
+    { userId: 'u6',  role: 'CLIENT_ADMIN' },
+    { userId: 'u7',  role: 'CLIENT_USER' },
+    { userId: 'u8',  role: 'CLIENT_USER' },
+    { userId: 'u9',  role: 'SUPPORT_AGENT' },
+    { userId: 'u9',  role: 'CLIENT_USER' },
+    { userId: 'u10', role: 'SUPPORT_AGENT' },
+    { userId: 'u10', role: 'CLIENT_USER' },
+    { userId: 'u11', role: 'SUPPORT_AGENT' },
+    { userId: 'u11', role: 'CLIENT_USER' },
+    { userId: 'u12', role: 'SUPPORT_AGENT' },
+    { userId: 'u12', role: 'CLIENT_USER' },
+    { userId: 'u13', role: 'CLIENT_USER' },
+    { userId: 'u14', role: 'CLIENT_USER' },
+    { userId: 'u15', role: 'CLIENT_ADMIN' },
+    { userId: 'u16', role: 'CLIENT_USER' },
+    { userId: 'u17', role: 'CLIENT_ADMIN' },
+    { userId: 'u18', role: 'CLIENT_USER' }
   ],
 
+  // Which projects each Support Agent covers (Decision O + Decision I revised).
+  // Tier is NOT here — it lives on the user record (Decision M revised).
+  // System Admin is intentionally absent: admins see every project by role.
+  // In APEX this is a join table (AGENT_PROJECTS: user_id + project_id).
+  agentProjects: [
+    { userId: 'u2',  projectId: 'P1' },   // Mike covers Acme IT Support
+    { userId: 'u2',  projectId: 'P3' },   // Mike covers Globex IT Support
+    { userId: 'u2',  projectId: 'P6' },   // Mike covers Northwind Internal Apps
+    { userId: 'u3',  projectId: 'P1' },   // Lee covers Acme IT Support
+    { userId: 'u3',  projectId: 'P2' },   // Lee covers Acme ERP
+    { userId: 'u3',  projectId: 'P5' },   // Lee covers Initech IT Support
+    { userId: 'u3',  projectId: 'P6' },   // Lee covers Northwind Internal Apps
+    { userId: 'u9',  projectId: 'P1' },   // Nora covers Acme IT Support
+    { userId: 'u9',  projectId: 'P5' },   // Nora covers Initech IT Support
+    { userId: 'u10', projectId: 'P3' },   // Raj covers Globex IT Support
+    { userId: 'u10', projectId: 'P4' },   // Raj covers Globex CRM
+    { userId: 'u10', projectId: 'P5' },   // Raj covers Initech IT Support
+    { userId: 'u11', projectId: 'P1' },   // Kim covers Acme IT Support
+    { userId: 'u11', projectId: 'P3' },   // Kim covers Globex IT Support
+    { userId: 'u11', projectId: 'P5' },   // Kim covers Initech IT Support
+    { userId: 'u12', projectId: 'P1' },   // Omar covers Acme (all projects)
+    { userId: 'u12', projectId: 'P2' },
+    { userId: 'u12', projectId: 'P3' },   // Omar covers Globex (all projects)
+    { userId: 'u12', projectId: 'P4' },
+    { userId: 'u12', projectId: 'P5' },   // Omar covers Initech
+    { userId: 'u2',  projectId: 'P7' },   // Mike covers Northwind Infrastructure
+    { userId: 'u3',  projectId: 'P7' }    // Lee covers Northwind Infrastructure
+  ],
+
+  // Decision N revised: client-side project access control.
+  // Empty array = open default (all client users see all of their company's projects).
+  // Rows restrict a specific user to specific projects (managed by Client Admin).
+  // In APEX this is USER_PROJECTS: user_id + project_id.
+  userProjects: [],
+
+  // Categories: companyId null = global, set = company-specific (hybrid model per brief §5)
+  // projectId: null = available to all projects in that company (or globally); set = project-specific
+  // description = guidance text shown in the LOV
   categories: [
-    { id: 'cat1', name: 'Network' },
-    { id: 'cat2', name: 'Hardware' },
-    { id: 'cat3', name: 'Software' },
-    { id: 'cat4', name: 'Access / Account' },
-    { id: 'cat5', name: 'Request' }
+    { id: 'cat1', name: 'Network',          companyId: null, projectId: null, description: 'Network connectivity, DNS, VPN, firewall issues', status: 'Active' },
+    { id: 'cat2', name: 'Hardware',          companyId: null, projectId: null, description: 'Physical device faults — laptops, printers, peripherals', status: 'Active' },
+    { id: 'cat3', name: 'Software',          companyId: null, projectId: null, description: 'Application errors, crashes, bugs, license issues', status: 'Active' },
+    { id: 'cat4', name: 'Access / Account',  companyId: null, projectId: null, description: 'Password resets, permission changes, account provisioning', status: 'Active' },
+    { id: 'cat5', name: 'Request',           companyId: null, projectId: null, description: 'General service requests not covered by other categories', status: 'Active' },
+    { id: 'cat6', name: 'ERP / Finance',     companyId: 'C1', projectId: 'P2', description: 'Acme-specific ERP and financial system issues', status: 'Active' },
+    { id: 'cat7', name: 'CRM Integration',   companyId: 'C2', projectId: 'P4', description: 'Globex CRM platform and integration issues', status: 'Active' }
   ],
 
   // Decision K: severity (client-set, business impact) vs priority (support-set, work order)
@@ -99,46 +174,73 @@ window.DEMO_SEED = {
   // FR-36: Resolution codes for resolved/closed tickets
   resolutionCodes: ['FIXED', 'WORKAROUND', 'KNOWN_ERROR', 'CANNOT_REPRODUCE', 'DUPLICATE', 'USER_EDUCATION', 'NOT_AN_INCIDENT'],
 
-  // FR-23: Per-company SLA targets per severity (vendor-managed).
+  // FR-23: Per-project SLA targets per severity (vendor-managed).
   // sla_due_date = created_at + resolution_days.
   // escalationPct = auto-escalation threshold percentage (FR-35).
+  // Keyed on projectId (Decision O) — each project gets its own SLA terms.
   slaTargets: [
-    { companyId: 'C1', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 80 },
-    { companyId: 'C1', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 80 },
-    { companyId: 'C1', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 80 },
-    { companyId: 'C1', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 },
-    { companyId: 'C2', severity: 'Critical', responseHours: 2,  resolutionDays: 1,  escalationPct: 75 },
-    { companyId: 'C2', severity: 'Major',    responseHours: 8,  resolutionDays: 5,  escalationPct: 75 },
-    { companyId: 'C2', severity: 'Minor',    responseHours: 16, resolutionDays: 10, escalationPct: 75 },
-    { companyId: 'C2', severity: 'Low',      responseHours: 48, resolutionDays: 21, escalationPct: 75 },
-    { companyId: 'C3', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 80 },
-    { companyId: 'C3', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 80 },
-    { companyId: 'C3', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 80 },
-    { companyId: 'C3', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 }
+    // P1: Acme IT Support
+    { projectId: 'P1', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 80 },
+    { projectId: 'P1', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 80 },
+    { projectId: 'P1', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 80 },
+    { projectId: 'P1', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 },
+    // P2: Acme ERP Systems (tighter resolution for critical ERP issues)
+    { projectId: 'P2', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 75 },
+    { projectId: 'P2', severity: 'Major',    responseHours: 4,  resolutionDays: 2,  escalationPct: 75 },
+    { projectId: 'P2', severity: 'Minor',    responseHours: 8,  resolutionDays: 5,  escalationPct: 80 },
+    { projectId: 'P2', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 },
+    // P3: Globex IT Support
+    { projectId: 'P3', severity: 'Critical', responseHours: 2,  resolutionDays: 1,  escalationPct: 75 },
+    { projectId: 'P3', severity: 'Major',    responseHours: 8,  resolutionDays: 5,  escalationPct: 75 },
+    { projectId: 'P3', severity: 'Minor',    responseHours: 16, resolutionDays: 10, escalationPct: 75 },
+    { projectId: 'P3', severity: 'Low',      responseHours: 48, resolutionDays: 21, escalationPct: 75 },
+    // P4: Globex CRM Platform (same as Globex IT Support)
+    { projectId: 'P4', severity: 'Critical', responseHours: 2,  resolutionDays: 1,  escalationPct: 75 },
+    { projectId: 'P4', severity: 'Major',    responseHours: 8,  resolutionDays: 5,  escalationPct: 75 },
+    { projectId: 'P4', severity: 'Minor',    responseHours: 16, resolutionDays: 10, escalationPct: 75 },
+    { projectId: 'P4', severity: 'Low',      responseHours: 48, resolutionDays: 21, escalationPct: 75 },
+    // P5: Initech IT Support
+    { projectId: 'P5', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 80 },
+    { projectId: 'P5', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 80 },
+    { projectId: 'P5', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 80 },
+    { projectId: 'P5', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 },
+    // P6: Northwind Internal Apps
+    { projectId: 'P6', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 90 },
+    { projectId: 'P6', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 90 },
+    { projectId: 'P6', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 90 },
+    { projectId: 'P6', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 90 },
+    // P7: Northwind Infrastructure
+    { projectId: 'P7', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 90 },
+    { projectId: 'P7', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 90 },
+    { projectId: 'P7', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 90 },
+    { projectId: 'P7', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 90 }
   ],
 
   // createdAt/updatedAt are ISO strings; relative time is computed at runtime.
   // severity = client-set (required at creation); priority = support-set (nullable until triaged)
-  // slaDueDate = stamped at creation from SLA_TARGETS based on severity
+  // projectId = scopes ticket to a service engagement (Decision O)
+  // slaDueDate = stamped at creation from SLA_TARGETS based on severity + project
   // csatScore = null until requester rates after closure (FR-27)
   // ticketType = INCIDENT or SERVICE_REQUEST (FR-30)
   // firstResponseAt = timestamp of first agent response (FR-31), null if no response yet
   // resolutionCode + resolutionSummary = required on resolve (FR-36), null until resolved
   // reopenCount = number of times ticket was reopened
-  // departmentId = stamped from creator's department (Decision N)
+  // departmentId = stamped from creator's department (metadata, Decision N)
   tickets: [
-    { id:'t51', ref:'TKT-00051', companyId:'C1', departmentId:'dep1', subject:'Production DB connection pool exhausted', description:'The ERP is throwing connection errors during peak hours. Finance cannot post invoices.', categoryId:'cat3', severity:'Critical', priority:null, status:'New', ticketType:'INCIDENT', createdBy:'u4', assignedTo:null, createdAt:'2026-06-30T08:55:00', updatedAt:'2026-06-30T08:55:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-01T08:55:00', csatScore:null, firstResponseAt:null, resolutionCode:null, resolutionSummary:null, reopenCount:0 },
-    { id:'t50', ref:'TKT-00050', companyId:'C2', departmentId:'dep4', subject:'SSO login fails for new staff', description:'Three new Globex employees cannot sign in via SSO. Existing users are fine.', categoryId:'cat4', severity:'Major', priority:'P2', status:'Assigned', ticketType:'INCIDENT', createdBy:'u7', assignedTo:'u2', createdAt:'2026-06-30T08:38:00', updatedAt:'2026-06-30T08:40:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-03T08:38:00', csatScore:null, firstResponseAt:null, resolutionCode:null, resolutionSummary:null, reopenCount:0 },
-    { id:'t48', ref:'TKT-00048', companyId:'C3', departmentId:'dep5', subject:'Invoice PDF shows wrong currency', description:'Exported invoices show USD instead of MYR for Initech accounts.', categoryId:'cat3', severity:'Major', priority:'P2', status:'In Progress', ticketType:'INCIDENT', createdBy:'u8', assignedTo:'u3', createdAt:'2026-06-29T15:10:00', updatedAt:'2026-06-30T07:30:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-02T15:10:00', csatScore:null, firstResponseAt:'2026-06-30T07:30:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 },
-    { id:'t42', ref:'TKT-00042', companyId:'C1', departmentId:'dep1', subject:'VPN disconnects every few minutes', description:'Finance team on the Acme network reports the VPN dropping every 3-5 minutes since this morning.', categoryId:'cat1', severity:'Major', priority:'P3', status:'In Progress', ticketType:'INCIDENT', createdBy:'u4', assignedTo:'u2', createdAt:'2026-06-30T01:14:00', updatedAt:'2026-06-30T01:38:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-03T01:14:00', csatScore:null, firstResponseAt:'2026-06-30T01:40:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 },
-    { id:'t41', ref:'TKT-00041', companyId:'C1', departmentId:'dep2', subject:'Request: provision 5 new mailboxes', description:'Need 5 new email mailboxes for incoming Acme interns.', categoryId:'cat5', severity:'Minor', priority:null, status:'New', ticketType:'SERVICE_REQUEST', createdBy:'u5', assignedTo:null, createdAt:'2026-06-29T22:00:00', updatedAt:'2026-06-29T22:00:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-06T22:00:00', csatScore:null, firstResponseAt:null, resolutionCode:null, resolutionSummary:null, reopenCount:0 },
-    { id:'t39', ref:'TKT-00039', companyId:'C1', departmentId:'dep1', subject:'Cannot export monthly report to PDF', description:'The export button spins forever and never produces a PDF.', categoryId:'cat3', severity:'Minor', priority:'P3', status:'Resolved', ticketType:'INCIDENT', createdBy:'u4', assignedTo:'u3', createdAt:'2026-06-28T09:00:00', updatedAt:'2026-06-29T16:00:00', resolvedAt:'2026-06-29T16:00:00', closedAt:null, slaDueDate:'2026-07-05T09:00:00', csatScore:null, firstResponseAt:'2026-06-29T16:00:00', resolutionCode:'FIXED', resolutionSummary:'Fixed the PDF export timeout by increasing the server-side report generation limit.', reopenCount:0 },
-    { id:'t38', ref:'TKT-00038', companyId:'C2', departmentId:'dep4', subject:'Printer on 3rd floor offline', description:'Shared printer GLOBEX-P3 is not reachable.', categoryId:'cat2', severity:'Low', priority:'P4', status:'On Hold', ticketType:'INCIDENT', createdBy:'u7', assignedTo:'u2', createdAt:'2026-06-27T11:20:00', updatedAt:'2026-06-29T10:00:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-11T11:20:00', csatScore:null, firstResponseAt:'2026-06-29T10:00:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 },
-    { id:'t35', ref:'TKT-00035', companyId:'C1', departmentId:'dep2', subject:'New laptop setup for finance hire', description:'Provision and image a laptop for a new Acme finance staff member.', categoryId:'cat2', severity:'Minor', priority:'P3', status:'Closed', ticketType:'SERVICE_REQUEST', createdBy:'u5', assignedTo:'u2', createdAt:'2026-06-24T08:00:00', updatedAt:'2026-06-26T14:00:00', resolvedAt:'2026-06-25T16:00:00', closedAt:'2026-06-26T14:00:00', slaDueDate:'2026-07-01T08:00:00', csatScore:4, firstResponseAt:'2026-06-25T10:00:00', resolutionCode:'FIXED', resolutionSummary:'Laptop provisioned, imaged with standard SOE, and delivered to the new hire.', reopenCount:0 },
-    { id:'t31', ref:'TKT-00031', companyId:'C1', departmentId:'dep1', subject:'Add new user license', description:'Please add one more licensed seat for the analytics tool.', categoryId:'cat5', severity:'Low', priority:'P4', status:'Closed', ticketType:'SERVICE_REQUEST', createdBy:'u4', assignedTo:'u2', createdAt:'2026-06-20T10:00:00', updatedAt:'2026-06-22T09:00:00', resolvedAt:'2026-06-21T14:00:00', closedAt:'2026-06-22T09:00:00', slaDueDate:'2026-07-04T10:00:00', csatScore:5, firstResponseAt:'2026-06-21T09:00:00', resolutionCode:'FIXED', resolutionSummary:'License seat added to the analytics tool subscription.', reopenCount:0 },
-    { id:'t28', ref:'TKT-00028', companyId:'C3', departmentId:'dep5', subject:'Email going to spam', description:'Outbound email from Initech domain is landing in client spam folders.', categoryId:'cat1', severity:'Major', priority:'P2', status:'In Progress', ticketType:'INCIDENT', createdBy:'u8', assignedTo:'u3', createdAt:'2026-06-26T13:00:00', updatedAt:'2026-06-30T06:00:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-06-29T13:00:00', csatScore:null, firstResponseAt:'2026-06-27T10:00:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 },
-    { id:'t24', ref:'TKT-00024', companyId:'C2', departmentId:'dep3', subject:'Password reset not arriving', description:'Reset emails are delayed by 20+ minutes.', categoryId:'cat4', severity:'Minor', priority:'P3', status:'Resolved', ticketType:'INCIDENT', createdBy:'u6', assignedTo:'u2', createdAt:'2026-06-25T09:30:00', updatedAt:'2026-06-28T12:00:00', resolvedAt:'2026-06-28T12:00:00', closedAt:null, slaDueDate:'2026-07-02T09:30:00', csatScore:null, firstResponseAt:'2026-06-26T14:00:00', resolutionCode:'FIXED', resolutionSummary:'Investigated mail relay configuration — password reset emails were queuing behind bulk marketing sends. Adjusted priority routing rules.', reopenCount:0 },
-    { id:'t19', ref:'TKT-00019', companyId:'C1', departmentId:'dep2', subject:'Shared drive missing files', description:'A folder on the X: drive appears empty after the weekend.', categoryId:'cat3', severity:'Critical', priority:'P1', status:'Assigned', ticketType:'INCIDENT', createdBy:'u5', assignedTo:'u3', createdAt:'2026-06-29T18:00:00', updatedAt:'2026-06-29T18:30:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-06-30T18:00:00', csatScore:null, firstResponseAt:'2026-06-29T18:30:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 }
+    { id:'t51', ref:'TKT-00051', companyId:'C1', projectId:'P2', departmentId:'dep1', subject:'Production DB connection pool exhausted', description:'The ERP is throwing connection errors during peak hours. Finance cannot post invoices.', categoryId:'cat3', severity:'Critical', priority:null, status:'New', ticketType:'INCIDENT', createdBy:'u4', assignedTo:null, createdAt:'2026-06-30T08:55:00', updatedAt:'2026-06-30T08:55:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-01T08:55:00', csatScore:null, firstResponseAt:null, resolutionCode:null, resolutionSummary:null, reopenCount:0 },
+    { id:'t50', ref:'TKT-00050', companyId:'C2', projectId:'P3', departmentId:'dep4', subject:'SSO login fails for new staff', description:'Three new Globex employees cannot sign in via SSO. Existing users are fine.', categoryId:'cat4', severity:'Major', priority:'P2', status:'Assigned', ticketType:'INCIDENT', createdBy:'u7', assignedTo:'u2', createdAt:'2026-06-30T08:38:00', updatedAt:'2026-06-30T08:40:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-03T08:38:00', csatScore:null, firstResponseAt:null, resolutionCode:null, resolutionSummary:null, reopenCount:0 },
+    { id:'t48', ref:'TKT-00048', companyId:'C3', projectId:'P5', departmentId:'dep5', subject:'Invoice PDF shows wrong currency', description:'Exported invoices show USD instead of MYR for Initech accounts.', categoryId:'cat3', severity:'Major', priority:'P2', status:'In Progress', ticketType:'INCIDENT', createdBy:'u8', assignedTo:'u3', createdAt:'2026-06-29T15:10:00', updatedAt:'2026-06-30T07:30:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-02T15:10:00', csatScore:null, firstResponseAt:'2026-06-30T07:30:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 },
+    { id:'t42', ref:'TKT-00042', companyId:'C1', projectId:'P1', departmentId:'dep1', subject:'VPN disconnects every few minutes', description:'Finance team on the Acme network reports the VPN dropping every 3-5 minutes since this morning.', categoryId:'cat1', severity:'Major', priority:'P3', status:'In Progress', ticketType:'INCIDENT', createdBy:'u4', assignedTo:'u2', createdAt:'2026-06-30T01:14:00', updatedAt:'2026-06-30T01:38:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-03T01:14:00', csatScore:null, firstResponseAt:'2026-06-30T01:40:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 },
+    { id:'t41', ref:'TKT-00041', companyId:'C1', projectId:'P1', departmentId:'dep2', subject:'Request: provision 5 new mailboxes', description:'Need 5 new email mailboxes for incoming Acme interns.', categoryId:'cat5', severity:'Minor', priority:null, status:'New', ticketType:'SERVICE_REQUEST', createdBy:'u5', assignedTo:null, createdAt:'2026-06-29T22:00:00', updatedAt:'2026-06-29T22:00:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-06T22:00:00', csatScore:null, firstResponseAt:null, resolutionCode:null, resolutionSummary:null, reopenCount:0 },
+    { id:'t39', ref:'TKT-00039', companyId:'C1', projectId:'P2', departmentId:'dep1', subject:'Cannot export monthly report to PDF', description:'The export button spins forever and never produces a PDF.', categoryId:'cat3', severity:'Minor', priority:'P3', status:'Resolved', ticketType:'INCIDENT', createdBy:'u4', assignedTo:'u3', createdAt:'2026-06-28T09:00:00', updatedAt:'2026-06-29T16:00:00', resolvedAt:'2026-06-29T16:00:00', closedAt:null, slaDueDate:'2026-06-28T17:00:00', csatScore:null, firstResponseAt:'2026-06-29T16:00:00', resolutionCode:'FIXED', resolutionSummary:'Fixed the PDF export timeout by increasing the server-side report generation limit.', reopenCount:0 },
+    { id:'t38', ref:'TKT-00038', companyId:'C2', projectId:'P3', departmentId:'dep4', subject:'Printer on 3rd floor offline', description:'Shared printer GLOBEX-P3 is not reachable.', categoryId:'cat2', severity:'Low', priority:'P4', status:'On Hold', ticketType:'INCIDENT', createdBy:'u7', assignedTo:'u2', createdAt:'2026-06-27T11:20:00', updatedAt:'2026-06-29T10:00:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-11T11:20:00', csatScore:null, firstResponseAt:'2026-06-29T10:00:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 },
+    { id:'t35', ref:'TKT-00035', companyId:'C1', projectId:'P1', departmentId:'dep2', subject:'New laptop setup for finance hire', description:'Provision and image a laptop for a new Acme finance staff member.', categoryId:'cat2', severity:'Minor', priority:'P3', status:'Closed', ticketType:'SERVICE_REQUEST', createdBy:'u5', assignedTo:'u2', createdAt:'2026-06-24T08:00:00', updatedAt:'2026-06-26T14:00:00', resolvedAt:'2026-06-25T16:00:00', closedAt:'2026-06-26T14:00:00', slaDueDate:'2026-07-01T08:00:00', csatScore:4, firstResponseAt:'2026-06-25T10:00:00', resolutionCode:'FIXED', resolutionSummary:'Laptop provisioned, imaged with standard SOE, and delivered to the new hire.', reopenCount:0 },
+    { id:'t31', ref:'TKT-00031', companyId:'C1', projectId:'P1', departmentId:'dep1', subject:'Add new user license', description:'Please add one more licensed seat for the analytics tool.', categoryId:'cat5', severity:'Low', priority:'P4', status:'Closed', ticketType:'SERVICE_REQUEST', createdBy:'u4', assignedTo:'u2', createdAt:'2026-06-20T10:00:00', updatedAt:'2026-06-22T09:00:00', resolvedAt:'2026-06-21T14:00:00', closedAt:'2026-06-22T09:00:00', slaDueDate:'2026-07-04T10:00:00', csatScore:5, firstResponseAt:'2026-06-21T09:00:00', resolutionCode:'FIXED', resolutionSummary:'License seat added to the analytics tool subscription.', reopenCount:0 },
+    { id:'t28', ref:'TKT-00028', companyId:'C3', projectId:'P5', departmentId:'dep5', subject:'Email going to spam', description:'Outbound email from Initech domain is landing in client spam folders.', categoryId:'cat1', severity:'Major', priority:'P2', status:'In Progress', ticketType:'INCIDENT', createdBy:'u8', assignedTo:'u3', createdAt:'2026-06-26T13:00:00', updatedAt:'2026-06-30T06:00:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-06-29T13:00:00', csatScore:null, firstResponseAt:'2026-06-27T10:00:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 },
+    { id:'t24', ref:'TKT-00024', companyId:'C2', projectId:'P3', departmentId:'dep3', subject:'Password reset not arriving', description:'Reset emails are delayed by 20+ minutes.', categoryId:'cat4', severity:'Minor', priority:'P3', status:'Resolved', ticketType:'INCIDENT', createdBy:'u6', assignedTo:'u2', createdAt:'2026-06-25T09:30:00', updatedAt:'2026-06-28T12:00:00', resolvedAt:'2026-06-28T12:00:00', closedAt:null, slaDueDate:'2026-06-27T09:30:00', csatScore:null, firstResponseAt:'2026-06-26T14:00:00', resolutionCode:'FIXED', resolutionSummary:'Investigated mail relay configuration — password reset emails were queuing behind bulk marketing sends. Adjusted priority routing rules.', reopenCount:0 },
+    { id:'t19', ref:'TKT-00019', companyId:'C1', projectId:'P1', departmentId:'dep2', subject:'Shared drive missing files', description:'A folder on the X: drive appears empty after the weekend.', categoryId:'cat3', severity:'Critical', priority:'P1', status:'Assigned', ticketType:'INCIDENT', createdBy:'u5', assignedTo:'u3', createdAt:'2026-06-29T18:00:00', updatedAt:'2026-06-29T18:30:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-06-30T18:00:00', csatScore:null, firstResponseAt:'2026-06-29T18:30:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 },
+    { id:'t52', ref:'TKT-00052', companyId:'C0', projectId:'P6', departmentId:'dep0', subject:'Internal wiki search broken', description:'The Northwind internal wiki search returns no results for any query since yesterday.', categoryId:'cat3', severity:'Major', priority:null, status:'New', ticketType:'INCIDENT', createdBy:'u18', assignedTo:null, createdAt:'2026-07-02T10:30:00', updatedAt:'2026-07-02T10:30:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-05T10:30:00', csatScore:null, firstResponseAt:null, resolutionCode:null, resolutionSummary:null, reopenCount:0 },
+    { id:'t53', ref:'TKT-00053', companyId:'C0', projectId:'P6', departmentId:'dep0', subject:'Request: new dev environment for QA team', description:'Need a new staging environment provisioned for the QA team internal project.', categoryId:'cat5', severity:'Minor', priority:'P3', status:'In Progress', ticketType:'SERVICE_REQUEST', createdBy:'u17', assignedTo:'u2', createdAt:'2026-07-01T09:00:00', updatedAt:'2026-07-02T14:00:00', resolvedAt:null, closedAt:null, slaDueDate:'2026-07-08T09:00:00', csatScore:null, firstResponseAt:'2026-07-01T11:00:00', resolutionCode:null, resolutionSummary:null, reopenCount:0 }
   ],
 
   comments: [
@@ -170,5 +272,5 @@ window.DEMO_SEED = {
     { id:'a5', ticketId:'t19', companyId:'C1', commentId:null,  fileName:'shared-drive-empty-folder.png', mimeType:'image/png', fileSize:95000,  uploadedBy:'u5', uploadedAt:'2026-06-29T18:05:00' }
   ],
 
-  seq: 51 // last ticket number used; next created ticket = 52
+  seq: 53 // last ticket number used; next created ticket = 54
 };

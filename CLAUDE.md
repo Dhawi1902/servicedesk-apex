@@ -28,7 +28,7 @@ Do not edit `_backup/` (source HTML caches, used to regenerate the reference).
 
 ## The project at a glance
 
-A vendor (our company) runs a support desk for **multiple client companies** (tenants).
+Our company (the service provider) runs a support desk for **multiple customer companies** (tenants) — including itself for internal apps.
 Self-hosted alternative to Jira Service Management, following **ITIL 4** (Incident Management +
 Service Request Management). Judged on: **working demo → feature breadth → UI polish**, in that
 order. **Hackathon demo: 16 July 2026**; system continues as **production** afterward.
@@ -42,27 +42,28 @@ A client must **never** see another client's tickets. Every tenant-scoped table 
 the entire "production-level" claim. Test this harder than anything else.
 
 ### Roles (4) + agent tiers (L1–L4)
-- **Client User** — sees all tickets in **their department** (decision N); raises/comments; **assigns L1 agent only** from agents mapped to their company (decisions J/L).
-- **Client Admin** — sees all of their own company's tickets (cross-department); **assigns/reassigns agents** for any company ticket.
-- **Support Agent** — works tickets for their **assigned projects only** (status/comments/resolve); tiered L1–L4 (decision M); can **reassign to higher tier** (FR-26). No user/company admin.
-- **System Admin** — everything across all companies; manages users/companies; **assigns** tickets.
+- **Client User** — sees tickets in **projects they have access to** (default: all company projects; Client Admin can restrict via `USER_PROJECTS`); raises/comments; **assigns L1 agent only** from agents mapped to their project (decisions J/L).
+- **Client Admin** — sees **all of their own company's tickets** across all projects; manages user-project access, raises on behalf of staff, **assigns/reassigns agents** for any company ticket, manages company users & departments.
+- **Support Agent** — works tickets for their **assigned projects only** via `AGENT_PROJECTS` (status/comments/resolve); tiered L1–L4 (decision M); can **reassign to higher tier** (FR-26). No user/company admin.
+- **System Admin** — everything across all companies and projects; manages companies/projects/users; **assigns** tickets.
 
-### Data model (9 tables)
-`COMPANIES` · `DEPARTMENTS` (per-company departments, decision N) · `APP_USERS` (with `tier` L1–L4 for agents, `department_id` for clients) · `TICKETS` · `TICKET_COMMENTS` · `TICKET_HISTORY` · `CATEGORIES` ·
-`AGENT_COMPANIES` (which clients each agent covers — scopes an agent's queue to their projects) ·
-`SLA_TARGETS` (SLA targets per severity **per company** — vendor-managed, FR-23; includes `escalation_pct` for per-company auto-escalation threshold, FR-35).
+### Data model (12 tables)
+`COMPANIES` · `PROJECTS` (service engagements per company, decision O) · `DEPARTMENTS` (per-company, **metadata only** — routing/reporting, not visibility scoping, decision N revised) · `APP_USERS` (`default_role` nullable — landing role at login; role moved to `USER_ROLES`, `department_id` as metadata) · `USER_ROLES` (one-to-many roles per user, decision P — enables role-switching without re-login; Northwind agents get SUPPORT_AGENT + CLIENT_USER) · `TICKETS` · `TICKET_COMMENTS` · `TICKET_HISTORY` · `CATEGORIES` ·
+`AGENT_PROJECTS` (which projects each agent covers — scopes an agent's queue, decision I revised) ·
+`USER_PROJECTS` (which projects each client user can access — managed by Client Admin, open default: empty = all company projects) ·
+`SLA_TARGETS` (SLA targets per severity **per project** — admin-managed, FR-23; includes `escalation_pct` for per-project auto-escalation threshold, FR-35).
 `TICKETS.ticket_type` is `INCIDENT` or `SERVICE_REQUEST` (FR-30, ITIL distinction).
 `TICKETS.severity` is client-set (business impact: Critical/Major/Minor/**Low**); `TICKETS.priority` is support-set (P1–P4, nullable until triaged — **required before In Progress**, FR-37); `TICKETS.first_response_at` tracks first agent response (FR-31); `TICKETS.sla_due_date` is stamped at creation from `SLA_TARGETS`.
 `TICKETS.resolution_code` + `resolution_summary` are required on Resolve (FR-36); `TICKETS.reopen_count` tracks reopens.
-`TICKETS.company_id` is the tenant key; `TICKETS.department_id` scopes client-user visibility. Full schema + ERD in the brief.
+`TICKETS.company_id` is the tenant key; `TICKETS.project_id` scopes to the service engagement; `TICKETS.department_id` is metadata (stamped from creator). Full schema + ERD in the brief.
 
 ### Ticket lifecycle
 `New → Assigned → In Progress → On Hold → Resolved → Closed` (+ `Reopen`: Resolved → In Progress). Decision B confirmed.
 Every state change is written to `TICKET_HISTORY` (who/what/when).
 
 ### Scope (MoSCoW) — protect the demo over adding features
-- **MUST (18):** companies/users/roles, login + isolation, ticket CRUD + lifecycle (severity = client-set, priority = support-set, On Hold + Reopen — decision B), **ticket type INCIDENT/SERVICE_REQUEST** (FR-30), assignment (admin + agent self-assign + client from L1 mapped agents), comments + history, dashboard.
-- **SHOULD (18):** categories/priorities + filtering, branded theme, assignment notification, status-change notification (FR-22), **comment notification** (FR-38), CSAT rating (one-time, FR-27), dashboard analytics + **SLA Compliance % KPI** (FR-32), auto-ack email, **reassign to higher tier** (FR-26), **auto-escalation on SLA breach + customer notification** (FR-35), **SLA per severity per company** (FR-23), first-response tracking (FR-31), workload in assignment LOV (FR-33), severity guidance text (FR-34), **resolution code + summary** (FR-36), **triage gate** (FR-37).
+- **MUST (18):** companies/projects/users/roles, login + isolation, ticket CRUD + lifecycle (severity = client-set, priority = support-set, On Hold + Reopen — decision B), **ticket type INCIDENT/SERVICE_REQUEST** (FR-30), assignment (admin + agent self-assign + client from L1 mapped agents per project), comments + history, dashboard.
+- **SHOULD (18):** categories/priorities + filtering, branded theme, assignment notification, status-change notification (FR-22), **comment notification** (FR-38), CSAT rating (one-time, FR-27), dashboard analytics + **SLA Compliance % KPI** (FR-32), auto-ack email, **reassign to higher tier** (FR-26), **auto-escalation on SLA breach + customer notification** (FR-35), **SLA per severity per project** (FR-23), first-response tracking (FR-31), workload in assignment LOV (FR-33), severity guidance text (FR-34), **resolution code + summary** (FR-36), **triage gate** (FR-37).
 - **COULD (2, do not commit):** AI category suggest (`APEX_AI`), file/screenshot attachments (`TICKET_ATTACHMENTS` BLOB, tenant-scoped — brief §5.1).
 - **FUTURE:** ITIL-prioritized production roadmap (P1–P4) — separate incident/SR workflows, SLA pause + business-hours, VPD/RLS, **KB / known error DB** (P2, ISO 20000 §8.7.1), **email-to-ticket + reply-via-email** (P2), hierarchical escalation, major incident + duplicate linking, canned responses, bulk actions, auto-close, **SSO** (P3), urgency field, problem management, incident ownership, rich text, announcement banner, REST API/ORDS, and more. Park "could we also…" ideas here, not in the build (brief §1).
 
@@ -80,9 +81,12 @@ Look these up in the reference before implementing:
 | Export dashboard/report data | `APEX_DATA_EXPORT` | `reference/plsql/` |
 | (Stretch) AI category/priority suggestion | `APEX_AI` | `reference/plsql/` |
 
-> Tenant isolation in v1 = APEX **application item** holding the logged-in user's `company_id` +
-> role (set at login), client-facing reports filter `WHERE company_id = :APP_COMPANY_ID`, with
-> **authorization schemes** layered per role. (VPD is a more robust stretch option.)
+> Tenant isolation in v1 = APEX **application items** holding the logged-in user's `company_id` +
+> active role (set at login from `USER_ROLES`, switchable via nav-bar toggle — decision P),
+> client-facing reports filter `WHERE company_id = :APP_COMPANY_ID`, with
+> **authorization schemes** layered per role. Agents additionally filtered by `AGENT_PROJECTS`;
+> client users filtered by `USER_PROJECTS` (empty = all company projects). Departments are
+> metadata only (not a visibility filter). (VPD is a more robust stretch option.)
 
 ## Documentation map (`docs/`)
 | File | Purpose |
@@ -114,8 +118,9 @@ APEX workspace. Full run order + App Builder wiring in [`sql/README.md`](sql/REA
 - **Run order (SQL Workshop → SQL Scripts):** `01_schema` → `02_seed_data` → `03_attachments`
   (optional, FR-25) → `05_isolation_views` → `04_apex_accounts`. `00_drop_all` resets everything.
 - **Auth = APEX Accounts** (built-in salted hashing/lockout; no password column in `APP_USERS`).
-  A post-auth process stamps `APP_COMPANY_ID`/`APP_USER_ID`/`APP_ROLE` app items — that split is
-  what carries tenant context; the auth scheme never does. `04_apex_accounts.sql` auto-creates a
+  A post-auth process stamps `APP_COMPANY_ID`/`APP_USER_ID`/`APP_ROLE`/`APP_HAS_MULTI_ROLE` app
+  items (role from `USER_ROLES`, decision P) — that split is what carries tenant context; the
+  auth scheme never does. `04_apex_accounts.sql` auto-creates a
   `demo`-password login per seeded user. (Reference-verified: `APEX_UTIL.CREATE_USER`.)
 - **Tenant isolation = tenant-scoped views** (`V_MY_TICKETS` / `V_MY_COMMENTS` / `V_MY_HISTORY` /
   `V_MY_ATTACHMENTS` in `05_isolation_views.sql`). They encode the full role matrix once (via
