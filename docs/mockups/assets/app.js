@@ -1810,11 +1810,13 @@
     return (DB.userRoles || []).some(function (r) { return r.userId === uid && r.role === role; });
   }
   function renderProjectDetail(u) {
-    if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
+    if (!isAdmin(u) && !isClientAdmin(u)) { renderShell(u, 'home', notFound('System Admin or Client Admin only.'), ''); return; }
+    var admin = isAdmin(u);
     var pid = qs('id');
     if (!pid) { renderShell(u, 'projects', notFound('No project id in the URL — this page expects 19-project-detail.html?id=Pn. Open it via a Manage button on the Projects page.'), ''); return; }
     var p = (DB.projects || []).find(function (x) { return x.id === pid; });
     if (!p) { renderShell(u, 'projects', notFound('Project "' + esc(pid) + '" is not in your demo data (stale localStorage?). Click "Reset demo" in the header and try again.'), ''); return; }
+    if (!admin && p.companyId !== u.companyId) { renderShell(u, 'projects', notFound('Project "' + esc(pid) + '" not found.'), ''); return; }
     var c = company(p.companyId);
     var isRestricted = (p.visibility || 'OPEN') === 'RESTRICTED';
     var activeTab = window._projectDetailTab || 'details';
@@ -1855,7 +1857,7 @@
     // --- Details tab ---
     var detailsPanel = '<div class="cd-panel" data-panel="details"' + (activeTab !== 'details' ? ' style="display:none;"' : '') + '>' +
       '<div class="card"><div class="card-hd"><span>Project Details</span>' +
-      '<button class="btn btn-sm" style="float:right;margin:-4px 0;" onclick="sd.showEditProject(\'' + pid + '\')">&#9998; Edit</button></div>' +
+      (admin ? '<button class="btn btn-sm" style="float:right;margin:-4px 0;" onclick="sd.showEditProject(\'' + pid + '\')">&#9998; Edit</button>' : '') + '</div>' +
       '<div class="card-bd"><div class="form-grid cols-2">' +
       '<div class="field"><label>Project Name</label><input value="' + esc(p.projectName) + '" disabled></div>' +
       '<div class="field"><label>Key</label><input value="' + esc(p.projectKey) + '" disabled></div>' +
@@ -1877,15 +1879,17 @@
         '<td>' + (a.tier || '<span class="muted">—</span>') + '</td>' +
         '<td><span class="' + stCls + '">&#9679; ' + (a.status || 'Active') + '</span></td>' +
         '<td>' + openN + '</td><td>' + totalProjects + '</td>' +
-        '<td><button class="btn btn-sm" style="color:#b91c1c;" onclick="sd.removeTeamAgent(\'' + pid + '\',\'' + a.id + '\')">&#10005; Remove</button></td></tr>';
+        (admin ? '<td><button class="btn btn-sm" style="color:#b91c1c;" onclick="sd.removeTeamAgent(\'' + pid + '\',\'' + a.id + '\')">&#10005; Remove</button></td>' : '') + '</tr>';
     }).join('');
-    if (!teamRows) teamRows = '<tr><td colspan="6" class="muted">No agents mapped — this project is in a broken state (FR-10).</td></tr>';
+    if (!teamRows) teamRows = '<tr><td colspan="' + (admin ? 6 : 5) + '" class="muted">No agents mapped — this project is in a broken state (FR-10).</td></tr>';
     var teamPanel = '<div class="cd-panel" data-panel="team"' + (activeTab !== 'team' ? ' style="display:none;"' : '') + '>' +
       '<div class="card" style="overflow:hidden;">' +
       '<div class="card-hd"><span>Support Team' + teamCoverageBadges(pid) + '</span>' +
-      '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddTeamAgent(\'' + pid + '\')">+ Add Agent</button></div>' +
-      '<table class="t"><thead><tr><th>Agent</th><th>Tier</th><th>Status</th><th>Open here</th><th>Projects covered</th><th>Actions</th></tr></thead><tbody>' + teamRows + '</tbody></table>' +
-      '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Flow 3/4 gates: an active project keeps &ge;1 L1 (clients assign L1 only, FR-10); removal is blocked while an agent holds open tickets here.</p>' +
+      (admin ? '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddTeamAgent(\'' + pid + '\')">+ Add Agent</button>' : '') + '</div>' +
+      '<table class="t"><thead><tr><th>Agent</th><th>Tier</th><th>Status</th><th>Open here</th><th>Projects covered</th>' + (admin ? '<th>Actions</th>' : '') + '</tr></thead><tbody>' + teamRows + '</tbody></table>' +
+      (admin
+        ? '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Flow 3/4 gates: an active project keeps &ge;1 L1 (clients assign L1 only, FR-10); removal is blocked while an agent holds open tickets here.</p>'
+        : '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">The support team covering this engagement — tiers are per-project (decision M). Read-only: team changes are made by the service provider.</p>') +
       '</div></div>';
 
     // --- SLA tab (policy assignment — the ONE door for changing a project's SLA) ---
@@ -1901,10 +1905,14 @@
       '<div class="card" style="overflow:hidden;"><div class="card-hd">SLA Policy (FR-23)</div>' +
       '<div class="card-bd" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">' +
       '<label style="font-weight:600;font-size:13px;">Assigned policy for <b>' + esc(p.projectKey) + '</b> — ' + esc(c.name || '') + ':</label>' +
-      '<select class="ig-filter-select" onchange="sd.changeProjectSlaPolicy(\'' + pid + '\', this.value)">' + polOptions + '</select>' +
-      '<a class="btn btn-sm" href="13-sla-targets.html">Manage policies &rarr;</a></div>' +
+      (admin
+        ? '<select class="ig-filter-select" onchange="sd.changeProjectSlaPolicy(\'' + pid + '\', this.value)">' + polOptions + '</select>' +
+          '<a class="btn btn-sm" href="13-sla-targets.html">Manage policies &rarr;</a>'
+        : '<b style="font-size:13px;">' + esc((assignedPol || {}).name || '—') + '</b>') + '</div>' +
       '<table class="t"><thead><tr><th>Severity</th><th>Response Time</th><th>Resolution Time</th><th>Escalation %</th></tr></thead><tbody>' + polTargetRows + '</tbody></table>' +
-      '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Targets shown are the <b>' + esc((assignedPol || {}).name || '—') + '</b> policy&rsquo;s — edit them on the SLA Policies page (affects every project on that policy). New tickets stamp their due date from the policy at creation; existing tickets keep their stamped dates.</p>' +
+      (admin
+        ? '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Targets shown are the <b>' + esc((assignedPol || {}).name || '—') + '</b> policy&rsquo;s — edit them on the SLA Policies page (affects every project on that policy). New tickets stamp their due date from the policy at creation; existing tickets keep their stamped dates.</p>'
+        : '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Your contracted response/resolution targets per severity (FR-23). Tickets stamp their due date from these at creation.</p>') +
       '</div></div>';
 
     // --- Categories tab ---
@@ -1916,7 +1924,7 @@
       var stCls = (x.status || 'Active') === 'Active' ? 'tag-active' : 'tag-inactive';
       return '<tr><td><b>' + esc(x.name) + '</b></td><td>Project-specific</td><td class="muted" style="font-size:12px;">' + esc(x.description || '') + '</td>' +
         '<td><span class="' + stCls + '">&#9679; ' + (x.status || 'Active') + '</span></td>' +
-        '<td><button class="btn btn-sm" onclick="sd.showEditCategory(\'' + x.id + '\')">&#9998; Edit</button></td></tr>';
+        '<td>' + (admin ? '<button class="btn btn-sm" onclick="sd.showEditCategory(\'' + x.id + '\')">&#9998; Edit</button>' : '<span class="muted" style="font-size:11px;">read-only</span>') + '</td></tr>';
     }).join('');
     catRows += inheritedCats.map(function (x) {
       return '<tr><td>' + esc(x.name) + '</td><td><span class="muted">' + (x.companyId ? 'Company-wide' : 'Global') + ' (inherited)</span></td>' +
@@ -1927,7 +1935,7 @@
     var catsPanel = '<div class="cd-panel" data-panel="cats"' + (activeTab !== 'cats' ? ' style="display:none;"' : '') + '>' +
       '<div class="card" style="overflow:hidden;">' +
       '<div class="card-hd"><span>Categories (hybrid model — two doors, one table)</span>' +
-      '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddCategoryPD(\'' + pid + '\')">+ Add Project Category</button></div>' +
+      (admin ? '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddCategoryPD(\'' + pid + '\')">+ Add Project Category</button>' : '') + '</div>' +
       '<table class="t"><thead><tr><th>Category</th><th>Scope</th><th>Description</th><th>Status</th><th>Actions</th></tr></thead><tbody>' + catRows + '</tbody></table>' +
       '</div></div>';
 
@@ -1952,11 +1960,13 @@
         '</div></div>';
     }
 
-    var html = pageBar('Administration / Projects / ' + esc(p.projectName), p.projectName, '<a class="btn btn-sm" href="11-projects.html">&larr; Back to Projects</a>') +
+    var html = pageBar((admin ? 'Administration' : 'My Company') + ' / Projects / ' + esc(p.projectName), p.projectName, '<a class="btn btn-sm" href="11-projects.html">&larr; Back to Projects</a>') +
       '<div class="content">' +
       '<div class="card" style="overflow:hidden;padding:16px;">' + header + '</div>' +
       tabs + detailsPanel + teamPanel + slaPanel + catsPanel + invitesPanel +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 19 &mdash; Project-centric admin hub (admin-console spec 2026-07-03). Flat pages browse; this hub configures: team (Flows 3/4), SLA (FR-23), categories (hybrid), invitations (decision Q).</p></div>';
+      (admin
+        ? '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 19 &mdash; Project-centric admin hub (admin-console spec 2026-07-03). Flat pages browse; this hub configures: team (Flows 3/4), SLA (FR-23), categories (hybrid), access (decision Q).</p>'
+        : '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 19 &mdash; same hub, Client Admin view (spec 2026-07-04): team/SLA/categories read-only; you manage invitations on the Access tab (decision Q).</p>') + '</div>';
     renderShell(u, 'projects', html, tenantBanner(u));
   }
 
