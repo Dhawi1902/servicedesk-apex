@@ -1820,7 +1820,7 @@
     var c = company(p.companyId);
     var isRestricted = (p.visibility || 'OPEN') === 'RESTRICTED';
     var activeTab = window._projectDetailTab || 'details';
-    if (activeTab === 'invites' && !isRestricted) activeTab = 'details';
+    if (activeTab === 'invites') activeTab = 'access';
 
     // --- Stats ---
     var projTickets = DB.tickets.filter(function (t) { return t.projectId === pid; });
@@ -1851,7 +1851,7 @@
       '<button class="cd-tab' + (activeTab === 'team' ? ' cd-tab-active' : '') + '" data-tab="team" onclick="sd.projectTab(\'team\')">&#128101; Support Team</button>' +
       '<button class="cd-tab' + (activeTab === 'sla' ? ' cd-tab-active' : '') + '" data-tab="sla" onclick="sd.projectTab(\'sla\')">&#9202; SLA Policy</button>' +
       '<button class="cd-tab' + (activeTab === 'cats' ? ' cd-tab-active' : '') + '" data-tab="cats" onclick="sd.projectTab(\'cats\')">&#127991;&#65039; Categories</button>' +
-      (isRestricted ? '<button class="cd-tab' + (activeTab === 'invites' ? ' cd-tab-active' : '') + '" data-tab="invites" onclick="sd.projectTab(\'invites\')">&#9993;&#65039; Invitations</button>' : '') +
+      '<button class="cd-tab' + (activeTab === 'access' ? ' cd-tab-active' : '') + '" data-tab="access" onclick="sd.projectTab(\'access\')">&#128101; Access</button>' +
       '</div>';
 
     // --- Details tab ---
@@ -1866,7 +1866,7 @@
       '<div class="field" style="grid-column:span 2;"><label>Description</label><input value="' + esc(p.description || '') + '" disabled></div>' +
       '</div>' +
       (isRestricted
-        ? '<p class="muted" style="font-size:12px;">&#128274; <b>Restricted</b> (decision Q): invisible to the company except invited users (Invitations tab). Flip to Open at go-live via Edit.'
+        ? '<p class="muted" style="font-size:12px;">&#128274; <b>Restricted</b> (decision Q): invisible to the company except invited users (Access tab). Flip to Open at go-live via Edit.'
         : '<p class="muted" style="font-size:12px;">&#127758; <b>Open</b> (decision Q): every ' + esc(c.name || '') + ' user sees this project and can raise tickets in it.') +
       '</p></div></div></div>';
 
@@ -1939,8 +1939,8 @@
       '<table class="t"><thead><tr><th>Category</th><th>Scope</th><th>Description</th><th>Status</th><th>Actions</th></tr></thead><tbody>' + catRows + '</tbody></table>' +
       '</div></div>';
 
-    // --- Invitations tab (Restricted only) ---
-    var invitesPanel = '';
+    // --- Access tab (decision Q, spec 2026-07-04): who can see this project ---
+    var accessPanel;
     if (isRestricted) {
       var invRows = invited.map(function (r) {
         var x = user(r.userId);
@@ -1951,19 +1951,34 @@
           '<td><button class="btn btn-sm" style="color:#b91c1c;" onclick="sd.revokeInvitePD(\'' + pid + '\',\'' + x.id + '\')">&#10005; Revoke</button></td></tr>';
       }).join('');
       if (!invRows) invRows = '<tr><td colspan="4" class="muted">Nobody invited yet — this project is invisible to all ' + esc(c.name || '') + ' users.</td></tr>';
-      invitesPanel = '<div class="cd-panel" data-panel="invites"' + (activeTab !== 'invites' ? ' style="display:none;"' : '') + '>' +
+      accessPanel = '<div class="cd-panel" data-panel="access"' + (activeTab !== 'access' ? ' style="display:none;"' : '') + '>' +
         '<div class="card" style="overflow:hidden;">' +
-        '<div class="card-hd"><span>Invited Users (USER_PROJECTS — decision Q invitation list)</span>' +
+        '<div class="card-hd"><span>&#128274; Restricted — invited users only (USER_PROJECTS, decision Q)</span>' +
         '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showInvitePD(\'' + pid + '\')">+ Invite User</button></div>' +
         '<table class="t"><thead><tr><th>User</th><th>Email</th><th>Department</th><th>Actions</th></tr></thead><tbody>' + invRows + '</tbody></table>' +
-        '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Only invited users see this Restricted project. Flip the project to Open (Details &rarr; Edit) at go-live — no per-user cleanup needed.</p>' +
+        '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Only invited users see this Restricted project. ' + (admin ? 'Flip the project to Open (Details &rarr; Edit) at go-live — no per-user cleanup needed.' : 'Ask the service provider to flip it to Open at go-live — no per-user cleanup needed.') + '</p>' +
+        '</div></div>';
+    } else {
+      var roster = DB.users.filter(function (x) { return x.companyId === p.companyId && x.status === 'Active'; });
+      var rosterRows = roster.map(function (x) {
+        var dept = department(x.departmentId);
+        return '<tr><td><span class="avatar-sm">' + initials(x.name) + '</span> <b>' + esc(x.name) + '</b></td><td>' + esc(x.email) + '</td>' +
+          '<td><span class="role-pill">' + esc(x.role) + '</span></td>' +
+          '<td>' + (dept.name ? esc(dept.name) : '<span class="muted">—</span>') + '</td></tr>';
+      }).join('');
+      if (!rosterRows) rosterRows = '<tr><td colspan="4" class="muted">No active users at ' + esc(c.name || '') + '.</td></tr>';
+      accessPanel = '<div class="cd-panel" data-panel="access"' + (activeTab !== 'access' ? ' style="display:none;"' : '') + '>' +
+        '<div class="card" style="overflow:hidden;">' +
+        '<div class="card-hd">&#127758; Open — visible to everyone at ' + esc(c.name || '') + ' (' + roster.length + ' users)</div>' +
+        '<table class="t"><thead><tr><th>User</th><th>Email</th><th>Landing Role</th><th>Department</th></tr></thead><tbody>' + rosterRows + '</tbody></table>' +
+        '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Open projects need no invitations (decision Q) — every active ' + esc(c.name || '') + ' user sees this project automatically. Read-only roster.</p>' +
         '</div></div>';
     }
 
     var html = pageBar((admin ? 'Administration' : 'My Company') + ' / Projects / ' + esc(p.projectName), p.projectName, '<a class="btn btn-sm" href="11-projects.html">&larr; Back to Projects</a>') +
       '<div class="content">' +
       '<div class="card" style="overflow:hidden;padding:16px;">' + header + '</div>' +
-      tabs + detailsPanel + teamPanel + slaPanel + catsPanel + invitesPanel +
+      tabs + detailsPanel + teamPanel + slaPanel + catsPanel + accessPanel +
       (admin
         ? '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 19 &mdash; Project-centric admin hub (admin-console spec 2026-07-03). Flat pages browse; this hub configures: team (Flows 3/4), SLA (FR-23), categories (hybrid), access (decision Q).</p>'
         : '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 19 &mdash; same hub, Client Admin view (spec 2026-07-04): team/SLA/categories read-only; you manage invitations on the Access tab (decision Q).</p>') + '</div>';
@@ -3111,7 +3126,7 @@
       save();
       sd.closeModal();
       toast(x.name + ' invited to ' + (p.projectName || 'project') + '.');
-      window._projectDetailTab = 'invites';
+      window._projectDetailTab = 'access';
       renderProjectDetail(currentUser());
     },
     revokeInvitePD: function(pid, uid) {
@@ -3123,7 +3138,7 @@
       auditLog(currentUser().id, 'REVOKE', 'User-Project', (x ? x.name : uid) + ' -> ' + (p.projectName || pid), 'invited', '');
       save();
       toast('Invitation revoked.');
-      window._projectDetailTab = 'invites';
+      window._projectDetailTab = 'access';
       renderProjectDetail(currentUser());
     },
     showAddCategoryPD: function(pid) {
