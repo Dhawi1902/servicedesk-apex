@@ -443,7 +443,7 @@ So we build the Ticket List *once*: a Client User sees only their tickets, a Sys
 
 > Two cross-cutting mechanisms make this work (they are *Shared Components*, not pages): **application items** `APP_COMPANY_ID` / `APP_USER_ID` / `APP_ROLE` set once at login, and one **authorization scheme per role** (`IS_CLIENT_USER`, `IS_CLIENT_ADMIN`, `IS_AGENT`, `IS_SYSTEM_ADMIN`).
 
-### The pages (15 total → 12 MUST, 3 SHOULD)
+### The pages (18 total → 12 MUST, 6 SHOULD)
 
 | # | Page | APEX page type | What it's for / who uses it | Shared vs role-specific | Priority |
 |---|---|---|---|---|---|
@@ -461,12 +461,15 @@ So we build the Ticket List *once*: a Client User sees only their tickets, a Sys
 | **Admin** ||||||
 | 9 | **Companies (manage)** | Interactive Grid | Create/edit/deactivate client companies (CRUD). *System Admin only.* | Role-specific | **MUST** |
 | 10 | **Users (manage)** | Interactive Grid | Create/edit/deactivate users; assign role + company. *System Admin only.* | Role-specific | **MUST** |
-| 11 | **Projects (manage)** | Interactive Grid | Create/edit/deactivate projects (service engagements) per company; map agents to projects (`AGENT_PROJECTS`). *System Admin only.* | Role-specific | **MUST** |
-| 12 | **Project Invitations** | Interactive Grid | Invite client users into **Restricted** projects (`USER_PROJECTS`, decision Q); Open projects need no setup. *Client Admin only.* | Role-specific | **MUST** |
+| 11 | **Projects (list)** | Interactive Report | Browse service engagements; rows scoped per role — agents via `AGENT_PROJECTS`, client users see Open + invited Restricted (decision Q); create/edit gated to System Admin. *All roles.* | Shared (role-scoped) | **MUST** |
+| 12 | **Project Detail hub** | Tabbed detail (Region Display Selector) | One door per project: Details · Support Team (`AGENT_PROJECTS` + tier, decision M revised) · SLA Targets · Categories · **Access/invitations** (`USER_PROJECTS`, decision Q — absorbs the former standalone "Project Invitations" page). *All roles read; System Admin configures; Client Admin manages invitations.* | Shared (tabs gated) | **MUST** |
 | **Supporting** ||||||
-| 13 | **Categories (manage)** | Interactive Grid | Maintain ticket categories / priorities. *System Admin.* | Role-specific | **SHOULD** |
-| 14 | **My Profile** | Form | View/change own details / password. *All roles.* | Shared | **SHOULD** |
-| 15 | **SLA Targets (manage)** | Interactive Grid | Configure SLA response/resolution targets per **project** per severity (FR-23). *System Admin only.* | Role-specific | **SHOULD** |
+| 13 | **My Company hub** | Tabbed detail | Read-only company hub for client roles (Projects · Departments · Client Admins); doubles as the System Admin's company drill-down from page 9. *Client roles + System Admin.* | Shared (edits gated) | **SHOULD** |
+| 14 | **Categories (manage)** | Interactive Grid | Maintain ticket categories (global — shared by all tenants by design). *System Admin.* | Role-specific | **SHOULD** |
+| 15 | **My Profile** | Form | View/change own details / password; shows an agent's per-project tiers. *All roles.* | Shared | **SHOULD** |
+| 16 | **SLA Policies & Targets** | Master-detail (IG + IG) | Named SLA policies (decision S: Gold/Standard/Bronze/Internal, one `is_default`) with per-severity target rows (`response_hours`, `resolution_days`, `escalation_pct` — FR-23/FR-35). *System Admin only.* | Role-specific | **SHOULD** |
+| 17 | **Agent–Project Mapping** | Interactive Grid | Global view of `AGENT_PROJECTS` (tier per project, decisions I/M revised); page 12's Support Team tab edits the same table per project. *System Admin only.* | Role-specific | **SHOULD** |
+| 18 | **Audit Log** | Interactive Report | Admin-action transparency — who changed what, when, old→new value (companies/projects/users/roles/SLA). *System Admin only.* | Role-specific | **SHOULD** |
 
 **A working, judge-satisfying demo needs only the 12 MUST pages (1–12).** If time is tight, the irreducible spine is pages **1, 3, 4, 5, 6, 7, 9, 10, 11** — that alone hits all four judge non-negotiables (role-based access, multiple companies/projects, assignment, dashboard).
 
@@ -476,7 +479,7 @@ So we build the Ticket List *once*: a Client User sees only their tickets, a Sys
 - **Navigation menu, theme/branding, breadcrumbs** = *Shared Components*.
 - **Assignment notification email** (FR-21, SHOULD) = a process on the Assign action via `APEX_MAIL`, not a page.
 
-> This 13-page map slots straight into the workstreams below: pages 1–2 + the app-item/auth plumbing → *Data model & security*; pages 4–8 → *Ticket screens & workflow*; page 3 → *Dashboard & reporting*; pages 9–13 + theme → split between *Admin* and *UI/UX*.
+> This 18-page map slots straight into the workstreams below: pages 1–2 + the app-item/auth plumbing → *Data model & security*; pages 4–8 → *Ticket screens & workflow*; page 3 → *Dashboard & reporting*; pages 9–18 + theme → split between *Admin* and *UI/UX*.
 
 ### 6.2 Build instructions — UX patterns that existing FRs already require
 *(These are NOT new features — they are how the committed FRs should be implemented. Gap analysis confirmed each one maps to an existing FR.)*
@@ -495,7 +498,7 @@ So we build the Ticket List *once*: a Client User sees only their tickets, a Sys
 | **3 (Dashboard)** | **Project breakdown for Client Admin** — a conditional chart region (shown when `V('APP_ROLE') = 'CLIENT_ADMIN'`) grouping tickets by project | The dashboard "respects the viewer's role" (FR-19); for a Client Admin, the company breakdown is useless — they see only one company; project breakdown shows each service engagement | FR-19 + FR-20 |
 
 ### 6.1 Clickable prototype (built — review before building in APEX)
-A **working, role-aware front-end prototype** of all 12 pages is live. It runs in the browser
+A **working, role-aware front-end prototype** of all 18 pages is live. It runs in the browser
 only (HTML/CSS/JS) — **no APEX, no real database, no real authentication** — so the team can
 agree on layout and flow, and rehearse the demo, *before* a line of APEX is built.
 
@@ -531,7 +534,7 @@ Only after the team agrees on §3–§5 do we split work. A suggested division t
 
 ### Team ownership — 5 developers (confirmed)
 
-Balanced by **effort, not page count** (Ticket Detail alone is ~5× a Categories grid), and dependency-aware: the Foundation must land before anyone can build a tenant-filtered page. Step-by-step build instructions per page live in [`page-build-guide.md`](page-build-guide.md).
+Balanced by **effort, not page count** (Ticket Detail alone is ~5× a Categories grid), and dependency-aware: the Foundation must land before anyone can build a tenant-filtered page. Step-by-step build instructions per page live in [`guide/`](../guide/README.md) (one doc per page; supersedes the old `page-build-guide.md`).
 
 | Owner | Workstream | Pages | Also owns |
 |---|---|---|---|
@@ -539,7 +542,7 @@ Balanced by **effort, not page count** (Ticket Detail alone is ~5× a Categories
 | **P2** | Ticket Detail hub (hardest page) | **5** Ticket Detail · **8** Add Comment | Lifecycle buttons/processes (each writes `TICKET_HISTORY`), Escalate action, CSAT capture, internal-note flag, the self-assign button on detail |
 | **P3** | Intake, queue & assignment | **4** Ticket List/Queue · **6** Create Ticket · **7** Assign/Reassign | Self-assign process, auto-acknowledgement email + assignment email (`APEX_MAIL`), faceted filtering/search |
 | **P4** | Dashboard & data | **2** Home/Landing · **3** Dashboard | Charts + analytics (avg resolution time, per-agent counts), realistic **test data** (feeds everyone's testing) |
-| **P5** | Admin & UI | **9** Companies · **10** Users · **11** Projects · **12** Project Invitations · **13** Categories · **14** Profile | Theme/branding, navigation menu, breadcrumbs (Shared Components) |
+| **P5** | Admin & UI | **9** Companies · **10** Users · **11** Projects · **12** Project Detail hub · **14** Categories · **15** Profile | Theme/branding, navigation menu, breadcrumbs (Shared Components). SHOULD pages **13** My Company, **16** SLA Policies, **17** Agent–Project Mapping, **18** Audit Log are stretch — assign in week 2 as capacity allows |
 
 **Contract between owners:** P1's app items + authorization schemes are frozen once published — everyone else only *consumes* `:APP_COMPANY_ID` and the `IS_*` schemes, never redefines them. This keeps all tenant-isolation logic in one owner's hands (§5's core rule). P2 (Page 5) and P3 (Page 4) share the `TICKETS` table — agree the column list early. P5 owns the new project management pages (11, 12).
 

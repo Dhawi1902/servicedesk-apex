@@ -97,13 +97,17 @@ Look these up in the reference before implementing:
 | `ticketing-system.html` | Interactive, visual version for sharing/screen-share |
 | `Ticketing-Kickoff.pptx` | Slide deck to present the kickoff |
 | `Ticketing-Requirements.xlsx` | Live requirements tracker (filter by priority, assign owners) |
-| `mockups/` | Clickable HTML/JS prototype of all 12 pages (APEX Universal-Theme look) |
+| `mockups/` | Clickable HTML/JS prototype of all 18 pages (APEX Universal-Theme look) |
+
+Build-phase documentation lives at repo root in [`guide/`](guide/README.md) — one doc per APEX
+page (18 pages = 12 MUST + 6 SHOULD, guide file numbers = APEX page numbers) plus SQL setup;
+it supersedes the old `docs/page-build-guide.md`.
 
 When project decisions change (e.g. the A–F open decisions in the brief), **update all four**
 so they stay consistent.
 
 ## Interactive prototype (`docs/mockups/`)
-A working, **simulated** front-end demo of the 12-page architecture — APEX is NOT involved yet.
+A working, **simulated** front-end demo of the 18-page architecture — APEX is NOT involved yet.
 Use it to agree on layout/flow and to demo RBAC + tenant isolation before building in APEX.
 
 - **Live:** <https://apex-demo.dhawilabs.com> · **Source:** `docs/mockups/` · **Public repo:** `Dhawi1902/servicedesk-mockups` (Pages).
