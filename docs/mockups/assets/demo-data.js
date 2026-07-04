@@ -5,9 +5,9 @@
    are built in Oracle APEX (application items + WHERE company_id filters
    + authorization schemes).
 
-   Updated to match the latest brief (2026-07-03):
+   Updated to match the latest brief (2026-07-04):
    - Decision O: PROJECTS layer between COMPANIES and TICKETS
-   - Decision M revised: tier on APP_USERS (one tier per agent, not per-company)
+   - Decision M revised 2026-07-04: tier is per agent-project mapping (AGENT_PROJECTS.tier)
    - Decision N revised: project-scoped client visibility (not department-scoped)
    - Decision P: multi-role support (userRoles array)
    - AGENT_PROJECTS replaces AGENT_COMPANIES (maps agents to projects, not companies)
@@ -37,14 +37,17 @@ window.DEMO_SEED = {
   // Decision Q: visibility = 'OPEN' (whole company sees it) or 'RESTRICTED'
   // (invitation-only via userProjects — e.g. an app still in testing, or HR/payroll).
   projects: [
-    { id: 'P1', companyId: 'C1', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Acme Corp',              visibility: 'OPEN',       isActive: true, createdAt: '2026-01-15T00:00:00' },
-    { id: 'P2', companyId: 'C1', projectName: 'ERP Systems',     projectKey: 'ERP',   description: 'ERP platform maintenance and support',          visibility: 'OPEN',       isActive: true, createdAt: '2026-03-01T00:00:00' },
-    { id: 'P3', companyId: 'C2', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Globex Ltd',              visibility: 'OPEN',       isActive: true, createdAt: '2026-03-15T00:00:00' },
-    { id: 'P4', companyId: 'C2', projectName: 'CRM Platform',    projectKey: 'CRM',   description: 'CRM integration and support',                   visibility: 'OPEN',       isActive: true, createdAt: '2026-04-01T00:00:00' },
-    { id: 'P5', companyId: 'C3', projectName: 'IT Support',      projectKey: 'ITSUP', description: 'General IT support for Initech',                 visibility: 'OPEN',       isActive: true, createdAt: '2026-06-01T00:00:00' },
-    { id: 'P6', companyId: 'C0', projectName: 'Internal Apps',   projectKey: 'INTAP', description: 'Internal application support for Northwind IT',  visibility: 'OPEN',       isActive: true, createdAt: '2026-01-01T00:00:00' },
-    { id: 'P7', companyId: 'C0', projectName: 'Infrastructure',  projectKey: 'INFRA', description: 'Network and server infrastructure',              visibility: 'OPEN',       isActive: true, createdAt: '2026-01-01T00:00:00' },
-    { id: 'P8', companyId: 'C0', projectName: 'HR System Pilot', projectKey: 'HRPIL', description: 'New HR platform — pilot phase, invited testers only', visibility: 'RESTRICTED', isActive: true, createdAt: '2026-06-20T00:00:00' }
+    // projectKey is GLOBALLY UNIQUE and company-prefixed (Jira/ConnectWise pattern) —
+    // it disambiguates same-named projects across companies in every LOV/report.
+    // slaPolicyId assigns a named SLA policy (see slaPolicies below); null = default policy.
+    { id: 'P1', companyId: 'C1', projectName: 'IT Support',      projectKey: 'ACME-IT',  slaPolicyId: 'SLP2', description: 'General IT support for Acme Corp',              visibility: 'OPEN',       isActive: true, createdAt: '2026-01-15T00:00:00' },
+    { id: 'P2', companyId: 'C1', projectName: 'ERP Systems',     projectKey: 'ACME-ERP', slaPolicyId: 'SLP1', description: 'ERP platform maintenance and support',          visibility: 'OPEN',       isActive: true, createdAt: '2026-03-01T00:00:00' },
+    { id: 'P3', companyId: 'C2', projectName: 'IT Support',      projectKey: 'GLBX-IT',  slaPolicyId: 'SLP3', description: 'General IT support for Globex Ltd',              visibility: 'OPEN',       isActive: true, createdAt: '2026-03-15T00:00:00' },
+    { id: 'P4', companyId: 'C2', projectName: 'CRM Platform',    projectKey: 'GLBX-CRM', slaPolicyId: 'SLP3', description: 'CRM integration and support',                   visibility: 'OPEN',       isActive: true, createdAt: '2026-04-01T00:00:00' },
+    { id: 'P5', companyId: 'C3', projectName: 'IT Support',      projectKey: 'INIT-IT',  slaPolicyId: 'SLP2', description: 'General IT support for Initech',                 visibility: 'OPEN',       isActive: true, createdAt: '2026-06-01T00:00:00' },
+    { id: 'P6', companyId: 'C0', projectName: 'Internal Apps',   projectKey: 'NW-APPS',  slaPolicyId: 'SLP4', description: 'Internal application support for Northwind IT',  visibility: 'OPEN',       isActive: true, createdAt: '2026-01-01T00:00:00' },
+    { id: 'P7', companyId: 'C0', projectName: 'Infrastructure',  projectKey: 'NW-INFRA', slaPolicyId: 'SLP4', description: 'Network and server infrastructure',              visibility: 'OPEN',       isActive: true, createdAt: '2026-01-01T00:00:00' },
+    { id: 'P8', companyId: 'C0', projectName: 'HR System Pilot', projectKey: 'NW-HR',    slaPolicyId: null,   description: 'New HR platform — pilot phase, invited testers only', visibility: 'RESTRICTED', isActive: true, createdAt: '2026-06-20T00:00:00' }
   ],
 
   // Decision N: departments per company (metadata only — not a visibility filter)
@@ -59,31 +62,31 @@ window.DEMO_SEED = {
   ],
 
   // password is 'demo' for every account (prefilled on the login screen)
-  // Decision M revised: tier is on APP_USERS (one tier per agent, not per-company).
-  //   Non-agent users have tier: null.
+  // Decision M revised 2026-07-04: tier is NOT here — it lives on each
+  //   agentProjects mapping (per-project proficiency).
   // Decision P: role is the user's default/landing role. Full role list in userRoles[].
   // departmentId: links client users to their department (metadata), null for vendor users
   // status: Active/Inactive — FR-6 deactivation support
   // lastLogin: ISO timestamp of last login — ISO §6.6 access review
   users: [
-    { id: 'u1', name: 'Sara Admin',   email: 'sara@northwind.example',  password: 'demo', role: 'System Admin',  companyId: 'C0', departmentId: null,   tier: null, status: 'Active', lastLogin: '2026-07-03T08:15:00' },
-    { id: 'u2', name: 'Mike Ops',     email: 'mike@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L2', status: 'Active', lastLogin: '2026-07-03T07:50:00' },
-    { id: 'u3', name: 'Lee Tech',     email: 'lee@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L2', status: 'Active', lastLogin: '2026-07-02T16:30:00' },
-    { id: 'u4', name: 'Anna Nguyen',  email: 'anna@acme.example',       password: 'demo', role: 'Client User',   companyId: 'C1', departmentId: 'dep1', tier: null, status: 'Active', lastLogin: '2026-07-03T09:00:00' },
-    { id: 'u5', name: 'Bob Reyes',    email: 'bob@acme.example',        password: 'demo', role: 'Client Admin',  companyId: 'C1', departmentId: 'dep2', tier: null, status: 'Active', lastLogin: '2026-07-02T14:20:00' },
-    { id: 'u6', name: 'Carla Vidal',  email: 'carla@globex.example',    password: 'demo', role: 'Client Admin',  companyId: 'C2', departmentId: 'dep3', tier: null, status: 'Active', lastLogin: '2026-07-01T11:00:00' },
-    { id: 'u7', name: 'Dan Yu',       email: 'dan@globex.example',      password: 'demo', role: 'Client User',   companyId: 'C2', departmentId: 'dep4', tier: null, status: 'Active', lastLogin: '2026-07-03T08:45:00' },
-    { id: 'u8', name: 'Eve Park',     email: 'eve@initech.example',     password: 'demo', role: 'Client User',   companyId: 'C3', departmentId: 'dep5', tier: null, status: 'Active', lastLogin: '2026-06-30T10:15:00' },
-    { id: 'u9',  name: 'Nora Syed',    email: 'nora@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L1', status: 'Active', lastLogin: '2026-07-03T08:00:00' },
-    { id: 'u10', name: 'Raj Patel',    email: 'raj@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L2', status: 'Active', lastLogin: '2026-07-02T17:00:00' },
-    { id: 'u11', name: 'Kim Tanaka',   email: 'kim@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L3', status: 'Active', lastLogin: '2026-07-01T09:30:00' },
-    { id: 'u12', name: 'Omar Hassan',  email: 'omar@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   tier: 'L4', status: 'Active', lastLogin: '2026-06-28T15:00:00' },
-    { id: 'u13', name: 'Fay Wong',     email: 'fay@acme.example',        password: 'demo', role: 'Client User',   companyId: 'C1', departmentId: 'dep2', tier: null, status: 'Active', lastLogin: '2026-07-02T09:45:00' },
-    { id: 'u14', name: 'Tom Grant',    email: 'tom@globex.example',      password: 'demo', role: 'Client User',   companyId: 'C2', departmentId: 'dep3', tier: null, status: 'Inactive', lastLogin: '2026-06-15T10:00:00' },
-    { id: 'u15', name: 'Lily Chen',    email: 'lily@initech.example',    password: 'demo', role: 'Client Admin',  companyId: 'C3', departmentId: 'dep5', tier: null, status: 'Active', lastLogin: '2026-07-03T07:30:00' },
-    { id: 'u16', name: 'Zack Osman',   email: 'zack@initech.example',    password: 'demo', role: 'Client User',   companyId: 'C3', departmentId: 'dep6', tier: null, status: 'Active', lastLogin: '2026-06-29T14:00:00' },
-    { id: 'u17', name: 'Nora Syed (Int)',  email: 'nora-int@northwind.example', password: 'demo', role: 'Client Admin',  companyId: 'C0', departmentId: 'dep0', tier: null, status: 'Active', lastLogin: '2026-07-03T08:00:00' },
-    { id: 'u18', name: 'Nick Farrow',      email: 'nick@northwind.example',     password: 'demo', role: 'Client User',   companyId: 'C0', departmentId: 'dep0', tier: null, status: 'Active', lastLogin: '2026-07-02T16:00:00' }
+    { id: 'u1', name: 'Sara Admin',   email: 'sara@northwind.example',  password: 'demo', role: 'System Admin',  companyId: 'C0', departmentId: null,   status: 'Active', lastLogin: '2026-07-03T08:15:00' },
+    { id: 'u2', name: 'Mike Ops',     email: 'mike@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   status: 'Active', lastLogin: '2026-07-03T07:50:00' },
+    { id: 'u3', name: 'Lee Tech',     email: 'lee@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   status: 'Active', lastLogin: '2026-07-02T16:30:00' },
+    { id: 'u4', name: 'Anna Nguyen',  email: 'anna@acme.example',       password: 'demo', role: 'Client User',   companyId: 'C1', departmentId: 'dep1', status: 'Active', lastLogin: '2026-07-03T09:00:00' },
+    { id: 'u5', name: 'Bob Reyes',    email: 'bob@acme.example',        password: 'demo', role: 'Client Admin',  companyId: 'C1', departmentId: 'dep2', status: 'Active', lastLogin: '2026-07-02T14:20:00' },
+    { id: 'u6', name: 'Carla Vidal',  email: 'carla@globex.example',    password: 'demo', role: 'Client Admin',  companyId: 'C2', departmentId: 'dep3', status: 'Active', lastLogin: '2026-07-01T11:00:00' },
+    { id: 'u7', name: 'Dan Yu',       email: 'dan@globex.example',      password: 'demo', role: 'Client User',   companyId: 'C2', departmentId: 'dep4', status: 'Active', lastLogin: '2026-07-03T08:45:00' },
+    { id: 'u8', name: 'Eve Park',     email: 'eve@initech.example',     password: 'demo', role: 'Client User',   companyId: 'C3', departmentId: 'dep5', status: 'Active', lastLogin: '2026-06-30T10:15:00' },
+    { id: 'u9',  name: 'Nora Syed',    email: 'nora@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   status: 'Active', lastLogin: '2026-07-03T08:00:00' },
+    { id: 'u10', name: 'Raj Patel',    email: 'raj@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   status: 'Active', lastLogin: '2026-07-02T17:00:00' },
+    { id: 'u11', name: 'Kim Tanaka',   email: 'kim@northwind.example',   password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   status: 'Active', lastLogin: '2026-07-01T09:30:00' },
+    { id: 'u12', name: 'Omar Hassan',  email: 'omar@northwind.example',  password: 'demo', role: 'Support Agent', companyId: 'C0', departmentId: null,   status: 'Active', lastLogin: '2026-06-28T15:00:00' },
+    { id: 'u13', name: 'Fay Wong',     email: 'fay@acme.example',        password: 'demo', role: 'Client User',   companyId: 'C1', departmentId: 'dep2', status: 'Active', lastLogin: '2026-07-02T09:45:00' },
+    { id: 'u14', name: 'Tom Grant',    email: 'tom@globex.example',      password: 'demo', role: 'Client User',   companyId: 'C2', departmentId: 'dep3', status: 'Inactive', lastLogin: '2026-06-15T10:00:00' },
+    { id: 'u15', name: 'Lily Chen',    email: 'lily@initech.example',    password: 'demo', role: 'Client Admin',  companyId: 'C3', departmentId: 'dep5', status: 'Active', lastLogin: '2026-07-03T07:30:00' },
+    { id: 'u16', name: 'Zack Osman',   email: 'zack@initech.example',    password: 'demo', role: 'Client User',   companyId: 'C3', departmentId: 'dep6', status: 'Active', lastLogin: '2026-06-29T14:00:00' },
+    { id: 'u17', name: 'Nora Syed (Int)',  email: 'nora-int@northwind.example', password: 'demo', role: 'Client Admin',  companyId: 'C0', departmentId: 'dep0', status: 'Active', lastLogin: '2026-07-03T08:00:00' },
+    { id: 'u18', name: 'Nick Farrow',      email: 'nick@northwind.example',     password: 'demo', role: 'Client User',   companyId: 'C0', departmentId: 'dep0', status: 'Active', lastLogin: '2026-07-02T16:00:00' }
   ],
 
   // Decision P: multi-role support. Each user can hold multiple roles.
@@ -120,39 +123,40 @@ window.DEMO_SEED = {
     { userId: 'u18', role: 'CLIENT_USER' }
   ],
 
-  // Which projects each Support Agent covers (Decision O + Decision I revised).
-  // Tier is NOT here — it lives on the user record (Decision M revised).
+  // Which projects each Support Agent covers, and at what tier (Decision O +
+  // Decision I revised + Decision M revised 2026-07-04: tier is PER MAPPING —
+  // per-project proficiency, so one agent can be L3 on one project, L2 on another).
   // System Admin is intentionally absent: admins see every project by role.
-  // In APEX this is a join table (AGENT_PROJECTS: user_id + project_id).
+  // In APEX this is a join table (AGENT_PROJECTS: user_id + project_id + tier).
   agentProjects: [
-    { userId: 'u2',  projectId: 'P1' },   // Mike covers Acme IT Support
-    { userId: 'u2',  projectId: 'P3' },   // Mike covers Globex IT Support
-    { userId: 'u2',  projectId: 'P6' },   // Mike covers Northwind Internal Apps
-    { userId: 'u3',  projectId: 'P1' },   // Lee covers Acme IT Support
-    { userId: 'u3',  projectId: 'P2' },   // Lee covers Acme ERP
-    { userId: 'u3',  projectId: 'P5' },   // Lee covers Initech IT Support
-    { userId: 'u3',  projectId: 'P6' },   // Lee covers Northwind Internal Apps
-    { userId: 'u9',  projectId: 'P1' },   // Nora covers Acme IT Support
-    { userId: 'u9',  projectId: 'P2' },   // Nora (L1) — first-line on Acme ERP (L1 gate, Flow 3)
-    { userId: 'u9',  projectId: 'P3' },   // Nora (L1) — first-line on Globex IT Support
-    { userId: 'u9',  projectId: 'P5' },   // Nora covers Initech IT Support
-    { userId: 'u9',  projectId: 'P6' },   // Nora (L1) — first-line on Northwind Internal Apps
-    { userId: 'u9',  projectId: 'P7' },   // Nora (L1) — first-line on Northwind Infrastructure
+    { userId: 'u2',  projectId: 'P1', tier: 'L2' },   // Mike covers Acme IT Support
+    { userId: 'u2',  projectId: 'P3', tier: 'L2' },   // Mike covers Globex IT Support
+    { userId: 'u2',  projectId: 'P6', tier: 'L2' },   // Mike covers Northwind Internal Apps
+    { userId: 'u3',  projectId: 'P1', tier: 'L2' },   // Lee covers Acme IT Support
+    { userId: 'u3',  projectId: 'P2', tier: 'L2' },   // Lee covers Acme ERP
+    { userId: 'u3',  projectId: 'P5', tier: 'L2' },   // Lee covers Initech IT Support
+    { userId: 'u3',  projectId: 'P6', tier: 'L2' },   // Lee covers Northwind Internal Apps
+    { userId: 'u9',  projectId: 'P1', tier: 'L1' },   // Nora covers Acme IT Support
+    { userId: 'u9',  projectId: 'P2', tier: 'L1' },   // Nora (L1) — first-line on Acme ERP (L1 gate, Flow 3)
+    { userId: 'u9',  projectId: 'P3', tier: 'L1' },   // Nora (L1) — first-line on Globex IT Support
+    { userId: 'u9',  projectId: 'P5', tier: 'L1' },   // Nora covers Initech IT Support
+    { userId: 'u9',  projectId: 'P6', tier: 'L1' },   // Nora (L1) — first-line on Northwind Internal Apps
+    { userId: 'u9',  projectId: 'P7', tier: 'L1' },   // Nora (L1) — first-line on Northwind Infrastructure
     // NOTE: P4 (Globex CRM) deliberately has NO L1 — demos the red "no L1" gate badge
-    { userId: 'u10', projectId: 'P3' },   // Raj covers Globex IT Support
-    { userId: 'u10', projectId: 'P4' },   // Raj covers Globex CRM
-    { userId: 'u10', projectId: 'P5' },   // Raj covers Initech IT Support
-    { userId: 'u11', projectId: 'P1' },   // Kim covers Acme IT Support
-    { userId: 'u11', projectId: 'P3' },   // Kim covers Globex IT Support
-    { userId: 'u11', projectId: 'P5' },   // Kim covers Initech IT Support
-    { userId: 'u12', projectId: 'P1' },   // Omar covers Acme (all projects)
-    { userId: 'u12', projectId: 'P2' },
-    { userId: 'u12', projectId: 'P3' },   // Omar covers Globex (all projects)
-    { userId: 'u12', projectId: 'P4' },
-    { userId: 'u12', projectId: 'P5' },   // Omar covers Initech
-    { userId: 'u2',  projectId: 'P7' },   // Mike covers Northwind Infrastructure
-    { userId: 'u3',  projectId: 'P7' },   // Lee covers Northwind Infrastructure
-    { userId: 'u9',  projectId: 'P8' }    // Nora (L1) covers the HR System Pilot (L1 gate — Flow 3)
+    { userId: 'u10', projectId: 'P3', tier: 'L2' },   // Raj covers Globex IT Support
+    { userId: 'u10', projectId: 'P4', tier: 'L2' },   // Raj covers Globex CRM
+    { userId: 'u10', projectId: 'P5', tier: 'L3' },   // Raj covers Initech IT Support — SENIOR here (per-project tier demo: L2 elsewhere)
+    { userId: 'u11', projectId: 'P1', tier: 'L3' },   // Kim covers Acme IT Support
+    { userId: 'u11', projectId: 'P3', tier: 'L3' },   // Kim covers Globex IT Support
+    { userId: 'u11', projectId: 'P5', tier: 'L3' },   // Kim covers Initech IT Support
+    { userId: 'u12', projectId: 'P1', tier: 'L4' },   // Omar covers Acme (all projects)
+    { userId: 'u12', projectId: 'P2', tier: 'L4' },
+    { userId: 'u12', projectId: 'P3', tier: 'L4' },   // Omar covers Globex (all projects)
+    { userId: 'u12', projectId: 'P4', tier: 'L4' },
+    { userId: 'u12', projectId: 'P5', tier: 'L4' },   // Omar covers Initech
+    { userId: 'u2',  projectId: 'P7', tier: 'L2' },   // Mike covers Northwind Infrastructure
+    { userId: 'u3',  projectId: 'P7', tier: 'L2' },   // Lee covers Northwind Infrastructure
+    { userId: 'u9',  projectId: 'P8', tier: 'L1' }    // Nora (L1) covers the HR System Pilot (L1 gate — Flow 3)
   ],
 
   // Decision Q: USER_PROJECTS is an INVITATION list (semantic flip from decision N).
@@ -189,51 +193,44 @@ window.DEMO_SEED = {
   // FR-36: Resolution codes for resolved/closed tickets
   resolutionCodes: ['FIXED', 'WORKAROUND', 'KNOWN_ERROR', 'CANNOT_REPRODUCE', 'DUPLICATE', 'USER_EDUCATION', 'NOT_AN_INCIDENT'],
 
-  // FR-23: Per-project SLA targets per severity (vendor-managed).
-  // sla_due_date = created_at + resolution_days.
-  // escalationPct = auto-escalation threshold percentage (FR-35).
-  // Keyed on projectId (Decision O) — each project gets its own SLA terms.
-  slaTargets: [
-    // P1: Acme IT Support
-    { projectId: 'P1', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 80 },
-    { projectId: 'P1', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 80 },
-    { projectId: 'P1', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 80 },
-    { projectId: 'P1', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 },
-    // P2: Acme ERP Systems (tighter resolution for critical ERP issues)
-    { projectId: 'P2', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 75 },
-    { projectId: 'P2', severity: 'Major',    responseHours: 4,  resolutionDays: 2,  escalationPct: 75 },
-    { projectId: 'P2', severity: 'Minor',    responseHours: 8,  resolutionDays: 5,  escalationPct: 80 },
-    { projectId: 'P2', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 },
-    // P3: Globex IT Support
-    { projectId: 'P3', severity: 'Critical', responseHours: 2,  resolutionDays: 1,  escalationPct: 75 },
-    { projectId: 'P3', severity: 'Major',    responseHours: 8,  resolutionDays: 5,  escalationPct: 75 },
-    { projectId: 'P3', severity: 'Minor',    responseHours: 16, resolutionDays: 10, escalationPct: 75 },
-    { projectId: 'P3', severity: 'Low',      responseHours: 48, resolutionDays: 21, escalationPct: 75 },
-    // P4: Globex CRM Platform (same as Globex IT Support)
-    { projectId: 'P4', severity: 'Critical', responseHours: 2,  resolutionDays: 1,  escalationPct: 75 },
-    { projectId: 'P4', severity: 'Major',    responseHours: 8,  resolutionDays: 5,  escalationPct: 75 },
-    { projectId: 'P4', severity: 'Minor',    responseHours: 16, resolutionDays: 10, escalationPct: 75 },
-    { projectId: 'P4', severity: 'Low',      responseHours: 48, resolutionDays: 21, escalationPct: 75 },
-    // P5: Initech IT Support
-    { projectId: 'P5', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 80 },
-    { projectId: 'P5', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 80 },
-    { projectId: 'P5', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 80 },
-    { projectId: 'P5', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 },
-    // P6: Northwind Internal Apps
-    { projectId: 'P6', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 90 },
-    { projectId: 'P6', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 90 },
-    { projectId: 'P6', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 90 },
-    { projectId: 'P6', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 90 },
-    // P7: Northwind Infrastructure
-    { projectId: 'P7', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 90 },
-    { projectId: 'P7', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 90 },
-    { projectId: 'P7', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 90 },
-    { projectId: 'P7', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 90 },
-    // P8: Northwind HR System Pilot (defaults seeded at creation — Flow 3)
-    { projectId: 'P8', severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 80 },
-    { projectId: 'P8', severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 80 },
-    { projectId: 'P8', severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 80 },
-    { projectId: 'P8', severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 }
+  // FR-23: Named SLA policies (industry pattern: Zendesk SLA policies, Autotask/Halo
+  // SLA templates, ServiceNow SLA definitions). A policy carries per-severity targets;
+  // projects are ASSIGNED a policy (PROJECTS.slaPolicyId) instead of owning target rows.
+  // isDefault marks the fallback for projects with no assignment (e.g. P8).
+  // sla_due_date = created_at + resolutionDays; escalationPct = FR-35 threshold.
+  slaPolicies: [
+    { id: 'SLP1', name: 'Gold', isDefault: false, description: 'Premium contract tier — tightest resolution for business-critical systems',
+      effectiveFrom: '2026-03-01', approvedBy: 'u1', notes: 'Acme ERP contract addendum #2',
+      targets: [
+        { severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 75 },
+        { severity: 'Major',    responseHours: 4,  resolutionDays: 2,  escalationPct: 75 },
+        { severity: 'Minor',    responseHours: 8,  resolutionDays: 5,  escalationPct: 80 },
+        { severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 }
+      ] },
+    { id: 'SLP2', name: 'Standard', isDefault: true, description: 'Default service tier — applies when a project has no policy assigned',
+      effectiveFrom: '2026-01-01', approvedBy: 'u1', notes: '',
+      targets: [
+        { severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 80 },
+        { severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 80 },
+        { severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 80 },
+        { severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 80 }
+      ] },
+    { id: 'SLP3', name: 'Bronze', isDefault: false, description: 'Relaxed tier for lower-urgency engagements',
+      effectiveFrom: '2026-03-15', approvedBy: 'u1', notes: 'Globex master services agreement',
+      targets: [
+        { severity: 'Critical', responseHours: 2,  resolutionDays: 1,  escalationPct: 75 },
+        { severity: 'Major',    responseHours: 8,  resolutionDays: 5,  escalationPct: 75 },
+        { severity: 'Minor',    responseHours: 16, resolutionDays: 10, escalationPct: 75 },
+        { severity: 'Low',      responseHours: 48, resolutionDays: 21, escalationPct: 75 }
+      ] },
+    { id: 'SLP4', name: 'Internal', isDefault: false, description: 'Northwind internal systems — early escalation, no contractual penalty',
+      effectiveFrom: '2026-01-01', approvedBy: 'u1', notes: 'Internal OLA, not a customer SLA',
+      targets: [
+        { severity: 'Critical', responseHours: 1,  resolutionDays: 1,  escalationPct: 90 },
+        { severity: 'Major',    responseHours: 4,  resolutionDays: 3,  escalationPct: 90 },
+        { severity: 'Minor',    responseHours: 8,  resolutionDays: 7,  escalationPct: 90 },
+        { severity: 'Low',      responseHours: 24, resolutionDays: 14, escalationPct: 90 }
+      ] }
   ],
 
   // createdAt/updatedAt are ISO strings; relative time is computed at runtime.
