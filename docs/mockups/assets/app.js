@@ -1677,19 +1677,21 @@
 
   /* ---------- page: COMPANY DETAIL (Page 17) ---------- */
   function renderCompanyDetail(u) {
-    if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
-    var cid = qs('id');
+    if (!isAdmin(u) && !isClient(u)) { renderShell(u, 'home', notFound('System Admin or client roles only.'), ''); return; }
+    var admin = isAdmin(u);
+    var cid = admin ? qs('id') : u.companyId; // client roles are locked to their own company
     if (!cid) { renderShell(u, 'companies', notFound('No company id in the URL — this page expects 17-company-detail.html?id=Cn. Open it via a Manage button on the Companies page.'), ''); return; }
     var c = DB.companies.find(function (x) { return x.id === cid; });
     if (!c) { renderShell(u, 'companies', notFound('Company "' + esc(cid) + '" is not in your demo data (stale localStorage?). Click "Reset demo" in the header and try again.'), ''); return; }
     if (c.status !== 'Active') { renderShell(u, 'companies', notFound('Company "' + esc(c.name) + '" is inactive — reactivate it from the Companies page to manage it.'), ''); return; }
 
     // --- Stats ---
-    var companyTickets = DB.tickets.filter(function (t) { return t.companyId === cid; });
+    var accIds = (isClient(u) && !isClientAdmin(u)) ? userAccessibleProjectIds(u) : null;
+    var companyTickets = DB.tickets.filter(function (t) { return t.companyId === cid && (!accIds || accIds.indexOf(t.projectId) >= 0); });
     var openCount = companyTickets.filter(function (t) { return t.status !== 'Closed' && t.status !== 'Resolved'; }).length;
     var breachedCount = companyTickets.filter(function (t) { return slaStatus(t) === 'breached'; }).length;
     var companyUsers = DB.users.filter(function (x) { return x.companyId === cid; });
-    var cProjs = companyProjects(cid);
+    var cProjs = companyProjects(cid).filter(function (p) { return !accIds || accIds.indexOf(p.id) >= 0; });
     var clientAdmins = companyUsers.filter(function (x) {
       return x.role === 'Client Admin' || userHoldsRole(x.id, 'CLIENT_ADMIN');
     });
@@ -1724,14 +1726,16 @@
         : '<span class="tag-active" title="Visible to the whole company">&#127758; Open</span>';
       return '<tr><td><b>' + esc(p.projectName) + '</b></td><td>' + esc(p.projectKey) + '</td>' +
         '<td>' + visBadge + '</td><td>' + tk + '</td><td>' + agCount + teamCoverageBadges(p.id) + '</td>' +
-        '<td><a class="btn btn-sm btn-primary" href="19-project-detail.html?id=' + p.id + '">&#9881; Manage</a> ' +
-        '<button class="btn btn-sm" onclick="sd.showEditProject(\'' + p.id + '\')">&#9998; Edit</button></td></tr>';
+        '<td>' + (admin
+          ? '<a class="btn btn-sm btn-primary" href="19-project-detail.html?id=' + p.id + '">&#9881; Manage</a> ' +
+            '<button class="btn btn-sm" onclick="sd.showEditProject(\'' + p.id + '\')">&#9998; Edit</button>'
+          : '<a class="btn btn-sm btn-primary" href="19-project-detail.html?id=' + p.id + '">&#128065; View</a>') + '</td></tr>';
     }).join('');
     if (!projRows) projRows = '<tr><td colspan="6" class="muted">No projects for this company.</td></tr>';
     var projectsPanel = '<div class="cd-panel" data-panel="projects"' + (activeTab !== 'projects' ? ' style="display:none;"' : '') + '>' +
       '<div class="card" style="overflow:hidden;">' +
       '<div class="card-hd"><span>Projects</span>' +
-      '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddProjectCD(\'' + cid + '\')">+ Add Project</button></div>' +
+      (admin ? '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddProjectCD(\'' + cid + '\')">+ Add Project</button>' : '') + '</div>' +
       '<table class="t"><thead><tr><th>Project Name</th><th>Key</th><th>Visibility</th><th>Tickets</th><th>Agents</th><th>Actions</th></tr></thead><tbody>' + projRows + '</tbody></table>' +
       '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Support team, SLA policy, categories and invitations are configured per project &mdash; use <b>&#9881; Manage</b> (one door, one truth).</p>' +
       '</div></div>';
@@ -1741,14 +1745,14 @@
     var deptRows = cDepts.map(function (d) {
       var userCount = DB.users.filter(function (x) { return x.departmentId === d.id; }).length;
       return '<tr><td><b>' + esc(d.name) + '</b></td><td>' + userCount + '</td>' +
-        '<td><button class="btn btn-sm" onclick="sd.showEditDept(\'' + d.id + '\')">&#9998; Edit</button></td></tr>';
+        (admin ? '<td><button class="btn btn-sm" onclick="sd.showEditDept(\'' + d.id + '\')">&#9998; Edit</button></td>' : '') + '</tr>';
     }).join('');
-    if (!deptRows) deptRows = '<tr><td colspan="3" class="muted">No departments yet — users and tickets can be filed without one.</td></tr>';
+    if (!deptRows) deptRows = '<tr><td colspan="' + (admin ? 3 : 2) + '" class="muted">No departments yet — users and tickets can be filed without one.</td></tr>';
     var deptsPanel = '<div class="cd-panel" data-panel="depts"' + (activeTab !== 'depts' ? ' style="display:none;"' : '') + '>' +
       '<div class="card" style="overflow:hidden;">' +
       '<div class="card-hd"><span>Departments</span>' +
-      '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddDeptCD(\'' + cid + '\')">+ Add Department</button></div>' +
-      '<table class="t"><thead><tr><th>Department</th><th>Users</th><th>Actions</th></tr></thead><tbody>' + deptRows + '</tbody></table>' +
+      (admin ? '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddDeptCD(\'' + cid + '\')">+ Add Department</button>' : '') + '</div>' +
+      '<table class="t"><thead><tr><th>Department</th><th>Users</th>' + (admin ? '<th>Actions</th>' : '') + '</tr></thead><tbody>' + deptRows + '</tbody></table>' +
       '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Departments are <b>metadata only</b> (decision N) — stamped on users and tickets for routing/reporting, never a visibility filter. Set a user&rsquo;s department on the Users page (&#9998; Edit).</p>' +
       '</div></div>';
 
@@ -1765,17 +1769,20 @@
     var adminsPanel = '<div class="cd-panel" data-panel="admins"' + (activeTab !== 'admins' ? ' style="display:none;"' : '') + '>' +
       '<div class="card" style="overflow:hidden;">' +
       '<div class="card-hd"><span>Client Admins</span>' +
-      '<a class="btn btn-sm" style="float:right;margin:-4px 0;" href="10-users.html">Manage on Users page &rarr;</a></div>' +
+      (admin ? '<a class="btn btn-sm" style="float:right;margin:-4px 0;" href="10-users.html">Manage on Users page &rarr;</a>' : '') + '</div>' +
       '<table class="t"><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Last Login</th></tr></thead><tbody>' + adminRows + '</tbody></table>' +
       '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Client Admins see all company tickets, manage company users and Restricted-project invitations (decision Q), and can assign/reassign agents on any company ticket.</p>' +
       '</div></div>';
 
-    var html = pageBar('Administration / Companies / ' + esc(c.name), c.name, '<a class="btn btn-sm" href="09-companies.html">&larr; Back to Companies</a>') +
+    var html = pageBar(admin ? 'Administration / Companies / ' + esc(c.name) : 'My Company / ' + esc(c.name), c.name,
+      admin ? '<a class="btn btn-sm" href="09-companies.html">&larr; Back to Companies</a>' : '') +
       '<div class="content">' +
       '<div class="card" style="overflow:hidden;padding:16px;">' + header + '</div>' +
       tabs + projectsPanel + deptsPanel + adminsPanel +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 17 &mdash; Company-centric admin: projects (Decision O) + departments (decision N, metadata only) + Client Admin contacts. Team, SLA, categories and invitations are configured per project on the Project Detail hub.</p></div>';
-    renderShell(u, 'companies', html, tenantBanner(u));
+      (admin
+        ? '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 17 &mdash; Company-centric admin: projects (Decision O) + departments (decision N, metadata only) + Client Admin contacts. Team, SLA, categories and invitations are configured per project on the Project Detail hub.</p>'
+        : '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 17 &mdash; My Company, read-only (spec 2026-07-04): your projects, departments (metadata, decision N) and Client Admin contacts. Changes go through your Client Admin or the service provider.</p>') + '</div>';
+    renderShell(u, admin ? 'companies' : 'my-company', html, tenantBanner(u));
   }
 
   /* ---------- page: PROJECT DETAIL HUB (Page 19) ----------
