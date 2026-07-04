@@ -4,72 +4,88 @@
 -- Purpose: concentrate ALL tenant + role scoping in a few tested objects, so page
 -- authors physically cannot write the leaky "WHERE ticket_id = :P5_TICKET_ID"
 -- query the tenant-isolation-auditor flagged (CRITICAL-1/2, HIGH-1). This is the
--- brief's stated goal: isolation logic in a few well-tested queries (brief §330).
+-- brief's stated goal: isolation logic in a few well-tested queries.
 --
 -- HOW IT WORKS
---   V_MY_TICKETS encodes the FULL role matrix once, using the APEX session
+--   V_MY_PROJECTS encodes the FULL role matrix once, using the APEX session
 --   functions verified in reference/plsql/061-APEX_UTIL.md:
 --     * V('APP_ROLE')        = APEX_UTIL.GET_SESSION_STATE          (varchar)
 --     * NV('APP_COMPANY_ID') = APEX_UTIL.GET_NUMERIC_SESSION_STATE  (number)
 --     * NV('APP_USER_ID')    = APEX_UTIL.GET_NUMERIC_SESSION_STATE  (number)
 --   These read the app items stamped by the post-auth process. Outside an APEX
 --   session they return NULL, so every view returns ZERO rows — fail-closed.
---   The child views (comments/history/attachments) scope themselves to
---   V_MY_TICKETS, so they inherit the exact same matrix automatically.
+--   V_MY_TICKETS derives from V_MY_PROJECTS; the child views (comments/history/
+--   attachments) scope themselves to V_MY_TICKETS — one matrix, inherited by all.
 --
--- ROLE MATRIX (who sees which tickets)
---   CLIENT_USER   -> own company AND own department (decision N: dept-scoped)
---   CLIENT_ADMIN  -> own company (all departments)
---   SUPPORT_AGENT -> only companies in AGENT_COMPANIES for me (decision I)
---   SYSTEM_ADMIN  -> everything
+-- ROLE MATRIX (decisions N revised / O / Q / I / M revised — locked 2026-07-04)
+--   SYSTEM_ADMIN  -> every project and ticket
+--   CLIENT_ADMIN  -> all projects/tickets of own company
+--   CLIENT_USER   -> own company's OPEN projects + RESTRICTED projects they have
+--                    a USER_PROJECTS invitation for (rows GRANT, never restrict)
+--   SUPPORT_AGENT -> only projects in AGENT_PROJECTS for me (any tier)
+--   Departments are METADATA ONLY — never a visibility filter (decision N revised).
 --
 -- USAGE RULES (tell the whole team)
 --   * READS: every client-facing region/report/chart/LOV/Download-BLOB that
 --     touches ticket data selects FROM these views, NEVER the base tables.
+--     Project lists and the ticket-create project picker select FROM
+--     V_MY_PROJECTS (add WHERE IS_ACTIVE='Y' when raising new tickets).
 --   * WRITES: insert/update/assign/escalate run against the BASE tables in a
 --     process, but must first confirm the target ticket is visible to the caller:
 --         SELECT COUNT(*) INTO l_ok FROM V_MY_TICKETS WHERE TICKET_ID = :P5_TICKET_ID;
 --         IF l_ok = 0 THEN raise_application_error(-20010,'Not authorized'); END IF;
 --     (These views are not simply-updatable, so don't build editable grids on
---     them; use the base table + this guard. Covers auditor CRITICAL-3.)
---   * Ticket INSERT stamps COMPANY_ID = NV('APP_COMPANY_ID') server-side for
---     clients; a System Admin creating on behalf of a client sets it explicitly.
---     Never map COMPANY_ID from a submittable page item.
+--     them; use the base table + this guard.)
+--   * Ticket INSERT: validate PROJECT_ID against V_MY_PROJECTS, then derive
+--     COMPANY_ID from the project SERVER-SIDE (the composite FK on TICKETS
+--     rejects a mismatch anyway). Never map COMPANY_ID from a submittable item.
 --
 -- Run AFTER 01_schema.sql (and 03_attachments.sql if using attachments).
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
--- V_MY_TICKETS — the single source of truth for "which tickets can I see".
--- CLIENT_USER is now department-scoped (decision N, 2026-07-02):
---   they see all tickets from their department, not just their own.
+-- V_MY_PROJECTS — the single source of truth for "which projects can I access".
+-- Every other view derives from this, so the role matrix lives in ONE place.
 --------------------------------------------------------------------------------
-CREATE OR REPLACE VIEW V_MY_TICKETS AS
-SELECT t.*
-FROM   TICKETS t
+CREATE OR REPLACE VIEW V_MY_PROJECTS AS
+SELECT p.*
+FROM   PROJECTS p
 WHERE  CASE
          WHEN V('APP_ROLE') = 'SYSTEM_ADMIN'
               THEN 1
          WHEN V('APP_ROLE') = 'CLIENT_ADMIN'
-              AND t.COMPANY_ID = NV('APP_COMPANY_ID')
+              AND p.COMPANY_ID = NV('APP_COMPANY_ID')
               THEN 1
          WHEN V('APP_ROLE') = 'CLIENT_USER'
-              AND t.COMPANY_ID = NV('APP_COMPANY_ID')
-              AND t.DEPARTMENT_ID = (SELECT DEPARTMENT_ID
-                                     FROM   APP_USERS
-                                     WHERE  USER_ID = NV('APP_USER_ID'))
+              AND p.COMPANY_ID = NV('APP_COMPANY_ID')
+              AND ( p.VISIBILITY = 'OPEN'
+                    OR p.PROJECT_ID IN (SELECT up.PROJECT_ID
+                                        FROM   USER_PROJECTS up
+                                        WHERE  up.USER_ID = NV('APP_USER_ID')) )
               THEN 1
          WHEN V('APP_ROLE') = 'SUPPORT_AGENT'
-              AND t.COMPANY_ID IN (SELECT ac.COMPANY_ID
-                                   FROM   AGENT_COMPANIES ac
-                                   WHERE  ac.USER_ID = NV('APP_USER_ID'))
+              AND p.PROJECT_ID IN (SELECT ap.PROJECT_ID
+                                   FROM   AGENT_PROJECTS ap
+                                   WHERE  ap.USER_ID = NV('APP_USER_ID'))
               THEN 1
          ELSE 0
        END = 1;
 
 --------------------------------------------------------------------------------
+-- V_MY_TICKETS — tickets in projects I can access. The company predicate is a
+-- redundant second lock for client roles (defence-in-depth on top of the
+-- TICKETS (PROJECT_ID, COMPANY_ID) composite FK).
+--------------------------------------------------------------------------------
+CREATE OR REPLACE VIEW V_MY_TICKETS AS
+SELECT t.*
+FROM   TICKETS t
+WHERE  t.PROJECT_ID IN (SELECT PROJECT_ID FROM V_MY_PROJECTS)
+AND    ( V('APP_ROLE') IN ('SYSTEM_ADMIN','SUPPORT_AGENT')
+         OR t.COMPANY_ID = NV('APP_COMPANY_ID') );
+
+--------------------------------------------------------------------------------
 -- V_MY_COMMENTS — comments only for visible tickets; internal notes hidden
--- from clients (auditor MEDIUM: TICKET_COMMENTS.IS_INTERNAL).
+-- from clients (TICKET_COMMENTS.IS_INTERNAL).
 --------------------------------------------------------------------------------
 CREATE OR REPLACE VIEW V_MY_COMMENTS AS
 SELECT c.*
@@ -88,7 +104,7 @@ WHERE  h.TICKET_ID IN (SELECT TICKET_ID FROM V_MY_TICKETS);
 
 --------------------------------------------------------------------------------
 -- V_MY_ATTACHMENTS — files only for visible tickets. Inherits the role matrix
--- via V_MY_TICKETS, closing the BLOB-download IDOR (auditor CRITICAL-2).
+-- via V_MY_TICKETS, closing the BLOB-download IDOR.
 -- Guard the base against runtime errors if the attachments table isn't installed.
 --------------------------------------------------------------------------------
 DECLARE
