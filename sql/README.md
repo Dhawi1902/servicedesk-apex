@@ -153,6 +153,7 @@ agents see their `AGENT_PROJECTS`, departments are metadata only) — so pages c
 | View | Use for |
 |---|---|
 | `V_MY_PROJECTS` | project lists, project LOVs, the ticket-create project picker (`WHERE IS_ACTIVE='Y'` for new tickets) |
+| `V_MY_CATEGORIES` | every category LOV + server-side validation of the submitted `CATEGORY_ID` (global rows + rows in my project scope) |
 | `V_MY_TICKETS` | ticket lists, detail region, dashboard counts, ticket LOVs |
 | `V_MY_COMMENTS` | comments sub-region (hides internal notes from clients) |
 | `V_MY_HISTORY` | history/audit timeline |
@@ -178,8 +179,9 @@ policy when `PROJECTS.SLA_POLICY_ID` is NULL).
 **LOVs:** the assignment LOV for clients lists L1 agents **on the ticket's project**
 (`AGENT_PROJECTS WHERE PROJECT_ID = … AND TIER = 'L1'`); agent reassignment targets
 are same-or-higher tier on that project (FR-26). A company picker is System-Admin-only.
-Category LOVs: global rows (`COMPANY_ID IS NULL`) plus the ticket company's rows,
-narrowed by project where `PROJECT_ID` is set.
+Category LOVs select `FROM V_MY_CATEGORIES` (never the base table — scoped rows
+would leak other tenants' category labels), narrowed by the chosen project where
+`PROJECT_ID` is set; validate the submitted `CATEGORY_ID` against the same view.
 
 **Output:** escape `SUBJECT`/`DESCRIPTION`/`COMMENT_TEXT` with `APEX_ESCAPE.HTML` on any
 non-default render path (Cards, HTML expressions, `<img>` previews).

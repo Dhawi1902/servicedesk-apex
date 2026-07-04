@@ -30,6 +30,8 @@
 --     touches ticket data selects FROM these views, NEVER the base tables.
 --     Project lists and the ticket-create project picker select FROM
 --     V_MY_PROJECTS (add WHERE IS_ACTIVE='Y' when raising new tickets).
+--     Category LOVs select FROM V_MY_CATEGORIES (never the base table — scoped
+--     rows would leak other tenants' category labels).
 --   * WRITES: insert/update/assign/escalate run against the BASE tables in a
 --     process, but must first confirm the target ticket is visible to the caller:
 --         SELECT COUNT(*) INTO l_ok FROM V_MY_TICKETS WHERE TICKET_ID = :P5_TICKET_ID;
@@ -70,6 +72,22 @@ WHERE  CASE
               THEN 1
          ELSE 0
        END = 1;
+
+--------------------------------------------------------------------------------
+-- V_MY_CATEGORIES — categories offerable to me: global rows, plus company/project
+-- rows within my project scope (via V_MY_PROJECTS, so the matrix stays in one
+-- place). Use for every category LOV and validate the submitted CATEGORY_ID
+-- against it on ticket insert. Fail-closed: no session -> no rows (even globals).
+--------------------------------------------------------------------------------
+CREATE OR REPLACE VIEW V_MY_CATEGORIES AS
+SELECT c.*
+FROM   CATEGORIES c
+WHERE  V('APP_ROLE') = 'SYSTEM_ADMIN'
+   OR  ( V('APP_ROLE') IN ('CLIENT_USER','CLIENT_ADMIN','SUPPORT_AGENT')
+         AND ( c.COMPANY_ID IS NULL
+               OR ( c.PROJECT_ID IS NULL
+                    AND c.COMPANY_ID IN (SELECT COMPANY_ID FROM V_MY_PROJECTS) )
+               OR c.PROJECT_ID IN (SELECT PROJECT_ID FROM V_MY_PROJECTS) ) );
 
 --------------------------------------------------------------------------------
 -- V_MY_TICKETS — tickets in projects I can access. The company predicate is a
