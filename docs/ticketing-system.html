@@ -311,11 +311,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
   <p class="lead">The <b>customer side</b> (external and internal users) and the <b>support side</b> (our agents &amp; admins). Multi-company isolation lives in the jump from Client Admin (one company) to System Admin (all companies).</p>
   <div class="grid g4">
     <div class="role client"><div class="tag">Client side</div><h3>Client User</h3>
-      <div class="ln"><span class="k">Sees</span><span>Tickets in <b>accessible projects</b> (default: all company projects; Client Admin can restrict)</span></div>
-      <div class="ln"><span class="k">Does</span><span>Raise a ticket, comment, track status, <b>assign L1 agent</b> (from project's mapped agents)</span></div></div>
+      <div class="ln"><span class="k">Sees</span><span>Tickets in <b>accessible projects</b>: all <b>Open</b> projects of their company + invited <b>Restricted</b> projects (decision Q)</span></div>
+      <div class="ln"><span class="k">Does</span><span>Raise a ticket, comment, track status, <b>assign L1 agent</b> (L1 on the ticket's project)</span></div></div>
     <div class="role client"><div class="tag">Client side</div><h3>Client Admin</h3>
       <div class="ln"><span class="k">Sees</span><span><b>All</b> of their company's tickets across all projects</span></div>
-      <div class="ln"><span class="k">Does</span><span>Manage user-project access, raise on behalf, company dashboard &amp; reports, <b>assign/reassign agents</b>, manage users &amp; departments</span></div></div>
+      <div class="ln"><span class="k">Does</span><span>Manage <b>Restricted-project invitations</b> (<code>USER_PROJECTS</code>), raise on behalf, company dashboard &amp; reports, <b>assign/reassign agents</b>, manage users &amp; departments</span></div></div>
     <div class="role vendor"><div class="tag">Our side</div><h3>Support Agent</h3>
       <div class="ln"><span class="k">Sees</span><span>Tickets for <b>their assigned projects</b> via <code>AGENT_PROJECTS</code> &mdash; never projects they're not on</span></div>
       <div class="ln"><span class="k">Does</span><span>Work tickets: status, comment, resolve, <b>reassign to higher tier</b></span></div></div>
@@ -323,7 +323,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       <div class="ln"><span class="k">Sees</span><span><b>Everything</b>, across all companies and projects</span></div>
       <div class="ln"><span class="k">Does</span><span>Manage companies/projects/users, <b>assign</b>, configure</span></div></div>
   </div>
-  <div class="callout good"><div class="ico">👥</div><div><b>Four roles + L1&ndash;L4 agent tiers (decisions I, M, N, O).</b> Agents carry an explicit <b>tier</b> (L1/L2/L3/L4) &mdash; clients assign L1 only; higher tiers via reassignment. Client Users see <b>project-scoped</b> tickets (Client Admin controls access via <code>USER_PROJECTS</code>); Client Admins see all company projects. A <b>Manager</b> is an Admin who doesn't click work buttons; a <b>Project Lead</b> is deferred. Agents are <b>scoped to their assigned projects</b> via <code>AGENT_PROJECTS</code>.</div></div>
+  <div class="callout good"><div class="ico">👥</div><div><b>Four roles + L1&ndash;L4 agent tiers (decisions I, M, N, O, P, Q).</b> Agents carry an explicit <b>tier per project</b> (L1/L2/L3/L4 on <code>AGENT_PROJECTS</code>, decision M revised &mdash; the same agent can be L3 on one engagement, L1 on another) &mdash; clients assign L1 only; higher tiers via reassignment. Client Users see <b>project-scoped</b> tickets: all <b>Open</b> projects + invited <b>Restricted</b> ones (<code>USER_PROJECTS</code> = invitation list, decision Q); Client Admins see all company projects. Users can hold <b>multiple roles</b> and switch via the nav bar (decision P). A <b>Manager</b> is an Admin who doesn't click work buttons; a <b>Project Lead</b> is deferred. Agents are <b>scoped to their assigned projects</b> via <code>AGENT_PROJECTS</code>.</div></div>
 </div></section>
 
 <!-- REQUIREMENTS -->
@@ -353,7 +353,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
     <div class="pstep">Resolved<small>agent fixes</small></div>
     <div class="pstep">Closed<small>client confirms</small></div>
   </div>
-  <div class="opt"><span>+ On Hold (pause &mdash; waiting)</span><span>+ Reopen (client: not fixed)</span><span>decide today: include in v1?</span></div>
+  <div class="opt"><span>+ On Hold (pause &mdash; waiting)</span><span>+ Reopen (client: not fixed)</span><span>both included in v1 (decision B)</span></div>
 
   <div class="mbox"><pre class="mermaid">
 stateDiagram-v2
@@ -383,7 +383,7 @@ stateDiagram-v2
 <!-- DATA -->
 <section id="data"><div class="wrap reveal">
   <div class="eyebrow">Database · the foundation</div>
-  <h2 class="sec">Twelve tables</h2>
+  <h2 class="sec">Thirteen tables</h2>
   <p class="lead">APEX is database-first: get these right and the screens almost build themselves. Every ticket carries a <code>company_id</code> (tenant key) and a <code>project_id</code> (service engagement) &mdash; those columns are how we keep clients isolated and work organized.</p>
   <div class="erd">
     <div class="tbl"><div class="hd">COMPANIES <span class="pk">PK company_id</span></div><ul>
@@ -391,7 +391,9 @@ stateDiagram-v2
       <li><span>status</span><span class="t">ACTIVE/INACTIVE</span></li></ul></div>
     <div class="tbl"><div class="hd">PROJECTS <span class="pk">PK project_id</span></div><ul>
       <li><span class="fk">company_id</span><span class="t">FK</span></li>
-      <li><span>project_name · project_key</span><span class="t">text</span></li>
+      <li><span>project_name · project_key</span><span class="t">key globally unique (ACME-IT)</span></li>
+      <li><span class="fk">sla_policy_id</span><span class="t">FK · null = default policy</span></li>
+      <li><span>visibility</span><span class="t">OPEN/RESTRICTED</span></li>
       <li><span>description · is_active</span><span class="t">text</span></li></ul></div>
     <div class="tbl"><div class="hd">DEPARTMENTS <span class="pk">PK department_id</span></div><ul>
       <li><span class="fk">company_id</span><span class="t">FK</span></li>
@@ -430,15 +432,21 @@ stateDiagram-v2
     <div class="tbl"><div class="hd">AGENT_PROJECTS <span class="pk">PK user_id+project_id</span></div><ul>
       <li><span class="fk">user_id</span><span class="t">FK · agent</span></li>
       <li><span class="fk">project_id</span><span class="t">FK · project</span></li>
-      <li><span class="t">which projects an agent covers</span></li></ul></div>
+      <li><span>tier</span><span class="t">L1&ndash;L4 · per project</span></li>
+      <li><span class="t">which projects an agent covers, at what tier</span></li></ul></div>
     <div class="tbl"><div class="hd">USER_PROJECTS <span class="pk">PK user_id+project_id</span></div><ul>
       <li><span class="fk">user_id</span><span class="t">FK · client user</span></li>
       <li><span class="fk">project_id</span><span class="t">FK · project</span></li>
-      <li><span class="t">restricts client visibility (empty=all)</span></li></ul></div>
+      <li><span class="t">invitations into Restricted projects (rows grant, never restrict)</span></li></ul></div>
+    <div class="tbl"><div class="hd">SLA_POLICIES <span class="pk">PK sla_policy_id</span></div><ul>
+      <li><span>policy_name</span><span class="t">Gold/Standard/Bronze/Internal</span></li>
+      <li><span>is_default</span><span class="t">Y/N · fallback policy</span></li>
+      <li><span>effective_from · approved_by · notes</span><span class="t">ISO 20000 docs</span></li></ul></div>
     <div class="tbl"><div class="hd">SLA_TARGETS <span class="pk">PK sla_target_id</span></div><ul>
-      <li><span class="fk">project_id</span><span class="t">FK</span></li>
+      <li><span class="fk">sla_policy_id</span><span class="t">FK · owning policy</span></li>
       <li><span>severity</span><span class="t">text</span></li>
-      <li><span>response_hours · resolution_days</span><span class="t">number</span></li></ul></div>
+      <li><span>response_hours · resolution_days</span><span class="t">number</span></li>
+      <li><span>escalation_pct</span><span class="t">number · default 80</span></li></ul></div>
   </div>
 
   <div class="mbox"><pre class="mermaid">
@@ -457,11 +465,12 @@ erDiagram
     PROJECTS ||--o{ AGENT_PROJECTS : coveredBy
     APP_USERS ||--o{ USER_PROJECTS : canAccess
     PROJECTS ||--o{ USER_PROJECTS : accessibleTo
-    PROJECTS ||--o{ SLA_TARGETS : hasTargets
+    SLA_POLICIES ||--o{ SLA_TARGETS : hasTargets
+    SLA_POLICIES ||--o{ PROJECTS : governs
   </pre></div>
   <div class="mcap">Entity relationships (renders if online; the table cards above are the offline-safe version)</div>
 
-  <div class="callout good"><div class="ico">🛡️</div><div><b>Tenant isolation plan (v1):</b> at login, store the user's <code>company_id</code> + role in an APEX application item. Every client-facing report filters <code>WHERE company_id = :APP_COMPANY_ID</code>, with APEX authorization schemes layered on top. In the demo, <b>show</b> a client logging in and seeing only their tickets &mdash; that proves it live. <b>Agents</b> are additionally narrowed to their own projects via <code>WHERE project_id IN (their AGENT_PROJECTS)</code>. <b>Client Users</b> see projects they have access to via <code>USER_PROJECTS</code> (empty = all company projects). Departments are metadata for routing/reporting, not a visibility boundary.</div></div>
+  <div class="callout good"><div class="ico">🛡️</div><div><b>Tenant isolation plan (v1):</b> at login, store the user's <code>company_id</code> + role in an APEX application item. Every client-facing report filters <code>WHERE company_id = :APP_COMPANY_ID</code>, with APEX authorization schemes layered on top. In the demo, <b>show</b> a client logging in and seeing only their tickets &mdash; that proves it live. <b>Agents</b> are additionally narrowed to their own projects via <code>WHERE project_id IN (their AGENT_PROJECTS)</code>. <b>Client Users</b> see all <b>Open</b> projects of their company plus <b>Restricted</b> projects they're invited to via <code>USER_PROJECTS</code> (invitation list &mdash; rows grant access, decision Q). Departments are metadata for routing/reporting, not a visibility boundary.</div></div>
 </div></section>
 
 <!-- PAGES -->
@@ -537,19 +546,28 @@ erDiagram
   <h2 class="sec">Decisions for today's meeting</h2>
   <p class="lead">Each one has a recommended default &mdash; if the room goes quiet, propose the default and ask for objections. That keeps momentum.</p>
   <div class="dec"><div class="k">A</div><div><div class="q">Does a Support Agent self-assign, or does only the System Admin assign?</div><div class="rec">✓ Decided: agents self-assign from the queue <strong>and</strong> System Admin assigns/reassigns</div></div></div>
-  <div class="dec"><div class="k">B</div><div><div class="q">Include On Hold + Reopen states in v1, or keep the lifecycle minimal?</div><div class="rec">✓ Recommend: minimal first, add if time</div></div></div>
+  <div class="dec"><div class="k">B</div><div><div class="q">Include On Hold + Reopen states in v1, or keep the lifecycle minimal?</div><div class="rec">✓ Decided: <strong>include both</strong> &mdash; On Hold (pause) and Reopen (Resolved &rarr; In Progress)</div></div></div>
   <div class="dec"><div class="k">C</div><div><div class="q">Tenant isolation = application item + WHERE clause + authorization schemes?</div><div class="rec">✓ Recommend: yes</div></div></div>
   <div class="dec"><div class="k">D</div><div><div class="q">Confirm the MUST / SHOULD / COULD scope &mdash; move anything?</div><div class="rec">✓ Recommend: accept as drafted</div></div></div>
   <div class="dec"><div class="k">E</div><div><div class="q">Confirm the workstream split and who owns what.</div><div class="rec">✓ Decided (5 devs): P1 Foundation/Login + QA · P2 Ticket Detail + Add Comment · P3 Queue/Create/Assign · P4 Dashboard + test data · P5 Admin grids + theme</div></div></div>
   <div class="dec"><div class="k">F</div><div><div class="q">Confirm the 3-week milestone shape.</div><div class="rec">✓ Recommend: Wk1 foundation · Wk2 core · Wk3 polish + demo</div></div></div>
-  <div class="dec"><div class="k">G</div><div><div class="q">Escalation: add the lightweight "Escalate" action only (reassign + raise priority, logged), or also add Tier-2/Team-Lead roles?</div><div class="rec">✓ Recommend: action only &mdash; models tiered escalation without growing the role matrix</div></div></div>
-  <div class="dec"><div class="k">H</div><div><div class="q">Confirm the four new SHOULD items (CSAT, dashboard analytics, auto-ack email, escalate) &mdash; all verified feasible in APEX 26.1. Keep SLA as COULD, highlight only?</div><div class="rec">✓ Recommend: yes &mdash; adopt the four; SLA stays COULD (no timers)</div></div></div>
-  <div class="dec"><div class="k">I</div><div><div class="q">Should agents see every client's queue, or only the projects they're assigned to?</div><div class="rec">✓ Decided: agents are <strong>scoped to their assigned projects</strong> (AGENT_COMPANIES join). Keeps queues quiet. 4 roles stay &mdash; Manager = overseer (not a role), L1/L2/L3 = Escalate (no level field), Project Lead deferred (is_lead flag)</div></div></div>
+  <div class="dec"><div class="k">G</div><div><div class="q">"Reassign" (manual) vs "Escalation" (automatic) &mdash; how do they differ?</div><div class="rec">✓ Decided: manual reassign (FR-26, logged REASSIGN) is separate from system-driven two-stage auto-escalation (FR-35: warn at 75% SLA, auto-reassign to next tier at 90%, hierarchical fallback when exhausted)</div></div></div>
+  <div class="dec"><div class="k">H</div><div><div class="q">Confirm the SHOULD items (CSAT, dashboard analytics, auto-ack email, reassign, SLA per severity per project, auto-escalation) &mdash; all verified feasible in APEX 26.1?</div><div class="rec">✓ Recommend: yes</div></div></div>
+  <div class="dec"><div class="k">I</div><div><div class="q">Should agents see every client's queue, or only the projects they're assigned to?</div><div class="rec">✓ Decided (revised): agents are <strong>scoped to their assigned projects</strong> via <code>AGENT_PROJECTS</code> &mdash; each mapping carries a tier (decision M). 4 roles stay &mdash; Manager = overseer (not a role), Project Lead deferred (is_lead flag)</div></div></div>
+  <div class="dec"><div class="k">J·L</div><div><div class="q">Can clients assign an agent directly?</div><div class="rec">✓ Decided: yes &mdash; Client User/Admin assign from agents who are <strong>L1 on the ticket's project</strong>; higher tiers only via support-side reassignment</div></div></div>
+  <div class="dec"><div class="k">K</div><div><div class="q">One priority field, or separate severity and priority?</div><div class="rec">✓ Decided: separate &mdash; <strong>Severity</strong> (Critical/Major/Minor/Low) client-set at creation; <strong>Priority</strong> (P1&ndash;P4) support-set at triage. SLA keys off severity</div></div></div>
+  <div class="dec"><div class="k">M</div><div><div class="q">Do agents have explicit support tiers?</div><div class="rec">✓ Decided (revised 2026-07-04): L1&ndash;L4 tier lives on <strong>AGENT_PROJECTS</strong> &mdash; per-project proficiency (same agent can be L3 on one engagement, L1 on another); all tier checks evaluate on the ticket's project</div></div></div>
+  <div class="dec"><div class="k">N</div><div><div class="q">Is client visibility scoped by department?</div><div class="rec">✓ Revised: no &mdash; visibility is <strong>project-scoped</strong>; departments stay as routing/reporting metadata only</div></div></div>
+  <div class="dec"><div class="k">O</div><div><div class="q">How do we model service engagements?</div><div class="rec">✓ Decided: a <strong>PROJECTS</strong> table between COMPANIES and TICKETS; AGENT_PROJECTS + USER_PROJECTS + SLA_TARGETS all key off it</div></div></div>
+  <div class="dec"><div class="k">P</div><div><div class="q">Can one account hold multiple roles?</div><div class="rec">✓ Decided: yes &mdash; roles in <strong>USER_ROLES</strong> (one-to-many), nav-bar role switching without re-login; <code>default_role</code> = landing role</div></div></div>
+  <div class="dec"><div class="k">Q</div><div><div class="q">How does our own company use the desk internally?</div><div class="rec">✓ Decided: <strong>tenant zero</strong> &mdash; provider company is an ordinary tenant; projects are <strong>Open</strong> (whole company) or <strong>Restricted</strong> (invitation-only via USER_PROJECTS = invitation list)</div></div></div>
+  <div class="dec"><div class="k">R</div><div><div class="q">How does a client pick the project when raising a ticket?</div><div class="rec">✓ Decided: single accessible project auto-selects; 2+ &rarr; required pick with live description feedback; classify-first form order; ticket lists stay flat</div></div></div>
+  <div class="dec"><div class="k">S</div><div><div class="q">How are SLA targets managed across projects?</div><div class="rec">✓ Decided: <strong>named SLA policies</strong> (Gold/Standard/Bronze/Internal) with per-severity targets; projects are assigned a policy (<code>PROJECTS.sla_policy_id</code>, is_default fallback). Project keys globally unique + company-prefixed (ACME-IT)</div></div></div>
 </div></section>
 
 <footer><div class="wrap">
   <div><b style="color:#fff">Service Desk Ticketing System</b> · Project Brief · Oracle APEX 26.1</div>
-  <div>Living document &mdash; updated as decisions are made · 2026-06-30</div>
+  <div>Living document &mdash; updated as decisions are made · 2026-07-04 · design locked for development</div>
 </div></footer>
 
 <!-- DATA + INTERACTIVITY -->
@@ -558,13 +576,13 @@ const REQS=[
  ["FR-1","A user can log in with email + password.","Auth & Access","MUST"],
  ["FR-2","After login, the system knows the user's role and company.","Auth & Access","MUST"],
  ["FR-3","A user only sees pages and actions allowed for their role.","Auth & Access","MUST"],
- ["FR-4","A client user only sees data belonging to their own company and department (tenant + dept isolation).","Auth & Access","MUST"],
- ["FR-5","System Admin can create / edit / deactivate companies.","Companies & Users","MUST"],
- ["FR-6","System Admin can create / edit / deactivate users and assign role + company.","Companies & Users","MUST"],
- ["FR-7","A client can raise a ticket (subject, description, category, severity). Severity (business impact) is client-set; Priority (work order) is support-set.","Tickets","MUST"],
+ ["FR-4","A client user only sees tickets from projects they can access: all Open projects of their company + invited Restricted projects (tenant + project isolation, decisions N/Q). Departments are metadata only.","Auth & Access","MUST"],
+ ["FR-5","System Admin can create / edit / deactivate companies and projects. Each project carries a visibility flag: OPEN (default, whole company sees it) or RESTRICTED (invitation-only, decision Q).","Companies & Users","MUST"],
+ ["FR-6","System Admin can create / edit / deactivate users and assign role + company. Agent creation requires &ge;1 AGENT_PROJECTS mapping, each carrying a tier (decision M revised); provider-company users auto-granted CLIENT_USER. Client Admin manages Restricted-project invitations.","Companies & Users","MUST"],
+ ["FR-7","A client can raise a ticket (project, subject, description, category, severity) &mdash; project auto-selected if the company has only one. Severity (business impact) is client-set; Priority (work order) is support-set.","Tickets","MUST"],
  ["FR-8","Each ticket gets a unique human-friendly reference (e.g. TKT-00001).","Tickets","MUST"],
  ["FR-9","A user can view a ticket's full detail, incl. comments and history.","Tickets","MUST"],
- ["FR-10","A ticket can be assigned/reassigned to a support agent. System Admin assigns anyone; clients assign from L1 agents mapped to their company; agents self-assign.","Tickets","MUST"],
+ ["FR-10","A ticket can be assigned/reassigned to a support agent. System Admin assigns anyone; clients assign from agents who are L1 on the ticket's project (tier per project, decisions J/L/M); agents self-assign.","Tickets","MUST"],
  ["FR-11","A support agent can change a ticket's status per workflow rules.","Tickets","MUST"],
  ["FR-12","Any state change is recorded in ticket history (who / what / when).","Tickets","MUST"],
  ["FR-13","Users can add comments to a ticket.","Tickets","MUST"],
@@ -578,11 +596,11 @@ const REQS=[
  ["FR-21","When a ticket is assigned, the agent is notified (email or in-app).","Notifications","SHOULD"],
  ["FR-29","When a ticket is created, the requester gets an automatic acknowledgement email.","Notifications","SHOULD"],
  ["FR-22","When a client's ticket changes status, they are notified via email (ITIL: communication at every lifecycle touchpoint).","Notifications","SHOULD"],
- ["FR-26","A support agent/lead can reassign a ticket to a higher-tier agent (e.g. L1&rarr;L2) + optionally raise priority, written to history.","Tickets","SHOULD"],
+ ["FR-26","A support agent/lead can reassign a ticket to a same-or-higher-tier agent (e.g. L1&rarr;L2) + optionally raise priority, written to history. Tiers compared on the ticket's project (AGENT_PROJECTS, decision M revised).","Tickets","SHOULD"],
  ["FR-27","After a ticket is closed, the requester rates support via CSAT (star rating).","Feedback","SHOULD"],
  ["FR-28","Dashboard shows analytics: average resolution time and tickets handled per agent.","Dashboard","SHOULD"],
- ["FR-23","SLA target per severity, per project (company) with breach highlighting &mdash; SLA_TARGETS keyed on (company_id, severity), colour-coded indicators.","SLA & Aging","SHOULD"],
- ["FR-35","Auto-escalation on SLA breach &mdash; two-stage (warning at 75%, reassign at 90%), per-company threshold via SLA_TARGETS.escalation_pct, workload-based agent selection, 5-min scheduler, hierarchical fallback when no higher tier. ITIL 4 + ISO 20000-1 &sect;8.6.3 grounded.","SLA & Aging","SHOULD"],
+ ["FR-23","Named SLA policies (Gold/Standard/Bronze/Internal, decision S) with per-severity targets + breach highlighting &mdash; SLA_POLICIES assigned via PROJECTS.sla_policy_id (is_default fallback), SLA_TARGETS keyed on (sla_policy_id, severity), colour-coded indicators.","SLA & Aging","SHOULD"],
+ ["FR-35","Auto-escalation on SLA breach &mdash; two-stage (warning at 75%, reassign at 90%), per-severity threshold via the policy's SLA_TARGETS.escalation_pct, next-tier agent read from AGENT_PROJECTS for the ticket's project, workload-based selection, 5-min scheduler, hierarchical fallback when no higher tier. ITIL 4 + ISO 20000-1 &sect;8.6.3 grounded.","SLA & Aging","SHOULD"],
  ["FR-24","AI auto-suggests category / priority from the description (APEX_AI).","Stretch","COULD"],
  ["FR-25","File / screenshot attachments on a ticket (proof/evidence); stored in TICKET_ATTACHMENTS, tenant-scoped. See brief §5.1.","Stretch","COULD"],
  ["FR-30","Each ticket has a ticket type: INCIDENT (break-fix) or SERVICE_REQUEST (pre-defined request). ITIL foundational distinction.","ITIL Alignment","MUST"],
