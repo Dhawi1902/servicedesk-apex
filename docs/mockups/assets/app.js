@@ -4,9 +4,10 @@
    NOT real authentication. Demonstrates role-based access, tenant
    isolation, and the ticket lifecycle. Real version is built in APEX.
 
-   Updated to match the latest brief (2026-07-03):
+   Updated to match the latest brief (2026-07-04):
    - Decision O: PROJECTS layer between COMPANIES and TICKETS
-   - Decision M revised: tier on APP_USERS (one tier per agent, not per-company)
+   - Decision M revised 2026-07-04: tier is per agent-project mapping
+     (agentProjects[].tier) — same agent can be L3 on one project, L2 on another
    - Decision N revised: project-scoped client visibility (not department-scoped)
    - Decision P: multi-role support (userRoles array)
    - AGENT_PROJECTS replaces AGENT_COMPANIES
@@ -38,7 +39,7 @@
    ========================================================================= */
 (function () {
   'use strict';
-  var LS_DATA = 'sd_demo_data_v8', LS_SESSION = 'sd_demo_session_v8';
+  var LS_DATA = 'sd_demo_data_v9', LS_SESSION = 'sd_demo_session_v9';
 
   /* ---------- store ---------- */
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
@@ -89,9 +90,16 @@
   // Remove old agentCompanies
   delete DB.agentCompanies;
 
-  // Backfill tier on users (Decision M revised: tier on user, not per-company)
+  // Decision M revised 2026-07-04: tier lives on agentProjects mappings.
+  // Migrate old localStorage shape (tier on the user) into the mappings, then drop it.
+  (DB.agentProjects || []).forEach(function (m) {
+    if (m.tier === undefined || m.tier === null) {
+      var mu = DB.users.find(function (x) { return x.id === m.userId; });
+      m.tier = (mu && mu.tier) ? mu.tier : 'L1';
+    }
+  });
   DB.users.forEach(function (x) {
-    if (x.tier === undefined) x.tier = null;
+    delete x.tier;
     if (x.departmentId === undefined) x.departmentId = null;
     if (x.status === undefined) x.status = 'Active';
     if (x.lastLogin === undefined) x.lastLogin = null;
@@ -118,15 +126,13 @@
     if (c.status === undefined) c.status = 'Active';
   });
 
-  (DB.slaTargets || []).forEach(function (s) {
-    if (s.effectiveFrom === undefined) s.effectiveFrom = '2026-01-01';
-    if (s.approvedBy === undefined) s.approvedBy = 'u1';
-    if (s.notes === undefined) s.notes = '';
-    // Migrate companyId-keyed SLA to projectId-keyed
-    if (s.projectId === undefined && s.companyId) {
-      var compProjs = (DB.projects || []).filter(function (p) { return p.companyId === s.companyId && p.isActive; });
-      s.projectId = compProjs.length ? compProjs[0].id : null;
-    }
+  (DB.slaPolicies || []).forEach(function (sp) {
+    if (sp.effectiveFrom === undefined) sp.effectiveFrom = '2026-01-01';
+    if (sp.approvedBy === undefined) sp.approvedBy = 'u1';
+    if (sp.notes === undefined) sp.notes = '';
+  });
+  (DB.projects || []).forEach(function (p) {
+    if (p.slaPolicyId === undefined) p.slaPolicyId = null; // null = default policy applies
   });
   save();
 
@@ -182,10 +188,31 @@
     return days === 1 ? 'yesterday' : days + 'd ago';
   }
 
-  // Decision M revised: tier is on user object
-  function agentTier(userId) {
-    var u = user(userId);
-    return u ? u.tier || null : null;
+  // Decision M revised 2026-07-04: tier is per agent-project mapping —
+  // "which support line is this agent on THIS project" (AGENT_PROJECTS.tier).
+  function agentTier(userId, projectId) {
+    var m = (DB.agentProjects || []).find(function (x) { return x.userId === userId && x.projectId === projectId; });
+    return (m && m.tier) ? m.tier : null;
+  }
+  // Distinct tiers an agent holds across all their mappings, e.g. 'L2' or 'L2/L3'.
+  // For project-less contexts only (users grid, login cards, dashboard rollups).
+  function agentTierSummary(userId) {
+    var seen = [];
+    (DB.agentProjects || []).forEach(function (x) {
+      if (x.userId === userId && x.tier && seen.indexOf(x.tier) < 0) seen.push(x.tier);
+    });
+    return seen.length ? seen.sort().join('/') : null;
+  }
+  // Sensible default when mapping an agent to a NEW project: their most common
+  // existing tier (falls back to L1 = first-line).
+  function defaultTierFor(userId) {
+    var counts = {};
+    (DB.agentProjects || []).forEach(function (x) {
+      if (x.userId === userId && x.tier) counts[x.tier] = (counts[x.tier] || 0) + 1;
+    });
+    var best = null;
+    Object.keys(counts).forEach(function (t) { if (!best || counts[t] > counts[best]) best = t; });
+    return best || 'L1';
   }
 
   function ageDays(iso) {
@@ -224,9 +251,17 @@
   }
 
   /* ---------- support-team helpers (Flows 3/4: L1 gate, removal guards) ---------- */
+  // Returns the project's agents with .tier = their tier ON THIS PROJECT
+  // (copies, not the live user objects — decision M revised).
   function projectTeam(projectId) {
     return (DB.agentProjects || []).filter(function (ap) { return ap.projectId === projectId; })
-      .map(function (ap) { return DB.users.find(function (x) { return x.id === ap.userId; }); })
+      .map(function (ap) {
+        var a = DB.users.find(function (x) { return x.id === ap.userId; });
+        if (!a) return null;
+        var copy = clone(a);
+        copy.tier = ap.tier || null;
+        return copy;
+      })
       .filter(function (a) { return !!a; });
   }
   function agentOpenCountInProject(agentId, projectId) {
@@ -245,7 +280,7 @@
         ' in ' + (p.projectName || 'this project') + '. Reassign them first (Flow 4).';
     }
     var l1s = projectTeam(projectId).filter(function (x) { return x.tier === 'L1' && x.status === 'Active'; });
-    if (p.isActive && a && a.tier === 'L1' && l1s.length === 1 && l1s[0].id === agentId) {
+    if (p.isActive && a && agentTier(agentId, projectId) === 'L1' && l1s.length === 1 && l1s[0].id === agentId) {
       return 'Cannot remove the last L1 agent from an active project — clients could assign nobody (FR-10). Map another L1 first.';
     }
     return null;
@@ -256,14 +291,46 @@
     var hasL1 = team.some(function (a) { return a.tier === 'L1'; });
     var hasHigher = team.some(function (a) { return a.tier && a.tier !== 'L1'; });
     var out = '';
-    if (!hasL1) out += ' <span class="tag-inactive" title="Clients could assign nobody (FR-10)">&#9888; no L1 agent</span>';
-    if (hasL1 && !hasHigher) out += ' <span class="muted" style="font-size:11px;" title="Auto-escalation has no higher tier to go to (FR-35)">&#9888; no L2+ — escalation dead-ends</span>';
+    if (!hasL1) out += ' <span class="tag-warn" title="Clients could assign nobody (FR-10)">&#9888; No L1</span>';
+    if (hasL1 && !hasHigher) out += ' <span class="tag-warn" title="Auto-escalation has no higher tier to go to (FR-35)">&#9888; No L2+</span>';
     return out;
   }
+  // Coverage classifier for the exceptions-first Agent-Project Mapping view (Page 14).
+  // An empty team also counts as 'no-l1': clients can assign nobody either way (FR-10).
+  function projectCoverageIssues(projectId) {
+    var team = projectTeam(projectId).filter(function (a) { return a.status === 'Active'; });
+    if (!team.length) return ['no-agents', 'no-l1'];
+    var issues = [];
+    var hasL1 = team.some(function (a) { return a.tier === 'L1'; });
+    if (!hasL1) issues.push('no-l1');
+    if (hasL1 && !team.some(function (a) { return a.tier && a.tier !== 'L1'; })) issues.push('no-l2');
+    if (team.length === 1) issues.push('single');
+    return issues;
+  }
 
-  /* ---------- SLA (FR-23) — now by projectId ---------- */
+  /* ---------- SLA (FR-23) — named policies assigned to projects ---------- */
+  function slaPolicy(id) {
+    return (DB.slaPolicies || []).find(function (sp) { return sp.id === id; }) || null;
+  }
+  function defaultSlaPolicy() {
+    return (DB.slaPolicies || []).find(function (sp) { return sp.isDefault; }) || (DB.slaPolicies || [])[0] || null;
+  }
+  // Resolution order: project's assigned policy → default policy (Freshservice/ConnectWise pattern).
+  function slaPolicyFor(projectId) {
+    var p = project(projectId);
+    return (p && p.slaPolicyId && slaPolicy(p.slaPolicyId)) || defaultSlaPolicy();
+  }
+  function slaPolicyProjects(policyId) {
+    var def = defaultSlaPolicy();
+    return (DB.projects || []).filter(function (p) {
+      if (!p.isActive) return false;
+      return p.slaPolicyId ? p.slaPolicyId === policyId : (def && def.id === policyId);
+    });
+  }
   function slaTarget(projectId, severity) {
-    return (DB.slaTargets || []).find(function (s) { return s.projectId === projectId && s.severity === severity; });
+    var pol = slaPolicyFor(projectId);
+    if (!pol) return null;
+    return (pol.targets || []).find(function (t) { return t.severity === severity; }) || null;
   }
   function slaStatus(ticket) {
     if (!ticket.slaDueDate) return null;
@@ -457,12 +524,12 @@
       items.push({ key: 'projects', label: 'Projects', icon: '&#128194;', href: '11-projects.html', section: 'Administration' });
       items.push({ key: 'users', label: 'Users', icon: '&#128101;', href: '10-users.html', section: 'Administration' });
       items.push({ key: 'categories', label: 'Categories', icon: '&#127991;&#65039;', href: '11-categories.html', section: 'Administration' });
-      items.push({ key: 'sla', label: 'SLA Targets', icon: '&#9202;', href: '13-sla-targets.html', section: 'Administration' });
+      items.push({ key: 'sla', label: 'SLA Policies', icon: '&#9202;', href: '13-sla-targets.html', section: 'Administration' });
       items.push({ key: 'agent-projects', label: 'Agent-Project Mapping', icon: '&#128279;', href: '14-agent-companies.html', section: 'Administration' });
       items.push({ key: 'audit-log', label: 'Audit Log', icon: '&#128220;', href: '16-audit-log.html', section: 'Administration' });
     }
     if (isClientAdmin(u)) {
-      items.push({ key: 'user-projects', label: 'Project Invitations', icon: '&#9993;&#65039;', href: '18-user-projects.html', section: 'Administration' });
+      items.push({ key: 'projects', label: 'Projects', icon: '&#128194;', href: '11-projects.html', section: 'Administration' });
     }
     items.push({ key: 'profile', label: 'My Profile', icon: '&#128100;', href: '12-profile.html', section: 'Account' });
     return items;
@@ -558,9 +625,10 @@
     var panels = groups.map(function(g, i) {
       var cards = g.users.map(function(u) {
         var roleLabel = u.role;
-        // Show tier from user.tier for agents
-        if (u.tier) {
-          roleLabel += ' \u00b7 ' + u.tier;
+        // Show the agent's tier(s) across their project mappings (decision M revised)
+        var tierSum = agentTierSummary(u.id);
+        if (u.role === 'Support Agent' && tierSum) {
+          roleLabel += ' \u00b7 ' + tierSum;
         }
         // For agents, show covered projects grouped by company
         var coveredHtml = '';
@@ -798,7 +866,7 @@
       var assigned = ts.filter(function (t) { return t.assignedTo === a.id; });
       var openT = assigned.filter(function (t) { return t.status !== 'Closed' && t.status !== 'Resolved'; }).length;
       var closedT = assigned.filter(function (t) { return t.status === 'Closed' || t.status === 'Resolved'; }).length;
-      return { name: a.name, tier: a.tier || '\u2014', open: openT, closed: closedT, total: assigned.length };
+      return { name: a.name, tier: agentTierSummary(a.id) || '\u2014', open: openT, closed: closedT, total: assigned.length };
     });
     var agentRows = agentStats.map(function (a) {
       return '<tr><td><b>' + esc(a.name) + '</b></td><td>' + esc(a.tier) + '</td><td>' + a.open + '</td><td>' + a.closed + '</td><td>' + a.total + '</td></tr>';
@@ -893,6 +961,10 @@
     if (!filters.some(function (x) { return x.f === f; })) f = defaultFilter(u);
     var ts = applyQueueFilter(all, u, f).slice().sort(function (a, b) { return new Date(b.updatedAt) - new Date(a.updatedAt); });
     var showCompany = isAdmin(u) || isAgent(u);
+    // Project column/facet: staff always; clients only when they can see 2+ projects
+    // (single-project users would see a column that always says the same thing).
+    var clientProjCount = isClient(u) ? (isClientAdmin(u) ? companyProjects(u.companyId).length : userAccessibleProjectIds(u).length) : 0;
+    var showProject = showCompany || clientProjCount > 1;
     var cq = companyId ? '&company=' + encodeURIComponent(companyId) : '';
     var pq = projectFilter ? '&project=' + encodeURIComponent(projectFilter) : '';
 
@@ -911,10 +983,8 @@
       { field: 'priority', label: 'Priority' },
       { field: 'type', label: 'Type' }
     ];
-    if (showCompany) {
-      facetDefs.push({ field: 'company', label: 'Company' });
-      facetDefs.push({ field: 'project', label: 'Project' });
-    }
+    if (showCompany) facetDefs.push({ field: 'company', label: 'Company' });
+    if (showProject) facetDefs.push({ field: 'project', label: 'Project' });
     facetDefs.push({ field: 'assignee', label: 'Assignee' });
 
     var facetValues = {};
@@ -951,7 +1021,7 @@
         '<td>' + esc(t.subject) + '</td>' +
         '<td>' + typeBadge(t.ticketType) + '</td>' +
         (showCompany ? '<td>' + esc(company(t.companyId).name) + '</td>' : '') +
-        (showCompany ? '<td>' + esc(projName) + '</td>' : '') +
+        (showProject ? '<td>' + esc(projName) + '</td>' : '') +
         '<td>' + sevBadge(t.severity) + '</td>' +
         '<td>' + prioBadge(t.priority) + '</td>' +
         '<td>' + statusBadge(t.status) + '</td>' +
@@ -961,7 +1031,7 @@
         '</tr>';
     }).join('');
     if (!rows) {
-      var colSpan = showCompany ? 11 : 9;
+      var colSpan = 9 + (showCompany ? 1 : 0) + (showProject ? 1 : 0);
       rows = '<tr><td colspan="' + colSpan + '" class="muted">No tickets visible to you.</td></tr>';
     }
     var actions = canCreate(u) ? '<a class="btn btn-primary" href="06-create-ticket.html' + (projectFilter ? '?project=' + encodeURIComponent(projectFilter) : '') + '">&#10133; New Ticket</a>' : '';
@@ -985,7 +1055,7 @@
             '<th class="sortable">Subject</th>' +
             '<th class="sortable">Type</th>' +
             (showCompany ? '<th class="sortable">Company</th>' : '') +
-            (showCompany ? '<th class="sortable">Project</th>' : '') +
+            (showProject ? '<th class="sortable">Project</th>' : '') +
             '<th class="sortable">Severity</th>' +
             '<th class="sortable">Priority</th>' +
             '<th class="sortable">Status</th>' +
@@ -1141,6 +1211,7 @@
     document.body.appendChild(wrap);
   }
 
+  var CREATE_SEC_STYLE = 'font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;';
   function renderCreate(u) {
     if (!canCreate(u)) { renderShell(u, 'queue', notFound('Only client users can raise tickets.'), ''); return; }
     pendingFiles = [];
@@ -1155,11 +1226,20 @@
     // With 2+ projects and no context, force an explicit pick.
     var ctxProj = qs('project');
     if (ctxProj && !userProjs.some(function (p) { return p.id === ctxProj; })) ctxProj = null;
-    var defaultProjId = ctxProj || (userProjs.length === 1 ? userProjs[0].id : null);
-    var projOpts = (defaultProjId ? '' : '<option value="" selected disabled>— Select a project —</option>') +
+    // Single accessible project: no question at all — auto-select and lock (amends "no default").
+    var singleProj = userProjs.length === 1;
+    var defaultProjId = ctxProj || (singleProj ? userProjs[0].id : null);
+    var projOpts = (defaultProjId ? '' : '<option value="" selected disabled>— Select —</option>') +
       userProjs.map(function (p) {
         return '<option value="' + p.id + '"' + (p.id === defaultProjId ? ' selected' : '') + '>' + esc(p.projectName) + '</option>';
       }).join('');
+    // Plain-language picker: the project's description doubles as live feedback
+    // (the JSM/Zendesk pattern: routing choice first, form reacts to it).
+    var projField = singleProj
+      ? '<div class="field full"><label>Project</label><select id="createProject" disabled>' + projOpts + '</select>' +
+        '<span class="hint">' + esc(userProjs[0].description || '') + ' &mdash; your only project, so this ticket is filed there automatically.</span></div>'
+      : '<div class="field full"><label>Project <span class="req">*</span></label><select id="createProject" onchange="sd.onCreateProjectChange()">' + projOpts + '</select>' +
+        '<span class="hint" id="projHint">' + (defaultProjId ? esc(project(defaultProjId).description || '') : 'Pick the system or service this ticket concerns &mdash; it decides which support team, categories and SLA apply.') + '</span></div>';
 
     // Categories filtered by project; empty until a project is chosen
     var cats = defaultProjId ? DB.categories.filter(function (c) {
@@ -1178,11 +1258,11 @@
     }).join('');
     // Agent LOV: filter by agents covering the selected project (L1 only for clients)
     var agentPool = DB.users.filter(function (x) {
-      return x.role === 'Support Agent' && agentCoversProject(x.id, defaultProjId) && (isClientAdmin(u) || agentTier(x.id) === 'L1');
+      return x.role === 'Support Agent' && agentCoversProject(x.id, defaultProjId) && (isClientAdmin(u) || agentTier(x.id, defaultProjId) === 'L1');
     });
     var agentOpts = '<option value="">\u2014 Unassigned \u2014</option>' + agentPool.map(function (a) {
       var load = DB.tickets.filter(function (x) { return x.assignedTo === a.id && x.status !== 'Closed'; }).length;
-      var aTier = agentTier(a.id);
+      var aTier = agentTier(a.id, defaultProjId);
       return '<option value="' + a.id + '">' + esc(a.name) + (aTier ? ' [' + aTier + ']' : '') + ' \u00b7 ' + load + ' open</option>';
     }).join('');
     var dept = department(u.departmentId);
@@ -1191,13 +1271,14 @@
     var modal = '<div class="modal lg"><div class="m-hd"><h2>Raise a Ticket</h2><span class="x" onclick="location.href=\'04-ticket-list.html\'">&#10005;</span></div>' +
       '<div class="m-bd"><div class="tenant-banner" style="border-radius:4px;margin-bottom:16px;">&#128274; Filed under <b>' + esc(company(u.companyId).name) + '</b>' + (dept.name ? ' / <b>' + esc(dept.name) + '</b>' : '') + '<span id="bannerProj">' + bannerProj + '</span>.</div>' +
       '<div class="form-grid cols-2">' +
-        '<div class="field"><label>Project <span class="req">*</span></label><select id="createProject" onchange="sd.onCreateProjectChange()">' + projOpts + '</select>' +
-          '<span class="hint">Decides which support team, categories and SLA apply.</span></div>' +
-        '<div class="field full"><label>Ticket Type <span class="req">*</span></label><select id="ticketType">' + typeOpts + '</select>' +
+        '<div class="field full" style="margin-bottom:-8px;"><span style="' + CREATE_SEC_STYLE + '">1 &middot; Project &amp; type</span></div>' +
+        projField +
+        '<div class="field"><label>Ticket Type <span class="req">*</span></label><select id="ticketType">' + typeOpts + '</select>' +
           '<span class="hint">Incident = something is broken. Service Request = a standard request.</span></div>' +
+        '<div class="field"><label>Category <span class="req">*</span></label><select id="cat">' + cats + '</select></div>' +
+        '<div class="field full" style="margin-bottom:-8px;margin-top:4px;"><span style="' + CREATE_SEC_STYLE + '">2 &middot; Issue details</span></div>' +
         '<div class="field full"><label>Subject <span class="req">*</span></label><input id="subject" placeholder="Short summary"></div>' +
         '<div class="field full"><label>Description <span class="req">*</span></label><textarea id="desc" placeholder="Describe the issue\u2026"></textarea></div>' +
-        '<div class="field"><label>Category <span class="req">*</span></label><select id="cat">' + cats + '</select></div>' +
         '<div class="field"><label>Severity <span class="req">*</span></label><select id="sev">' + sevs + '</select>' +
           '<span class="hint">Critical = Complete outage affecting all users. Major = Significant impact, workaround possible. Minor = Limited impact. Low = Cosmetic or nice-to-have.</span></div>' +
         '<div class="field"><label>Assign to</label><select id="createAgent">' + agentOpts + '</select>' +
@@ -1215,14 +1296,14 @@
     // Decision J: For clients, only L1 agents covering this ticket's project
     var pool;
     if (isClient(u)) {
-      pool = DB.users.filter(function (x) { return x.role === 'Support Agent' && agentCoversProject(x.id, t.projectId) && agentTier(x.id) === 'L1'; });
+      pool = DB.users.filter(function (x) { return x.role === 'Support Agent' && agentCoversProject(x.id, t.projectId) && agentTier(x.id, t.projectId) === 'L1'; });
     } else {
       pool = DB.users.filter(function (x) { return x.role === 'Support Agent' && agentCoversProject(x.id, t.projectId); });
       if (!pool.length) pool = DB.users.filter(function (x) { return x.role === 'Support Agent'; });
     }
     var agents = pool.map(function (a) {
       var load = DB.tickets.filter(function (x) { return x.assignedTo === a.id && x.status !== 'Closed'; }).length;
-      var aTier = agentTier(a.id);
+      var aTier = agentTier(a.id, t.projectId);
       return '<option value="' + a.id + '"' + (t.assignedTo === a.id ? ' selected' : '') + '>' + esc(a.name) + (aTier ? ' [' + aTier + ']' : '') + ' &middot; ' + load + ' open</option>';
     }).join('');
     var modal = '<div class="modal"><div class="m-hd"><h2>Assign &middot; ' + t.ref + '</h2><span class="x" onclick="location.href=\'05-ticket-detail.html?id=' + t.id + '\'">&#10005;</span></div>' +
@@ -1374,7 +1455,6 @@
       var dept = department(x.departmentId);
       var statusClass = (x.status || 'Active') === 'Active' ? 'tag-active' : 'tag-inactive';
       var lastLoginStr = x.lastLogin ? new Date(x.lastLogin).toLocaleDateString() : '<span class="muted">Never</span>';
-      var tierCell = x.tier ? x.tier : '<span class="muted">\u2014</span>';
       // Decision P: role chips \u2014 all roles held, landing role first/bold.
       // Decision Q: provider users always include CLIENT_USER (auto-granted).
       var held = (DB.userRoles || []).filter(function (r) { return r.userId === x.id; })
@@ -1385,7 +1465,7 @@
           return ' <span class="role-pill" style="opacity:.65;" title="Also holds this role (decision P) \u2014 switchable in the nav bar">' + esc(r) + '</span>';
         }).join('');
       return '<tr><td><span class="ig-row-check"></span></td><td><b>' + esc(x.name) + '</b></td><td>' + esc(x.email) + '</td><td>' + roleChips + '</td>' +
-        '<td>' + esc(company(x.companyId).name) + '</td><td>' + tierCell + '</td>' +
+        '<td>' + esc(company(x.companyId).name) + '</td>' +
         '<td>' + (dept.name ? esc(dept.name) : '<span class="muted">\u2014</span>') + '</td>' +
         '<td><span class="' + statusClass + '">&#9679; ' + (x.status || 'Active') + '</span></td>' +
         '<td>' + lastLoginStr + '</td>' +
@@ -1411,7 +1491,7 @@
           '<span class="ir-count" id="users-row-count">' + DB.users.length + ' rows</span>' +
         '</div>' +
       '</div>' +
-      '<table class="t ig-table" id="ig-users"><thead><tr><th style="width:30px;"></th><th class="sortable">Name</th><th class="sortable">Email</th><th class="sortable">Role</th><th class="sortable">Company</th><th class="sortable">Tier</th><th class="sortable">Dept</th><th class="sortable">Status</th><th class="sortable">Last Login</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<table class="t ig-table" id="ig-users"><thead><tr><th style="width:30px;"></th><th class="sortable">Name</th><th class="sortable">Email</th><th class="sortable">Role</th><th class="sortable">Company</th><th class="sortable">Dept</th><th class="sortable">Status</th><th class="sortable">Last Login</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
       '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 10 \u2014 APEX Interactive Grid. FR-6: create/edit/deactivate users (never delete \u2014 history keeps its authors) + password reset. Role chips = all roles held (decision P); provider users always include Client User (decision Q auto-grant). ISO \u00a76.6: access lifecycle.</p></div>';
     renderShell(u, 'users', html, tenantBanner(u));
   }
@@ -1420,12 +1500,22 @@
     var rows = DB.categories.map(function (c) {
       var n = DB.tickets.filter(function (t) { return t.categoryId === c.id && t.status !== 'Closed'; }).length;
       var scope = c.companyId ? esc(company(c.companyId).name) : '<span class="muted">Global</span>';
-      var projScope = c.projectId ? esc(project(c.projectId).projectName || c.projectId) : '<span class="muted">All</span>';
+      var projScope = c.projectId ? '<b>' + esc(project(c.projectId).projectKey || '') + '</b> ' + esc(project(c.projectId).projectName || c.projectId) : '<span class="muted">All</span>';
       var statusClass = (c.status || 'Active') === 'Active' ? 'tag-active' : 'tag-inactive';
-      return '<tr><td><b>' + esc(c.name) + '</b></td><td>' + scope + '</td><td>' + projScope + '</td><td class="muted" style="font-size:12px;">' + esc(c.description || '') + '</td><td>' + n + '</td>' +
+      return '<tr data-cat-company="' + esc(c.companyId || '') + '" data-cat-project="' + esc(c.projectId || '') + '"><td><b>' + esc(c.name) + '</b></td><td>' + scope + '</td><td>' + projScope + '</td><td class="muted" style="font-size:12px;">' + esc(c.description || '') + '</td><td>' + n + '</td>' +
         '<td><span class="' + statusClass + '">&#9679; ' + (c.status || 'Active') + '</span></td>' +
         '<td><button class="btn btn-sm" onclick="sd.showEditCategory(\'' + c.id + '\')">&#9998; Edit</button></td></tr>';
     }).join('');
+    var catCompanySelect = '<select id="cats-company-filter" class="ig-filter-select" onchange="sd.filterCatsByCompany(this.value)">' +
+      '<option value="all">All Companies</option>' +
+      DB.companies.filter(function (c2) { return c2.status === 'Active'; }).map(function (c2) {
+        return '<option value="' + c2.id + '">' + esc(c2.name) + '</option>';
+      }).join('') + '</select>';
+    var catProjectSelect = '<select id="cats-project-filter" class="ig-filter-select" onchange="sd.applyCatFilter()">' +
+      '<option value="all">All Projects</option>' +
+      (DB.projects || []).filter(function (p) { return p.isActive; }).map(function (p) {
+        return '<option value="' + p.id + '">' + esc(p.projectKey) + ' — ' + esc(p.projectName) + '</option>';
+      }).join('') + '</select>';
     var html = pageBar('Administration / Categories', 'Categories, Severities & SLA', '') +
       '<div class="content"><div class="grid cols-3">' +
       '<div class="card" style="overflow:hidden;grid-column:span 2;" id="ig-cats-wrap"><div class="card-hd">Categories</div>' +
@@ -1433,7 +1523,9 @@
         '<button class="ir-btn primary" onclick="sd.showAddCategory()">+ Add Row</button>' +
         '<button class="ir-btn">Actions &#9662;</button>' +
         '<div class="ir-search">&#128270; <input placeholder="Search\u2026" oninput="sd.igSearch(\'ig-cats\')"></div>' +
-        '<span class="ir-count" style="margin-left:auto;">' + DB.categories.length + ' rows</span>' +
+        '<div style="margin-left:8px;display:flex;align-items:center;gap:6px;" title="Project filter shows the effective set: project-specific + company-wide + global categories"><label for="cats-company-filter" style="font-size:12px;white-space:nowrap;">Company:</label>' + catCompanySelect +
+        '<label for="cats-project-filter" style="font-size:12px;white-space:nowrap;">Project:</label>' + catProjectSelect + '</div>' +
+        '<span class="ir-count" id="cats-row-count" style="margin-left:auto;">' + DB.categories.length + ' rows</span>' +
       '</div>' +
       '<table class="t" id="ig-cats"><thead><tr><th class="sortable">Category</th><th class="sortable">Company</th><th class="sortable">Project</th><th>Description</th><th class="sortable">Open</th><th class="sortable">Status</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
       '<div><div class="card" style="overflow:hidden;"><div class="card-hd">Severities (client-set)</div><table class="t"><thead><tr><th>Severity</th><th>Badge</th></tr></thead><tbody>' +
@@ -1450,58 +1542,66 @@
   /* ---------- page: SLA TARGETS (Page 13) ---------- */
   function renderSlaTargets(u) {
     if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
-    // Group SLA targets by project
-    var byProject = {};
-    (DB.slaTargets || []).forEach(function (s) {
-      var key = s.projectId || 'unknown';
-      if (!byProject[key]) byProject[key] = [];
-      byProject[key].push(s);
-    });
     var allProjects = (DB.projects || []).filter(function (p) { return p.isActive; });
 
+    // --- Section 1: named policies (the editing surface \u2014 a handful, regardless of project count) ---
+    var policyCards = (DB.slaPolicies || []).map(function (sp) {
+      var usedBy = slaPolicyProjects(sp.id);
+      var approver = sp.approvedBy ? user(sp.approvedBy) : null;
+      var rows = (sp.targets || []).map(function (t) {
+        return '<tr><td>' + sevBadge(t.severity) + '</td><td>' + t.responseHours + 'h</td><td>' + t.resolutionDays + 'd</td><td>' + (t.escalationPct || 80) + '%</td></tr>';
+      }).join('');
+      var govHtml = '<div style="padding:8px 12px;font-size:11.5px;color:#666;border-top:1px solid var(--c-border-lt);display:flex;gap:16px;flex-wrap:wrap;">' +
+        '<span>Effective: <b>' + esc(sp.effectiveFrom || '\u2014') + '</b></span>' +
+        '<span>Approved by: <b>' + (approver ? esc(approver.name) : '\u2014') + '</b></span>' +
+        (sp.notes ? '<span>Notes: ' + esc(sp.notes) + '</span>' : '') +
+        '</div>';
+      return '<div class="card" style="overflow:hidden;">' +
+        '<div class="card-hd"><span style="display:flex;align-items:center;gap:8px;">' + esc(sp.name) +
+        (sp.isDefault ? ' <span class="tag-active" title="Applies to projects with no policy assigned">Default</span>' : '') +
+        ' <span class="muted" style="font-size:12px;font-weight:400;" title="Blast radius: editing this policy changes targets for all these projects">used by ' + usedBy.length + ' project' + (usedBy.length === 1 ? '' : 's') + '</span></span>' +
+        '<button class="btn btn-sm" style="float:right;margin:-4px 0;" onclick="sd.showEditSlaPolicy(\'' + sp.id + '\')">&#9998; Edit</button></div>' +
+        '<div style="padding:6px 12px 0;font-size:12px;color:#666;">' + esc(sp.description || '') + '</div>' +
+        '<table class="t"><thead><tr><th>Severity</th><th>Response Time</th><th>Resolution Time</th><th>Escalation %</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+        govHtml + '</div>';
+    }).join('');
+
+    // --- Section 2: read-only assignment rollup (which project runs on which policy) ---
     var companySelect = '<select id="sla-company-filter" class="ig-filter-select" onchange="sd.filterSlaByCompany(this.value)">' +
       '<option value="all">All Companies</option>' +
       DB.companies.filter(function (c) { return c.status === 'Active'; }).map(function (c) {
         return '<option value="' + c.id + '">' + esc(c.name) + '</option>';
       }).join('') + '</select>';
-
-    var tables = allProjects.map(function (p) {
+    var assignRows = allProjects.map(function (p) {
       var c = company(p.companyId);
-      var targets = byProject[p.id] || [];
-      var firstTarget = targets[0] || {};
-      var approver = firstTarget.approvedBy ? user(firstTarget.approvedBy) : null;
-      var rows = targets.map(function (s) {
-        var globalIdx = (DB.slaTargets || []).indexOf(s);
-        return '<tr><td>' + sevBadge(s.severity) + '</td><td>' + s.responseHours + 'h</td><td>' + s.resolutionDays + 'd</td><td>' + (s.escalationPct || 80) + '%</td>' +
-          '<td><button class="btn btn-sm" onclick="sd.showEditSla(' + globalIdx + ')">&#9998; Edit</button></td></tr>';
-      }).join('');
-      if (!rows) rows = '<tr><td colspan="5" class="muted">No targets configured \u2014 will use defaults.</td></tr>';
+      var pol = slaPolicyFor(p.id);
+      var explicit = !!p.slaPolicyId;
       var projTickets = DB.tickets.filter(function (t) { return t.projectId === p.id; });
       var openCount = projTickets.filter(function (t) { return t.status !== 'Closed' && t.status !== 'Resolved'; }).length;
       var breachedCount = projTickets.filter(function (t) { return slaStatus(t) === 'breached'; }).length;
-      var govHtml = '<div style="padding:8px 12px;font-size:11.5px;color:#666;border-top:1px solid var(--c-border-lt);display:flex;gap:16px;flex-wrap:wrap;">' +
-        '<span>Effective: <b>' + esc(firstTarget.effectiveFrom || '\u2014') + '</b></span>' +
-        '<span>Approved by: <b>' + (approver ? esc(approver.name) : '\u2014') + '</b></span>' +
-        (firstTarget.notes ? '<span>Notes: ' + esc(firstTarget.notes) + '</span>' : '') +
-        '</div>';
-      return '<div class="sla-company-card" data-sla-company="' + p.companyId + '">' +
-        '<div class="card"><div class="card-hd"><span style="display:flex;align-items:center;gap:8px;">' + esc(p.projectName) +
-        ' <span class="muted" style="font-size:12px;font-weight:400;">' + esc(c.name) + ' &middot; ' + openCount + ' open tickets' +
-        (breachedCount ? ' &middot; <span style="color:#b91c1c;">' + breachedCount + ' breached</span>' : '') +
-        '</span></span></div>' +
-        '<table class="t"><thead><tr><th>Severity</th><th>Response Time</th><th>Resolution Time</th><th>Escalation %</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-        govHtml + '</div></div>';
+      return '<tr data-sla-company="' + esc(p.companyId) + '">' +
+        '<td><b>' + esc(p.projectKey) + '</b> <span class="muted">' + esc(p.projectName) + '</span></td>' +
+        '<td>' + esc(c.name || '') + '</td>' +
+        '<td>' + (pol ? esc(pol.name) : '<span class="tag-inactive">&#9888; none</span>') +
+        (pol && !explicit ? ' <span class="muted" style="font-size:11px;" title="No policy assigned \u2014 default policy applies">(default)</span>' : '') + '</td>' +
+        '<td>' + openCount + '</td>' +
+        '<td>' + (breachedCount ? '<span style="color:#b91c1c;">' + breachedCount + '</span>' : '0') + '</td>' +
+        '<td><a class="btn btn-sm" href="19-project-detail.html?id=' + p.id + '" title="Policy assignment is changed on the project\u2019s SLA tab">&#9881; Manage</a></td></tr>';
     }).join('');
 
-    var html = pageBar('Administration / SLA Targets', 'SLA Targets', '') +
+    var html = pageBar('Administration / SLA Policies', 'SLA Policies', '') +
       '<div class="content">' +
       '<div class="card" style="margin-bottom:16px;"><div class="card-bd">' +
-      '<p style="margin:0;font-size:13px;">Each project has its own SLA targets per severity level. ' +
-      'Response time = max time before first agent response. Resolution time = max time to resolve. ' +
-      'Escalation threshold = % of SLA elapsed before auto-escalation triggers (FR-35).</p></div></div>' +
-      '<div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;"><label style="font-weight:600;font-size:13px;white-space:nowrap;">Filter by Company:</label>' + companySelect + '</div>' +
-      '<div id="sla-panels">' + tables + '</div>' +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 13 \u2014 APEX Interactive Grid. System Admin only. FR-23: SLA per project. ISO \u00a78.6.3: SLA governance.</p></div>';
+      '<p style="margin:0;font-size:13px;"><b>Named policies, assigned to projects</b> (industry pattern \u2014 service tiers). ' +
+      'Targets are defined once per policy; each project is assigned a policy on its SLA tab. ' +
+      'Response = max time to first agent response \u00b7 Resolution = max time to resolve \u00b7 Escalation = % of SLA elapsed before auto-escalation (FR-35). ' +
+      'Projects with no assignment use the <b>Default</b> policy.</p></div></div>' +
+      '<div class="grid cols-2" style="margin-bottom:16px;">' + policyCards + '</div>' +
+      '<div class="card" style="overflow:hidden;"><div class="card-hd"><span>Project Assignments <span class="muted" style="font-size:12px;font-weight:400;">read-only \u2014 edit on each project\u2019s SLA tab</span></span></div>' +
+      '<div class="ig-toolbar"><div style="display:flex;align-items:center;gap:6px;"><label for="sla-company-filter" style="font-size:12px;white-space:nowrap;">Company:</label>' + companySelect + '</div>' +
+      '<span class="ir-count" style="margin-left:auto;">' + allProjects.length + ' projects</span></div>' +
+      '<table class="t" id="sla-assign"><thead><tr><th>Project</th><th>Company</th><th>SLA Policy</th><th>Open</th><th>Breached</th><th>Actions</th></tr></thead><tbody>' + assignRows + '</tbody></table></div>' +
+      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 13 \u2014 System Admin only. FR-23: SLA per severity via named policies per project. ISO \u00a78.6.3: SLA governance. Pattern study 2026-07-03: Zendesk SLA policies / Autotask SLA templates / ServiceNow SLA definitions.</p></div>';
     renderShell(u, 'sla', html, tenantBanner(u));
   }
 
@@ -1518,6 +1618,20 @@
       DB.companies.filter(function (c) { return c.status === 'Active'; }).map(function (c) {
         return '<option value="' + c.id + '">' + esc(c.name) + '</option>';
       }).join('') + '</select>';
+    var apProjectSelect = '<select id="ap-project-filter" class="ig-filter-select" onchange="sd.applyAgentMapFilter()">' +
+      '<option value="all">All Projects</option>' +
+      activeProjects.map(function (p) {
+        return '<option value="' + p.id + '">' + esc(p.projectKey) + ' — ' + esc(p.projectName) + '</option>';
+      }).join('') + '</select>';
+
+    var issuesByProject = {};
+    activeProjects.forEach(function (p) { issuesByProject[p.id] = projectCoverageIssues(p.id); });
+    var attentionN = activeProjects.filter(function (p) { return issuesByProject[p.id].length > 0; }).length;
+    function issueCount(key) {
+      return activeProjects.filter(function (p) { return issuesByProject[p.id].indexOf(key) >= 0; }).length;
+    }
+    // Exceptions-first: open on the gaps; fall back to All when coverage is clean.
+    var initialView = attentionN ? 'attention' : 'all';
 
     var cards = activeProjects.map(function (p) {
       var c = company(p.companyId);
@@ -1525,65 +1639,55 @@
       var chips = team.map(function (a) {
         var openN = agentOpenCountInProject(a.id, p.id);
         return '<span class="cover-tag" title="' + esc(a.email) + ' \u2014 ' + openN + ' open ticket' + (openN === 1 ? '' : 's') + ' here">' +
-          esc(a.name) + ' <b>(' + (a.tier || '\u2014') + ')</b>' +
-          ' <span style="cursor:pointer;color:#b91c1c;" onclick="sd.removeTeamAgent(\'' + p.id + '\',\'' + a.id + '\')" title="Remove from project">&times;</span></span>';
+          esc(a.name) + ' <b>(' + (a.tier || '\u2014') + ')</b></span>';
       }).join(' ');
       if (!chips) chips = '<span class="muted">No agents mapped</span>';
-      return '<div class="card" data-ap-company="' + esc(p.companyId) + '" style="margin-bottom:12px;overflow:hidden;">' +
+      return '<div class="card" data-ap-company="' + esc(p.companyId) + '" data-ap-project="' + esc(p.id) + '" data-ap-issues="' + issuesByProject[p.id].join(' ') + '" style="margin-bottom:12px;overflow:hidden;">' +
         '<div class="card-hd"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' +
         esc(p.projectName) + ' <span class="muted" style="font-size:12px;font-weight:400;">' + esc(c.name || '') + ' &middot; ' + esc(p.projectKey) + '</span>' +
         teamCoverageBadges(p.id) + '</span>' +
         '<span style="float:right;display:flex;gap:8px;align-items:center;">' +
-        '<button class="btn btn-sm btn-primary" onclick="sd.showAddTeamAgent(\'' + p.id + '\')">+ Add Agent</button>' +
-        '<a class="btn btn-sm" href="19-project-detail.html?id=' + p.id + '">&#9881; Manage</a></span></div>' +
+        '<a class="btn btn-sm" href="19-project-detail.html?id=' + p.id + '" title="Team changes happen on the project&rsquo;s Support Team tab — the project context is fixed there, so no wrong-company mistakes">&#9881; Manage Team</a></span></div>' +
         '<div class="card-bd" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">' + chips + '</div>' +
         '</div>';
     }).join('');
     if (!cards) cards = '<p class="muted">No active projects.</p>';
 
+    // Coverage KPI strip \u2014 each tile is a one-click filter on the card list below.
+    var kpiTiles = [
+      { view: 'all', n: activeProjects.length, label: 'Active projects', icon: '&#128193;', bg: '#e8f1fb', fg: '#045aa3', tip: 'Show every active project' },
+      { view: 'no-l1', n: issueCount('no-l1'), label: 'Missing L1', icon: '&#9888;', bg: '#fde8e8', fg: '#b91c1c', tip: 'Clients can assign L1 agents only \u2014 these projects are broken for clients (FR-10)' },
+      { view: 'no-agents', n: issueCount('no-agents'), label: 'No agents mapped', icon: '&#128683;', bg: '#fde8e8', fg: '#b91c1c', tip: 'Tickets in these projects have nobody to work them' },
+      { view: 'no-l2', n: issueCount('no-l2'), label: 'No L2+ \u2014 escalation dead-end', icon: '&#128257;', bg: '#fdf6b2', fg: '#92740a', tip: 'Auto-escalation has no higher tier to go to (FR-35)' },
+      { view: 'single', n: issueCount('single'), label: 'Single agent', icon: '&#128100;', bg: '#fdf6b2', fg: '#92740a', tip: 'One agent covers the whole project \u2014 single point of failure' }
+    ].map(function (k) {
+      var valStyle = (k.n && k.view !== 'all') ? ' style="color:' + k.fg + ';"' : '';
+      return '<div class="kpi-badge ap-kpi" data-ap-view="' + k.view + '" onclick="sd.setAgentMapView(\'' + k.view + '\')" title="' + k.tip + '" style="flex:1;min-width:140px;max-width:280px;">' +
+        '<div class="kpi-icon" style="background:' + k.bg + ';color:' + k.fg + ';">' + k.icon + '</div>' +
+        '<div class="kpi-body"><div class="kpi-value"' + valStyle + '>' + k.n + '</div><div class="kpi-label">' + k.label + '</div></div></div>';
+    }).join('');
+
+    var viewToggle = '<div style="display:flex;gap:4px;">' +
+      '<button class="btn btn-sm ap-view-btn" data-ap-view="attention" onclick="sd.setAgentMapView(\'attention\')">&#9888; Needs attention (' + attentionN + ')</button>' +
+      '<button class="btn btn-sm ap-view-btn" data-ap-view="all" onclick="sd.setAgentMapView(\'all\')">All projects (' + activeProjects.length + ')</button></div>';
+
     var html = pageBar('Administration / Agent Mapping', 'Agent-Project Mapping', '') +
       '<div class="content">' +
       '<div class="card" style="margin-bottom:16px;"><div class="card-bd">' +
-      '<p style="margin:0;font-size:13px;"><b>Who covers what</b> \u2014 one card per project (Flows 3/4). ' +
-      'An active project must keep <b>&ge;1 L1</b> (clients assign L1 only, FR-10); no L2+ means auto-escalation dead-ends (FR-35). ' +
-      'Removing an agent is blocked while they hold open tickets in that project.</p></div></div>' +
-      '<div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;"><label style="font-weight:600;font-size:13px;white-space:nowrap;">Filter by Company:</label>' + companySelect + '</div>' +
+      '<p style="margin:0;font-size:13px;"><b>Who covers what</b> \u2014 read-only coverage overview, exceptions first: ' +
+      'projects with coverage gaps show by default; switch to <b>All projects</b> to browse the full list. ' +
+      'Team changes happen on each project&rsquo;s <b>Support Team</b> tab, where the project context is fixed (pattern study 2026-07-03: JSM project settings / PSA customer-360). ' +
+      'An active project must keep <b>&ge;1 L1</b> (clients assign L1 only, FR-10); no L2+ means auto-escalation dead-ends (FR-35).</p></div></div>' +
+      '<div style="margin-bottom:16px;display:flex;gap:12px;flex-wrap:wrap;">' + kpiTiles + '</div>' +
+      '<div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">' + viewToggle +
+      '<label style="font-weight:600;font-size:13px;white-space:nowrap;">Company:</label>' + companySelect +
+      '<label style="font-weight:600;font-size:13px;white-space:nowrap;">Project:</label>' + apProjectSelect +
+      '<span class="ir-count" id="ap-visible-count" style="margin-left:auto;"></span></div>' +
       '<div id="ap-cards">' + cards + '</div>' +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 14 &mdash; AGENT_PROJECTS grouped by project (admin-console spec). Same table as the Project Detail Support Team tab &mdash; two doors, one truth.</p></div>';
+      '<p id="ap-empty" class="muted" style="display:none;"></p>' +
+      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 14 &mdash; AGENT_PROJECTS read-only rollup, exceptions-first (coverage KPIs are one-click filters; gaps show by default). Edits live on the Project Detail Support Team tab only &mdash; one door, one truth (pattern study 2026-07-03).</p></div>';
     renderShell(u, 'agent-projects', html, tenantBanner(u));
-  }
-
-  /* ---------- page: DEPARTMENTS (Page 15) ---------- */
-  function renderDepartments(u) {
-    if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
-    var clientCompanies = DB.companies.filter(function (c) { return c.status === 'Active'; });
-    var deptCompanySelect = '<select id="dept-company-filter" class="ig-filter-select" onchange="sd.filterDeptsByCompany(this.value)">' +
-      '<option value="all">All Companies (' + clientCompanies.length + ')</option>' +
-      clientCompanies.map(function (c) {
-        var count = (DB.departments || []).filter(function(d) { return d.companyId === c.id; }).length;
-        return '<option value="' + c.id + '">' + esc(c.name) + ' (' + count + ' depts)</option>';
-      }).join('') + '</select>';
-    var rows = (DB.departments || []).map(function (d) {
-      var c = company(d.companyId);
-      var userCount = DB.users.filter(function (x) { return x.departmentId === d.id; }).length;
-      return '<tr data-dept-company="' + esc(d.companyId) + '"><td><span class="ig-row-check"></span></td><td><b>' + esc(d.name) + '</b></td><td>' + esc(c.name) + '</td><td>' + userCount + '</td>' +
-        '<td><button class="btn btn-sm" onclick="sd.showEditDept(\'' + d.id + '\')">&#9998; Edit</button></td></tr>';
-    }).join('');
-    if (!rows) rows = '<tr><td colspan="5" class="muted">No departments yet.</td></tr>';
-    var html = pageBar('Administration / Departments', 'Departments', '') +
-      '<div class="content"><div class="card" style="overflow:hidden;" id="ig-depts-wrap">' +
-      '<div class="ig-toolbar">' +
-        '<button class="ir-btn primary" onclick="sd.showAddDept()">+ Add Row</button>' +
-        '<div class="ir-search">&#128270; <input placeholder="Search\u2026" oninput="sd.igSearch(\'ig-depts\')"></div>' +
-        '<div style="margin-left:8px;display:flex;align-items:center;gap:6px;"><label for="dept-company-filter" style="font-size:12px;white-space:nowrap;">Company:</label>' + deptCompanySelect + '</div>' +
-        '<div class="ir-actions" style="margin-left:auto;">' +
-          '<button class="ir-btn">Actions &#9662;</button>' +
-          '<span class="ir-count" id="depts-row-count">' + (DB.departments || []).length + ' rows</span>' +
-        '</div>' +
-      '</div>' +
-      '<table class="t ig-table" id="ig-depts"><thead><tr><th style="width:30px;"></th><th class="sortable">Department</th><th class="sortable">Company</th><th class="sortable">Users</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 15 &mdash; APEX Interactive Grid. Decision N: departments per company (metadata only).</p></div>';
-    renderShell(u, 'departments', html, tenantBanner(u));
+    sd.setAgentMapView(initialView);
   }
 
   /* ---------- page: COMPANY DETAIL (Page 17) ---------- */
@@ -1595,22 +1699,14 @@
     if (!c) { renderShell(u, 'companies', notFound('Company "' + esc(cid) + '" is not in your demo data (stale localStorage?). Click "Reset demo" in the header and try again.'), ''); return; }
     if (c.status !== 'Active') { renderShell(u, 'companies', notFound('Company "' + esc(c.name) + '" is inactive — reactivate it from the Companies page to manage it.'), ''); return; }
 
-    var activeTab = window._companyDetailTab || 'projects';
-
     // --- Stats ---
     var companyTickets = DB.tickets.filter(function (t) { return t.companyId === cid; });
     var openCount = companyTickets.filter(function (t) { return t.status !== 'Closed' && t.status !== 'Resolved'; }).length;
     var breachedCount = companyTickets.filter(function (t) { return slaStatus(t) === 'breached'; }).length;
     var companyUsers = DB.users.filter(function (x) { return x.companyId === cid; });
-    var companyDepts = (DB.departments || []).filter(function (d) { return d.companyId === cid; });
     var cProjs = companyProjects(cid);
-    var mappedAgents = [];
-    cProjs.forEach(function (p) {
-      (DB.agentProjects || []).filter(function (ap) { return ap.projectId === p.id; }).forEach(function (ap) {
-        if (!mappedAgents.some(function (x) { return x.userId === ap.userId; })) {
-          mappedAgents.push(ap);
-        }
-      });
+    var clientAdmins = companyUsers.filter(function (x) {
+      return x.role === 'Client Admin' || userHoldsRole(x.id, 'CLIENT_ADMIN');
     });
 
     // --- Header ---
@@ -1623,132 +1719,77 @@
       (breachedCount ? '<div class="stat-card" style="text-align:center;padding:8px 16px;border-color:#fecaca;"><div class="stat-val" style="color:#b91c1c;">' + breachedCount + '</div><div class="stat-lbl">SLA Breached</div></div>' : '') +
       '<div class="stat-card" style="text-align:center;padding:8px 16px;"><div class="stat-val">' + cProjs.length + '</div><div class="stat-lbl">Projects</div></div>' +
       '<div class="stat-card" style="text-align:center;padding:8px 16px;"><div class="stat-val">' + companyUsers.length + '</div><div class="stat-lbl">Users</div></div>' +
-      '<div class="stat-card" style="text-align:center;padding:8px 16px;"><div class="stat-val">' + companyDepts.length + '</div><div class="stat-lbl">Departments</div></div>' +
-      '<div class="stat-card" style="text-align:center;padding:8px 16px;"><div class="stat-val">' + mappedAgents.length + '</div><div class="stat-lbl">Agents</div></div>' +
+      '<div class="stat-card" style="text-align:center;padding:8px 16px;"><div class="stat-val">' + clientAdmins.length + '</div><div class="stat-lbl">Client Admins</div></div>' +
       '</div></div>';
 
     // --- Tabs ---
+    var activeTab = window._companyDetailTab || 'projects';
     var tabs = '<div class="cd-tabs" style="display:flex;gap:0;border-bottom:2px solid var(--c-border-lt);margin:16px 0 0 0;">' +
-      '<button class="cd-tab' + (activeTab === 'projects' ? ' cd-tab-active' : '') + '" onclick="sd.companyTab(\'projects\')">&#128194; Projects</button>' +
-      '<button class="cd-tab' + (activeTab === 'sla' ? ' cd-tab-active' : '') + '" onclick="sd.companyTab(\'sla\')">&#9202; SLA Targets</button>' +
-      '<button class="cd-tab' + (activeTab === 'depts' ? ' cd-tab-active' : '') + '" onclick="sd.companyTab(\'depts\')">&#127963;&#65039; Departments</button>' +
-      '<button class="cd-tab' + (activeTab === 'agents' ? ' cd-tab-active' : '') + '" onclick="sd.companyTab(\'agents\')">&#128101; Agent-Project Mapping</button>' +
+      '<button class="cd-tab' + (activeTab === 'projects' ? ' cd-tab-active' : '') + '" data-tab="projects" onclick="sd.companyTab(\'projects\')">&#128194; Projects</button>' +
+      '<button class="cd-tab' + (activeTab === 'depts' ? ' cd-tab-active' : '') + '" data-tab="depts" onclick="sd.companyTab(\'depts\')">&#127970; Departments</button>' +
+      '<button class="cd-tab' + (activeTab === 'admins' ? ' cd-tab-active' : '') + '" data-tab="admins" onclick="sd.companyTab(\'admins\')">&#128100; Client Admins</button>' +
       '</div>';
 
-    // --- Projects Tab ---
+    // --- Projects tab (team/SLA/categories/invitations are per-project on the Project Detail hub) ---
     var projRows = cProjs.map(function (p) {
       var tk = DB.tickets.filter(function (t) { return t.projectId === p.id; }).length;
       var agCount = (DB.agentProjects || []).filter(function (ap) { return ap.projectId === p.id; }).length;
-      return '<tr><td><b>' + esc(p.projectName) + '</b></td><td>' + esc(p.projectKey) + '</td><td>' + tk + '</td><td>' + agCount + '</td>' +
-        '<td><button class="btn btn-sm" onclick="sd.showEditProject(\'' + p.id + '\')">&#9998; Edit</button></td></tr>';
+      var visBadge = (p.visibility || 'OPEN') === 'RESTRICTED'
+        ? '<span class="tag-inactive" title="Invitation-only (decision Q)">&#128274; Restricted</span>'
+        : '<span class="tag-active" title="Visible to the whole company">&#127758; Open</span>';
+      return '<tr><td><b>' + esc(p.projectName) + '</b></td><td>' + esc(p.projectKey) + '</td>' +
+        '<td>' + visBadge + '</td><td>' + tk + '</td><td>' + agCount + teamCoverageBadges(p.id) + '</td>' +
+        '<td><a class="btn btn-sm btn-primary" href="19-project-detail.html?id=' + p.id + '">&#9881; Manage</a> ' +
+        '<button class="btn btn-sm" onclick="sd.showEditProject(\'' + p.id + '\')">&#9998; Edit</button></td></tr>';
     }).join('');
-    if (!projRows) projRows = '<tr><td colspan="5" class="muted">No projects for this company.</td></tr>';
+    if (!projRows) projRows = '<tr><td colspan="6" class="muted">No projects for this company.</td></tr>';
     var projectsPanel = '<div class="cd-panel" data-panel="projects"' + (activeTab !== 'projects' ? ' style="display:none;"' : '') + '>' +
       '<div class="card" style="overflow:hidden;">' +
       '<div class="card-hd"><span>Projects</span>' +
       '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddProjectCD(\'' + cid + '\')">+ Add Project</button></div>' +
-      '<table class="t"><thead><tr><th>Project Name</th><th>Key</th><th>Tickets</th><th>Agents</th><th>Actions</th></tr></thead><tbody>' + projRows + '</tbody></table>' +
+      '<table class="t"><thead><tr><th>Project Name</th><th>Key</th><th>Visibility</th><th>Tickets</th><th>Agents</th><th>Actions</th></tr></thead><tbody>' + projRows + '</tbody></table>' +
+      '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Support team, SLA policy, categories and invitations are configured per project &mdash; use <b>&#9881; Manage</b> (one door, one truth).</p>' +
       '</div></div>';
 
-    // --- SLA Tab (grouped by project) ---
-    var slaContent = cProjs.map(function (p) {
-      var targets = (DB.slaTargets || []).filter(function (s) { return s.projectId === p.id; });
-      var slaRows = targets.map(function (s) {
-        var globalIdx = (DB.slaTargets || []).indexOf(s);
-        return '<tr><td>' + sevBadge(s.severity) + '</td><td>' + s.responseHours + 'h</td><td>' + s.resolutionDays + 'd</td><td>' + (s.escalationPct || 80) + '%</td>' +
-          '<td><button class="btn btn-sm" onclick="sd.showEditSla(' + globalIdx + ', true)">&#9998; Edit</button></td></tr>';
-      }).join('');
-      if (!slaRows) slaRows = '<tr><td colspan="5" class="muted">No SLA targets configured.</td></tr>';
-      return '<div style="margin-bottom:12px;"><div style="font-weight:600;font-size:13px;margin-bottom:4px;">' + esc(p.projectName) + ' (' + esc(p.projectKey) + ')</div>' +
-        '<table class="t"><thead><tr><th>Severity</th><th>Response Time</th><th>Resolution Time</th><th>Escalation %</th><th>Actions</th></tr></thead><tbody>' + slaRows + '</tbody></table></div>';
-    }).join('');
-    if (!slaContent) slaContent = '<p class="muted">No projects configured.</p>';
-    var slaPanel = '<div class="cd-panel" data-panel="sla"' + (activeTab !== 'sla' ? ' style="display:none;"' : '') + '>' +
-      '<div class="card" style="overflow:hidden;">' +
-      '<div class="card-hd">SLA Targets per Severity (grouped by project)</div>' +
-      '<div class="card-bd">' + slaContent + '</div></div></div>';
-
-    // --- Departments Tab ---
-    var deptRows = companyDepts.map(function (d) {
+    // --- Departments tab (decision N: metadata only — routing/reporting, never visibility) ---
+    var cDepts = (DB.departments || []).filter(function (d) { return d.companyId === cid; });
+    var deptRows = cDepts.map(function (d) {
       var userCount = DB.users.filter(function (x) { return x.departmentId === d.id; }).length;
-      var deptUsers = DB.users.filter(function (x) { return x.departmentId === d.id && x.companyId === cid; });
-      var avatarHtml = deptUsers.slice(0, 5).map(function (du) {
-        return '<span class="avatar-sm" title="' + esc(du.name) + '">' + initials(du.name) + '</span>';
-      }).join('');
-      if (deptUsers.length > 5) avatarHtml += '<span class="muted" style="font-size:11px;">+' + (deptUsers.length - 5) + '</span>';
-      return '<tr><td><b>' + esc(d.name) + '</b></td><td>' + userCount + '</td><td>' + avatarHtml + '</td>' +
-        '<td><button class="btn btn-sm" onclick="sd.showEditDeptCD(\'' + d.id + '\')">&#9998; Edit</button></td></tr>';
+      return '<tr><td><b>' + esc(d.name) + '</b></td><td>' + userCount + '</td>' +
+        '<td><button class="btn btn-sm" onclick="sd.showEditDept(\'' + d.id + '\')">&#9998; Edit</button></td></tr>';
     }).join('');
-    if (!deptRows) deptRows = '<tr><td colspan="4" class="muted">No departments yet. Add one below.</td></tr>';
+    if (!deptRows) deptRows = '<tr><td colspan="3" class="muted">No departments yet — users and tickets can be filed without one.</td></tr>';
     var deptsPanel = '<div class="cd-panel" data-panel="depts"' + (activeTab !== 'depts' ? ' style="display:none;"' : '') + '>' +
       '<div class="card" style="overflow:hidden;">' +
       '<div class="card-hd"><span>Departments</span>' +
       '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showAddDeptCD(\'' + cid + '\')">+ Add Department</button></div>' +
-      '<table class="t"><thead><tr><th>Department</th><th>Users</th><th>Members</th><th>Actions</th></tr></thead><tbody>' + deptRows + '</tbody></table>' +
+      '<table class="t"><thead><tr><th>Department</th><th>Users</th><th>Actions</th></tr></thead><tbody>' + deptRows + '</tbody></table>' +
+      '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Departments are <b>metadata only</b> (decision N) — stamped on users and tickets for routing/reporting, never a visibility filter. Set a user&rsquo;s department on the Users page (&#9998; Edit).</p>' +
       '</div></div>';
 
-    // --- Agents Tab (Shuttle-style, scoped to projects) ---
-    var allAssignedAgentIds = [];
-    cProjs.forEach(function (p) {
-      (DB.agentProjects || []).filter(function (ap) { return ap.projectId === p.id; }).forEach(function (ap) {
-        if (allAssignedAgentIds.indexOf(ap.userId) < 0) allAssignedAgentIds.push(ap.userId);
-      });
-    });
-    var allAgents = DB.users.filter(function (x) { return x.role === 'Support Agent' && x.status === 'Active'; });
-    var assignedAgents = allAgents.filter(function (a) { return allAssignedAgentIds.indexOf(a.id) >= 0; });
-    var availableAgents = allAgents.filter(function (a) { return allAssignedAgentIds.indexOf(a.id) < 0; });
-
-    // Show which projects each assigned agent covers in this company
-    var assignedList = assignedAgents.map(function (a) {
-      var coveredProjs = cProjs.filter(function (p) { return agentCoversProject(a.id, p.id); });
-      var projNames = coveredProjs.map(function (p) { return esc(p.projectName); }).join(', ');
-      var aTier = agentTier(a.id);
-      return '<div class="shuttle-item" data-agent-id="' + a.id + '" onclick="sd.shuttleSelect(this)">' +
-        '<span class="avatar-sm">' + initials(a.name) + '</span> ' +
-        '<b>' + esc(a.name) + '</b> <span class="muted" style="font-size:11px;">' + (aTier || '') + ' \u2014 ' + projNames + '</span></div>';
+    // --- Client Admins tab (system-admin view: who runs this company's side of the desk) ---
+    var adminRows = clientAdmins.map(function (x) {
+      var stCls = (x.status || 'Active') === 'Active' ? 'tag-active' : 'tag-inactive';
+      var last = x.lastLogin ? new Date(x.lastLogin).toLocaleString() : '—';
+      return '<tr><td><span class="avatar-sm">' + initials(x.name) + '</span> <b>' + esc(x.name) + '</b></td>' +
+        '<td>' + esc(x.email) + '</td>' +
+        '<td><span class="' + stCls + '">&#9679; ' + (x.status || 'Active') + '</span></td>' +
+        '<td>' + esc(last) + '</td></tr>';
     }).join('');
-    if (!assignedList) assignedList = '<div class="shuttle-empty muted">No agents assigned</div>';
-
-    var availableList = availableAgents.map(function (a) {
-      return '<div class="shuttle-item" data-agent-id="' + a.id + '" onclick="sd.shuttleSelect(this)">' +
-        '<span class="avatar-sm">' + initials(a.name) + '</span> ' +
-        '<b>' + esc(a.name) + '</b></div>';
-    }).join('');
-    if (!availableList) availableList = '<div class="shuttle-empty muted">All agents assigned</div>';
-
-    // Project selector for shuttle add
-    var shuttleProjOpts = cProjs.map(function (p) {
-      return '<option value="' + p.id + '">' + esc(p.projectName) + '</option>';
-    }).join('');
-
-    var agentsPanel = '<div class="cd-panel" data-panel="agents"' + (activeTab !== 'agents' ? ' style="display:none;"' : '') + '>' +
+    if (!adminRows) adminRows = '<tr><td colspan="4"><span class="tag-inactive">&#9888; No Client Admin</span> <span class="muted" style="font-size:12px;">this company cannot manage its own users or Restricted-project invitations &mdash; assign the CLIENT_ADMIN role on the Users page.</span></td></tr>';
+    var adminsPanel = '<div class="cd-panel" data-panel="admins"' + (activeTab !== 'admins' ? ' style="display:none;"' : '') + '>' +
       '<div class="card" style="overflow:hidden;">' +
-      '<div class="card-hd">Agent-Project Mapping</div>' +
-      '<p style="margin:0 16px 12px;font-size:12px;color:#666;">Select agents on the left, pick a project, and click &#10145;&#65039; to assign them. Select assigned agents and click &#11013;&#65039; to remove from all projects in ' + esc(c.name) + '.</p>' +
-      '<div style="padding:0 16px 8px;"><label style="font-size:12px;">Assign to project: </label><select id="shuttle-project">' + shuttleProjOpts + '</select></div>' +
-      '<div class="shuttle" style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;min-height:280px;">' +
-        '<div class="shuttle-col">' +
-          '<div class="shuttle-hd">Available Agents (' + availableAgents.length + ')</div>' +
-          '<div class="shuttle-search"><input placeholder="Search\u2026" oninput="sd.shuttleFilter(this, \'shuttle-available\')"></div>' +
-          '<div class="shuttle-list" id="shuttle-available">' + availableList + '</div>' +
-        '</div>' +
-        '<div class="shuttle-btns" style="display:flex;flex-direction:column;justify-content:center;gap:8px;padding:0 8px;">' +
-          '<button class="btn btn-sm" onclick="sd.shuttleAdd(\'' + cid + '\')" title="Assign selected">&#10145;&#65039;</button>' +
-          '<button class="btn btn-sm" onclick="sd.shuttleRemove(\'' + cid + '\')" title="Remove selected">&#11013;&#65039;</button>' +
-        '</div>' +
-        '<div class="shuttle-col">' +
-          '<div class="shuttle-hd">Assigned to ' + esc(c.name) + ' (' + assignedAgents.length + ')</div>' +
-          '<div class="shuttle-search"><input placeholder="Search\u2026" oninput="sd.shuttleFilter(this, \'shuttle-assigned\')"></div>' +
-          '<div class="shuttle-list" id="shuttle-assigned">' + assignedList + '</div>' +
-        '</div>' +
-      '</div>' +
+      '<div class="card-hd"><span>Client Admins</span>' +
+      '<a class="btn btn-sm" style="float:right;margin:-4px 0;" href="10-users.html">Manage on Users page &rarr;</a></div>' +
+      '<table class="t"><thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Last Login</th></tr></thead><tbody>' + adminRows + '</tbody></table>' +
+      '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Client Admins see all company tickets, manage company users and Restricted-project invitations (decision Q), and can assign/reassign agents on any company ticket.</p>' +
       '</div></div>';
 
     var html = pageBar('Administration / Companies / ' + esc(c.name), c.name, '<a class="btn btn-sm" href="09-companies.html">&larr; Back to Companies</a>') +
       '<div class="content">' +
       '<div class="card" style="overflow:hidden;padding:16px;">' + header + '</div>' +
-      tabs + projectsPanel + slaPanel + deptsPanel + agentsPanel +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 17 &mdash; Company-centric admin. Projects (Decision O), SLA (FR-23), Departments (Decision N), Agent-Project Mapping (Decision J). ITIL 4: customer-based SLA structure.</p></div>';
+      tabs + projectsPanel + deptsPanel + adminsPanel +
+      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 17 &mdash; Company-centric admin: projects (Decision O) + departments (decision N, metadata only) + Client Admin contacts. Team, SLA, categories and invitations are configured per project on the Project Detail hub.</p></div>';
     renderShell(u, 'companies', html, tenantBanner(u));
   }
 
@@ -1796,7 +1837,7 @@
     var tabs = '<div class="cd-tabs" style="display:flex;gap:0;border-bottom:2px solid var(--c-border-lt);margin:16px 0 0 0;">' +
       '<button class="cd-tab' + (activeTab === 'details' ? ' cd-tab-active' : '') + '" data-tab="details" onclick="sd.projectTab(\'details\')">&#128196; Details</button>' +
       '<button class="cd-tab' + (activeTab === 'team' ? ' cd-tab-active' : '') + '" data-tab="team" onclick="sd.projectTab(\'team\')">&#128101; Support Team</button>' +
-      '<button class="cd-tab' + (activeTab === 'sla' ? ' cd-tab-active' : '') + '" data-tab="sla" onclick="sd.projectTab(\'sla\')">&#9202; SLA Targets</button>' +
+      '<button class="cd-tab' + (activeTab === 'sla' ? ' cd-tab-active' : '') + '" data-tab="sla" onclick="sd.projectTab(\'sla\')">&#9202; SLA Policy</button>' +
       '<button class="cd-tab' + (activeTab === 'cats' ? ' cd-tab-active' : '') + '" data-tab="cats" onclick="sd.projectTab(\'cats\')">&#127991;&#65039; Categories</button>' +
       (isRestricted ? '<button class="cd-tab' + (activeTab === 'invites' ? ' cd-tab-active' : '') + '" data-tab="invites" onclick="sd.projectTab(\'invites\')">&#9993;&#65039; Invitations</button>' : '') +
       '</div>';
@@ -1837,16 +1878,23 @@
       '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Flow 3/4 gates: an active project keeps &ge;1 L1 (clients assign L1 only, FR-10); removal is blocked while an agent holds open tickets here.</p>' +
       '</div></div>';
 
-    // --- SLA tab ---
-    var slaRows = (DB.slaTargets || []).filter(function (s) { return s.projectId === pid; }).map(function (s) {
-      var globalIdx = (DB.slaTargets || []).indexOf(s);
-      return '<tr><td>' + sevBadge(s.severity) + '</td><td>' + s.responseHours + 'h</td><td>' + s.resolutionDays + 'd</td><td>' + (s.escalationPct || 80) + '%</td>' +
-        '<td><button class="btn btn-sm" onclick="sd.showEditSla(' + globalIdx + ')">&#9998; Edit</button></td></tr>';
-    }).join('');
-    if (!slaRows) slaRows = '<tr><td colspan="5" class="muted">No SLA targets configured — defaults apply.</td></tr>';
+    // --- SLA tab (policy assignment — the ONE door for changing a project's SLA) ---
+    var assignedPol = slaPolicyFor(pid);
+    var polOptions = '<option value=""' + (!p.slaPolicyId ? ' selected' : '') + '>— Default policy (' + esc((defaultSlaPolicy() || {}).name || 'none') + ') —</option>' +
+      (DB.slaPolicies || []).map(function (sp) {
+        return '<option value="' + sp.id + '"' + (p.slaPolicyId === sp.id ? ' selected' : '') + '>' + esc(sp.name) + (sp.isDefault ? ' (default)' : '') + '</option>';
+      }).join('');
+    var polTargetRows = assignedPol ? (assignedPol.targets || []).map(function (t) {
+      return '<tr><td>' + sevBadge(t.severity) + '</td><td>' + t.responseHours + 'h</td><td>' + t.resolutionDays + 'd</td><td>' + (t.escalationPct || 80) + '%</td></tr>';
+    }).join('') : '<tr><td colspan="4" class="muted">No SLA policies defined.</td></tr>';
     var slaPanel = '<div class="cd-panel" data-panel="sla"' + (activeTab !== 'sla' ? ' style="display:none;"' : '') + '>' +
-      '<div class="card" style="overflow:hidden;"><div class="card-hd">SLA Targets per Severity (FR-23 — seeded at creation, tune here)</div>' +
-      '<table class="t"><thead><tr><th>Severity</th><th>Response Time</th><th>Resolution Time</th><th>Escalation %</th><th>Actions</th></tr></thead><tbody>' + slaRows + '</tbody></table>' +
+      '<div class="card" style="overflow:hidden;"><div class="card-hd">SLA Policy (FR-23)</div>' +
+      '<div class="card-bd" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">' +
+      '<label style="font-weight:600;font-size:13px;">Assigned policy for <b>' + esc(p.projectKey) + '</b> — ' + esc(c.name || '') + ':</label>' +
+      '<select class="ig-filter-select" onchange="sd.changeProjectSlaPolicy(\'' + pid + '\', this.value)">' + polOptions + '</select>' +
+      '<a class="btn btn-sm" href="13-sla-targets.html">Manage policies &rarr;</a></div>' +
+      '<table class="t"><thead><tr><th>Severity</th><th>Response Time</th><th>Resolution Time</th><th>Escalation %</th></tr></thead><tbody>' + polTargetRows + '</tbody></table>' +
+      '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Targets shown are the <b>' + esc((assignedPol || {}).name || '—') + '</b> policy&rsquo;s — edit them on the SLA Policies page (affects every project on that policy). New tickets stamp their due date from the policy at creation; existing tickets keep their stamped dates.</p>' +
       '</div></div>';
 
     // --- Categories tab ---
@@ -1945,7 +1993,11 @@
   }
 
   function renderProfile(u) {
-    var tierHtml = u.tier ? '<div class="field"><label>Tier</label><input value="' + esc(u.tier) + '" disabled></div>' : '';
+    // Decision M revised: tier is per project mapping — show the full picture
+    var myTiers = (DB.agentProjects || []).filter(function (m) { return m.userId === u.id; })
+      .map(function (m) { return (project(m.projectId).projectKey || m.projectId) + ': ' + (m.tier || '—'); })
+      .join(', ');
+    var tierHtml = myTiers ? '<div class="field"><label>Tier (per project)</label><input value="' + esc(myTiers) + '" disabled></div>' : '';
     var html = pageBar('Account / Profile', 'My Profile', '') +
       '<div class="content" style="max-width:720px;"><div class="card"><div class="card-hd">Personal details</div><div class="card-bd">' +
       '<div style="display:flex;gap:16px;align-items:center;margin-bottom:18px;"><div class="avatar" style="width:60px;height:60px;font-size:22px;">' + initials(u.name) + '</div>' +
@@ -2013,9 +2065,37 @@
       var countEl = document.getElementById('users-row-count');
       if (countEl) countEl.textContent = visible + ' rows';
     },
+    // Cascading Company → Project filter (Categories / SLA / Agent Mapping pages).
+    // Mirrors APEX cascading LOVs: picking a company narrows the project list.
+    cascadeProjectFilter: function(selectId, companyId) {
+      var sel = document.getElementById(selectId);
+      if (!sel) return;
+      var projs = (DB.projects || []).filter(function (p) { return p.isActive && (companyId === 'all' || p.companyId === companyId); });
+      sel.innerHTML = '<option value="all">All Projects</option>' +
+        projs.map(function (p) { return '<option value="' + p.id + '">' + esc(p.projectKey) + ' — ' + esc(p.projectName) + '</option>'; }).join('');
+    },
+    filterCatsByCompany: function(companyId) {
+      sd.cascadeProjectFilter('cats-project-filter', companyId);
+      sd.applyCatFilter();
+    },
+    applyCatFilter: function() {
+      var companyId = (document.getElementById('cats-company-filter') || {}).value || 'all';
+      var projectId = (document.getElementById('cats-project-filter') || {}).value || 'all';
+      var visible = 0;
+      document.querySelectorAll('#ig-cats tbody tr').forEach(function (row) {
+        var rc = row.getAttribute('data-cat-company'); // '' = global category
+        var rp = row.getAttribute('data-cat-project'); // '' = all projects
+        var show = (companyId === 'all' || !rc || rc === companyId) &&
+                   (projectId === 'all' || !rp || rp === projectId);
+        row.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      var countEl = document.getElementById('cats-row-count');
+      if (countEl) countEl.textContent = visible + ' rows';
+    },
     filterSlaByCompany: function(companyId) {
-      document.querySelectorAll('.sla-company-card').forEach(function(p) {
-        p.style.display = (companyId === 'all' || p.getAttribute('data-sla-company') === companyId) ? '' : 'none';
+      document.querySelectorAll('#sla-assign tbody tr').forEach(function(row) {
+        row.style.display = (companyId === 'all' || row.getAttribute('data-sla-company') === companyId) ? '' : 'none';
       });
     },
     filterProjectsByCompany: function(companyId) {
@@ -2037,6 +2117,10 @@
       // Keep the "Filed under" banner in sync with the chosen project
       var bp = document.getElementById('bannerProj');
       if (bp) bp.innerHTML = projId ? ', project <b>' + esc(project(projId).projectName || '') + '</b>' : ' — <b>choose a project below</b>';
+      // Live feedback under the picker: show the chosen project's description
+      var ph = document.getElementById('projHint');
+      if (ph) ph.textContent = projId ? (project(projId).description || '')
+        : 'Pick the system or service this ticket concerns — it decides which support team, categories and SLA apply.';
       // Refresh category LOV
       var catSel = document.getElementById('cat');
       if (catSel) {
@@ -2053,11 +2137,11 @@
       var agentSel = document.getElementById('createAgent');
       if (agentSel) {
         var agentPool = DB.users.filter(function (x) {
-          return x.role === 'Support Agent' && agentCoversProject(x.id, projId) && (isClientAdmin(u) || agentTier(x.id) === 'L1');
+          return x.role === 'Support Agent' && agentCoversProject(x.id, projId) && (isClientAdmin(u) || agentTier(x.id, projId) === 'L1');
         });
         agentSel.innerHTML = '<option value="">\u2014 Unassigned \u2014</option>' + agentPool.map(function (a) {
           var load = DB.tickets.filter(function (x) { return x.assignedTo === a.id && x.status !== 'Closed'; }).length;
-          var aTier = agentTier(a.id);
+          var aTier = agentTier(a.id, projId);
           return '<option value="' + a.id + '">' + esc(a.name) + (aTier ? ' [' + aTier + ']' : '') + ' \u00b7 ' + load + ' open</option>';
         }).join('');
       }
@@ -2191,17 +2275,18 @@
       var t = DB.tickets.find(function (x) { return x.id === id; });
       var TIER_ORDER = { 'L1': 1, 'L2': 2, 'L3': 3, 'L4': 4 };
       var currentAssignee = t.assignedTo ? user(t.assignedTo) : null;
-      var currentTierVal = currentAssignee ? agentTier(currentAssignee.id) : null;
+      // FR-26 + decision M revised: both sides compared on the TICKET'S project
+      var currentTierVal = currentAssignee ? agentTier(currentAssignee.id, t.projectId) : null;
       var currentTierLevel = currentTierVal ? (TIER_ORDER[currentTierVal] || 0) : 0;
       var pool = DB.users.filter(function (x) {
         if (x.role !== 'Support Agent' || x.id === t.assignedTo) return false;
         if (!agentCoversProject(x.id, t.projectId)) return false;
-        var xTier = agentTier(x.id);
+        var xTier = agentTier(x.id, t.projectId);
         var xTierLevel = xTier ? (TIER_ORDER[xTier] || 0) : 0;
         return xTierLevel >= currentTierLevel;
       });
       if (!pool.length) pool = DB.users.filter(function (x) { return x.role === 'Support Agent' && x.id !== t.assignedTo; });
-      var agents = pool.map(function (a) { var aTier = agentTier(a.id); return '<option value="' + a.id + '">' + esc(a.name) + (aTier ? ' [' + aTier + ']' : '') + '</option>'; }).join('');
+      var agents = pool.map(function (a) { var aTier = agentTier(a.id, t.projectId); return '<option value="' + a.id + '">' + esc(a.name) + (aTier ? ' [' + aTier + ']' : '') + '</option>'; }).join('');
       var prios = (DB.priorities || ['P1','P2','P3','P4']).map(function (p) {
         var sel = t.priority && p < t.priority ? ' selected' : (p === 'P1' ? ' selected' : '');
         return '<option' + sel + '>' + p + '</option>';
@@ -2389,19 +2474,14 @@
       var status = document.getElementById('cmpStatus').value;
       var id = 'C' + Date.now();
       DB.companies.push({ id: id, name: name, status: status });
-      // Create a default project for the new company
+      // Create a default project for the new company — key auto-generated, globally unique
       var projId = 'P' + Date.now();
-      DB.projects.push({ id: projId, companyId: id, projectName: 'IT Support', projectKey: 'ITSUP', description: 'General IT support for ' + name, isActive: true, createdAt: nowIso() });
-      // Create default SLA targets for the new project
-      (DB.severities || ['Critical','Major','Minor','Low']).forEach(function(sev) {
-        var defaults = { 'Critical': {r:1,d:1}, 'Major': {r:4,d:3}, 'Minor': {r:8,d:7}, 'Low': {r:24,d:14} };
-        var def = defaults[sev] || {r:24,d:14};
-        DB.slaTargets.push({ projectId: projId, severity: sev, responseHours: def.r, resolutionDays: def.d, escalationPct: 80 });
-      });
+      var projKey = sd.makeProjectKey(name, 'IT');
+      DB.projects.push({ id: projId, companyId: id, projectName: 'IT Support', projectKey: projKey, slaPolicyId: null, description: 'General IT support for ' + name, isActive: true, createdAt: nowIso() });
       auditLog(currentUser().id, 'CREATE', 'Company', name, '', status);
       save();
       sd.closeModal();
-      sessionStorage.setItem('flash', 'Company "' + name + '" created with default project and SLA targets.');
+      sessionStorage.setItem('flash', 'Company "' + name + '" created with default project ' + projKey + ' (Default SLA policy applies).');
       renderCompanies(currentUser());
       var f = sessionStorage.getItem('flash'); if (f) { toast(f); sessionStorage.removeItem('flash'); }
     },
@@ -2478,23 +2558,21 @@
       var desc = document.getElementById('projDesc').value.trim();
       var visEl = document.getElementById('projVisibility');
       var visibility = visEl ? visEl.value : 'OPEN';
+      key = key.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+      if ((DB.projects || []).some(function (px) { return px.projectKey === key; })) {
+        alert('Project key "' + key + '" is already in use by another project. Keys are globally unique (e.g. ACME-IT vs GLBX-IT) so same-named projects can never be confused across companies.');
+        return;
+      }
       var id = 'P' + Date.now();
-      DB.projects.push({ id: id, companyId: companyId, projectName: name, projectKey: key, description: desc, visibility: visibility, isActive: true, createdAt: nowIso() });
-      // Create default SLA targets for the new project
-      (DB.severities || ['Critical','Major','Minor','Low']).forEach(function(sev) {
-        var defaults = { 'Critical': {r:1,d:1}, 'Major': {r:4,d:3}, 'Minor': {r:8,d:7}, 'Low': {r:24,d:14} };
-        var def = defaults[sev] || {r:24,d:14};
-        DB.slaTargets.push({ projectId: id, severity: sev, responseHours: def.r, resolutionDays: def.d, escalationPct: 80 });
-      });
+      DB.projects.push({ id: id, companyId: companyId, projectName: name, projectKey: key, slaPolicyId: null, description: desc, visibility: visibility, isActive: true, createdAt: nowIso() });
       auditLog(currentUser().id, 'CREATE', 'Project', name + ' (' + company(companyId).name + ')', '', key);
       save();
       sd.closeModal();
       if (fixedCompanyId) {
-        toast('Project "' + name + '" created with default SLA targets.');
-        window._companyDetailTab = 'projects';
+        toast('Project "' + name + '" (' + key + ') created — Default SLA policy applies.');
         renderCompanyDetail(currentUser());
       } else {
-        sessionStorage.setItem('flash', 'Project "' + name + '" created with default SLA targets.');
+        sessionStorage.setItem('flash', 'Project "' + name + '" (' + key + ') created — Default SLA policy applies.');
         renderProjects(currentUser());
         var f = sessionStorage.getItem('flash'); if (f) { toast(f); sessionStorage.removeItem('flash'); }
       }
@@ -2539,7 +2617,6 @@
       // Re-render whichever page we're on
       var page = document.body.getAttribute('data-page');
       if (page === 'company-detail') {
-        window._companyDetailTab = 'projects';
         renderCompanyDetail(currentUser());
       } else if (page === 'project-detail') {
         renderProjectDetail(currentUser());
@@ -2557,15 +2634,13 @@
       }).map(function(d) {
         return '<option value="' + d.id + '">' + esc(d.name) + '</option>';
       }).join('');
-      var tierOpts = '<option value="">\u2014 None \u2014</option><option>L1</option><option>L2</option><option>L3</option><option>L4</option>';
       var modal = '<div class="modal"><div class="m-hd"><h2>New User</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
         '<div class="m-bd"><div class="form-grid cols-2">' +
         '<div class="field"><label>Full Name <span class="req">*</span></label><input id="usrName" placeholder="e.g. Jane Smith"></div>' +
         '<div class="field"><label>Email <span class="req">*</span></label><input id="usrEmail" type="email" placeholder="jane@company.example"></div>' +
-        '<div class="field"><label>Role <span class="req">*</span></label><select id="usrRole"><option value="Client User">Client User</option><option value="Client Admin">Client Admin</option><option value="Support Agent">Support Agent</option><option value="System Admin">System Admin</option></select></div>' +
+        '<div class="field"><label>Role <span class="req">*</span></label><select id="usrRole"><option value="Client User">Client User</option><option value="Client Admin">Client Admin</option><option value="Support Agent">Support Agent</option><option value="System Admin">System Admin</option></select><span class="hint">Agent tier (L1\u2013L4) is set per project on each project&rsquo;s Support Team tab (decision M revised)</span></div>' +
         '<div class="field"><label>Company <span class="req">*</span></label><select id="usrCompany" onchange="sd.filterDeptLov(this.value)">' + companies + '</select></div>' +
         '<div class="field"><label>Department</label><select id="usrDept">' + depts + '</select><span class="hint">For client users \u2014 filtered by company</span></div>' +
-        '<div class="field"><label>Tier</label><select id="usrTier">' + tierOpts + '</select><span class="hint">For support agents only (L1\u2013L4)</span></div>' +
         '<div class="field"><label>Status</label><select id="usrStatus"><option value="Active" selected>Active</option><option value="Inactive">Inactive</option></select></div>' +
         '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
         '<button class="btn btn-primary" onclick="sd.doAddUser()">&#10133; Create User</button></div></div>';
@@ -2584,10 +2659,9 @@
       var role = document.getElementById('usrRole').value;
       var companyId = document.getElementById('usrCompany').value;
       var deptId = document.getElementById('usrDept').value || null;
-      var tier = document.getElementById('usrTier').value || null;
       var status = document.getElementById('usrStatus').value;
       var id = 'u' + Date.now();
-      DB.users.push({ id: id, name: name, email: email, password: 'demo', role: role, companyId: companyId, departmentId: deptId, tier: tier, status: status, lastLogin: null });
+      DB.users.push({ id: id, name: name, email: email, password: 'demo', role: role, companyId: companyId, departmentId: deptId, status: status, lastLogin: null });
       // USER_ROLES rows (decision P) + decision Q auto-grant: every provider-company
       // (Northwind, C0) user silently gets CLIENT_USER — always a potential requester.
       var ROLE_ENUM = { 'System Admin': 'SYSTEM_ADMIN', 'Support Agent': 'SUPPORT_AGENT', 'Client Admin': 'CLIENT_ADMIN', 'Client User': 'CLIENT_USER' };
@@ -2617,9 +2691,6 @@
       }).map(function(d) {
         return '<option value="' + d.id + '"' + (d.id===x.departmentId?' selected':'') + '>' + esc(d.name) + '</option>';
       }).join('');
-      var tierOpts = ['', 'L1', 'L2', 'L3', 'L4'].map(function(t) {
-        return '<option value="' + t + '"' + ((x.tier || '') === t ? ' selected' : '') + '>' + (t || '\u2014 None \u2014') + '</option>';
-      }).join('');
       var userStatus = x.status || 'Active';
       var modal = '<div class="modal"><div class="m-hd"><h2>Edit User</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
         '<div class="m-bd"><div class="form-grid cols-2">' +
@@ -2628,8 +2699,7 @@
         '<div class="field"><label>Role <span class="req">*</span></label><select id="usrRole">' + roles + '</select></div>' +
         '<div class="field"><label>Company <span class="req">*</span></label><select id="usrCompany" onchange="sd.filterDeptLov(this.value)">' + companies + '</select></div>' +
         '<div class="field"><label>Department</label><select id="usrDept">' + depts + '</select><span class="hint">Filtered by company</span></div>' +
-        '<div class="field"><label>Tier</label><select id="usrTier">' + tierOpts + '</select><span class="hint">For support agents (L1\u2013L4)</span></div>' +
-        '<div class="field"><label>Status</label><select id="usrStatus"><option value="Active"' + (userStatus==='Active'?' selected':'') + '>Active</option><option value="Inactive"' + (userStatus==='Inactive'?' selected':'') + '>Inactive</option></select></div>' +
+        '<div class="field"><label>Status</label><select id="usrStatus"><option value="Active"' + (userStatus==='Active'?' selected':'') + '>Active</option><option value="Inactive"' + (userStatus==='Inactive'?' selected':'') + '>Inactive</option></select><span class="hint">Agent tier is set per project (decision M revised) \u2014 see each project&rsquo;s Support Team tab</span></div>' +
         '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
         '<button class="btn btn-primary" onclick="sd.doEditUser(\'' + uid + '\')">Save Changes</button></div></div>';
       var wrap = document.createElement('div');
@@ -2646,7 +2716,6 @@
       x.role = document.getElementById('usrRole').value;
       x.companyId = document.getElementById('usrCompany').value;
       x.departmentId = document.getElementById('usrDept').value || null;
-      x.tier = document.getElementById('usrTier').value || null;
       x.status = document.getElementById('usrStatus').value;
       auditLog(currentUser().id, 'UPDATE', 'User', x.name + ' (' + x.email + ')', oldName + ' / ' + oldRole + ' / ' + oldStatus, x.name + ' / ' + x.role + ' / ' + x.status);
       save();
@@ -2672,9 +2741,40 @@
     // (sd.showAddTeamAgent / sd.removeTeamAgent — Flow 3/4 gates). The old ungated
     // flat-grid add/remove actions were removed with the reshape (admin-console spec).
     filterAgentMapByCompany: function(companyId) {
-      document.querySelectorAll('#ap-cards .card').forEach(function(cardEl) {
-        cardEl.style.display = (companyId === 'all' || cardEl.getAttribute('data-ap-company') === companyId) ? '' : 'none';
+      sd.cascadeProjectFilter('ap-project-filter', companyId);
+      sd.applyAgentMapFilter();
+    },
+    // view: 'attention' (any gap) | 'all' | a single issue key ('no-l1', 'no-agents', 'no-l2', 'single')
+    setAgentMapView: function(view) {
+      window._apView = view;
+      document.querySelectorAll('.ap-view-btn, .ap-kpi').forEach(function(el) {
+        el.classList.toggle('ap-view-active', el.getAttribute('data-ap-view') === view);
       });
+      sd.applyAgentMapFilter();
+    },
+    applyAgentMapFilter: function() {
+      var view = window._apView || 'all';
+      var companyId = (document.getElementById('ap-company-filter') || {}).value || 'all';
+      var projectId = (document.getElementById('ap-project-filter') || {}).value || 'all';
+      var visible = 0;
+      document.querySelectorAll('#ap-cards .card').forEach(function(cardEl) {
+        var issues = (cardEl.getAttribute('data-ap-issues') || '').split(' ').filter(Boolean);
+        var viewOk = view === 'all' || (view === 'attention' ? issues.length > 0 : issues.indexOf(view) >= 0);
+        var show = viewOk &&
+                   (companyId === 'all' || cardEl.getAttribute('data-ap-company') === companyId) &&
+                   (projectId === 'all' || cardEl.getAttribute('data-ap-project') === projectId);
+        cardEl.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      var count = document.getElementById('ap-visible-count');
+      if (count) count.textContent = visible + ' project' + (visible === 1 ? '' : 's') + ' shown';
+      var empty = document.getElementById('ap-empty');
+      if (empty) {
+        empty.style.display = visible ? 'none' : '';
+        empty.innerHTML = (view !== 'all' && companyId === 'all' && projectId === 'all')
+          ? '&#10003; No coverage gaps — every active project passes this check.'
+          : 'No projects match the current filters.';
+      }
     },
 
     // User-Project access CRUD (Client Admin)
@@ -2725,34 +2825,30 @@
     },
 
     // Department CRUD
-    showAddDept: function() {
-      var clientCompanies = DB.companies.filter(function(c) { return c.status === 'Active'; });
-      var companyOpts = clientCompanies.map(function(c) {
-        return '<option value="' + c.id + '">' + esc(c.name) + '</option>';
-      }).join('');
+    // Company-hub door (Page 17): company is fixed, no select
+    showAddDeptCD: function(companyId) {
+      var c = company(companyId);
       var modal = '<div class="modal"><div class="m-hd"><h2>New Department</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
         '<div class="m-bd"><div class="form-grid">' +
         '<div class="field"><label>Department Name <span class="req">*</span></label><input id="deptName" placeholder="e.g. Finance"></div>' +
-        '<div class="field"><label>Company <span class="req">*</span></label><select id="deptCompany">' + companyOpts + '</select></div>' +
+        '<div class="field"><label>Company</label><input value="' + esc(c.name || '') + '" disabled></div>' +
         '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
-        '<button class="btn btn-primary" onclick="sd.doAddDept()">&#10133; Create Department</button></div></div>';
+        '<button class="btn btn-primary" onclick="sd.doAddDept(\'' + companyId + '\')">&#10133; Create Department</button></div></div>';
       var wrap = document.createElement('div');
       wrap.className = 'modal-backdrop';
       wrap.innerHTML = modal;
       document.body.appendChild(wrap);
     },
-    doAddDept: function() {
+    doAddDept: function(companyId) {
       var name = document.getElementById('deptName').value.trim();
-      var companyId = document.getElementById('deptCompany').value;
       if (!name) { alert('Department name is required.'); return; }
       var id = 'dep' + Date.now();
       DB.departments.push({ id: id, companyId: companyId, name: name });
       auditLog(currentUser().id, 'CREATE', 'Department', name + ' (' + company(companyId).name + ')', '', '');
       save();
       sd.closeModal();
-      sessionStorage.setItem('flash', 'Department "' + name + '" created under ' + company(companyId).name + '.');
-      renderDepartments(currentUser());
-      var f = sessionStorage.getItem('flash'); if (f) { toast(f); sessionStorage.removeItem('flash'); }
+      toast('Department "' + name + '" created under ' + company(companyId).name + '.');
+      renderCompanyDetail(currentUser());
     },
     showEditDept: function(deptId) {
       var d = (DB.departments || []).find(function(x) { return x.id === deptId; });
@@ -2782,22 +2878,9 @@
       auditLog(currentUser().id, 'UPDATE', 'Department', d.name, oldName + ' (' + company(oldCompanyId).name + ')', d.name + ' (' + company(d.companyId).name + ')');
       save();
       sd.closeModal();
-      sessionStorage.setItem('flash', 'Department updated.');
-      renderDepartments(currentUser());
-      var f = sessionStorage.getItem('flash'); if (f) { toast(f); sessionStorage.removeItem('flash'); }
+      toast('Department updated.');
+      renderCompanyDetail(currentUser());
     },
-    filterDeptsByCompany: function(companyId) {
-      var rows = document.querySelectorAll('#ig-depts tbody tr');
-      var visible = 0;
-      rows.forEach(function(row) {
-        var show = (companyId === 'all' || row.getAttribute('data-dept-company') === companyId);
-        row.style.display = show ? '' : 'none';
-        if (show) visible++;
-      });
-      var countEl = document.getElementById('depts-row-count');
-      if (countEl) countEl.textContent = visible + ' rows';
-    },
-
     // Category CRUD
     showAddCategory: function() {
       var companyOpts = '<option value="">Global (all companies)</option>' +
@@ -2898,6 +2981,16 @@
         t.classList.toggle('cd-tab-active', t.getAttribute('data-tab') === tab);
       });
     },
+    // Company Detail hub (Page 17) — tabs: Projects | Client Admins
+    companyTab: function(tab) {
+      window._companyDetailTab = tab;
+      document.querySelectorAll('.cd-panel').forEach(function (p) {
+        p.style.display = (p.getAttribute('data-panel') === tab) ? '' : 'none';
+      });
+      document.querySelectorAll('.cd-tab').forEach(function (t) {
+        t.classList.toggle('cd-tab-active', t.getAttribute('data-tab') === tab);
+      });
+    },
     showAddTeamAgent: function(pid) {
       var team = projectTeam(pid).map(function (a) { return a.id; });
       var candidates = DB.users.filter(function (x) {
@@ -2906,11 +2999,19 @@
       if (!candidates.length) { alert('All active agents are already on this team.'); return; }
       var opts = candidates.map(function (a) {
         var load = DB.tickets.filter(function (t) { return t.assignedTo === a.id && t.status !== 'Resolved' && t.status !== 'Closed'; }).length;
-        return '<option value="' + a.id + '">' + esc(a.name) + ' (' + (a.tier || '—') + ') — ' + load + ' open ticket' + (load === 1 ? '' : 's') + '</option>';
+        var elsewhere = agentTierSummary(a.id);
+        return '<option value="' + a.id + '" data-default-tier="' + defaultTierFor(a.id) + '">' + esc(a.name) + (elsewhere ? ' (' + elsewhere + ' on other projects)' : ' (new agent)') + ' — ' + load + ' open ticket' + (load === 1 ? '' : 's') + '</option>';
       }).join('');
-      var modal = '<div class="modal" style="max-width:440px;"><div class="m-hd"><h2>Add Agent — ' + esc(project(pid).projectName || '') + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
+      var apProj = project(pid);
+      var firstTier = defaultTierFor(candidates[0].id);
+      var tierSel = ['L1', 'L2', 'L3', 'L4'].map(function (t) {
+        return '<option' + (t === firstTier ? ' selected' : '') + '>' + t + '</option>';
+      }).join('');
+      var modal = '<div class="modal" style="max-width:440px;"><div class="m-hd"><h2>Add Agent — ' + esc(apProj.projectKey || '') + ' ' + esc(apProj.projectName || '') + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
+        '<div style="padding:8px 20px 0;font-size:12.5px;color:#666;">Granting access to <b>' + esc(company(apProj.companyId).name || '') + '</b>&rsquo;s ' + esc(apProj.projectName || '') + ' queue.</div>' +
         '<div class="m-bd"><div class="form-grid">' +
-        '<div class="field"><label>Agent <span class="req">*</span></label><select id="teamAgent">' + opts + '</select><span class="hint">Tier + current workload shown (FR-33)</span></div>' +
+        '<div class="field"><label>Agent <span class="req">*</span></label><select id="teamAgent" onchange="var o=this.options[this.selectedIndex];document.getElementById(\'teamTier\').value=o.getAttribute(\'data-default-tier\')||\'L1\';">' + opts + '</select><span class="hint">Current workload shown (FR-33)</span></div>' +
+        '<div class="field"><label>Tier on this project <span class="req">*</span></label><select id="teamTier">' + tierSel + '</select><span class="hint">Per-project tier (decision M revised) — the agent&rsquo;s support line on this engagement; defaults to their usual tier</span></div>' +
         '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
         '<button class="btn btn-primary" onclick="sd.doAddTeamAgent(\'' + pid + '\')">&#10133; Add to Team</button></div></div>';
       var wrap = document.createElement('div');
@@ -2922,12 +3023,14 @@
       var uid = document.getElementById('teamAgent').value;
       var a = DB.users.find(function (x) { return x.id === uid; });
       if (!a) return;
-      DB.agentProjects.push({ userId: uid, projectId: pid });
+      var tierEl = document.getElementById('teamTier');
+      var tier = (tierEl && tierEl.value) || 'L1';
+      DB.agentProjects.push({ userId: uid, projectId: pid, tier: tier });
       var p = project(pid);
-      auditLog(currentUser().id, 'TEAM_ADD', 'Agent-Project', a.name + ' -> ' + (p.projectName || pid), '', a.tier || '');
+      auditLog(currentUser().id, 'TEAM_ADD', 'Agent-Project', a.name + ' -> ' + (p.projectName || pid), '', tier);
       save();
       sd.closeModal();
-      toast(a.name + ' added to ' + (p.projectName || 'project') + ' — notification sent (Flow 4).');
+      toast(a.name + ' added to ' + (p.projectName || 'project') + ' as ' + tier + ' — notification sent (Flow 4).');
       sd._rerenderTeamContext();
     },
     removeTeamAgent: function(pid, uid) {
@@ -2937,8 +3040,9 @@
       var p = project(pid);
       if (!confirm('Remove ' + (a ? a.name : uid) + ' from ' + (p.projectName || 'this project') + '?')) return;
       var idx = (DB.agentProjects || []).findIndex(function (ap) { return ap.userId === uid && ap.projectId === pid; });
+      var removedTier = idx >= 0 ? (DB.agentProjects[idx].tier || '') : '';
       if (idx >= 0) DB.agentProjects.splice(idx, 1);
-      auditLog(currentUser().id, 'TEAM_REMOVE', 'Agent-Project', (a ? a.name : uid) + ' -> ' + (p.projectName || pid), a ? (a.tier || '') : '', '');
+      auditLog(currentUser().id, 'TEAM_REMOVE', 'Agent-Project', (a ? a.name : uid) + ' -> ' + (p.projectName || pid), removedTier, '');
       save();
       toast((a ? a.name : 'Agent') + ' removed from ' + (p.projectName || 'project') + '.');
       sd._rerenderTeamContext();
@@ -2949,7 +3053,6 @@
         window._projectDetailTab = 'team';
         renderProjectDetail(currentUser());
       } else if (page === 'company-detail') {
-        window._companyDetailTab = 'agents';
         renderCompanyDetail(currentUser());
       } else {
         renderAgentProjects(currentUser());
@@ -3031,171 +3134,79 @@
       renderProjectDetail(currentUser());
     },
 
-    // Company Detail tab switching + shuttle
-    companyTab: function(tab) {
-      window._companyDetailTab = tab;
-      document.querySelectorAll('.cd-panel').forEach(function (p) {
-        p.style.display = (p.getAttribute('data-panel') === tab) ? '' : 'none';
-      });
-      document.querySelectorAll('.cd-tab').forEach(function (t) { t.classList.remove('cd-tab-active'); });
-      var idx = { projects: 0, sla: 1, depts: 2, agents: 3 }[tab] || 0;
-      var tabEls = document.querySelectorAll('.cd-tab');
-      if (tabEls[idx]) tabEls[idx].classList.add('cd-tab-active');
-    },
-    shuttleSelect: function(el) {
-      el.classList.toggle('shuttle-selected');
-    },
-    shuttleFilter: function(inp, listId) {
-      var term = inp.value.toLowerCase();
-      var items = document.querySelectorAll('#' + listId + ' .shuttle-item');
-      items.forEach(function (it) {
-        it.style.display = (!term || it.textContent.toLowerCase().indexOf(term) >= 0) ? '' : 'none';
-      });
-    },
-    shuttleAdd: function(companyId) {
-      var selected = document.querySelectorAll('#shuttle-available .shuttle-item.shuttle-selected');
-      if (!selected.length) { toast('Select agents from the Available list first.'); return; }
-      var projSel = document.getElementById('shuttle-project');
-      var projectId = projSel ? projSel.value : null;
-      if (!projectId) { toast('Select a project first.'); return; }
-      selected.forEach(function (el) {
-        var agentId = el.getAttribute('data-agent-id');
-        var exists = (DB.agentProjects || []).some(function (m) { return m.userId === agentId && m.projectId === projectId; });
-        if (!exists) {
-          DB.agentProjects.push({ userId: agentId, projectId: projectId });
-          auditLog(currentUser().id, 'CREATE', 'Agent-Project', user(agentId).name + ' -> ' + project(projectId).projectName, '', '');
-        }
-      });
-      save();
-      toast(selected.length + ' agent(s) assigned to ' + project(projectId).projectName + '.');
-      window._companyDetailTab = 'agents';
-      renderCompanyDetail(currentUser());
-    },
-    shuttleRemove: function(companyId) {
-      var selected = document.querySelectorAll('#shuttle-assigned .shuttle-item.shuttle-selected');
-      if (!selected.length) { toast('Select agents from the Assigned list first.'); return; }
-      var cProjs = companyProjects(companyId);
-      var blocked = [];
-      var removedN = 0;
-      selected.forEach(function (el) {
-        var agentId = el.getAttribute('data-agent-id');
-        // Remove from all projects in this company — same guards as Flow 4
-        cProjs.forEach(function (p) {
-          var idx2 = DB.agentProjects.findIndex(function (m) { return m.userId === agentId && m.projectId === p.id; });
-          if (idx2 < 0) return;
-          var block = teamRemovalBlock(agentId, p.id);
-          if (block) { blocked.push(block); return; }
-          auditLog(currentUser().id, 'TEAM_REMOVE', 'Agent-Project', user(agentId).name + ' -> ' + p.projectName, '', '');
-          DB.agentProjects.splice(idx2, 1);
-          removedN++;
-        });
-      });
-      save();
-      if (blocked.length) alert('Some removals were blocked (Flow 4):\n\n' + blocked.join('\n'));
-      toast(removedN + ' mapping(s) removed for ' + company(companyId).name + '.');
-      window._companyDetailTab = 'agents';
-      renderCompanyDetail(currentUser());
-    },
-    showAddDeptCD: function(companyId) {
-      var modal = '<div class="modal"><div class="m-hd"><h2>New Department \u2014 ' + esc(company(companyId).name) + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
-        '<div class="m-bd"><div class="form-grid">' +
-        '<div class="field"><label>Department Name <span class="req">*</span></label><input id="deptName" placeholder="e.g. Finance"></div>' +
+    // SLA policy editing (all four severity rows in one modal; blast radius shown up front)
+    showEditSlaPolicy: function(policyId) {
+      var sp = (DB.slaPolicies || []).find(function (x) { return x.id === policyId; });
+      if (!sp) return;
+      var usedBy = slaPolicyProjects(sp.id);
+      var targetFields = (sp.targets || []).map(function (t) {
+        return '<tr><td style="white-space:nowrap;">' + sevBadge(t.severity) + '</td>' +
+          '<td><input id="slaResp-' + t.severity + '" type="number" min="1" style="width:70px;" value="' + t.responseHours + '"> h</td>' +
+          '<td><input id="slaRes-' + t.severity + '" type="number" min="1" style="width:70px;" value="' + t.resolutionDays + '"> d</td>' +
+          '<td><input id="slaEsc-' + t.severity + '" type="number" min="1" max="100" style="width:70px;" value="' + (t.escalationPct || 80) + '"> %</td></tr>';
+      }).join('');
+      var modal = '<div class="modal" style="max-width:560px;"><div class="m-hd"><h2>Edit SLA Policy \u2014 ' + esc(sp.name) + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
+        '<div class="m-bd">' +
+        '<p class="mt-0" style="font-size:12.5px;color:#92400e;background:#fef3c7;border:1px solid #fde68a;border-radius:4px;padding:6px 10px;">&#9888; Used by <b>' + usedBy.length + ' project' + (usedBy.length === 1 ? '' : 's') + '</b>' +
+        (usedBy.length ? ' (' + usedBy.map(function (p) { return esc(p.projectKey); }).join(', ') + ')' : '') +
+        ' \u2014 changes apply to all of them for newly created tickets.</p>' +
+        '<table class="t"><thead><tr><th>Severity</th><th>Response</th><th>Resolution</th><th>Escalation</th></tr></thead><tbody>' + targetFields + '</tbody></table>' +
+        '<div class="form-grid" style="margin-top:10px;">' +
+        '<div class="field"><label>Effective From</label><input id="slaEffective" type="date" value="' + (sp.effectiveFrom || '') + '"></div>' +
+        '<div class="field"><label>Notes</label><input id="slaNotes" value="' + esc(sp.notes || '') + '" placeholder="Contract reference, amendment notes\u2026"></div>' +
         '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
-        '<button class="btn btn-primary" onclick="sd.doAddDeptCD(\'' + companyId + '\')">&#10133; Create Department</button></div></div>';
+        '<button class="btn btn-primary" onclick="sd.doEditSlaPolicy(\'' + sp.id + '\')">Save Changes</button></div></div>';
       var wrap = document.createElement('div');
       wrap.className = 'modal-backdrop';
       wrap.innerHTML = modal;
       document.body.appendChild(wrap);
     },
-    doAddDeptCD: function(companyId) {
-      var name = document.getElementById('deptName').value.trim();
-      if (!name) { alert('Department name is required.'); return; }
-      var id = 'dep' + Date.now();
-      DB.departments.push({ id: id, companyId: companyId, name: name });
-      auditLog(currentUser().id, 'CREATE', 'Department', name + ' (' + company(companyId).name + ')', '', '');
-      save();
-      sd.closeModal();
-      toast('Department "' + name + '" created.');
-      window._companyDetailTab = 'depts';
-      renderCompanyDetail(currentUser());
-    },
-    showEditDeptCD: function(deptId) {
-      var d = (DB.departments || []).find(function (x) { return x.id === deptId; });
-      if (!d) return;
-      var modal = '<div class="modal"><div class="m-hd"><h2>Edit Department</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
-        '<div class="m-bd"><div class="form-grid">' +
-        '<div class="field"><label>Department Name <span class="req">*</span></label><input id="deptName" value="' + esc(d.name) + '"></div>' +
-        '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
-        '<button class="btn btn-primary" onclick="sd.doEditDeptCD(\'' + deptId + '\')">Save Changes</button></div></div>';
-      var wrap = document.createElement('div');
-      wrap.className = 'modal-backdrop';
-      wrap.innerHTML = modal;
-      document.body.appendChild(wrap);
-    },
-    doEditDeptCD: function(deptId) {
-      var d = (DB.departments || []).find(function (x) { return x.id === deptId; });
-      var name = document.getElementById('deptName').value.trim();
-      if (!name) { alert('Department name is required.'); return; }
-      var oldName = d.name;
-      d.name = name;
-      auditLog(currentUser().id, 'UPDATE', 'Department', d.name, oldName + ' (' + company(d.companyId).name + ')', d.name + ' (' + company(d.companyId).name + ')');
-      save();
-      sd.closeModal();
-      toast('Department updated.');
-      window._companyDetailTab = 'depts';
-      renderCompanyDetail(currentUser());
-    },
-
-    // SLA Target editing
-    showEditSla: function(idx, fromCompanyDetail) {
-      var s = (DB.slaTargets || [])[idx];
-      if (!s) return;
-      var p = project(s.projectId);
-      var c = company(p.companyId || '');
-      var modal = '<div class="modal" style="max-width:480px;"><div class="m-hd"><h2>Edit SLA Target \u2014 ' + esc(p.projectName || '') + ' / ' + s.severity + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
-        '<div class="m-bd"><p class="muted mt-0">' + esc(c.name || '') + '</p><div class="form-grid">' +
-        '<div class="field"><label>Response Time (hours) <span class="req">*</span></label><input id="slaResp" type="number" min="1" value="' + s.responseHours + '"></div>' +
-        '<div class="field"><label>Resolution Time (days) <span class="req">*</span></label><input id="slaRes" type="number" min="1" value="' + s.resolutionDays + '"></div>' +
-        '<div class="field"><label>Escalation Threshold (%) <span class="req">*</span></label><input id="slaEsc" type="number" min="1" max="100" value="' + (s.escalationPct || 80) + '"></div>' +
-        '<div class="field"><label>Effective From</label><input id="slaEffective" type="date" value="' + (s.effectiveFrom || '') + '"></div>' +
-        '<div class="field"><label>Notes</label><input id="slaNotes" value="' + esc(s.notes || '') + '" placeholder="Contract reference, amendment notes\u2026"></div>' +
-        '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
-        '<button class="btn btn-primary" onclick="sd.doEditSla(' + idx + ', ' + (fromCompanyDetail ? 'true' : 'false') + ')">Save Changes</button></div></div>';
-      var wrap = document.createElement('div');
-      wrap.className = 'modal-backdrop';
-      wrap.innerHTML = modal;
-      document.body.appendChild(wrap);
-    },
-    doEditSla: function(idx, fromCompanyDetail) {
-      var s = (DB.slaTargets || [])[idx];
-      if (!s) return;
-      var resp = parseInt(document.getElementById('slaResp').value);
-      var res = parseInt(document.getElementById('slaRes').value);
-      var esc2 = parseInt(document.getElementById('slaEsc').value);
-      if (!resp || !res || !esc2 || resp < 1 || res < 1 || esc2 < 1 || esc2 > 100) { alert('All fields must be valid positive numbers (escalation 1-100%).'); return; }
-      var oldVal = s.responseHours + 'h / ' + s.resolutionDays + 'd / ' + s.escalationPct + '%';
-      s.responseHours = resp;
-      s.resolutionDays = res;
-      s.escalationPct = esc2;
-      s.effectiveFrom = document.getElementById('slaEffective').value || s.effectiveFrom;
-      s.notes = document.getElementById('slaNotes').value;
-      s.approvedBy = currentUser().id;
-      var p = project(s.projectId);
-      var newVal = s.responseHours + 'h / ' + s.resolutionDays + 'd / ' + s.escalationPct + '%';
-      auditLog(currentUser().id, 'UPDATE', 'SLA Target', (p.projectName || '') + ' / ' + s.severity, oldVal, newVal);
-      save();
-      sd.closeModal();
-      toast('SLA target updated for ' + (p.projectName || '') + ' / ' + s.severity + '.');
-      var slaPage = document.body.getAttribute('data-page');
-      if (slaPage === 'project-detail') {
-        window._projectDetailTab = 'sla';
-        renderProjectDetail(currentUser());
-      } else if (fromCompanyDetail) {
-        window._companyDetailTab = 'sla';
-        renderCompanyDetail(currentUser());
-      } else {
-        renderSlaTargets(currentUser());
+    doEditSlaPolicy: function(policyId) {
+      var sp = (DB.slaPolicies || []).find(function (x) { return x.id === policyId; });
+      if (!sp) return;
+      var newTargets = [];
+      for (var i = 0; i < (sp.targets || []).length; i++) {
+        var t = sp.targets[i];
+        var resp = parseInt(document.getElementById('slaResp-' + t.severity).value);
+        var res = parseInt(document.getElementById('slaRes-' + t.severity).value);
+        var esc2 = parseInt(document.getElementById('slaEsc-' + t.severity).value);
+        if (!resp || !res || !esc2 || resp < 1 || res < 1 || esc2 < 1 || esc2 > 100) { alert(t.severity + ': all fields must be valid positive numbers (escalation 1-100%).'); return; }
+        newTargets.push({ severity: t.severity, responseHours: resp, resolutionDays: res, escalationPct: esc2 });
       }
+      var summarize = function (targets) {
+        return targets.map(function (t) { return t.severity.charAt(0) + ':' + t.responseHours + 'h/' + t.resolutionDays + 'd/' + t.escalationPct + '%'; }).join(' ');
+      };
+      var oldVal = summarize(sp.targets || []);
+      sp.targets = newTargets;
+      sp.effectiveFrom = document.getElementById('slaEffective').value || sp.effectiveFrom;
+      sp.notes = document.getElementById('slaNotes').value;
+      sp.approvedBy = currentUser().id;
+      auditLog(currentUser().id, 'UPDATE', 'SLA Policy', sp.name + ' (' + slaPolicyProjects(sp.id).length + ' projects)', oldVal, summarize(newTargets));
+      save();
+      sd.closeModal();
+      toast('SLA policy "' + sp.name + '" updated.');
+      renderSlaTargets(currentUser());
+    },
+    // Change which policy a project runs on (Project Detail SLA tab \u2014 the one door)
+    changeProjectSlaPolicy: function(pid, policyId) {
+      var p = project(pid);
+      if (!p) return;
+      var oldPol = slaPolicyFor(pid);
+      p.slaPolicyId = policyId || null;
+      var newPol = slaPolicyFor(pid);
+      auditLog(currentUser().id, 'UPDATE', 'Project SLA Policy', p.projectKey + ' (' + company(p.companyId).name + ')',
+        (oldPol ? oldPol.name : '\u2014'), (newPol ? newPol.name : '\u2014') + (p.slaPolicyId ? '' : ' (default)'));
+      save();
+      toast(p.projectKey + ' now runs on the ' + (newPol ? newPol.name : '\u2014') + ' policy (new tickets only).');
+      window._projectDetailTab = 'sla';
+      renderProjectDetail(currentUser());
+    },
+    // Globally unique, company-prefixed project key (Jira/ConnectWise pattern)
+    makeProjectKey: function(companyName, base) {
+      var code = (companyName || '').replace(/[^A-Za-z0-9 ]/g, '').split(/\s+/)[0].toUpperCase().slice(0, 4) || 'PRJ';
+      var key = code + '-' + base, n = 2;
+      while ((DB.projects || []).some(function (p) { return p.projectKey === key; })) { key = code + n + '-' + base; n++; }
+      return key;
     },
 
     closeModal: function () {
@@ -3341,7 +3352,6 @@
       case 'categories': renderCategories(u); break;
       case 'sla-targets': renderSlaTargets(u); break;
       case 'agent-companies': renderAgentProjects(u); break;
-      case 'departments': renderDepartments(u); break;
       case 'company-detail': renderCompanyDetail(u); break;
       case 'project-detail': renderProjectDetail(u); break;
       case 'audit-log': renderAuditLog(u); break;
