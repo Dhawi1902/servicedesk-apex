@@ -530,6 +530,14 @@
     }
     if (isClientAdmin(u)) {
       items.push({ key: 'projects', label: 'Projects', icon: '&#128194;', href: '11-projects.html', section: 'Administration' });
+      items.push({ key: 'my-company', label: 'My Company', icon: '&#127970;', href: '17-company-detail.html', section: 'Administration' });
+    }
+    if (isClient(u) && !isClientAdmin(u)) {
+      items.push({ key: 'projects', label: 'Projects', icon: '&#128194;', href: '11-projects.html', section: 'Workspace' });
+      items.push({ key: 'my-company', label: 'My Company', icon: '&#127970;', href: '17-company-detail.html', section: 'Workspace' });
+    }
+    if (isAgent(u)) {
+      items.push({ key: 'projects', label: 'Projects', icon: '&#128194;', href: '11-projects.html', section: 'Workspace' });
     }
     items.push({ key: 'profile', label: 'My Profile', icon: '&#128100;', href: '12-profile.html', section: 'Account' });
     return items;
