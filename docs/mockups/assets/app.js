@@ -1369,9 +1369,16 @@
 
   /* ---------- page: PROJECTS (Page 11 - projects) ---------- */
   function renderProjects(u) {
-    if (!isAdmin(u) && !isClientAdmin(u)) { renderShell(u, 'home', notFound('System Admin or Client Admin only.'), ''); return; }
     var admin = isAdmin(u);
-    var allProjects = (DB.projects || []).filter(function (p) { return admin || p.companyId === u.companyId; });
+    var agentScope = isAgent(u) ? agentProjectIds(u) : null;
+    var userScope = (isClient(u) && !isClientAdmin(u)) ? userAccessibleProjectIds(u) : null;
+    var allProjects = (DB.projects || []).filter(function (p) {
+      if (admin) return true;
+      if (agentScope) return agentScope.indexOf(p.id) >= 0;
+      if (userScope) return userScope.indexOf(p.id) >= 0;
+      return p.companyId === u.companyId; // Client Admin
+    });
+    var showCompany = admin || isAgent(u); // agents span companies
     var companySelect = '<select id="proj-company-filter" class="ig-filter-select" onchange="sd.filterProjectsByCompany(this.value)">' +
       '<option value="all">All Companies</option>' +
       DB.companies.filter(function (c) { return c.status === 'Active'; }).map(function (c) {
@@ -1393,14 +1400,14 @@
         : '<a class="btn btn-sm btn-primary" href="19-project-detail.html?id=' + p.id + '">&#128065; View</a>';
       return '<tr data-proj-company="' + esc(p.companyId) + '"><td><span class="ig-row-check"></span></td>' +
         '<td><b>' + esc(p.projectName) + '</b></td><td>' + esc(p.projectKey) + '</td>' +
-        (admin ? '<td>' + esc(c.name) + '</td>' : '') +
+        (showCompany ? '<td>' + esc(c.name) + '</td>' : '') +
         '<td class="muted" style="font-size:12px;">' + esc(p.description || '') + '</td>' +
         '<td>' + visBadge + '</td>' +
         '<td><span class="' + statusClass + '">&#9679; ' + (p.isActive ? 'Active' : 'Inactive') + '</span></td>' +
         '<td>' + tk + '</td><td>' + agCount + teamCoverageBadges(p.id) + '</td>' +
         '<td>' + actions + '</td></tr>';
     }).join('');
-    if (!rows) rows = '<tr><td colspan="' + (admin ? 10 : 9) + '" class="muted">No projects yet.</td></tr>';
+    if (!rows) rows = '<tr><td colspan="' + (showCompany ? 10 : 9) + '" class="muted">No projects yet.</td></tr>';
     var html = pageBar('Administration / Projects', 'Projects', '') +
       '<div class="content"><div class="card" style="overflow:hidden;" id="ig-projects-wrap">' +
       '<div class="ig-toolbar">' +
@@ -1413,11 +1420,15 @@
         '</div>' +
       '</div>' +
       '<table class="t ig-table" id="ig-projects"><thead><tr><th style="width:30px;"></th><th class="sortable">Project Name</th><th class="sortable">Key</th>' +
-      (admin ? '<th class="sortable">Company</th>' : '') +
+      (showCompany ? '<th class="sortable">Company</th>' : '') +
       '<th>Description</th><th class="sortable">Visibility</th><th class="sortable">Status</th><th class="sortable">Tickets</th><th class="sortable">Agents</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
       (admin
         ? '<p class="muted" style="font-size:11.5px;margin-top:12px;">Decision O \u2014 PROJECTS layer between COMPANIES and TICKETS. Decision Q \u2014 visibility: Open (whole company) vs Restricted (invitation-only). Manage opens the Project Detail hub (team, SLA, categories, access).</p>'
-        : '<p class="muted" style="font-size:11.5px;margin-top:12px;">Your company\u2019s service engagements. View opens the project hub \u2014 support team, SLA targets and categories are read-only; you manage <b>invitations</b> for Restricted projects there (decision Q).</p>') +
+        : (isAgent(u)
+          ? '<p class="muted" style="font-size:11.5px;margin-top:12px;">Your assigned projects (AGENT_PROJECTS, decision I) \u2014 View opens the read-only project hub: team, SLA targets, categories, access.</p>'
+          : (isClientAdmin(u)
+            ? '<p class="muted" style="font-size:11.5px;margin-top:12px;">Your company\u2019s service engagements. View opens the project hub \u2014 support team, SLA targets and categories are read-only; you manage <b>invitations</b> for Restricted projects there (decision Q).</p>'
+            : '<p class="muted" style="font-size:11.5px;margin-top:12px;">Projects you can access (decision Q: Open projects + Restricted ones you\u2019re invited to) \u2014 View opens the read-only project hub.</p>'))) +
       '</div>';
     renderShell(u, 'projects', html, tenantBanner(u));
   }
