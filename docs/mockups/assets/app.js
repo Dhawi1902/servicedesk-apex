@@ -1785,13 +1785,17 @@
     return (DB.userRoles || []).some(function (r) { return r.userId === uid && r.role === role; });
   }
   function renderProjectDetail(u) {
-    if (!isAdmin(u) && !isClientAdmin(u)) { renderShell(u, 'home', notFound('System Admin or Client Admin only.'), ''); return; }
     var admin = isAdmin(u);
     var pid = qs('id');
     if (!pid) { renderShell(u, 'projects', notFound('No project id in the URL — this page expects 19-project-detail.html?id=Pn. Open it via a Manage button on the Projects page.'), ''); return; }
     var p = (DB.projects || []).find(function (x) { return x.id === pid; });
     if (!p) { renderShell(u, 'projects', notFound('Project "' + esc(pid) + '" is not in your demo data (stale localStorage?). Click "Reset demo" in the header and try again.'), ''); return; }
-    if (!admin && p.companyId !== u.companyId) { renderShell(u, 'projects', notFound('Project "' + esc(pid) + '" not found.'), ''); return; }
+    var canView = admin ||
+      (isClientAdmin(u) && p.companyId === u.companyId) ||
+      (isAgent(u) && agentCoversProject(u.id, pid)) ||
+      (isClient(u) && !isClientAdmin(u) && userAccessibleProjectIds(u).indexOf(pid) >= 0);
+    if (!canView) { renderShell(u, 'projects', notFound('Project "' + esc(pid) + '" not found.'), ''); return; }
+    var canInvite = admin || (isClientAdmin(u) && p.companyId === u.companyId);
     var c = company(p.companyId);
     var isRestricted = (p.visibility || 'OPEN') === 'RESTRICTED';
     var activeTab = window._projectDetailTab || 'details';
@@ -1923,14 +1927,14 @@
         var dept = department(x.departmentId);
         return '<tr><td><span class="avatar-sm">' + initials(x.name) + '</span> <b>' + esc(x.name) + '</b></td><td>' + esc(x.email) + '</td>' +
           '<td>' + (dept.name ? esc(dept.name) : '<span class="muted">—</span>') + '</td>' +
-          '<td><button class="btn btn-sm" style="color:#b91c1c;" onclick="sd.revokeInvitePD(\'' + pid + '\',\'' + x.id + '\')">&#10005; Revoke</button></td></tr>';
+          (canInvite ? '<td><button class="btn btn-sm" style="color:#b91c1c;" onclick="sd.revokeInvitePD(\'' + pid + '\',\'' + x.id + '\')">&#10005; Revoke</button></td>' : '') + '</tr>';
       }).join('');
-      if (!invRows) invRows = '<tr><td colspan="4" class="muted">Nobody invited yet — this project is invisible to all ' + esc(c.name || '') + ' users.</td></tr>';
+      if (!invRows) invRows = '<tr><td colspan="' + (canInvite ? 4 : 3) + '" class="muted">Nobody invited yet — this project is invisible to all ' + esc(c.name || '') + ' users.</td></tr>';
       accessPanel = '<div class="cd-panel" data-panel="access"' + (activeTab !== 'access' ? ' style="display:none;"' : '') + '>' +
         '<div class="card" style="overflow:hidden;">' +
         '<div class="card-hd"><span>&#128274; Restricted — invited users only (USER_PROJECTS, decision Q)</span>' +
-        '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showInvitePD(\'' + pid + '\')">+ Invite User</button></div>' +
-        '<table class="t"><thead><tr><th>User</th><th>Email</th><th>Department</th><th>Actions</th></tr></thead><tbody>' + invRows + '</tbody></table>' +
+        (canInvite ? '<button class="btn btn-sm btn-primary" style="float:right;margin:-4px 0;" onclick="sd.showInvitePD(\'' + pid + '\')">+ Invite User</button>' : '') + '</div>' +
+        '<table class="t"><thead><tr><th>User</th><th>Email</th><th>Department</th>' + (canInvite ? '<th>Actions</th>' : '') + '</tr></thead><tbody>' + invRows + '</tbody></table>' +
         '<p class="muted" style="padding:8px 12px;font-size:11.5px;margin:0;">Only invited users see this Restricted project. ' + (admin ? 'Flip the project to Open (Details &rarr; Edit) at go-live — no per-user cleanup needed.' : 'Ask the service provider to flip it to Open at go-live — no per-user cleanup needed.') + '</p>' +
         '</div></div>';
     } else {
@@ -1950,13 +1954,15 @@
         '</div></div>';
     }
 
-    var html = pageBar((admin ? 'Administration' : 'My Company') + ' / Projects / ' + esc(p.projectName), p.projectName, '<a class="btn btn-sm" href="11-projects.html">&larr; Back to Projects</a>') +
+    var html = pageBar((admin ? 'Administration' : (isAgent(u) ? 'My Projects' : 'My Company')) + ' / Projects / ' + esc(p.projectName), p.projectName, '<a class="btn btn-sm" href="11-projects.html">&larr; Back to Projects</a>') +
       '<div class="content">' +
       '<div class="card" style="overflow:hidden;padding:16px;">' + header + '</div>' +
       tabs + detailsPanel + teamPanel + slaPanel + catsPanel + accessPanel +
       (admin
         ? '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 19 &mdash; Project-centric admin hub (admin-console spec 2026-07-03). Flat pages browse; this hub configures: team (Flows 3/4), SLA (FR-23), categories (hybrid), access (decision Q).</p>'
-        : '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 19 &mdash; same hub, Client Admin view (spec 2026-07-04): team/SLA/categories read-only; you manage invitations on the Access tab (decision Q).</p>') + '</div>';
+        : (isClientAdmin(u)
+          ? '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 19 &mdash; same hub, Client Admin view (spec 2026-07-04): team/SLA/categories read-only; you manage invitations on the Access tab (decision Q).</p>'
+          : '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 19 &mdash; read-only project view (spec 2026-07-04): team, SLA targets, categories and access are information only.</p>')) + '</div>';
     renderShell(u, 'projects', html, tenantBanner(u));
   }
 
