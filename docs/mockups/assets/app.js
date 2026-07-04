@@ -1414,50 +1414,6 @@
     renderShell(u, 'projects', html, tenantBanner(u));
   }
 
-  /* ---------- page: PROJECT INVITATIONS (Page 18) ----------
-     Decision Q: USER_PROJECTS is an invitation list. Open projects need no setup;
-     Restricted projects are invisible except to invited users. */
-  function renderUserProjects(u) {
-    if (!isClientAdmin(u)) { renderShell(u, 'home', notFound('Client Admin only.'), ''); return; }
-    var cProjs = companyProjects(u.companyId);
-
-    var projRows = cProjs.map(function (p) {
-      var isRestricted = (p.visibility || 'OPEN') === 'RESTRICTED';
-      var visBadge = isRestricted
-        ? '<span class="tag-inactive">&#128274; Restricted</span>'
-        : '<span class="tag-active">&#127758; Open</span>';
-      var accessHtml, actionHtml;
-      if (!isRestricted) {
-        accessHtml = '<span class="muted">Everyone at ' + esc(company(u.companyId).name) + ' \u2014 no setup needed</span>';
-        actionHtml = '<span class="muted" style="font-size:11px;">\u2014</span>';
-      } else {
-        var invitedRows = (DB.userProjects || []).filter(function (m) { return m.projectId === p.id; });
-        accessHtml = invitedRows.map(function (m) {
-          var usr = user(m.userId);
-          return '<span class="cover-tag">' + esc(usr ? usr.name : m.userId) +
-            ' <span style="cursor:pointer;color:#b91c1c;" title="Revoke invitation" onclick="sd.removeUserProject(\'' + m.userId + '\',\'' + p.id + '\')">&times;</span></span>';
-        }).join(' ');
-        if (!accessHtml) accessHtml = '<span class="muted">Nobody invited \u2014 invisible to all users</span>';
-        actionHtml = '<button class="btn btn-sm btn-primary" onclick="sd.showAddUserProject(\'' + p.id + '\')">&#9993;&#65039; Invite User</button>';
-      }
-      return '<tr><td><b>' + esc(p.projectName) + '</b></td><td>' + esc(p.projectKey) + '</td><td>' + visBadge + '</td><td>' + accessHtml + '</td>' +
-        '<td>' + actionHtml + '</td></tr>';
-    }).join('');
-    if (!projRows) projRows = '<tr><td colspan="5" class="muted">No active projects for your company.</td></tr>';
-
-    var html = pageBar('Administration / Project Invitations', 'Project Invitations', '') +
-      '<div class="content">' +
-      '<div class="card" style="margin-bottom:16px;"><div class="card-bd">' +
-      '<p style="margin:0;font-size:13px;"><b>Decision Q:</b> <b>Open</b> projects are visible to everyone in your company automatically. ' +
-      '<b>Restricted</b> projects (apps in testing, sensitive systems) are invisible except to users you <b>invite</b> below. ' +
-      'When a restricted project goes live, ask the service provider to flip it to Open \u2014 no per-user cleanup needed.</p></div></div>' +
-      '<div class="card" style="overflow:hidden;">' +
-      '<div class="card-hd">Projects &mdash; ' + esc(company(u.companyId).name) + '</div>' +
-      '<table class="t"><thead><tr><th>Project</th><th>Key</th><th>Visibility</th><th>Who can see it</th><th>Actions</th></tr></thead><tbody>' + projRows + '</tbody></table></div>' +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Page 18 \u2014 USER_PROJECTS as an invitation list (decision Q). Client Admin invites users into Restricted projects; rows grant (never restrict) access.</p></div>';
-    renderShell(u, 'user-projects', html, tenantBanner(u));
-  }
-
   function renderUsers(u) {
     if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
     var ROLE_LABELS = { SYSTEM_ADMIN: 'System Admin', SUPPORT_AGENT: 'Support Agent', CLIENT_ADMIN: 'Client Admin', CLIENT_USER: 'Client User' };
@@ -2812,53 +2768,6 @@
       }
     },
 
-    // User-Project access CRUD (Client Admin)
-    // Decision Q: invitations into Restricted projects (Client Admin door)
-    showAddUserProject: function(projectId) {
-      var u = currentUser();
-      var existing = (DB.userProjects || []).filter(function (up) { return up.projectId === projectId; }).map(function (up) { return up.userId; });
-      var available = DB.users.filter(function (x) {
-        return x.companyId === u.companyId && x.status === 'Active' && existing.indexOf(x.id) < 0 &&
-          (userHoldsRole(x.id, 'CLIENT_USER') || x.role === 'Client User');
-      });
-      if (!available.length) { toast('Everyone eligible is already invited.'); return; }
-      var userOpts = available.map(function (cu) {
-        return '<option value="' + cu.id + '">' + esc(cu.name) + ' (' + esc(cu.email) + ')</option>';
-      }).join('');
-      var p = project(projectId);
-      var modal = '<div class="modal" style="max-width:440px;"><div class="m-hd"><h2>Invite User \u2014 ' + esc(p.projectName || projectId) + '</h2><span class="x" onclick="sd.closeModal()">&#10005;</span></div>' +
-        '<div class="m-bd"><p class="muted mt-0">This project is <b>Restricted</b> \u2014 only invited users can see it and raise tickets in it (decision Q).</p>' +
-        '<div class="form-grid"><div class="field"><label>User</label><select id="upUser">' + userOpts + '</select></div>' +
-        '</div></div><div class="m-ft"><button class="btn" onclick="sd.closeModal()">Cancel</button>' +
-        '<button class="btn btn-primary" onclick="sd.doAddUserProject(\'' + projectId + '\')">&#9993;&#65039; Invite</button></div></div>';
-      var wrap = document.createElement('div');
-      wrap.className = 'modal-backdrop';
-      wrap.innerHTML = modal;
-      document.body.appendChild(wrap);
-    },
-    doAddUserProject: function(projectId) {
-      var userId = document.getElementById('upUser').value;
-      if (!userId) { alert('Select a user.'); return; }
-      if (!DB.userProjects) DB.userProjects = [];
-      DB.userProjects.push({ userId: userId, projectId: projectId });
-      auditLog(currentUser().id, 'INVITE', 'User-Project', (user(userId) || {}).name + ' -> ' + (project(projectId).projectName || projectId), '', 'invited');
-      save();
-      sd.closeModal();
-      toast((user(userId) || {}).name + ' invited.');
-      renderUserProjects(currentUser());
-    },
-    removeUserProject: function(userId, projectId) {
-      if (!DB.userProjects) return;
-      var idx = DB.userProjects.findIndex(function (up) { return up.userId === userId && up.projectId === projectId; });
-      if (idx >= 0) {
-        DB.userProjects.splice(idx, 1);
-        auditLog(currentUser().id, 'REVOKE', 'User-Project', (user(userId) || {}).name + ' -> ' + (project(projectId).projectName || projectId), 'invited', '');
-        save();
-        toast('Invitation revoked for ' + (user(userId) || {}).name + '.');
-        renderUserProjects(currentUser());
-      }
-    },
-
     // Department CRUD
     // Company-hub door (Page 17): company is fixed, no select
     showAddDeptCD: function(companyId) {
@@ -3382,7 +3291,6 @@
       case 'comment': renderComment(u); break;
       case 'companies': renderCompanies(u); break;
       case 'projects': renderProjects(u); break;
-      case 'user-projects': renderUserProjects(u); break;
       case 'users': renderUsers(u); break;
       case 'categories': renderCategories(u); break;
       case 'sla-targets': renderSlaTargets(u); break;
