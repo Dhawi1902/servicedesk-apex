@@ -1,44 +1,61 @@
 # Database & Auth setup — service desk
 
 Build-ready scripts for the multi-tenant ticketing system. Schema and conventions
-come from `docs/ticketing-system-brief.md` (the source of truth); auth guidance is
-grounded in `reference/plsql/061-APEX_UTIL.md` and `018-APEX_CUSTOM_AUTH.md`.
+come from `docs/ticketing-system-brief.md` (the source of truth, design locked
+2026-07-04: projects layer, named SLA policies, per-project agent tiers); auth
+guidance is grounded in `reference/plsql/061-APEX_UTIL.md` and `018-APEX_CUSTOM_AUTH.md`.
+The seed **mirrors `docs/mockups/assets/demo-data.js`** — the APEX build demos
+exactly what the team signed off in the clickable prototype.
 
 ## Run order (SQL Workshop → SQL Scripts)
 
 | Step | Script | Required? | What it does |
 |---|---|---|---|
-| 1 | `01_schema.sql` | ✅ | 10 core tables (incl. `DEPARTMENTS`, `SLA_TARGETS`, `USER_ROLES`), `TKT-` sequence + trigger, FKs, checks, indexes |
-| 2 | `02_seed_data.sql` | ✅ | 4 companies, 6 departments, 12 users, roles in `USER_ROLES` (dual-role for Northwind agents), agent scoping with per-company tiers, 6 categories, SLA targets, 10 tickets (with severity/priority split, ticket_type), comments, history |
+| 1 | `01_schema.sql` | ✅ | 13 core tables — projects layer (`PROJECTS`, `AGENT_PROJECTS` with L1–L4 tier, `USER_PROJECTS`), named SLA policies (`SLA_POLICIES` + policy-keyed `SLA_TARGETS`), `USER_ROLES`, hybrid `CATEGORIES`, `TKT-` sequence + trigger, FKs, checks, indexes |
+| 2 | `02_seed_data.sql` | ✅ | 5 companies, 7 departments, 18 users (roles in `USER_ROLES`, dual-role Northwind staff), 8 projects, 4 SLA policies (16 targets), 27 agent-project tier mappings, 1 restricted-project invitation, 7 categories, 14 tickets (mockup refs), comments, history — ends with a **count-assert block** that fails loudly on any mis-resolved key |
 | 3 | `03_attachments.sql` | optional (FR-25) | `TICKET_ATTACHMENTS` BLOB table + tenant-key enforcement trigger |
-| 4 | `05_isolation_views.sql` | ✅ | Tenant-scoped views (`V_MY_TICKETS` etc.) — the isolation firewall pages build on |
+| 4 | `05_isolation_views.sql` | ✅ | Tenant-scoped views (`V_MY_PROJECTS`, `V_MY_TICKETS`, …) — the isolation firewall pages build on |
 | 5 | `04_apex_accounts.sql` | ✅ (auth) | Creates one APEX Accounts login per seeded user (password `demo`) |
-| — | `00_drop_all.sql` | reset only | Drops everything so you can re-run from step 1 |
+| — | `00_drop_all.sql` | reset only | Drops everything (including the legacy pre-projects `AGENT_COMPANIES`) so you can re-run from step 1 |
 
 To start over: `00 → 01 → 02 → 03 → 05 → 04`. (Run `05_isolation_views.sql`
 after `03` so the attachments view is created; `04` can run any time after `02`.)
+`02_seed_data.sql` must print **“Seed OK: all counts match.”** — anything else is a failed seed.
 
 ## Accounts (all password `demo`)
 
-| Email | Roles (in `USER_ROLES`) | Company / Dept | Per-company tiers |
+| Email | Roles (in `USER_ROLES`) | Company / Dept | Projects covered @ tier |
 |---|---|---|---|
-| `sara@northwind.example` | SYSTEM_ADMIN | Northwind Support (vendor) | — |
-| `mike@northwind.example` | SUPPORT_AGENT + CLIENT_USER | covers Acme + Globex | Acme L1, Globex L2 |
-| `lena@northwind.example` | SUPPORT_AGENT + CLIENT_USER | covers Globex + Initech | Globex L2, Initech L3 |
-| `tom@northwind.example` | SUPPORT_AGENT + CLIENT_USER | covers all three clients | L3 everywhere |
-| `nora@northwind.example` | CLIENT_ADMIN | Northwind / Internal Systems | — |
-| `nick@northwind.example` | CLIENT_USER | Northwind / Internal Systems | — |
-| `anna@acme.example` | CLIENT_USER | Acme Corp / Engineering | — |
-| `aaron@acme.example` | CLIENT_ADMIN | Acme Corp / Engineering | — |
-| `amy@acme.example` | CLIENT_USER | Acme Corp / Finance | — |
-| `george@globex.example` | CLIENT_USER | Globex Inc / Operations | — |
-| `gina@globex.example` | CLIENT_ADMIN | Globex Inc / Operations | — |
-| `ivan@initech.example` | CLIENT_USER | Initech / IT | — |
+| `sara@northwind.example` | SYSTEM_ADMIN + CLIENT_USER | Northwind IT | — (admins see everything by role) |
+| `mike@northwind.example` | SUPPORT_AGENT + CLIENT_USER | Northwind IT | ACME-IT L2 · GLBX-IT L2 · NW-APPS L2 · NW-INFRA L2 |
+| `lee@northwind.example` | SUPPORT_AGENT + CLIENT_USER | Northwind IT | ACME-IT L2 · ACME-ERP L2 · INIT-IT L2 · NW-APPS L2 · NW-INFRA L2 |
+| `nora@northwind.example` | SUPPORT_AGENT + CLIENT_USER | Northwind IT | L1 on ACME-IT, ACME-ERP, GLBX-IT, INIT-IT, NW-APPS, NW-INFRA, NW-HR (the first-line agent) |
+| `raj@northwind.example` | SUPPORT_AGENT + CLIENT_USER | Northwind IT | GLBX-IT L2 · GLBX-CRM L2 · **INIT-IT L3** (per-project tier demo) |
+| `kim@northwind.example` | SUPPORT_AGENT + CLIENT_USER | Northwind IT | ACME-IT L3 · GLBX-IT L3 · INIT-IT L3 |
+| `omar@northwind.example` | SUPPORT_AGENT + CLIENT_USER | Northwind IT | L4 on ACME-IT, ACME-ERP, GLBX-IT, GLBX-CRM, INIT-IT |
+| `nora-int@northwind.example` | CLIENT_ADMIN + CLIENT_USER | Northwind IT / Internal Systems | internal Client Admin |
+| `nick@northwind.example` | CLIENT_USER | Northwind IT / Internal Systems | invited tester on **NW-HR** (Restricted) |
+| `anna@acme.example` | CLIENT_USER | Acme Corp / Finance | all Open Acme projects |
+| `bob@acme.example` | CLIENT_ADMIN | Acme Corp / IT | all Acme projects |
+| `fay@acme.example` | CLIENT_USER | Acme Corp / IT | all Open Acme projects |
+| `carla@globex.example` | CLIENT_ADMIN | Globex Ltd / Operations | all Globex projects |
+| `dan@globex.example` | CLIENT_USER | Globex Ltd / HR | all Open Globex projects |
+| `tom@globex.example` | CLIENT_USER | Globex Ltd / Operations | **INACTIVE** — login blocked by post-auth check (FR-6 demo) |
+| `eve@initech.example` | CLIENT_USER | Initech / Engineering | all Open Initech projects |
+| `lily@initech.example` | CLIENT_ADMIN | Initech / Engineering | all Initech projects |
+| `zack@initech.example` | CLIENT_USER | Initech / Support | all Open Initech projects |
 
-Isolation tests baked in:
-- **Cross-company:** Initech tickets must be invisible to Mike (he only covers Acme + Globex).
-- **Cross-department:** Amy (Acme/Finance) must NOT see Anna's tickets (Acme/Engineering). Aaron (Client Admin) sees both.
-- **Tier scoping:** Client assignment LOV shows only L1 agents for that company (e.g. Mike is L1 for Acme but L2 for Globex).
+Isolation tests baked in (run these before demoing):
+- **Cross-tenant:** Anna (Acme) must never see Globex, Initech, or Northwind tickets.
+- **Agent project scoping (decision I):** Mike covers ACME-IT, GLBX-IT, NW-APPS, NW-INFRA —
+  he must NOT see ACME-ERP tickets (e.g. `TKT-00051`) or GLBX-CRM.
+- **Restricted project (decision Q):** Nick sees NW-HR (invited); other Northwind
+  client-side users don't; Northwind agents in client mode don't either.
+- **L1 gate (decisions J/L):** the client assignment LOV lists only agents whose tier
+  on the ticket's project is L1 (Nora on most projects). **GLBX-CRM has NO L1 agent**
+  → the gate message shows; a Client Admin or System Admin assigns instead.
+- **Per-project tier (decision M revised):** Raj is L3 on INIT-IT but L2 on GLBX-IT /
+  GLBX-CRM — reassign-to-higher-tier targets (FR-26) differ per project.
 
 ---
 
@@ -129,10 +146,13 @@ Boolean**. Reuse these to show/hide pages, buttons, and columns.
 | `IS_SYSTEM_ADMIN` | `RETURN :APP_ROLE = 'SYSTEM_ADMIN';` |
 
 ### 5. Build every ticket-data page on the tenant-scoped views
-`05_isolation_views.sql` encodes the full role matrix once, so pages can't leak.
+`05_isolation_views.sql` encodes the full role matrix **once** — in `V_MY_PROJECTS`
+(decisions N revised / Q / I: client users see Open + invited Restricted projects,
+agents see their `AGENT_PROJECTS`, departments are metadata only) — so pages can't leak.
 
 | View | Use for |
 |---|---|
+| `V_MY_PROJECTS` | project lists, project LOVs, the ticket-create project picker (`WHERE IS_ACTIVE='Y'` for new tickets) |
 | `V_MY_TICKETS` | ticket lists, detail region, dashboard counts, ticket LOVs |
 | `V_MY_COMMENTS` | comments sub-region (hides internal notes from clients) |
 | `V_MY_HISTORY` | history/audit timeline |
@@ -149,22 +169,30 @@ SELECT COUNT(*) INTO l_ok FROM V_MY_TICKETS WHERE TICKET_ID = :P5_TICKET_ID;
 IF l_ok = 0 THEN raise_application_error(-20010, 'Not authorized'); END IF;
 ```
 
-Ticket **insert** stamps `COMPANY_ID = NV('APP_COMPANY_ID')` server-side (clients);
-a System Admin creating on behalf of a client sets it explicitly. Never map
-`COMPANY_ID` from a submittable page item.
+Ticket **insert**: validate `:Pn_PROJECT_ID` against `V_MY_PROJECTS`, then derive
+`COMPANY_ID` from the project **server-side** (the composite FK on `TICKETS`
+rejects a mismatch anyway). Never map `COMPANY_ID` from a submittable page item.
+Stamp `SLA_DUE_DATE` from the project's policy (fall back to the `IS_DEFAULT`
+policy when `PROJECTS.SLA_POLICY_ID` is NULL).
 
-**LOVs:** client-facing user LOVs need `WHERE COMPANY_ID = :APP_COMPANY_ID`; a company
-picker is System-Admin-only. `CATEGORIES` is global — don't filter it.
+**LOVs:** the assignment LOV for clients lists L1 agents **on the ticket's project**
+(`AGENT_PROJECTS WHERE PROJECT_ID = … AND TIER = 'L1'`); agent reassignment targets
+are same-or-higher tier on that project (FR-26). A company picker is System-Admin-only.
+Category LOVs: global rows (`COMPANY_ID IS NULL`) plus the ticket company's rows,
+narrowed by project where `PROJECT_ID` is set.
 
 **Output:** escape `SUBJECT`/`DESCRIPTION`/`COMMENT_TEXT` with `APEX_ESCAPE.HTML` on any
 non-default render path (Cards, HTML expressions, `<img>` previews).
 
-> Re-run the **tenant-isolation-auditor** over every page before demoing. Foundation
-> audit (2026-07-01): PASS — no leak in the SQL; findings were build-time guardrails,
-> now enforced by these views. A cross-tenant leak invalidates the "production-level" claim.
+> Re-run the **tenant-isolation-auditor** over every page before demoing. The
+> 2026-07-01 foundation audit covered the pre-projects shape; the projects-model
+> views were re-audited 2026-07-04 (see repo history). A cross-tenant leak
+> invalidates the "production-level" claim.
 
 ## Notes
 - No password lives in `APP_USERS` — APEX Accounts owns credentials. If you later must
   self-manage passwords (instance forbids APEX Accounts), the fallback is Custom Auth +
   `DBMS_CRYPTO` salted SHA-512 with `PASSWORD_HASH`/`PASSWORD_SALT` columns.
-- `04_apex_accounts.sql` skips users that already exist, so it's safe to re-run.
+- `04_apex_accounts.sql` skips users that already exist, so it's safe to re-run. It also
+  creates a login for the INACTIVE seed user (`tom@globex.example`) — the post-auth
+  process is what blocks that account, which is exactly the FR-6 behaviour to demo.
