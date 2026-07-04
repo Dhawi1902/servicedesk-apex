@@ -1,45 +1,70 @@
-# Page 11 — Projects (list) (MUST)
+# Step 11 — Projects List (p10) (MUST)
 
-> Mockup: `docs/mockups/11-projects.html` · APEX type: Interactive Report (grid look) · All roles, rows role-scoped
+> Browse service engagements. Flat list only — configuration happens on the Project Detail hub (page 11).
 
-## Purpose
+---
 
-Browse service engagements (decision O). Flat list only — configuration happens on the
-Project Detail hub (page 12): "flat pages browse, the hub configures".
+## Step 1: Create the Page
 
-## 1. Region & role scoping
+**App Builder → Create Page → Interactive Report**
+- Page Number: `10`
+- Name: `Projects`
+- Navigation: add to nav menu (all roles)
 
-One report, scoped in SQL (there is no V_MY_PROJECTS view yet — this page's query IS the scope,
-mirror `userAccessibleProjectIds` from the mockup):
+---
+
+## Step 2: Set the Region Source
 
 ```sql
-SELECT p.*, c.company_name, <ticket count>, <agent count>
-  FROM PROJECTS p JOIN COMPANIES c ON c.company_id = p.company_id
- WHERE :APP_ROLE = 'SYSTEM_ADMIN'
-    OR (:APP_ROLE = 'SUPPORT_AGENT' AND p.project_id IN
-         (SELECT project_id FROM AGENT_PROJECTS WHERE user_id = NV('APP_USER_ID')))
-    OR (:APP_ROLE = 'CLIENT_ADMIN' AND p.company_id = NV('APP_COMPANY_ID'))
-    OR (:APP_ROLE = 'CLIENT_USER' AND p.company_id = NV('APP_COMPANY_ID')
-        AND (p.visibility = 'OPEN' OR p.project_id IN
-             (SELECT project_id FROM USER_PROJECTS WHERE user_id = NV('APP_USER_ID'))))
+SELECT p.PROJECT_ID, p.PROJECT_NAME, p.PROJECT_KEY,
+       c.COMPANY_NAME, p.DESCRIPTION,
+       p.VISIBILITY, p.STATUS,
+       (SELECT COUNT(*) FROM TICKETS t WHERE t.PROJECT_ID = p.PROJECT_ID
+          AND t.STATUS NOT IN ('Resolved','Closed')) AS OPEN_TICKETS,
+       (SELECT COUNT(*) FROM AGENT_PROJECTS ap WHERE ap.PROJECT_ID = p.PROJECT_ID) AS AGENT_COUNT
+  FROM V_MY_PROJECTS p
+  JOIN COMPANIES c ON c.COMPANY_ID = p.COMPANY_ID
 ```
 
-(Consider promoting this to a `V_MY_PROJECTS` view in `05_isolation_views.sql` so page 6's LOV,
-this page, and page 12's guard share one definition.)
+---
 
-## 2. Columns & actions
+## Step 3: Configure Columns
 
-Name, **key** (`project_key`, globally unique, company-prefixed e.g. ACME-IT),
-company (System Admin + agents only — agents span companies), description,
-**visibility badge** (🌐 Open / 🔒 Restricted, decision Q), status, ticket count, agent count.
+| Column | Notes |
+|--------|-------|
+| `PROJECT_NAME` | Link → **page 11** (`P11_PROJECT_ID`) |
+| `PROJECT_KEY` | e.g. ACME-IT |
+| `COMPANY_NAME` | **Condition:** `:APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')` |
+| `VISIBILITY` | Badge: Open / Restricted |
+| `STATUS` | Active / Inactive |
+| `OPEN_TICKETS` | Count |
+| `AGENT_COUNT` | Count |
 
-- **Manage** (System Admin) / **View** (everyone else) link → page 12 with `P12_PROJECT_ID`.
-- **+ Add Project** button + company filter: `IS_SYSTEM_ADMIN`. Create/edit via a small modal
-  (name, key, company, description, visibility, SLA policy LOV — nullable = default policy).
+---
 
-## Isolation checklist
+## Step 4: Add "Create Project" Button (System Admin Only)
 
-- [ ] Anna sees Acme's Open projects + her invited Restricted ones — nothing else.
-- [ ] Mike sees exactly his `AGENT_PROJECTS` rows (no Initech project).
-- [ ] Company column hidden for client roles.
-- [ ] Add/Edit actions authorization-gated `IS_SYSTEM_ADMIN`, and the DML process re-checks it.
+Authorization = `IS_SYSTEM_ADMIN`. Opens a modal with: Project Name, Key, Company, Description, Visibility, SLA Policy LOV.
+
+---
+
+## Step 5: Test It
+
+| Test | Expected |
+|------|----------|
+| Anna (Client User) | Sees Acme's Open projects + invited Restricted. No Globex/Initech. |
+| Mike (Agent) | Sees his `AGENT_PROJECTS` rows only |
+| Sara (System Admin) | Sees all 8 projects; "Add Project" button visible |
+| Click a project name | Opens page 11 |
+
+---
+
+## Isolation Checklist
+
+- [ ] Source is `V_MY_PROJECTS`
+- [ ] Company column hidden for clients
+- [ ] Add/Edit gated `IS_SYSTEM_ADMIN`
+
+---
+
+**Next:** move to `12-project-detail.md`.

@@ -1,70 +1,129 @@
-# Page 1 — Login & Security Foundation (MUST)
+# Step 1 — Login & Security Foundation (MUST)
 
-> Mockup: `docs/mockups/01-login.html` · APEX type: Login page (created with the app) · All roles
+> This sets up everything every other page depends on. Don't skip anything here.
 
-## Purpose
+---
 
-The built-in login page needs almost no work — the real job here is the **security foundation**
-every other page consumes: authentication scheme, application items, post-auth process, and the
-four authorization schemes. Build this once, then never redefine it — pages only *consume*
-`:APP_COMPANY_ID` and the `IS_*` schemes.
+## Step 1: Create the Application
 
-## 1. Authentication scheme
+**App Builder → Create → New Application**
+- Name: `Service Desk`
+- Leave the default login page (page 9999)
+- Click **Create Application**
 
-Shared Components → **Authentication Schemes** → Create → **Application Express Accounts** →
-set **Current**. APEX verifies passwords (salted hashing + lockout built in);
-`04_apex_accounts.sql` already created a `demo`-password account per seeded user.
+---
 
-> The brief mentions Microsoft SSO (Entra ID Social Sign-In) as the eventual production route —
-> that is a later swap of the authentication scheme only; nothing else on any page changes,
-> because tenant context never lives in the auth scheme.
+## Step 2: Set the Authentication Scheme
 
-## 2. Application items (4)
+**Shared Components → Authentication Schemes** → select (or create) **Application Express Accounts** → make it **Current**.
 
-Shared Components → **Application Items**. For **each one** set
-**Session State Protection = Restricted — may not be set from browser** (blocks URL tampering).
+This uses the accounts that `04_apex_accounts.sql` already created (all password `demo`).
 
-| Item | Purpose |
-|------|---------|
-| `APP_USER_ID` | Logged-in user's `APP_USERS` PK |
-| `APP_COMPANY_ID` | Tenant key — the isolation views read this |
-| `APP_ROLE` | Active role, from `USER_ROLES` (decision P) |
-| `APP_HAS_MULTI_ROLE` | `Y`/`N` — shows/hides the nav-bar role switcher |
+---
 
-## 3. Post-authentication process
+## Step 3: Create 4 Application Items
 
-On the authentication scheme, set **Post-Authentication Procedure** to the PL/SQL block in
-`sql/README.md` §3. What it does: looks up the `APP_USERS` profile by `:APP_USER` email,
-rejects inactive accounts, picks the active role (`DEFAULT_ROLE` if set, else
-highest-privilege from `USER_ROLES`), and stamps all four app items with
-`APEX_UTIL.SET_SESSION_STATE` (not `:ITEM :=` — binding isn't reliable during login).
+**Shared Components → Application Items → Create**. Do this 4 times:
 
-## 4. Authorization schemes (4)
+| Name | Session State Protection |
+|------|--------------------------|
+| `APP_USER_ID` | **Restricted — may not be set from browser** |
+| `APP_COMPANY_ID` | **Restricted — may not be set from browser** |
+| `APP_ROLE` | **Restricted — may not be set from browser** |
+| `APP_HAS_MULTI_ROLE` | **Restricted — may not be set from browser** |
 
-Shared Components → **Authorization Schemes** → Create, type
-**PL/SQL Function Body Returning Boolean**:
+The "Restricted" setting is critical — it blocks URL tampering of your tenant key.
 
-| Scheme | Body |
-|--------|------|
+---
+
+## Step 4: Create the Post-Authentication Procedure
+
+First, create the stored procedure. Go to **SQL Workshop → SQL Commands** and run:
+
+```sql
+CREATE OR REPLACE PROCEDURE stamp_tenant_context
+AS
+    l_user_id      APP_USERS.USER_ID%TYPE;
+    l_company_id   APP_USERS.COMPANY_ID%TYPE;
+    l_default_role APP_USERS.DEFAULT_ROLE%TYPE;
+    l_status       APP_USERS.STATUS%TYPE;
+    l_active_role  USER_ROLES.ROLE%TYPE;
+    l_role_count   PLS_INTEGER;
+BEGIN
+    SELECT USER_ID, COMPANY_ID, DEFAULT_ROLE, STATUS
+      INTO l_user_id, l_company_id, l_default_role, l_status
+      FROM APP_USERS
+     WHERE UPPER(EMAIL) = UPPER(V('APP_USER'));
+
+    IF l_status <> 'ACTIVE' THEN
+        raise_application_error(-20001, 'Account is not active.');
+    END IF;
+
+    SELECT COUNT(*) INTO l_role_count
+      FROM USER_ROLES WHERE USER_ID = l_user_id;
+
+    IF l_default_role IS NOT NULL THEN
+        l_active_role := l_default_role;
+    ELSE
+        SELECT ROLE INTO l_active_role
+          FROM USER_ROLES
+         WHERE USER_ID = l_user_id
+         ORDER BY DECODE(ROLE,'SYSTEM_ADMIN',1,'SUPPORT_AGENT',2,'CLIENT_ADMIN',3,4)
+         FETCH FIRST 1 ROW ONLY;
+    END IF;
+
+    APEX_UTIL.SET_SESSION_STATE('APP_USER_ID',        l_user_id);
+    APEX_UTIL.SET_SESSION_STATE('APP_COMPANY_ID',     l_company_id);
+    APEX_UTIL.SET_SESSION_STATE('APP_ROLE',           l_active_role);
+    APEX_UTIL.SET_SESSION_STATE('APP_HAS_MULTI_ROLE',
+        CASE WHEN l_role_count > 1 THEN 'Y' ELSE 'N' END);
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        raise_application_error(-20002, 'No application profile for this user.');
+END stamp_tenant_context;
+```
+
+Then wire it up:
+**Shared Components → Authentication Schemes** → edit your current scheme → **Login Processing** tab → set **Post-Authentication Procedure Name** to `stamp_tenant_context` → **Apply Changes**.
+
+---
+
+## Step 5: Create 4 Authorization Schemes
+
+**Shared Components → Authorization Schemes → Create**. Do this 4 times. Type = **PL/SQL Function Body Returning Boolean**:
+
+| Scheme Name | PL/SQL Body |
+|-------------|-------------|
 | `IS_CLIENT_USER` | `RETURN :APP_ROLE = 'CLIENT_USER';` |
 | `IS_CLIENT_ADMIN` | `RETURN :APP_ROLE = 'CLIENT_ADMIN';` |
 | `IS_AGENT` | `RETURN :APP_ROLE = 'SUPPORT_AGENT';` |
 | `IS_SYSTEM_ADMIN` | `RETURN :APP_ROLE = 'SYSTEM_ADMIN';` |
 
-These gate pages, buttons, columns, and nav entries everywhere else. Where a page needs
-"client roles" or "staff roles", combine with a condition (`:APP_ROLE IN (...)`) rather than
-creating more schemes.
+These gate pages, buttons, columns, and nav entries everywhere else.
 
-## 5. The login page itself
+---
 
-Keep the default page 9999 layout; apply branding later (logo, app name "Service Desk",
-background) via Theme Roller / login page template options — see `apex-ui-stylist` for polish.
+## Step 6: Test It
 
-## Isolation checklist
+Log in as each test user and verify via **Developer Toolbar → Session → Application Items**:
 
-- [ ] All 4 app items are **Restricted — may not be set from browser**.
-- [ ] Post-auth raises an error for missing/inactive `APP_USERS` rows (no half-logged-in state).
-- [ ] No page, process, or LOV ever *sets* `APP_COMPANY_ID` outside the post-auth process
-      and the role switcher (page 2).
-- [ ] Log in as each of the 4 test users and check the app items in Session State
-      (developer toolbar → Session) — company and role must match the seed table.
+| User | Expected Role | Expected Company | Notes |
+|------|--------------|------------------|-------|
+| `sara@northwind.example` | SYSTEM_ADMIN | Northwind | `APP_HAS_MULTI_ROLE = Y` |
+| `anna@acme.example` | CLIENT_USER | Acme Corp | single role |
+| `bob@acme.example` | CLIENT_ADMIN | Acme Corp | single role |
+| `mike@northwind.example` | SUPPORT_AGENT | Northwind | `APP_HAS_MULTI_ROLE = Y` |
+| `tom@globex.example` | — | — | **Login must fail** (inactive account) |
+
+---
+
+## Isolation Checklist
+
+- [ ] All 4 app items are **Restricted — may not be set from browser**
+- [ ] Inactive user (`tom@globex.example`) is blocked at login
+- [ ] No page/process sets `APP_COMPANY_ID` outside the post-auth (and later the role switcher)
+- [ ] Session state shows correct values for each test user
+
+---
+
+**Next:** move to `02-home.md` to build the Home page and app shell (navigation + role switcher).

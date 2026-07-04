@@ -1,29 +1,58 @@
-# Page 9 — Companies (manage) (MUST)
+# Step 9 — Companies (p8) (MUST)
 
-> Mockup: `docs/mockups/09-companies.html` · APEX type: Interactive Grid · **System Admin only**
+> Judge non-negotiable: "multiple companies." This page proves it.
 
-## Purpose
+---
 
-CRUD for client companies (tenants). Judge non-negotiable "multiple companies" is proven here
-plus on the queue/dashboard.
+## Step 1: Create the Page
 
-## 1. Page & region
+**App Builder → Create Page → Interactive Grid**
+- Page Number: `8`
+- Name: `Companies`
+- Table: `COMPANIES`
+- Set page-level **Authorization Scheme = `IS_SYSTEM_ADMIN`**
 
-- Page-level **Authorization Scheme = `IS_SYSTEM_ADMIN`** (nav hiding alone is not security).
-- Interactive Grid on `COMPANIES`: name, status (Active/Inactive switch), created date,
-  plus useful read-only counts (projects, users, open tickets) as query columns.
-- A **Manage** link column → page 13 (`P13_COMPANY_ID`) opens the company hub
-  (projects / departments / client admins per company).
+---
 
-## 2. Rules
+## Step 2: Configure the Grid
 
-- **Deactivate, don't delete** — companies with tickets/users must never be hard-deleted
-  (history + FKs). Make Delete disabled in the IG toolbar; use the status column.
-- New company → remind (help text) to create at least one **project** (tickets need one,
-  decision O) and a **Client Admin** user, or the company can't self-serve.
-- Company name renders on client-facing pages — escape it where rendered via HTML expressions.
+| Column | Type | Notes |
+|--------|------|-------|
+| `COMPANY_NAME` | Text | Editable |
+| `STATUS` | Switch | Active / Inactive — editable |
+| `CREATED_AT` | Date | Read-only |
+| Projects count | Read-only | `(SELECT COUNT(*) FROM PROJECTS WHERE COMPANY_ID = COMPANIES.COMPANY_ID)` |
+| Users count | Read-only | `(SELECT COUNT(*) FROM APP_USERS WHERE COMPANY_ID = COMPANIES.COMPANY_ID)` |
+| Open tickets | Read-only | `(SELECT COUNT(*) FROM TICKETS WHERE COMPANY_ID = COMPANIES.COMPANY_ID AND STATUS NOT IN ('Resolved','Closed'))` |
 
-## Isolation checklist
+Add a **Manage** link column → **page 12** (`P12_COMPANY_ID`).
 
-- [ ] Page authorization = `IS_SYSTEM_ADMIN`; verify by URL-jumping to the page as Anna → must get the APEX authorization error.
-- [ ] No LOV elsewhere in the app exposes the full company list to non-admins (company picker is admin-only).
+---
+
+## Step 3: Disable Hard Delete
+
+- IG Attributes → Allowed Operations → uncheck Delete
+- Use Status column to deactivate instead
+- Help text: "New company? Create at least one Project and a Client Admin user."
+
+---
+
+## Step 4: Test It
+
+| Test | Expected |
+|------|----------|
+| Sara (System Admin) | Grid shows all 5 companies with counts |
+| Anna (Client User) URL-jump to page 8 | APEX authorization error |
+| Add a new company | Row inserted; counts start at 0 |
+| Click Manage → opens page 12 | Company hub loads |
+
+---
+
+## Isolation Checklist
+
+- [ ] Page authorization = `IS_SYSTEM_ADMIN`
+- [ ] No LOV elsewhere exposes the full company list to non-admins
+
+---
+
+**Next:** move to `10-users.md`.

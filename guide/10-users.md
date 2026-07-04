@@ -1,46 +1,111 @@
-# Page 10 — Users (manage) (MUST)
+# Step 10 — Users (p9) (MUST)
 
-> Mockup: `docs/mockups/10-users.html` · APEX type: Interactive Grid + role management · System Admin (all) · Client Admin (own company)
+> Create, edit, deactivate users and grant roles. System Admin sees everyone, Client Admin sees their own company only.
 
-## Purpose
+---
 
-Create/edit/deactivate users, grant roles (`USER_ROLES`, decision P — a user can hold several),
-set company + department metadata, and create the matching APEX account.
+## Step 1: Create the Page
 
-## 1. Region & scoping
+**App Builder → Create Page → Interactive Grid**
+- Page Number: `9`
+- Name: `Users`
+- Page-level **Condition:** `:APP_ROLE IN ('SYSTEM_ADMIN','CLIENT_ADMIN')`
 
-Interactive Grid on `APP_USERS`, one page, two scopes:
+---
+
+## Step 2: Set the Region Source
 
 ```sql
-SELECT ... FROM APP_USERS
+SELECT u.USER_ID, u.FULL_NAME, u.EMAIL, u.STATUS,
+       c.COMPANY_NAME, u.COMPANY_ID,
+       d.DEPARTMENT_NAME, u.DEPARTMENT_ID,
+       u.DEFAULT_ROLE
+  FROM APP_USERS u
+  JOIN COMPANIES c ON c.COMPANY_ID = u.COMPANY_ID
+  LEFT JOIN DEPARTMENTS d ON d.DEPARTMENT_ID = u.DEPARTMENT_ID
  WHERE :APP_ROLE = 'SYSTEM_ADMIN'
-    OR (:APP_ROLE = 'CLIENT_ADMIN' AND company_id = NV('APP_COMPANY_ID'))
+    OR (:APP_ROLE = 'CLIENT_ADMIN' AND u.COMPANY_ID = NV('APP_COMPANY_ID'))
 ```
 
-Page authorization: condition `:APP_ROLE IN ('SYSTEM_ADMIN','CLIENT_ADMIN')`.
-Column rules: company column editable by System Admin only (Client Admin's rows are always
-their own company — force it server-side on insert); department LOV cascades from company.
+---
 
-## 2. Roles (`USER_ROLES`)
+## Step 3: Configure Columns
 
-- Roles are rows, not a column: checkboxes / shuttle per user writing `USER_ROLES`, plus
-  `default_role` select (landing role at login).
-- **Client Admin may grant client roles only** (CLIENT_USER / CLIENT_ADMIN) and only within
-  their company. SUPPORT_AGENT / SYSTEM_ADMIN grants are System-Admin-only — validate
-  server-side, not just by hiding options.
-- Granting SUPPORT_AGENT should prompt to map projects + tiers (page 17 / project hub) —
-  an unmapped agent sees an empty queue.
+| Column | Editable by | Notes |
+|--------|-------------|-------|
+| `FULL_NAME` | all | |
+| `EMAIL` | insert only | Login — can't change after creation |
+| `STATUS` | all | Active / Inactive switch |
+| `COMPANY_ID` | System Admin only | **Condition:** `:APP_ROLE = 'SYSTEM_ADMIN'` |
+| `DEPARTMENT_ID` | all | LOV cascading from company |
+| `DEFAULT_ROLE` | all | LOV from user's `USER_ROLES` rows |
 
-## 3. APEX account creation
+---
 
-New app user needs an APEX Accounts login. In the insert process call
-`APEX_UTIL.CREATE_USER` (reference-verified; same pattern as `04_apex_accounts.sql`) with a
-temp password + require-change, wrapped so an already-existing account doesn't kill the insert.
-Deactivating a user sets `APP_USERS.status = 'INACTIVE'` — the post-auth process then blocks login.
+## Step 4: Add Role Management
 
-## Isolation checklist
+- Client Admin may only grant: `CLIENT_USER`, `CLIENT_ADMIN`
+- System Admin may grant all 4 roles
+- **Validate server-side:**
 
-- [ ] Client Admin URL-tampering another company's user ID → row not in scope, update rejected (add the same scope predicate to the IG's automatic row processing or a validation).
-- [ ] `company_id` forced to `NV('APP_COMPANY_ID')` on Client-Admin inserts.
-- [ ] Role-grant validation server-side: Client Admin posting SYSTEM_ADMIN must fail.
-- [ ] No password data anywhere in `APP_USERS` — credentials live in APEX Accounts only.
+```sql
+IF :APP_ROLE = 'CLIENT_ADMIN'
+   AND :NEW_ROLE NOT IN ('CLIENT_USER','CLIENT_ADMIN') THEN
+  raise_application_error(-20040, 'Only System Admin can grant this role.');
+END IF;
+```
+
+---
+
+## Step 5: Auto-Create APEX Account on New User
+
+```sql
+BEGIN
+  APEX_UTIL.CREATE_USER(
+    p_user_name       => :P9_EMAIL,
+    p_web_password    => 'ChangeMe1!',
+    p_change_password_on_first_use => 'Y',
+    p_email_address   => :P9_EMAIL
+  );
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE = -20000 THEN NULL;
+    ELSE RAISE;
+    END IF;
+END;
+```
+
+---
+
+## Step 6: Force Company on Client Admin Inserts
+
+```sql
+IF :APP_ROLE = 'CLIENT_ADMIN' THEN
+  :P9_COMPANY_ID := NV('APP_COMPANY_ID');
+END IF;
+```
+
+---
+
+## Step 7: Test It
+
+| Test | Expected |
+|------|----------|
+| Sara (System Admin) | Sees all 18 users |
+| Bob (Client Admin) | Sees only Acme users; company not editable |
+| Bob grants SYSTEM_ADMIN role | Server-side validation rejects |
+| Create new user as Bob | Company forced to Acme; APEX account created |
+| Anna (Client User) URL-jumps to page 9 | Blocked |
+
+---
+
+## Isolation Checklist
+
+- [ ] Client Admin can't tamper another company's user
+- [ ] `COMPANY_ID` forced on Client Admin inserts
+- [ ] Role-grant validation server-side
+- [ ] No password data in `APP_USERS`
+
+---
+
+**Next:** move to `11-projects.md`.

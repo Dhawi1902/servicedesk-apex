@@ -1,45 +1,51 @@
-# Page 16 — SLA Policies & Targets (SHOULD)
+# Step 16 — SLA Policies & Targets (p15) (SHOULD)
 
-> Mockup: `docs/mockups/13-sla-targets.html` · APEX type: Master-detail (IG + IG) · **System Admin only**
+> Named SLA policies (Gold/Standard/Bronze/Internal) with per-severity targets.
 
-## Purpose
+---
 
-Named SLA policies (decision S: Gold / Standard / Bronze / Internal) with per-severity target
-rows. Projects are *assigned* a policy (on page 12 Details); a project with no policy uses the
-`is_default` one. Feeds FR-23 (targets), FR-32 (compliance KPI), FR-35 (auto-escalation).
+## Step 1: Create the Page
 
-## 1. Master — `SLA_POLICIES`
+**App Builder → Create Page → Blank Page**
+- Page Number: `15`
+- Name: `SLA Policies`
+- **Authorization:** `IS_SYSTEM_ADMIN`
 
-IG columns: name, description, `is_default` flag, `effective_from`, `approved_by`, notes,
-read-only "projects using" count.
+---
 
-- Exactly **one** default: when a row is set default, clear the others in the same process
-  (or a validation that rejects a second default).
-- Don't delete a policy in use — deactivate/replace.
+## Step 2: Master Grid — SLA Policies
 
-## 2. Detail — `SLA_TARGETS` (per selected policy)
+IG on `SLA_POLICIES`: name, description, `IS_DEFAULT` switch, effective_from, approved_by, notes, projects-using count.
 
-Keyed `(sla_policy_id, severity)` — one row per severity:
+Only one default: clear others when a row is set default.
 
-| Column | Meaning |
-|--------|---------|
-| `severity` | Critical / Major / Minor / Low |
-| `response_hours` | first-response target (FR-31 measures against this) |
-| `resolution_days` | drives `TICKETS.sla_due_date` stamped at creation (page 6) |
-| `escalation_pct` | % of target consumed that triggers auto-escalation (FR-35) |
+---
 
-Validation: all four severities present per policy, values positive, `escalation_pct` 1–100.
+## Step 3: Detail Grid — SLA Targets
 
-## 3. Where the values get used (so changes are understood)
+IG on `SLA_TARGETS WHERE SLA_POLICY_ID = :P15_SLA_POLICY_ID` (filtered by selected policy):
+- Severity (Critical/Major/Minor/Low)
+- `RESPONSE_HOURS`, `RESOLUTION_DAYS`, `ESCALATION_PCT`
 
-- **Page 6** stamps `sla_due_date` at creation from the ticket's project → policy → severity row.
-  Changing a policy affects **new** tickets only — say so in help text.
-- **FR-35 auto-escalation** is an **Automation** (Shared Components → Automations, scheduled):
-  finds open tickets past `escalation_pct` of their SLA, bumps priority / flags escalation,
-  writes `TICKET_HISTORY`, emails via `APEX_MAIL`. Document it here since this page owns the knobs.
+Validations: all 4 severities present, values positive, escalation 1–100.
 
-## Isolation checklist
+---
 
-- [ ] Page gated `IS_SYSTEM_ADMIN`.
-- [ ] SLA tables are global config (no `company_id`) — tenancy applies to tickets, not policies.
-- [ ] The escalation automation writes through the same guarded patterns (history rows, no client-visible internal data in emails).
+## Step 4: Test It
+
+| Test | Expected |
+|------|----------|
+| Sara | 4 seeded policies; select one → 4 severity rows |
+| Set "Standard" as default | Previous default cleared |
+| Anna URL-jumps to page 15 | Authorization error |
+
+---
+
+## Isolation Checklist
+
+- [ ] Page gated `IS_SYSTEM_ADMIN`
+- [ ] SLA tables are global config (no `company_id`)
+
+---
+
+**Next:** move to `17-agent-projects.md`.

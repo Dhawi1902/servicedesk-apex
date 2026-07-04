@@ -1,45 +1,88 @@
-# Page 12 — Project Detail hub (MUST)
+# Step 12 — Project Detail Hub (p11) (MUST)
 
-> Mockup: `docs/mockups/19-project-detail.html` · APEX type: header stats + **Region Display Selector tabs** · All roles read; System Admin configures; Client Admin manages invitations
+> One door for everything about a project: Details, Support Team, SLA Targets, Categories, and Access (invitations).
 
-## Purpose
+---
 
-One door for everything about a project: **Details · Support Team · SLA Targets · Categories ·
-Access (invitations)**. This page absorbs the brief's "Project Invitations" MUST page (decision Q)
-and the per-project agent/tier mapping (decision M revised).
+## Step 1: Create the Page
 
-## 1. Access guard (first thing on the page)
+**App Builder → Create Page → Blank Page**
+- Page Number: `11`
+- Name: `Project Detail`
 
-Before-header PL/SQL process (or page-read authorization) — same matrix as page 11's query:
-System Admin: any; Client Admin: own company; Agent: mapped via `AGENT_PROJECTS`;
-Client User: Open in own company, or invited via `USER_PROJECTS`. Fail → redirect to page 11
-with "Project not found" (don't confirm the project exists).
+Add a hidden item `P11_PROJECT_ID` (passed from page 10).
 
-## 2. Header
+---
 
-Project name, key, company, visibility badge + stat cards: open tickets, SLA-breached,
-team size, invited users (Restricted only) — ticket stats `FROM V_MY_TICKETS WHERE project_id = :P12_PROJECT_ID`.
+## Step 2: Add the Access Guard
 
-## 3. Tabs (Region Display Selector over 5 regions)
+Before Header PL/SQL process:
 
-| Tab | Content | Who edits |
-|-----|---------|-----------|
-| **Details** | name/key/description/visibility/status/SLA policy form | System Admin |
-| **Support Team** | IG on `AGENT_PROJECTS` for this project: agent + **tier L1–L4** (decision M revised). Add/remove agents, set tier | System Admin |
-| **SLA Targets** | read-only view of the project's effective policy (`SLA_POLICIES` → `SLA_TARGETS` per severity); note "default policy" when `sla_policy_id` is null | System Admin (policy pick on Details; targets edited on page 16) |
-| **Categories** | categories in use / applicable | System Admin |
-| **Access** | shown for **Restricted** projects: IG on `USER_PROJECTS` — the invitation list. Invite/remove own-company users | **Client Admin (own company) + System Admin** |
+```sql
+DECLARE l_ok PLS_INTEGER;
+BEGIN
+  SELECT COUNT(*) INTO l_ok FROM V_MY_PROJECTS WHERE PROJECT_ID = :P11_PROJECT_ID;
+  IF l_ok = 0 THEN
+    APEX_UTIL.REDIRECT_URL(APEX_PAGE.GET_URL(p_page => 10));
+  END IF;
+END;
+```
 
-## 4. Invitation rules (decision Q)
+---
 
-- Rows in `USER_PROJECTS` **grant** access, never restrict — Open projects need no rows.
-- Invitee LOV = active users of the **project's company** only.
-- Insert/delete processes re-verify: caller is System Admin, or Client Admin of that company.
-- Uninviting a user doesn't touch their existing tickets' history — they just lose visibility.
+## Step 3: Add the Header
 
-## Isolation checklist
+Stats region:
 
-- [ ] URL-tamper `P12_PROJECT_ID` to a foreign/Restricted-uninvited project as each role → "not found".
-- [ ] Ticket stats read `V_MY_TICKETS` (a client viewing an Open project still sees only counts within their own visibility).
-- [ ] Invitation DML validates company ownership server-side (Client Admin of Acme cannot invite into a Globex project, nor invite a Globex user).
-- [ ] Tier edits (`AGENT_PROJECTS`) are `IS_SYSTEM_ADMIN` only — tier drives assignment rights (page 7), so treat it as security data.
+```sql
+SELECT p.PROJECT_NAME, p.PROJECT_KEY, c.COMPANY_NAME, p.VISIBILITY,
+       (SELECT COUNT(*) FROM V_MY_TICKETS WHERE PROJECT_ID = :P11_PROJECT_ID
+          AND STATUS NOT IN ('Resolved','Closed')) AS OPEN_TICKETS,
+       (SELECT COUNT(*) FROM AGENT_PROJECTS WHERE PROJECT_ID = :P11_PROJECT_ID) AS TEAM_SIZE,
+       (SELECT COUNT(*) FROM USER_PROJECTS WHERE PROJECT_ID = :P11_PROJECT_ID) AS INVITED_USERS
+  FROM PROJECTS p JOIN COMPANIES c ON c.COMPANY_ID = p.COMPANY_ID
+ WHERE p.PROJECT_ID = :P11_PROJECT_ID
+```
+
+---
+
+## Step 4: Add Tabs (Region Display Selector)
+
+### Tab 1 — Details
+Form: name, key, description, visibility, status, SLA policy LOV. **Authorization:** `IS_SYSTEM_ADMIN`.
+
+### Tab 2 — Support Team
+IG on `AGENT_PROJECTS WHERE PROJECT_ID = :P11_PROJECT_ID`: agent, **tier L1–L4**, open tickets. **Authorization:** `IS_SYSTEM_ADMIN`.
+
+### Tab 3 — SLA Targets
+Read-only report of the project's effective policy + per-severity targets.
+
+### Tab 4 — Categories
+Categories applicable to this project (read-only for now).
+
+### Tab 5 — Access (Invitations)
+**Condition:** project visibility = `RESTRICTED`. IG on `USER_PROJECTS WHERE PROJECT_ID = :P11_PROJECT_ID`. Editable by Client Admin (own company) + System Admin.
+
+---
+
+## Step 5: Test It
+
+| Test | Expected |
+|------|----------|
+| Anna opens an Acme Open project | Read-only tabs |
+| Anna URL-tampers to Globex project | Redirected to page 10 |
+| Sara (System Admin) | All tabs editable |
+| Bob (Client Admin) on Restricted Acme project | Can manage invitations |
+
+---
+
+## Isolation Checklist
+
+- [ ] URL-tamper → redirected to page 10
+- [ ] Ticket stats use `V_MY_TICKETS`
+- [ ] Invitation DML validates company ownership
+- [ ] Tier edits are `IS_SYSTEM_ADMIN` only
+
+---
+
+**Next:** you've finished all MUST pages! Move to `13-my-company.md` for SHOULD pages.

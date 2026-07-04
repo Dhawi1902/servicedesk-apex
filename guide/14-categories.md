@@ -1,22 +1,47 @@
-# Page 14 — Categories (manage) (SHOULD)
+# Step 14 — Categories (p13) (SHOULD)
 
-> Mockup: `docs/mockups/11-categories.html` · APEX type: Interactive Grid · **System Admin only**
+> Small page. Categories are global (shared by all tenants).
 
-## Purpose
+---
 
-Maintain the ticket category list (FR: categories + filtering). Small page — the only design
-point worth stating is that `CATEGORIES` is **global**, shared by all tenants.
+## Step 1: Create the Page
 
-## 1. Build
+**App Builder → Create Page → Interactive Grid**
+- Page Number: `13`
+- Name: `Categories`
+- Table: `CATEGORIES`
+- **Authorization:** `IS_SYSTEM_ADMIN`
 
-- Page authorization `IS_SYSTEM_ADMIN`.
-- Interactive Grid on `CATEGORIES`: name, description, active flag, display order,
-  read-only usage count (`SELECT COUNT(*) FROM TICKETS WHERE category_id = ...`).
-- Deactivate instead of delete once a category has tickets (same rule as companies).
-- Category LOVs elsewhere (pages 4, 5, 6) filter `active = 'Y'` but are **never**
-  tenant-filtered — don't "fix" that during an isolation sweep; it's by design.
+---
 
-## Isolation checklist
+## Step 2: Configure the Grid
 
-- [ ] Page gated `IS_SYSTEM_ADMIN` (URL-jump test as a client).
-- [ ] No `company_id` on this table or its LOVs — global by design.
+| Column | Notes |
+|--------|-------|
+| `CATEGORY_NAME` | Editable |
+| `DESCRIPTION` | Editable |
+| `ACTIVE` | Switch Y/N |
+| `DISPLAY_ORDER` | Number |
+| Usage count | Read-only subquery |
+
+Disable Delete — deactivate instead.
+
+---
+
+## Step 3: Test It
+
+| Test | Expected |
+|------|----------|
+| Sara | All categories with counts |
+| Anna URL-jumps to page 13 | Authorization error |
+
+---
+
+## Isolation Checklist
+
+- [ ] Page gated `IS_SYSTEM_ADMIN`
+- [ ] No `company_id` — global by design
+
+---
+
+**Next:** move to `15-profile.md`.

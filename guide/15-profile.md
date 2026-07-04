@@ -1,30 +1,52 @@
-# Page 15 — My Profile (SHOULD)
+# Step 15 — My Profile (p14) (SHOULD)
 
-> Mockup: `docs/mockups/12-profile.html` · APEX type: Form · All roles (own record only)
+> User's own details. Agents see their per-project tiers.
 
-## Purpose
+---
 
-The user's own details. Mostly read-only; the interesting bit is showing an agent their
-**per-project tiers** (decision M revised — tier is a property of the mapping, not the person).
+## Step 1: Create the Page
 
-## 1. Build
+**App Builder → Create Page → Form**
+- Page Number: `14`
+- Name: `My Profile`
+- Data Source: `APP_USERS`
 
-Form on `APP_USERS` fetched by `NV('APP_USER_ID')` — **never** from a URL parameter.
+---
+
+## Step 2: Fetch by Current User Only
+
+Where Clause: `USER_ID = NV('APP_USER_ID')` — **never** from a URL parameter.
+
+---
+
+## Step 3: Fields
 
 | Field | Editable? |
 |-------|-----------|
-| Full name | yes |
-| Email | no (it's the login) |
-| Active role, Company, Department | no (display only) |
-| **Tier (per project)** | display only, agents: `ACME-IT: L1, GLX-OPS: L2` from `AGENT_PROJECTS` join `PROJECTS` |
-| Roles held | display `USER_ROLES` list; multi-role users switch via the nav-bar switcher (page 2), not here |
+| Full Name | Yes |
+| Email | No |
+| Active Role, Company, Department | No |
+| Tier (per project) | No — agents only. Show `ACME-IT: L2, NW-APPS: L2` |
+| Roles Held | No — display from `USER_ROLES` |
 
-Save process updates only the editable columns, keyed `WHERE user_id = NV('APP_USER_ID')`.
+Save process: `UPDATE APP_USERS SET FULL_NAME = :P14_FULL_NAME WHERE USER_ID = NV('APP_USER_ID');`
 
-**Password change:** APEX Accounts owns credentials — link to the built-in change-password
-page (`APEX_UTIL.CHANGE_CURRENT_USER_PW` under the hood) rather than building one.
+---
 
-## Isolation checklist
+## Step 4: Test It
 
-- [ ] No `P15_USER_ID` item that can be tampered — the key is always `NV('APP_USER_ID')`.
-- [ ] Update statement cannot touch role/company/tier columns (whitelist the SET list).
+| Test | Expected |
+|------|----------|
+| Anna | Name, email, role, company. No tier section. |
+| Mike (Agent) | Per-project tiers visible |
+
+---
+
+## Isolation Checklist
+
+- [ ] No `P14_USER_ID` tamper — key is always `NV('APP_USER_ID')`
+- [ ] Update can't touch role/company/tier
+
+---
+
+**Next:** move to `16-sla-policies.md`.
