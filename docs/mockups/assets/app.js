@@ -1361,8 +1361,9 @@
 
   /* ---------- page: PROJECTS (Page 11 - projects) ---------- */
   function renderProjects(u) {
-    if (!isAdmin(u)) { renderShell(u, 'home', notFound('System Admin only.'), ''); return; }
-    var allProjects = DB.projects || [];
+    if (!isAdmin(u) && !isClientAdmin(u)) { renderShell(u, 'home', notFound('System Admin or Client Admin only.'), ''); return; }
+    var admin = isAdmin(u);
+    var allProjects = (DB.projects || []).filter(function (p) { return admin || p.companyId === u.companyId; });
     var companySelect = '<select id="proj-company-filter" class="ig-filter-select" onchange="sd.filterProjectsByCompany(this.value)">' +
       '<option value="all">All Companies</option>' +
       DB.companies.filter(function (c) { return c.status === 'Active'; }).map(function (c) {
@@ -1378,29 +1379,38 @@
       var visBadge = (p.visibility || 'OPEN') === 'RESTRICTED'
         ? '<span class="tag-inactive" title="Invitation-only (decision Q)">&#128274; Restricted</span>'
         : '<span class="tag-active" title="Visible to the whole company">&#127758; Open</span>';
+      var actions = admin
+        ? '<a class="btn btn-sm btn-primary" href="19-project-detail.html?id=' + p.id + '">&#9881; Manage</a> ' +
+          '<button class="btn btn-sm" onclick="sd.showEditProject(\'' + p.id + '\')">&#9998; Edit</button>'
+        : '<a class="btn btn-sm btn-primary" href="19-project-detail.html?id=' + p.id + '">&#128065; View</a>';
       return '<tr data-proj-company="' + esc(p.companyId) + '"><td><span class="ig-row-check"></span></td>' +
-        '<td><b>' + esc(p.projectName) + '</b></td><td>' + esc(p.projectKey) + '</td><td>' + esc(c.name) + '</td>' +
+        '<td><b>' + esc(p.projectName) + '</b></td><td>' + esc(p.projectKey) + '</td>' +
+        (admin ? '<td>' + esc(c.name) + '</td>' : '') +
         '<td class="muted" style="font-size:12px;">' + esc(p.description || '') + '</td>' +
         '<td>' + visBadge + '</td>' +
         '<td><span class="' + statusClass + '">&#9679; ' + (p.isActive ? 'Active' : 'Inactive') + '</span></td>' +
         '<td>' + tk + '</td><td>' + agCount + teamCoverageBadges(p.id) + '</td>' +
-        '<td><a class="btn btn-sm btn-primary" href="19-project-detail.html?id=' + p.id + '">&#9881; Manage</a> ' +
-        '<button class="btn btn-sm" onclick="sd.showEditProject(\'' + p.id + '\')">&#9998; Edit</button></td></tr>';
+        '<td>' + actions + '</td></tr>';
     }).join('');
-    if (!rows) rows = '<tr><td colspan="10" class="muted">No projects yet.</td></tr>';
+    if (!rows) rows = '<tr><td colspan="' + (admin ? 10 : 9) + '" class="muted">No projects yet.</td></tr>';
     var html = pageBar('Administration / Projects', 'Projects', '') +
       '<div class="content"><div class="card" style="overflow:hidden;" id="ig-projects-wrap">' +
       '<div class="ig-toolbar">' +
-        '<button class="ir-btn primary" onclick="sd.showAddProject()">+ Add Row</button>' +
+        (admin ? '<button class="ir-btn primary" onclick="sd.showAddProject()">+ Add Row</button>' : '') +
         '<div class="ir-search">&#128270; <input placeholder="Search\u2026" oninput="sd.igSearch(\'ig-projects\')"></div>' +
-        '<div style="margin-left:8px;display:flex;align-items:center;gap:6px;"><label style="font-size:12px;white-space:nowrap;">Company:</label>' + companySelect + '</div>' +
+        (admin ? '<div style="margin-left:8px;display:flex;align-items:center;gap:6px;"><label style="font-size:12px;white-space:nowrap;">Company:</label>' + companySelect + '</div>' : '') +
         '<div class="ir-actions" style="margin-left:auto;">' +
           '<button class="ir-btn">Actions &#9662;</button>' +
           '<span class="ir-count" id="projects-row-count">' + allProjects.length + ' rows</span>' +
         '</div>' +
       '</div>' +
-      '<table class="t ig-table" id="ig-projects"><thead><tr><th style="width:30px;"></th><th class="sortable">Project Name</th><th class="sortable">Key</th><th class="sortable">Company</th><th>Description</th><th class="sortable">Visibility</th><th class="sortable">Status</th><th class="sortable">Tickets</th><th class="sortable">Agents</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
-      '<p class="muted" style="font-size:11.5px;margin-top:12px;">Decision O \u2014 PROJECTS layer between COMPANIES and TICKETS. Decision Q \u2014 visibility: Open (whole company) vs Restricted (invitation-only). Manage opens the Project Detail hub (team, SLA, categories, invitations).</p></div>';
+      '<table class="t ig-table" id="ig-projects"><thead><tr><th style="width:30px;"></th><th class="sortable">Project Name</th><th class="sortable">Key</th>' +
+      (admin ? '<th class="sortable">Company</th>' : '') +
+      '<th>Description</th><th class="sortable">Visibility</th><th class="sortable">Status</th><th class="sortable">Tickets</th><th class="sortable">Agents</th><th>Actions</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      (admin
+        ? '<p class="muted" style="font-size:11.5px;margin-top:12px;">Decision O \u2014 PROJECTS layer between COMPANIES and TICKETS. Decision Q \u2014 visibility: Open (whole company) vs Restricted (invitation-only). Manage opens the Project Detail hub (team, SLA, categories, access).</p>'
+        : '<p class="muted" style="font-size:11.5px;margin-top:12px;">Your company\u2019s service engagements. View opens the project hub \u2014 support team, SLA targets and categories are read-only; you manage <b>invitations</b> for Restricted projects there (decision Q).</p>') +
+      '</div>';
     renderShell(u, 'projects', html, tenantBanner(u));
   }
 
