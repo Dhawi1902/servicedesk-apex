@@ -121,8 +121,16 @@ FROM   TICKET_HISTORY h
 WHERE  h.TICKET_ID IN (SELECT TICKET_ID FROM V_MY_TICKETS);
 
 --------------------------------------------------------------------------------
--- V_MY_ATTACHMENTS — files only for visible tickets. Inherits the role matrix
--- via V_MY_TICKETS, closing the BLOB-download IDOR.
+-- V_MY_ATTACHMENTS — files only for visible tickets. Inherits the ticket role
+-- matrix via V_MY_TICKETS (closing the cross-tenant BLOB-download IDOR) AND hides
+-- files on INTERNAL comments from clients — mirroring V_MY_COMMENTS.
+-- WHY the internal-note clause is here and NOT in the page's region SQL: a
+-- declarative Download-BLOB column / GET_BLOB_FILE_SRC preview serves the file
+-- from a separate GET request keyed only by ATTACHMENT_ID — it does NOT run the
+-- page's Before-Header guard or the region's COMMENT_ID/V_MY_COMMENTS predicate.
+-- The ONLY thing protecting that endpoint is this view, so every visibility rule
+-- for a file must live here. (Client could otherwise forge a PK to pull an
+-- internal note's screenshot off a ticket they can legitimately see.)
 -- Guard the base against runtime errors if the attachments table isn't installed.
 --------------------------------------------------------------------------------
 DECLARE
@@ -135,6 +143,9 @@ BEGIN
       SELECT a.*
       FROM   TICKET_ATTACHMENTS a
       WHERE  a.TICKET_ID IN (SELECT TICKET_ID FROM V_MY_TICKETS)
+      AND    ( a.COMMENT_ID IS NULL                                    -- ticket-level: ticket already visible
+               OR V('APP_ROLE') IN ('SUPPORT_AGENT','SYSTEM_ADMIN')    -- staff see all
+               OR a.COMMENT_ID IN (SELECT COMMENT_ID FROM V_MY_COMMENTS) )  -- client: only files on comments they can see (internal hidden)
     ]';
   END IF;
 END;

@@ -13,13 +13,15 @@ exactly what the team signed off in the clickable prototype.
 |---|---|---|---|
 | 1 | `01_schema.sql` | ✅ | 13 core tables — projects layer (`PROJECTS`, `AGENT_PROJECTS` with L1–L4 tier, `USER_PROJECTS`), named SLA policies (`SLA_POLICIES` + policy-keyed `SLA_TARGETS`), `USER_ROLES`, hybrid `CATEGORIES`, `TKT-` sequence + trigger, FKs, checks, indexes |
 | 2 | `02_seed_data.sql` | ✅ | 5 companies, 7 departments, 18 users (roles in `USER_ROLES`, dual-role Northwind staff), 8 projects, 4 SLA policies (16 targets), 27 agent-project tier mappings, 1 restricted-project invitation, 7 categories, 14 tickets (mockup refs), comments, history — ends with a **count-assert block** that fails loudly on any mis-resolved key |
-| 3 | `03_attachments.sql` | optional (FR-25) | `TICKET_ATTACHMENTS` BLOB table + tenant-key enforcement trigger |
+| 3 | `03_attachments.sql` | ✅ (FR-25) | `TICKET_ATTACHMENTS` BLOB table + tenant-key enforcement trigger — must run before `05` so `V_MY_ATTACHMENTS` builds |
 | 4 | `05_isolation_views.sql` | ✅ | Tenant-scoped views (`V_MY_PROJECTS`, `V_MY_TICKETS`, …) — the isolation firewall pages build on |
 | 5 | `04_apex_accounts.sql` | ✅ (auth) | Creates one APEX Accounts login per seeded user (password `demo`) |
-| — | `00_drop_all.sql` | reset only | Drops everything (including the legacy pre-projects `AGENT_COMPANIES`) so you can re-run from step 1 |
+| 6 | `06_auth_context.sql` | ✅ (auth) | Creates `STAMP_TENANT_CONTEXT` — the post-auth procedure that stamps the tenant/role app items. Then wire its name into the auth scheme (below) |
+| — | `00_drop_all.sql` | reset only | Drops everything (including the legacy pre-projects `AGENT_COMPANIES` and `STAMP_TENANT_CONTEXT`) so you can re-run from step 1 |
 
-To start over: `00 → 01 → 02 → 03 → 05 → 04`. (Run `05_isolation_views.sql`
-after `03` so the attachments view is created; `04` can run any time after `02`.)
+To start over: `00 → 01 → 02 → 03 → 05 → 04 → 06`. (Run `03_attachments.sql`
+before `05_isolation_views.sql` so the `V_MY_ATTACHMENTS` view is created; `04` and
+`06` can run any time after `02`.)
 `02_seed_data.sql` must print **“Seed OK: all counts match.”** — anything else is a failed seed.
 
 ## Accounts (all password `demo`)
@@ -69,7 +71,7 @@ is the whole point — the auth scheme never carries tenant data.
 App Builder → **Shared Components → Authentication Schemes** → create/select
 **Application Express Accounts** → make it Current.
 
-### 2. Create 4 Application Items
+### 2. Create 6 Application Items
 Shared Components → **Application Items**. For each, set **Session State Protection =
 Restricted — may not be set from browser** (stops URL tampering).
 
@@ -77,62 +79,33 @@ Restricted — may not be set from browser** (stops URL tampering).
 |---|---|---|
 | `APP_USER_ID` | Application | Logged-in user's PK |
 | `APP_COMPANY_ID` | Application | Tenant key for isolation views |
+| `APP_COMPANY_NAME` | Application | Display: company name for the banner |
 | `APP_ROLE` | Application | Active role (from `USER_ROLES`) |
+| `APP_ROLE_DISP` | Application | Display: `INITCAP` of the active role for the banner |
 | `APP_HAS_MULTI_ROLE` | Application | `Y`/`N` — controls nav-bar role-switch visibility |
 
-### 3. Add the Post-Authentication Process
-On the authentication scheme, set **Post-Authentication Procedure Name** to a process
-running this PL/SQL (looks up the profile, picks the active role from `USER_ROLES`,
-and stamps the app items):
+`APP_COMPANY_NAME` and `APP_ROLE_DISP` feed the combined banner/role-switcher nav entry
+(`guide/02-home.md`); they're derived from the restricted items, so mark them Restricted too.
 
-```sql
-DECLARE
-    l_user_id      APP_USERS.USER_ID%TYPE;
-    l_company_id   APP_USERS.COMPANY_ID%TYPE;
-    l_default_role APP_USERS.DEFAULT_ROLE%TYPE;
-    l_status       APP_USERS.STATUS%TYPE;
-    l_active_role  USER_ROLES.ROLE%TYPE;
-    l_role_count   PLS_INTEGER;
-BEGIN
-    -- 1. Look up profile
-    SELECT USER_ID, COMPANY_ID, DEFAULT_ROLE, STATUS
-      INTO l_user_id, l_company_id, l_default_role, l_status
-      FROM APP_USERS
-     WHERE UPPER(EMAIL) = UPPER(:APP_USER);
+### 3. Create the post-auth procedure, then wire it
+The post-auth logic is a real DB object — **run `06_auth_context.sql`** (step 6 above) to
+create `STAMP_TENANT_CONTEXT`. It looks up the `APP_USERS` profile, blocks non-ACTIVE
+accounts, picks the active role from `USER_ROLES`, and stamps the 6 app items.
 
-    IF l_status <> 'ACTIVE' THEN
-        raise_application_error(-20001, 'Account is not active.');
-    END IF;
+Then wire the name (the only non-scriptable part): on the authentication scheme set
+**Login Processing → Post-Authentication Procedure Name = `STAMP_TENANT_CONTEXT`**.
 
-    -- 2. Count roles
-    SELECT COUNT(*) INTO l_role_count
-      FROM USER_ROLES WHERE USER_ID = l_user_id;
-
-    -- 3. Pick active role: DEFAULT_ROLE if set, else highest-privilege
-    IF l_default_role IS NOT NULL THEN
-        l_active_role := l_default_role;
-    ELSE
-        SELECT ROLE INTO l_active_role
-          FROM USER_ROLES
-         WHERE USER_ID = l_user_id
-         ORDER BY DECODE(ROLE,'SYSTEM_ADMIN',1,'SUPPORT_AGENT',2,'CLIENT_ADMIN',3,4)
-         FETCH FIRST 1 ROW ONLY;
-    END IF;
-
-    -- 4. Stamp session
-    APEX_UTIL.SET_SESSION_STATE('APP_USER_ID',        l_user_id);
-    APEX_UTIL.SET_SESSION_STATE('APP_COMPANY_ID',     l_company_id);
-    APEX_UTIL.SET_SESSION_STATE('APP_ROLE',           l_active_role);
-    APEX_UTIL.SET_SESSION_STATE('APP_HAS_MULTI_ROLE',
-        CASE WHEN l_role_count > 1 THEN 'Y' ELSE 'N' END);
-EXCEPTION
-    WHEN NO_DATA_FOUND THEN
-        raise_application_error(-20002, 'No application profile for this user.');
-END;
-```
-
-> Use `SET_SESSION_STATE`, not `:APP_ITEM := ...` — the post-auth process runs during
-> login before normal item binding, and the API commits reliably into session state.
+> **Why a script, not a pasted block?** The "Post-Authentication Procedure Name" attribute
+> takes the *name* of a callable procedure, so the procedure belongs in `sql/` with the rest
+> of the foundation — versioned and testable — not buried as a Builder code block.
+>
+> **Inline alternative (no SQL Workshop):** paste the same logic as an anonymous block into a
+> login-page "After Authentication" process, or into the auth scheme's **Source (PL/SQL Code)**
+> box. Identical effect; the code just lives inside the app instead of as a schema object. If you
+> go that way, the snippet in the guide is the source — don't also create `06_auth_context.sql`.
+>
+> Either way use `SET_SESSION_STATE`, not `:APP_ITEM := …` — the post-auth runs during login
+> before normal item binding, and the API commits reliably into session state.
 
 ### 4. Create 4 Authorization Schemes (one per role)
 Shared Components → **Authorization Schemes**. Type = **PL/SQL Function Body Returning
