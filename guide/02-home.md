@@ -48,6 +48,7 @@ Go to **Page 20** in Page Designer → add a **Select List** item in the Content
    WHERE USER_ID = NV('APP_USER_ID')
   ```
 - Default → Type: Item, Value: `APP_ROLE`
+- **List of Values → Display Null Value: No** — a Select List shows a blank entry at the top by default; the user always has a current role, so turn it off (no empty option).
 
 > `"ROLE"` is in double quotes because `ROLE` is a reserved word in Oracle.
 
@@ -74,6 +75,9 @@ BEGIN
     raise_application_error(-20003, 'Role not granted.');
   END IF;
   APEX_UTIL.SET_SESSION_STATE('APP_ROLE', :P20_NEW_ROLE);
+  -- keep the display-formatted role in sync so the banner updates on switch
+  APEX_UTIL.SET_SESSION_STATE('APP_ROLE_DISP',
+    INITCAP(REPLACE(:P20_NEW_ROLE, '_', ' ')));
 END;
 ```
 
@@ -85,52 +89,51 @@ Still in the **Processing** tab → right-click After Processing → **Create Br
 - Target → Page: `1`
 - This closes the modal and re-renders the nav with the new role's permissions
 
-### 2e. Add the Navigation Bar Entry
+### 2e. (moved) — the nav entry is now the combined banner in Step 3
 
-**Shared Components → Navigation Bar List** → add an entry:
-- Sequence: `5` (so it appears before the logout entry)
-- List Entry Label: `Switch Role`
-- Target → Target type: Page in this Application → Page: `20`
-- Conditions tab → Condition Type: **Expression**
-- Expression 1: `:APP_HAS_MULTI_ROLE = 'Y'`
-
-This entry only appears for users who hold more than one role.
+The old standalone "Switch Role" nav entry is replaced by the combined banner below. Skip ahead to Step 3.
 
 ---
 
-## Step 3: Add the Tenant Banner (Page 0)
+## Step 3: Combine the Banner + Role Switcher into One Nav-Bar Entry
 
-This shows the active company and role on every page (e.g. "Northwind · System Admin"). It goes on **Page 0 (Global Page)** so it appears on all pages automatically.
+Rather than a separate tenant banner *and* a separate "Switch Role" button, we make **one** Navigation Bar entry that shows the company + role (e.g. `Northwind · System Admin`) **and** opens the switcher modal when clicked. Because Page 20 is a **Modal Dialog** page, APEX auto-generates the dialog-opening link for any declarative target pointed at it — **no PL/SQL, no JavaScript, no URL/checksum handling**.
 
-### 3a. Open Page 0
+### 3a. Prerequisite: two display app items
 
-In App Builder, click on **0 - Global Page** (or type `0` in the page number field).
+The nav-bar label is built from substitution strings, so we stamp the display values at login. In `01-login.md` these two application items are stamped by the post-auth procedure alongside `APP_COMPANY_ID`:
 
-### 3b. Add a Static Content Region
+| Item | Holds |
+|------|-------|
+| `APP_COMPANY_NAME` | the login user's company name (e.g. `Northwind`) |
+| `APP_ROLE_DISP` | the role, formatted for humans — `INITCAP(REPLACE(role,'_',' '))` → "System Admin", not "SYSTEM_ADMIN" |
 
-In Page Designer → right-click on **Content Body** (or **After Logo** position) → **Create Region**:
-- Title: `Tenant Banner`
-- Type: **PL/SQL Dynamic Content**
-- PL/SQL Code:
+If you followed an older `01-login.md`, add them now (Step 3 app items + the two `SET_SESSION_STATE` lines in the post-auth procedure). `APP_ROLE_DISP` is also refreshed by the role-switch process in Step 2c, so the banner updates the instant a user switches role.
 
-```sql
-HTP.P(
-  '<span style="font-size:12px; color:#ccc;">' ||
-  APEX_ESCAPE.HTML(
-    (SELECT COMPANY_NAME FROM COMPANIES WHERE COMPANY_ID = NV('APP_COMPANY_ID'))
-  ) ||
-  ' &middot; ' ||
-  REPLACE(:APP_ROLE, '_', ' ') ||
-  '</span>'
-);
-```
+> Substitution strings can only *inject* a value, not transform it — that's why the role is pre-formatted into `APP_ROLE_DISP` rather than `REPLACE`-d inside the label.
 
-- Template: **Blank with Attributes** (so it doesn't add extra padding/borders)
-- Position: try **After Logo** or **Before Navigation Bar** — pick whatever looks cleanest
+### 3b. Add the two nav-bar entries
 
-### 3c. Save and Run
+**Shared Components → Navigation Bar List** → add these two entries (replacing any old "Switch Role" entry). Same label on both, so the banner is always visible — but only clickable when there's more than one role to switch to:
 
-You should see something like `Northwind · System Admin` near the top of every page.
+| Seq | List Entry Label | Target Type | Target | Condition Type | Expression |
+|-----|------------------|-------------|--------|----------------|------------|
+| 5 | `&APP_COMPANY_NAME. · &APP_ROLE_DISP.` | Page in this Application | Page **20** | Expression | `:APP_HAS_MULTI_ROLE = 'Y'` |
+| 6 | `&APP_COMPANY_NAME. · &APP_ROLE_DISP.` | **URL** | URL Target = `#` | Expression | `NVL(:APP_HAS_MULTI_ROLE,'N') != 'Y'` |
+
+- Use the **literal middle-dot** character `·` (U+00B7) in the label — **not** the `&middot;` HTML entity. Nav-bar labels don't decode HTML entities, so `&middot;` would render raw.
+- **Entry 5** (multi-role users, like Mike): links to Page 20, so clicking the banner opens the switcher modal. Because Page 20 is Modal Dialog, it opens as a dialog automatically.
+- **Entry 6** (single-role users): APEX **requires a target** on a list entry — you can't leave it blank ("Page must be specified"). So set **Target Type = URL** with `#` as the URL: it renders the banner text without navigating anywhere (no dead-end click into a one-option modal).
+
+> **Simpler alternative** — if you don't mind single-role users clicking into a one-option switcher, skip entry 6 entirely and just **remove the condition on entry 5** so the one clickable banner shows for everyone. Fewer moving parts; the modal just lists their single role.
+
+### 3c. Remove the old Page 0 banner (if you built it)
+
+If you already added a **Tenant Banner** region on **Page 0 (Global Page)**, delete it — the nav-bar entry now carries that text on every page. (Nothing to remove if you're building fresh.)
+
+### 3d. Save and Run
+
+You should see `Northwind · System Admin` in the **top-right nav bar** on every page — clickable (opens the switcher) for multi-role users, plain text for everyone else.
 
 ---
 
@@ -138,21 +141,21 @@ You should see something like `Northwind · System Admin` near the top of every 
 
 ### Navigation menu test
 
-| User | Expected Nav Entries | Switch Role visible? |
-|------|---------------------|---------------------|
-| `sara@northwind.example` (System Admin) | All 13 entries | Yes (top-right nav bar) |
-| `anna@acme.example` (Client User) | Home, Dashboard, Ticket Queue, Raise a Ticket, Projects, My Company, My Profile | No |
-| `bob@acme.example` (Client Admin) | Same as Anna + Users | No |
-| `mike@northwind.example` (Agent) | Home, Dashboard, Ticket Queue, Projects, My Profile | Yes |
+| User | Expected Nav Entries | Banner clickable (switcher)? |
+|------|---------------------|------------------------------|
+| `sara@northwind.example` (System Admin) | All 13 entries | Yes — banner links to the switcher |
+| `anna@acme.example` (Client User) | Home, Dashboard, Ticket Queue, Raise a Ticket, Projects, My Company, My Profile | No — banner is plain text |
+| `bob@acme.example` (Client Admin) | Same as Anna + Users | No — banner is plain text |
+| `mike@northwind.example` (Agent) | Home, Dashboard, Ticket Queue, Projects, My Profile | Yes — banner links to the switcher |
 
 ### Role switcher test
 
 1. Log in as `mike@northwind.example`
-2. Click **Switch Role** (top-right nav bar) → modal opens
+2. Click the **banner** (top-right nav bar, shows `Northwind · Support Agent`) → switcher modal opens
 3. Select **Client User** → click **Switch**
 4. Nav changes: "Raise a Ticket" and "My Company" appear; admin entries stay hidden
-5. Tenant banner still shows **Northwind** (company never changes on role switch)
-6. Switch back to **Support Agent** → nav reverts
+5. Banner now reads `Northwind · Client User` — company never changes on role switch, only the role
+6. Switch back to **Support Agent** → nav and banner revert
 
 ### Tenant banner test
 

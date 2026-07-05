@@ -34,6 +34,34 @@ each guide tells you exactly what to click, what SQL to paste, and what to test 
 - The visual reference is the mockup prototype: <https://apex-demo.dhawilabs.com> (source: `docs/mockups/`)
 - SQL scripts live in `sql/` — run them first (see Step 0)
 
+## Reading Page Designer (read this once)
+
+Almost every step happens in **Page Designer** (open a page from App Builder). It has **three panes**, and the guides point you to them with a shorthand like `[Right ▸ Source ▸ SQL Query]`. Learn these once and every step is unambiguous.
+
+**LEFT pane — the component tree.** Four tabs across the top, shown **icon-only** (hover for the label):
+
+| Tab | Icon | What lives here |
+|-----|------|-----------------|
+| **Rendering** | stacked pages / layers | Regions, page items, buttons — everything drawn on the page |
+| **Dynamic Actions** | lightning bolt | Client-side behaviour (on-change, on-click, …) |
+| **Processing** | **gear / cog** | Server-side page logic: **Processes, Computations, Validations, Branches**. ⚠️ Icon-only, 3rd from the left — this is where "add a process" always means |
+| **Page Shared Components** | shapes | Shared components this page references |
+
+**CENTRAL pane — Layout + Gallery.** The **Layout** grid (WYSIWYG) is the working area. At the **bottom** is the **Gallery** with three tabs — **Regions · Items · Buttons** — the drag source: drag a *new* component up onto the Layout to create it.
+
+**RIGHT pane — the Property Editor.** Edits the **attributes** of whatever is selected. Attributes are organised into collapsible **groups** (Oracle's term — informally "sections"): commonly **Identification · Source · Layout · Appearance · Server-side Condition · Validation · Security · Advanced**. Use the **Filter Properties** box to find one fast.
+
+**Shorthand used in the guides** (`▸` = pane → group → attribute):
+- `[Left ▸ Rendering]` — select/create a region, item, or button
+- `[Left ▸ Processing]` — create a process / computation / validation / branch (the gear tab)
+- `[Left ▸ Dynamic Actions]` — work with a dynamic action
+- `[Gallery ▸ Items]` (or `▸ Regions` / `▸ Buttons`) — drag a **new** component onto the Layout
+- `[Right ▸ Group ▸ Attribute]` — set a property, e.g. `[Right ▸ Source ▸ SQL Query]`, `[Right ▸ Security ▸ Authorization Scheme]`, `[Right ▸ Identification ▸ Type]`
+
+> "Group" = the collapsible heading in the right pane; "attribute" = the individual field inside it.
+
+---
+
 ## Build Order
 
 ### Phase 0 — Foundation (do first)
@@ -41,8 +69,8 @@ each guide tells you exactly what to click, what SQL to paste, and what to test 
 | Step | Page | Guide | What it sets up |
 |------|------|-------|-----------------|
 | 0 | DB Setup | [`00-database-setup.md`](00-database-setup.md) | Schema, seed data, isolation views, APEX accounts |
-| 1 | Login (p9999) + Security | [`01-login.md`](01-login.md) | Auth scheme, 4 app items, post-auth process, 4 authorization schemes |
-| 2 | Home (p1) + App Shell | [`02-home.md`](02-home.md) | Navigation menu, role switcher (p20), tenant banner (p0) |
+| 1 | Login (p9999) + Security | [`01-login.md`](01-login.md) | Auth scheme, 6 app items, post-auth process, 4 authorization schemes |
+| 2 | Home (p1) + App Shell | [`02-home.md`](02-home.md) | Navigation menu, combined banner + role switcher (nav bar → p20) |
 
 ### Phase 1 — Ticket Spine (the demo core)
 

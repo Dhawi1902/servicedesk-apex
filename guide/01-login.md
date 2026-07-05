@@ -21,70 +21,37 @@ This uses the accounts that `04_apex_accounts.sql` already created (all password
 
 ---
 
-## Step 3: Create 4 Application Items
+## Step 3: Create 6 Application Items
 
-**Shared Components → Application Items → Create**. Do this 4 times:
+**Shared Components → Application Items → Create**. Do this 6 times:
 
 | Name | Session State Protection |
 |------|--------------------------|
 | `APP_USER_ID` | **Restricted — may not be set from browser** |
 | `APP_COMPANY_ID` | **Restricted — may not be set from browser** |
+| `APP_COMPANY_NAME` | **Restricted — may not be set from browser** |
 | `APP_ROLE` | **Restricted — may not be set from browser** |
+| `APP_ROLE_DISP` | **Restricted — may not be set from browser** |
 | `APP_HAS_MULTI_ROLE` | **Restricted — may not be set from browser** |
 
 The "Restricted" setting is critical — it blocks URL tampering of your tenant key.
+
+`APP_COMPANY_NAME` and `APP_ROLE_DISP` are **display helpers** — the human-readable company name and role (e.g. "System Admin") used by the combined banner/role-switcher nav entry in `02-home.md`. They're derived from the restricted items, so mark them Restricted too.
 
 ---
 
 ## Step 4: Create the Post-Authentication Procedure
 
-First, create the stored procedure. Go to **SQL Workshop → SQL Commands** and run:
+The procedure is a real DB object, so it lives in a script with the rest of the foundation — not pasted here. **Run [`sql/06_auth_context.sql`](../sql/06_auth_context.sql)** in **SQL Workshop → SQL Scripts** (any time after `01_schema.sql`). It creates `STAMP_TENANT_CONTEXT`, which:
 
-```sql
-CREATE OR REPLACE PROCEDURE stamp_tenant_context
-AS
-    l_user_id      APP_USERS.USER_ID%TYPE;
-    l_company_id   APP_USERS.COMPANY_ID%TYPE;
-    l_default_role APP_USERS.DEFAULT_ROLE%TYPE;
-    l_status       APP_USERS.STATUS%TYPE;
-    l_active_role  USER_ROLES.ROLE%TYPE;
-    l_role_count   PLS_INTEGER;
-BEGIN
-    SELECT USER_ID, COMPANY_ID, DEFAULT_ROLE, STATUS
-      INTO l_user_id, l_company_id, l_default_role, l_status
-      FROM APP_USERS
-     WHERE UPPER(EMAIL) = UPPER(V('APP_USER'));
+- looks up the `APP_USERS` profile (+ company name), and **blocks non-ACTIVE accounts** (FR-6);
+- picks the active role from `USER_ROLES` — `DEFAULT_ROLE` if set, else highest-privilege;
+- stamps the 6 app items with `APEX_UTIL.SET_SESSION_STATE` (incl. `APP_COMPANY_NAME` / `APP_ROLE_DISP` for the banner).
 
-    IF l_status <> 'ACTIVE' THEN
-        raise_application_error(-20001, 'Account is not active.');
-    END IF;
-
-    SELECT COUNT(*) INTO l_role_count
-      FROM USER_ROLES WHERE USER_ID = l_user_id;
-
-    IF l_default_role IS NOT NULL THEN
-        l_active_role := l_default_role;
-    ELSE
-        SELECT ROLE INTO l_active_role
-          FROM USER_ROLES
-         WHERE USER_ID = l_user_id
-         ORDER BY DECODE(ROLE,'SYSTEM_ADMIN',1,'SUPPORT_AGENT',2,'CLIENT_ADMIN',3,4)
-         FETCH FIRST 1 ROW ONLY;
-    END IF;
-
-    APEX_UTIL.SET_SESSION_STATE('APP_USER_ID',        l_user_id);
-    APEX_UTIL.SET_SESSION_STATE('APP_COMPANY_ID',     l_company_id);
-    APEX_UTIL.SET_SESSION_STATE('APP_ROLE',           l_active_role);
-    APEX_UTIL.SET_SESSION_STATE('APP_HAS_MULTI_ROLE',
-        CASE WHEN l_role_count > 1 THEN 'Y' ELSE 'N' END);
-EXCEPTION
-    WHEN NO_DATA_FOUND THEN
-        raise_application_error(-20002, 'No application profile for this user.');
-END stamp_tenant_context;
-```
-
-Then wire it up:
+Then wire the name (the only non-scriptable part):
 **Shared Components → Authentication Schemes** → edit your current scheme → **Login Processing** tab → set **Post-Authentication Procedure Name** to `stamp_tenant_context` → **Apply Changes**.
+
+> **Prefer no SQL Workshop?** You can instead paste the *same* logic as an anonymous block into a login-page "After Authentication" process (or the auth scheme's **Source / PL/SQL Code** box) — identical effect, code lives inside the app. Pick **one** route: script **or** inline, not both, so there's a single source of truth. The scripted route is the project default because it keeps all DB objects in `sql/`.
 
 ---
 
@@ -119,7 +86,7 @@ Log in as each test user and verify via **Developer Toolbar → Session → Appl
 
 ## Isolation Checklist
 
-- [ ] All 4 app items are **Restricted — may not be set from browser**
+- [ ] All 6 app items are **Restricted — may not be set from browser**
 - [ ] Inactive user (`tom@globex.example`) is blocked at login
 - [ ] No page/process sets `APP_COMPANY_ID` outside the post-auth (and later the role switcher)
 - [ ] Session state shows correct values for each test user
