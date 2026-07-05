@@ -296,8 +296,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
     <div class="donut"><div class="center"><div class="big">38</div><div class="sm">requirements</div></div></div>
     <div class="legend">
       <div class="lrow"><span class="sw must"></span><span class="name">MUST</span><span class="desc">This <b>is</b> the product. The demo dies without these.</span><span class="cnt">18</span></div>
-      <div class="lrow"><span class="sw should"></span><span class="name">SHOULD</span><span class="desc">Earns the "breadth + polish" points with judges.</span><span class="cnt">18</span></div>
-      <div class="lrow"><span class="sw could"></span><span class="name">COULD</span><span class="desc">Only if we finish early. We commit to none of these.</span><span class="cnt">2</span></div>
+      <div class="lrow"><span class="sw should"></span><span class="name">SHOULD</span><span class="desc">Earns the "breadth + polish" points with judges.</span><span class="cnt">19</span></div>
+      <div class="lrow"><span class="sw could"></span><span class="name">COULD</span><span class="desc">Only if we finish early. We commit to none of these.</span><span class="cnt">1</span></div>
       <div class="lrow"><span class="sw future"></span><span class="name">FUTURE</span><span class="desc">Explicitly out of scope now &mdash; recorded as the post-hackathon roadmap (WON'T-have this time).</span><span class="cnt">&mdash;</span></div>
     </div>
   </div>
@@ -334,8 +334,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
   <div class="fbar">
     <button class="fbtn active" data-f="all">All <span class="b">38</span></button>
     <button class="fbtn" data-f="MUST">Must <span class="b">18</span></button>
-    <button class="fbtn" data-f="SHOULD">Should <span class="b">18</span></button>
-    <button class="fbtn" data-f="COULD">Could <span class="b">2</span></button>
+    <button class="fbtn" data-f="SHOULD">Should <span class="b">19</span></button>
+    <button class="fbtn" data-f="COULD">Could <span class="b">1</span></button>
   </div>
   <table class="rtable"><thead><tr><th>ID</th><th>Requirement</th><th>Category</th><th>Priority</th></tr></thead>
   <tbody id="reqbody"></tbody></table>
@@ -605,7 +605,7 @@ const REQS=[
  ["FR-23","Named SLA policies (Gold/Standard/Bronze/Internal, decision S) with per-severity targets + breach highlighting &mdash; SLA_POLICIES assigned via PROJECTS.sla_policy_id (is_default fallback), SLA_TARGETS keyed on (sla_policy_id, severity), colour-coded indicators.","SLA & Aging","SHOULD"],
  ["FR-35","Auto-escalation on SLA breach &mdash; two-stage (warning at 75%, reassign at 90%), per-severity threshold via the policy's SLA_TARGETS.escalation_pct, next-tier agent read from AGENT_PROJECTS for the ticket's project, workload-based selection, 5-min scheduler, hierarchical fallback when no higher tier. ITIL 4 + ISO 20000-1 &sect;8.6.3 grounded.","SLA & Aging","SHOULD"],
  ["FR-24","AI auto-suggests category / priority from the description (APEX_AI).","Stretch","COULD"],
- ["FR-25","File / screenshot attachments on a ticket (proof/evidence); stored in TICKET_ATTACHMENTS, tenant-scoped. See brief §5.1.","Stretch","COULD"],
+ ["FR-25","File / screenshot attachments on a ticket or comment (proof/evidence); stored in TICKET_ATTACHMENTS, tenant-scoped via V_MY_ATTACHMENTS. Built 2026-07-05 (promoted from COULD). See brief §5.1.","Tickets","SHOULD"],
  ["FR-30","Each ticket has a ticket type: INCIDENT (break-fix) or SERVICE_REQUEST (pre-defined request). ITIL foundational distinction.","ITIL Alignment","MUST"],
  ["FR-31","First-response time tracking &mdash; first_response_at timestamp + response SLA breach indicator.","ITIL Alignment","SHOULD"],
  ["FR-32","Dashboard SLA Compliance % KPI card (resolved within SLA / total resolved). The #1 ITIL metric.","ITIL Alignment","SHOULD"],

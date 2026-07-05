@@ -47,12 +47,14 @@ the entire "production-level" claim. Test this harder than anything else.
 - **Support Agent** — works tickets for their **assigned projects only** via `AGENT_PROJECTS` (status/comments/resolve); tiered L1–L4 **per project** (`AGENT_PROJECTS.tier`, decision M revised 2026-07-04); can **reassign to same-or-higher tier on the ticket's project** (FR-26). No user/company admin.
 - **System Admin** — everything across all companies and projects; manages companies/projects/users; **assigns** tickets.
 
-### Data model (13 tables)
+### Data model (15 tables)
 `COMPANIES` · `PROJECTS` (service engagements per company, decision O; `project_key` globally unique + company-prefixed e.g. ACME-IT; `sla_policy_id` FK nullable — NULL = default policy; `visibility` = `OPEN`/`RESTRICTED`, decision Q) · `DEPARTMENTS` (per-company, **metadata only** — routing/reporting, not visibility scoping, decision N revised) · `APP_USERS` (`default_role` nullable — landing role at login; role moved to `USER_ROLES`, `department_id` as metadata) · `USER_ROLES` (one-to-many roles per user, decision P — enables role-switching without re-login; Northwind agents get SUPPORT_AGENT + CLIENT_USER) · `TICKETS` · `TICKET_COMMENTS` · `TICKET_HISTORY` · `CATEGORIES` ·
 `AGENT_PROJECTS` (which projects each agent covers **and at what tier** — `tier` L1–L4 per mapping, decisions I/M revised; scopes an agent's queue; all tier checks evaluate on the ticket's project) ·
 `USER_PROJECTS` (**invitation list** into Restricted projects — rows grant, never restrict; Open projects visible to the whole company automatically; managed by Client Admin, decision Q) ·
 `SLA_POLICIES` (named SLA tiers Gold/Standard/Bronze/Internal, decision S — `is_default` fallback + `effective_from`/`approved_by`/`notes`; projects are *assigned* a policy) ·
-`SLA_TARGETS` (per-severity target rows **per policy** — keyed `(sla_policy_id, severity)`: `response_hours`, `resolution_days`, `escalation_pct` for auto-escalation threshold, FR-23/FR-35).
+`SLA_TARGETS` (per-severity target rows **per policy** — keyed `(sla_policy_id, severity)`: `response_hours`, `resolution_days`, `escalation_pct` for auto-escalation threshold, FR-23/FR-35) ·
+`ADMIN_AUDIT_LOG` (admin-entity change trail — companies/projects/users/depts/categories/team-mappings/invitations/SLA policies; cross-tenant, System-Admin-only; distinct from ticket-scoped `TICKET_HISTORY`; added 2026-07-05) ·
+`TICKET_ATTACHMENTS` (files/screenshots on tickets & comments, BLOB; tenant-scoped via `V_MY_ATTACHMENTS`, which also hides internal-note files from clients — the guard lives in the view because the declarative Download-BLOB endpoint bypasses page/region predicates; FR-25, **built 2026-07-05**).
 `TICKETS.ticket_type` is `INCIDENT` or `SERVICE_REQUEST` (FR-30, ITIL distinction).
 `TICKETS.severity` is client-set (business impact: Critical/Major/Minor/**Low**); `TICKETS.priority` is support-set (P1–P4, nullable until triaged — **required before In Progress**, FR-37); `TICKETS.first_response_at` tracks first agent response (FR-31); `TICKETS.sla_due_date` is stamped at creation from the project's SLA policy (default policy if none assigned).
 `TICKETS.resolution_code` + `resolution_summary` are required on Resolve (FR-36); `TICKETS.reopen_count` tracks reopens.
@@ -64,8 +66,8 @@ Every state change is written to `TICKET_HISTORY` (who/what/when).
 
 ### Scope (MoSCoW) — protect the demo over adding features
 - **MUST (18):** companies/projects/users/roles, login + isolation, ticket CRUD + lifecycle (severity = client-set, priority = support-set, On Hold + Reopen — decision B), **ticket type INCIDENT/SERVICE_REQUEST** (FR-30), assignment (admin + agent self-assign + client from L1 mapped agents per project), comments + history, dashboard.
-- **SHOULD (18):** categories/priorities + filtering, branded theme, assignment notification, status-change notification (FR-22), **comment notification** (FR-38), CSAT rating (one-time, FR-27), dashboard analytics + **SLA Compliance % KPI** (FR-32), auto-ack email, **reassign to higher tier** (FR-26), **auto-escalation on SLA breach + customer notification** (FR-35), **named SLA policies with per-severity targets** (FR-23, decision S), first-response tracking (FR-31), workload in assignment LOV (FR-33), severity guidance text (FR-34), **resolution code + summary** (FR-36), **triage gate** (FR-37).
-- **COULD (2, do not commit):** AI category suggest (`APEX_AI`), file/screenshot attachments (`TICKET_ATTACHMENTS` BLOB, tenant-scoped — brief §5.1).
+- **SHOULD (19):** categories/priorities + filtering, branded theme, assignment notification, status-change notification (FR-22), **comment notification** (FR-38), CSAT rating (one-time, FR-27), dashboard analytics + **SLA Compliance % KPI** (FR-32), auto-ack email, **reassign to higher tier** (FR-26), **auto-escalation on SLA breach + customer notification** (FR-35), **named SLA policies with per-severity targets** (FR-23, decision S), first-response tracking (FR-31), workload in assignment LOV (FR-33), severity guidance text (FR-34), **resolution code + summary** (FR-36), **triage gate** (FR-37), **file/screenshot attachments** (FR-25, built 2026-07-05 — upload on Raise/Comment, download+preview on Detail, tenant-scoped via `V_MY_ATTACHMENTS`).
+- **COULD (1, do not commit):** AI category suggest (`APEX_AI`, FR-24) — **blocked for the demo: every Generative AI provider needs an API key we don't have** (checked 2026-07-05). (File/screenshot attachments were promoted to SHOULD and built.)
 - **FUTURE:** ITIL-prioritized production roadmap (P1–P4) — separate incident/SR workflows, SLA pause + business-hours, VPD/RLS, **KB / known error DB** (P2, ISO 20000 §8.7.1), **email-to-ticket + reply-via-email** (P2), hierarchical escalation, major incident + duplicate linking, canned responses, bulk actions, auto-close, **SSO** (P3), urgency field, problem management, incident ownership, rich text, announcement banner, REST API/ORDS, and more. Park "could we also…" ideas here, not in the build (brief §1).
 
 ## APEX APIs most relevant to this build
@@ -122,12 +124,14 @@ Use it to agree on layout/flow and to demo RBAC + tenant isolation before buildi
 Build-ready SQL scripts to stand up the schema, seed data, auth, and tenant isolation in the
 APEX workspace. Full run order + App Builder wiring in [`sql/README.md`](sql/README.md).
 - **Run order (SQL Workshop → SQL Scripts):** `01_schema` → `02_seed_data` → `03_attachments`
-  (optional, FR-25) → `05_isolation_views` → `04_apex_accounts`. `00_drop_all` resets everything.
+  (optional, FR-25) → `05_isolation_views` → `04_apex_accounts` → `06_auth_context`. `00_drop_all` resets everything.
 - **Auth = APEX Accounts** (built-in salted hashing/lockout; no password column in `APP_USERS`).
-  A post-auth process stamps `APP_COMPANY_ID`/`APP_USER_ID`/`APP_ROLE`/`APP_HAS_MULTI_ROLE` app
-  items (role from `USER_ROLES`, decision P) — that split is what carries tenant context; the
-  auth scheme never does. `04_apex_accounts.sql` auto-creates a
-  `demo`-password login per seeded user. (Reference-verified: `APEX_UTIL.CREATE_USER`.)
+  `06_auth_context.sql` creates the `STAMP_TENANT_CONTEXT` post-auth procedure (wire its name into the
+  auth scheme by hand); it stamps `APP_USER_ID`/`APP_COMPANY_ID`/`APP_COMPANY_NAME`/`APP_ROLE`/`APP_ROLE_DISP`/`APP_HAS_MULTI_ROLE`
+  app items (role from `USER_ROLES`, decision P; `APP_COMPANY_NAME`+`APP_ROLE_DISP` feed the combined
+  banner/role-switcher) — that split is what carries tenant context; the auth scheme never does.
+  `04_apex_accounts.sql` auto-creates a `demo`-password login per seeded user.
+  (Reference-verified: `APEX_UTIL.CREATE_USER`, `APEX_UTIL.SET_SESSION_STATE`.)
 - **Tenant isolation = tenant-scoped views** (`V_MY_TICKETS` / `V_MY_COMMENTS` / `V_MY_HISTORY` /
   `V_MY_ATTACHMENTS` in `05_isolation_views.sql`). They encode the full role matrix once (via
   `V()`/`NV()` session functions, fail-closed outside a session). **Rule for the whole team:**

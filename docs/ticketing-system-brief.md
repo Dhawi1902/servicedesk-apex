@@ -86,10 +86,10 @@ We organize features by priority so we **always have a working demo**, even if l
 - **Triage gate** — priority required before moving to In Progress (FR-37) — enforces ITIL categorization/prioritization step
 - **Category required** at ticket creation (FR-7 update) — prevents uncategorized tickets from breaking reports
 - **Comment notification** — notify the other party when a comment is added (FR-38, deferred until FR-21/22 are working)
+- **File / screenshot attachments** on tickets and comments (proof/evidence) — declarative File Browse + BLOB, tenant-scoped via `V_MY_ATTACHMENTS` (FR-25; **built 2026-07-05**, promoted from COULD)
 
 **COULD — only if we finish MUST + SHOULD early. Do NOT commit to these.**
-- AI assist (APEX has a built-in `APEX_AI` package — e.g. auto-suggest a ticket's category/priority). Strong demo moment *if* time allows.
-- **File / screenshot attachments** on tickets (proof/evidence) — almost entirely declarative; build-ready DDL + isolation plan in §5.1
+- AI assist (APEX has a built-in `APEX_AI` package — e.g. auto-suggest a ticket's category/priority). Strong demo moment *if* time allows. **Blocked for the demo: every Generative AI provider needs an API key, which we don't have (checked 2026-07-05).**
 - Knowledge base
 
 > **Lead's recommendation:** cut AI entirely. SLA breach highlighting is promoted to **SHOULD** — it's cheap (a lookup table + a computed column + conditional formatting) and gives the demo a production feel. The SHOULD items above are all verified feasible in APEX 26.1 and low-cost, so they're worth committing to.
@@ -260,7 +260,7 @@ Concrete "the system must…" statements, grouped by area. In the meeting, confi
 
 ### Stretch (do not commit)
 - FR-24: AI auto-suggests category/priority from the description (`APEX_AI`). *(COULD)*
-- FR-25: **File / screenshot attachments** on a ticket (and optionally on a comment) as proof/evidence, so an agent can view or download them while working the ticket. Uploaded via a declarative *File Browse* item, stored in a `TICKET_ATTACHMENTS` BLOB table, displayed as a download link (and inline preview for images). **Subject to the same `company_id` tenant scoping as everything else** (see §5.1). *(COULD)*
+- FR-25: **File / screenshot attachments** on a ticket (and optionally on a comment) as proof/evidence, so an agent can view or download them while working the ticket. Uploaded via a declarative *File Browse* item, stored in a `TICKET_ATTACHMENTS` BLOB table, displayed as a download link (and inline preview for images). **Subject to the same `company_id` tenant scoping as everything else** (see §5.1). Promoted from COULD and **built 2026-07-05** (tenant-scoped via `V_MY_ATTACHMENTS`). *(SHOULD)*
 
 ---
 
@@ -334,7 +334,8 @@ Now that we know the requirements and workflow, we can model the data to support
 | **USER_PROJECTS** | Invitations into **Restricted** projects — *the client-side visibility key (decisions N/Q)* | `user_id` (FK), `project_id` (FK); together the PK. **Invitation list (decision Q):** a client user sees all **Open** projects of their company automatically, plus any **Restricted** projects they have a row for. Rows **grant** (never restrict) access. Managed by the Client Admin. |
 | **SLA_POLICIES** | Named SLA policy tiers (decision S) — e.g. Gold / Standard / Bronze / Internal; projects are *assigned* a policy instead of owning target rows (FR-23) | `sla_policy_id` (PK), `policy_name`, **`is_default`** (Y/N — exactly one; the fallback for projects with no assignment), `description`, `effective_from` (DATE), `approved_by` (FK user), `notes` (ISO 20000 §8.6.3 documentation) |
 | **SLA_TARGETS** | Per-severity targets belonging to an SLA policy — admin-managed (FR-23, decision S) | `sla_target_id` (PK), `sla_policy_id` (FK — the owning policy), `severity` (matches `TICKETS.severity`), `response_hours` (NUMBER), `resolution_days` (NUMBER), **`escalation_pct`** (NUMBER, default 80 — % of SLA elapsed that triggers auto-escalation, per policy-severity, FR-35); unique on `(sla_policy_id, severity)` |
-| **TICKET_ATTACHMENTS** *(COULD — FR-25)* | Files/screenshots attached to a ticket as evidence | `attachment_id` (PK), `ticket_id` (FK), `company_id` (FK — *tenant key, denormalized on purpose; see §5.1*), `comment_id` (FK, nullable — null = ticket-level), `file_name`, `mime_type`, `file_blob` (BLOB), `uploaded_by`, `uploaded_at` |
+| **TICKET_ATTACHMENTS** *(SHOULD — FR-25, built)* | Files/screenshots attached to a ticket (or comment) as evidence | `attachment_id` (PK), `ticket_id` (FK), `company_id` (FK — *tenant key, denormalized on purpose; see §5.1*), `comment_id` (FK, nullable — null = ticket-level), `file_name`, `mime_type`, `file_blob` (BLOB), `uploaded_by`, `uploaded_at` |
+| **ADMIN_AUDIT_LOG** *(added 2026-07-05)* | Admin-entity change trail — companies/projects/users/departments/categories/team mappings/invitations/SLA policies. Distinct from ticket-scoped `TICKET_HISTORY`; cross-tenant, System-Admin-only; backs the audit-log page | `log_id` (PK), `user_id` (FK — actor), `action`, `entity`, `record_key`, `old_value`, `new_value`, `logged_at` |
 
 > **Severity vs Priority (ITIL-aligned, Decision K):** Severity (Critical/Major/Minor/Low) maps to ITIL's **Impact** — the client's assessment of business disruption, set at ticket creation, required. Priority (P1/P2/P3/P4) maps to ITIL's **Priority** — the support team's work-order decision, set during triage, nullable until then. Both can start as simple fixed lists (check constraints). SLA targets key off severity, not priority. *(Post-hackathon: add an **Urgency** dimension to complete the ITIL Impact × Urgency = Priority matrix — see FUTURE P3.)*
 
@@ -373,9 +374,10 @@ erDiagram
     TICKETS ||--o{ TICKET_ATTACHMENTS : "has"
     TICKET_COMMENTS ||--o{ TICKET_ATTACHMENTS : "may carry"
     COMPANIES ||--o{ TICKET_ATTACHMENTS : "owns"
+    APP_USERS ||--o{ ADMIN_AUDIT_LOG : "logs admin action"
 ```
 
-> **Note:** `TICKET_ATTACHMENTS` is a COULD feature (FR-25). It carries its **own** `company_id` (copied from the parent ticket at upload) so every BLOB-download query can filter on the tenant key directly — without a join — closing the IDOR gap on file downloads. Build-ready DDL and the full isolation plan are in §5.1.
+> **Note:** `TICKET_ATTACHMENTS` is **built** (FR-25, promoted from COULD 2026-07-05). It carries its **own** `company_id` (copied from the parent ticket at upload) so every BLOB-download query can filter on the tenant key directly — without a join — closing the IDOR gap on file downloads. Reads go through `V_MY_ATTACHMENTS` (which also hides internal-note files from clients — the guard must live in the view because the declarative Download-BLOB endpoint bypasses page/region predicates). Build-ready DDL and the full isolation plan are in §5.1.
 
 > **Note:** `AGENT_PROJECTS` is a many-to-many bridge — one agent covers several projects, one project is covered by several agents. It's what scopes an agent's queue to only their assigned projects (decision I). It does **not** weaken tenant isolation: customers are still locked to their own `company_id`; this table only *narrows* what an agent sees on the support side.
 
@@ -391,7 +393,7 @@ How we enforce it (from simplest to most robust — pick based on comfort):
 
 > **Decision (C) — ✅ confirmed:** approach **1 + 2** for v1 (application item + WHERE clause + authorization schemes). VPD/RLS is FUTURE P1 for defence-in-depth. (Note for the demo: explicitly *show* a client logging in and seeing only their tickets — that proves the requirement live.)
 
-### 5.1 File / screenshot attachments (FR-25 — COULD, build-ready)
+### 5.1 File / screenshot attachments (FR-25 — SHOULD, built 2026-07-05)
 
 A client raising a ticket — or anyone commenting — can attach a file or screenshot as proof/evidence; a support agent views or downloads it while working the ticket. This is **almost entirely declarative** in APEX (verified against the offline 26.1 reference) and is a **half-day to one-day** build, so it stays a **COULD** — only built if MUST + SHOULD finish early — but is documented here ready to go.
 
