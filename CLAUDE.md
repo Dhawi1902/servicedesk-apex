@@ -102,8 +102,11 @@ Look these up in the reference before implementing:
 | `mockups/` | Clickable HTML/JS prototype of all 18 pages (APEX Universal-Theme look) |
 
 Build-phase documentation lives at repo root in [`guide/`](guide/README.md) — one doc per APEX
-page (18 pages = 12 MUST + 6 SHOULD, guide file numbers = APEX page numbers) plus SQL setup;
-it supersedes the old `docs/page-build-guide.md`.
+page (18 pages = 12 MUST + 6 SHOULD; **guide file number ≠ APEX page number** — page numbers
+follow feature order, e.g. Home=p1/file 02, Dashboard=p2/file 08; each guide's `(pN)` header is
+authoritative) plus SQL setup;
+it supersedes the old `docs/page-build-guide.md`. Exception: `19-navigation.md` is **not** a page —
+it configures the left nav menu (a shared component), built **last** once every page exists to link to.
 
 When project decisions change (e.g. the A–F open decisions in the brief), **update all four**
 so they stay consistent.
