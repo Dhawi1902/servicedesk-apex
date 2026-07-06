@@ -1,21 +1,40 @@
 # Step 17 — Agent-Project Mapping (p16) (SHOULD)
 
-> **Who covers what** — a read-only, exceptions-first coverage overview of which agents cover
+> ***Who covers what** — a read-only, exceptions-first coverage overview of which agents cover
 > which projects and at what tier. Coverage gaps show by default. Team changes do **not** happen
 > here — they live on each project's **Support Team** tab (page 11), where the project context is
 > fixed so you can't map an agent to the wrong company. Droppable if short on time — page 11 covers
 > the MUST need; this page is the global rollup that makes the L1 gate and tier coverage visible at a
-> glance. System Admin only.
+> glance. System Admin only.*
 
 ---
 
 ## Step 1: Create the Page
 
-**App Builder → Create Page → Blank Page**
-- Page Number: `16`
-- Name: `Agent-Project Mapping`
-- Breadcrumb entry: `Administration / Agent Mapping`
-- **Authorization:** `IS_SYSTEM_ADMIN`
+This page is a **Blank Page** — a read-only rollup we hand-build from three regions, **not** an
+Interactive Grid (there is no single table to edit; Step 5 confirms it stays read-only). Open your app
+in **App Builder** and click the green **Create Page** button (top-right), then pick the **Blank Page**
+tile. That opens the **Create Blank Page** wizard — a **single** screen (a Blank Page has no Data
+Source step and no second screen):
+
+> ***Page already blank?** This page is a Blank Page anyway. If page 16 already exists, open it in Page
+> Designer and skip the create step — set the **Authorization** below, then build the three regions.*
+
+**Wizard screen 1 — Page Definition + Navigation:**
+
+| Field | Set to | Notes |
+|-------|--------|-------|
+| Page Number | `16` | Guide file number = APEX page number. |
+| Name | `Agent-Project Mapping` | Also becomes the page Title. |
+| Page Mode | `Normal` | Full page, not a dialog. |
+| Use Breadcrumb | **On** — entry `Administration / Agent Mapping` | Matches the mockup's breadcrumb; the nav-menu link is wired later (Step 19). |
+| Use Navigation | **Off** | Nav menu built later (Step 19). |
+
+Click **Create Page**. Because it's a Blank Page, APEX drops you into Page Designer on an **empty**
+page — no region, no data source, no items. You add everything by hand next.
+
+**Then set the page authorization:** `IS_SYSTEM_ADMIN` — select the page root node `[Left Pane ▸ Rendering]`
+then `[Right Pane ▸ Security ▸ Authorization Scheme]` (also covered in Step 6). Now build the three regions.
 
 The page carries three stacked regions in this order (matching the mockup top-to-bottom):
 1. **Coverage KPIs** — a 5-tile stat strip (also the quick filters).
@@ -26,10 +45,10 @@ The page carries three stacked regions in this order (matching the mockup top-to
 
 ## Step 2: Coverage KPIs (Region 1)
 
-Drag a new region `[Gallery ▸ Regions]` onto `[Central ▸ Layout]`; set it to a **Cards** region (or a
-simple stat strip) via `[Right ▸ Identification ▸ Type]` = Cards, title *Coverage* in
-`[Right ▸ Identification ▸ Title]`, and source type **SQL Query** in `[Right ▸ Source ▸ Type]` (query in
-`[Right ▸ Source ▸ SQL Query]`). One row of five values — tile order and labels match the mockup exactly:
+Drag a new region `[Central Pane ▸ Gallery ▸ Regions]` onto `[Central Pane ▸ Layout]`; set it to a **Cards** region (or a
+simple stat strip) via `[Right Pane ▸ Identification ▸ Type]` = Cards, title *Coverage* in
+`[Right Pane ▸ Identification ▸ Title]`, and source type **SQL Query** in `[Right Pane ▸ Source ▸ Type]` (query in
+`[Right Pane ▸ Source ▸ SQL Query]`). One row of five values — tile order and labels match the mockup exactly:
 
 | # | Tile | Value | Meaning (tooltip) |
 |---|------|-------|-------------------|
@@ -58,42 +77,42 @@ SELECT COUNT(*)                                              AS ACTIVE_PROJECTS,
        )
 ```
 
-> The mockup makes each tile a one-click filter on the list below. Declarative equivalent: give each
-> card a **Link** (`[Right ▸ Link ▸ Target]`) that sets a page item `:P16_VIEW`
+> *The mockup makes each tile a one-click filter on the list below. Declarative equivalent: give each
+> card a **Link** (`[Right Pane ▸ Link ▸ Target]`) that sets a page item `:P16_VIEW`
 > (`all` / `no-l1` / `no-agents` / `no-l2` / `single`) and refreshes Region 3 (a Refresh dynamic action
-> under `[Left ▸ Dynamic Actions]`). Optional polish — the read-only rollup works without it.
+> under `[Left Pane ▸ Dynamic Actions]`). Optional polish — the read-only rollup works without it.*
 
 ---
 
 ## Step 3: Filters (Region 2)
 
-Drag a new region `[Gallery ▸ Regions]` onto `[Central ▸ Layout]`, set it to Static Content via
-`[Right ▸ Identification ▸ Type]` — a toolbar region holding, left to right:
+Drag a new region `[Central Pane ▸ Gallery ▸ Regions]` onto `[Central Pane ▸ Layout]`, set it to Static Content via
+`[Right Pane ▸ Identification ▸ Type]` — a toolbar region holding, left to right:
 
-- **View toggle** — two buttons dragged from `[Gallery ▸ Buttons]`: `⚠ Needs attention (N)` and
+- **View toggle** — two buttons dragged from `[Central Pane ▸ Gallery ▸ Buttons]`: `⚠ Needs attention (N)` and
   `All projects (N)`. Default to **Needs attention** when any gap exists, else **All projects**
   (set `:P16_VIEW` accordingly on load).
-- **Company** — a Select List item `[Gallery ▸ Items]`, type set in `[Right ▸ Identification ▸ Type]`,
-  LOV in `[Right ▸ List of Values]`: `All Companies` + one entry per **Active** company
+- **Company** — a Select List item `[Central Pane ▸ Gallery ▸ Items]`, type set in `[Right Pane ▸ Identification ▸ Type]`,
+  LOV in `[Right Pane ▸ List of Values]`: `All Companies` + one entry per **Active** company
   (`SELECT COMPANY_NAME d, COMPANY_ID r FROM COMPANIES WHERE STATUS = 'ACTIVE' ORDER BY COMPANY_NAME`).
-- **Project** — a Select List item `[Gallery ▸ Items]`, `All Projects` + one entry per **active**
+- **Project** — a Select List item `[Central Pane ▸ Gallery ▸ Items]`, `All Projects` + one entry per **active**
   project, shown as `PROJECT_KEY — PROJECT_NAME`
   (`SELECT PROJECT_KEY || ' — ' || PROJECT_NAME d, PROJECT_ID r FROM PROJECTS WHERE IS_ACTIVE = 'Y' ORDER BY PROJECT_KEY`).
 
-Wire each item's **Change** to a Dynamic Action `[Left ▸ Dynamic Actions]` that refreshes Region 3.
+Wire each item's **Change** to a Dynamic Action `[Left Pane ▸ Dynamic Actions]` that refreshes Region 3.
 
 ---
 
 ## Step 4: Coverage by project (Region 3)
 
-Drag a new region `[Gallery ▸ Regions]` onto `[Central ▸ Layout]` and set it to **Interactive Report**
-via `[Right ▸ Identification ▸ Type]`. Add a **Control Break on `PROJECT_KEY`** at runtime (Actions →
+Drag a new region `[Central Pane ▸ Gallery ▸ Regions]` onto `[Central Pane ▸ Layout]` and set it to **Interactive Report**
+via `[Right Pane ▸ Identification ▸ Type]`. Add a **Control Break on `PROJECT_KEY`** at runtime (Actions →
 Format → Control Break) — save it as the report default. The control break gives the mockup's
 "grouped-by-project card" effect: each project is a group header, its mapped agents listed beneath with
 their tier and open-ticket count.
 
-**Region Source SQL** — select the IR region `[Left ▸ Rendering]` and paste into
-`[Right ▸ Source ▸ SQL Query]` (`LEFT JOIN` so a project with no agents still shows a group — the
+**Region Source SQL** — select the IR region `[Left Pane ▸ Rendering]` and paste into
+`[Right Pane ▸ Source ▸ SQL Query]` (`LEFT JOIN` so a project with no agents still shows a group — the
 *No agents mapped* case):
 
 ```sql
@@ -123,8 +142,8 @@ SELECT p.PROJECT_KEY,
  ORDER BY p.PROJECT_KEY, ap.TIER, u.FULL_NAME
 ```
 
-**Columns** — select each column under the IR region `[Left ▸ Rendering]` and set its label in
-`[Right ▸ Heading ▸ Heading]` (in mockup order; the group header carries the project identity, the rows
+**Columns** — select each column under the IR region `[Left Pane ▸ Rendering]` and set its label in
+`[Right Pane ▸ Heading ▸ Heading]` (in mockup order; the group header carries the project identity, the rows
 carry the agents):
 
 | Column | Source | Notes |
@@ -136,8 +155,8 @@ carry the agents):
 | Open | `OPEN_IN_PROJECT` | Open tickets this agent holds **in this project** |
 | Coverage | `FLAG_NO_L1`, `FLAG_NO_L2PLUS` | Warning chips on the group; show raw text (a later CSS pass styles them) |
 
-- Optionally add a **Link column** `Manage Team`: select the column `[Left ▸ Rendering]`, set
-  `[Right ▸ Identification ▸ Type]` = Link and point `[Right ▸ Link ▸ Target]` at page **11**
+- Optionally add a **Link column** `Manage Team`: select the column `[Left Pane ▸ Rendering]`, set
+  `[Right Pane ▸ Identification ▸ Type]` = Link and point `[Right Pane ▸ Link ▸ Target]` at page **11**
   (Project Detail) with `P11_PROJECT_ID = #PROJECT_ID#`, label `⚙ Manage Team`. This is the mockup's per-project button — the
   **only** door to editing the team (one door, one truth). This page stays read-only.
 - For the `:P16_VIEW` quick-filter, add a WHERE branch keyed off the flags (e.g. `no-l1` →
@@ -157,15 +176,15 @@ company — deliberately omitted, matching the mockup.
 
 ## Step 6: Authorization
 
-- Page-level **Authorization Scheme:** select the page (root) node `[Left ▸ Rendering]` and set
-  `[Right ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN` (the whole page — KPIs, filters, list).
+- Page-level **Authorization Scheme:** select the page (root) node `[Left Pane ▸ Rendering]` and set
+  `[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN` (the whole page — KPIs, filters, list).
 - No tenant filter: System Admin sees **all** companies and projects by design, so the KPI and
   open-ticket counts intentionally span every tenant. This is the one place base tables are read
   directly, and it is safe precisely because the page is gated to the global-admin role.
 
 ---
 
-## Step 3: Test It
+## Step 7: Test It
 
 | Test | Expected |
 |------|----------|
@@ -190,4 +209,4 @@ company — deliberately omitted, matching the mockup.
 
 ---
 
-**Next:** move to `18-audit-log.md` — the last page!
+**Next:** move to `18-audit-log.md`.

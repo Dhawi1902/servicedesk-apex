@@ -1,179 +1,195 @@
 # Step 3 — Ticket Queue (p3) (MUST)
 
-> The main browse/filter screen. Same page, same SQL for all roles — `V_MY_TICKETS`
+> *The main browse/filter screen. Same page, same SQL for all roles — `V_MY_TICKETS`
 > handles the scoping. The title, quick-filters, and the Company/Project columns adapt
-> to the logged-in role, but every row a user sees is one the view already allowed.
+> to the logged-in role, but every row a user sees is one the view already allowed.*
 
 ---
 
 ## Step 1: Create the Page
 
-**App Builder → Create Page → Faceted Search**
-- Page Number: `3`
-- Name: `Ticket Queue`
-- Table / View: pick `V_MY_TICKETS` (or use the custom SQL query in Step 2)
+> **Page already blank?** If page 3 already exists as a blank page, skip the wizard (creating on an
+> existing page number clashes). Open **page 3** in Page Designer and add the region by hand instead:
+> `[Central Pane ▸ Gallery ▸ Regions]` onto `[Central Pane ▸ Layout]`, `[Right Pane ▸ Identification ▸ Type]` = **Faceted Search**
+> (or **Interactive Report** per the fallback note below), `[Right Pane ▸ Source]` = `V_MY_TICKETS`. Then continue
+> from Step 2.
 
-**Role-based title.** Once the page exists, open it in Page Designer. Select the search
-region `[Left ▸ Rendering]` and set its title from the role so clients see their own
-tickets and staff see the shared queue:
-- Title expression `[Right ▸ Identification ▸ Title]`: `My Tickets` when
-  `:APP_ROLE IN ('CLIENT_USER','CLIENT_ADMIN')`, otherwise `Ticket Queue`.
-  (Breadcrumb: `Tickets / Queue`.)
+> *This page is a **Faceted Search** page (a filterable report with a facet sidebar).*
 
-> If Faceted Search isn't available or gives trouble, fall back to an **Interactive Report**
-> (facets → IR filters, quick-filter chips → a `P3_QUICK` item + WHERE clause).
+1. Open your app in **App Builder** and click the green **Create Page** button (top-right).
+2. Pick the **Faceted Search** tile.
+3. Wizard **screen 1** — fill this table, then click **Create Page**:
+
+   | Field | Set to | Notes |
+   |-------|--------|-------|
+   | Page Number | `3` | Guide file number = APEX page number. |
+   | Name | `Ticket Queue` | Also becomes the page Title. |
+   | Page Mode | `Normal` | Full page, not a dialog. |
+   | Data Source | `Local Database` | Data lives in this workspace's schema. |
+   | Source Type | `Table / View` | Point at the isolation view; Step 2 swaps in the enriched query. |
+   | Table / View Owner | *your workspace schema* | Leave the default. |
+   | Table / View Name | `V_MY_TICKETS` | The tenant-scoped view — never base `TICKETS`. |
+   | Use Breadcrumb | **Off** | Nav is built later (Step 19). |
+   | Use Navigation | **Off** | Same — skip for now. |
+
+> *APEX drops you into Page Designer with **two regions** on this page: a **Faceted Search** region and a **Search Results** classic-report region. Right now both are generic.*
+> *If Faceted Search isn't available or gives trouble, fall back to an **Interactive Report**.*
+
+4. Select the **search results region** in `[Left Pane ▸ Rendering]`.
+5. Set its title from the role so clients see their own tickets and staff see the shared queue:
+   - `[Right Pane ▸ Identification ▸ Title]`: `My Tickets` when `:APP_ROLE IN ('CLIENT_USER','CLIENT_ADMIN')`, otherwise `Ticket Queue`.
 
 ---
 
 ## Step 2: Set the Region Source
 
-Select the region `[Left ▸ Rendering]` and set `[Right ▸ Source ▸ SQL Query]`. Names come straight from `TICKETS` /
-`sql/05_isolation_views.sql`; the joins only add display labels (assignee, project,
-company) for tickets the view already returns.
+> *Names come straight from `TICKETS` / `sql/05_isolation_views.sql`; the joins only add display labels.*
 
-```sql
-SELECT t.TICKET_ID,
-       t.TICKET_REF,
-       t.SUBJECT,
-       t.TICKET_TYPE,
-       t.SEVERITY,
-       t.PRIORITY,
-       t.STATUS,
-       t.COMPANY_ID,
-       c.COMPANY_NAME,
-       t.PROJECT_ID,
-       p.PROJECT_NAME,
-       t.ASSIGNED_TO,
-       a.FULL_NAME                                   AS ASSIGNEE_NAME,
-       t.CREATED_AT,
-       t.SLA_DUE_DATE,
-       -- Age since raised (mirrors the mockup's "<1d" / "Nd")
-       CASE WHEN SYSDATE - CAST(t.CREATED_AT AS DATE) < 1
-            THEN '<1d'
-            ELSE FLOOR(SYSDATE - CAST(t.CREATED_AT AS DATE)) || 'd'
-       END                                           AS AGE,
-       -- SLA status (raw value; a later CSS pass turns it into a badge)
-       CASE
-         WHEN t.STATUS = 'Closed'        THEN 'Closed'
-         WHEN t.SLA_DUE_DATE IS NULL     THEN NULL
-         WHEN t.SLA_DUE_DATE <= SYSTIMESTAMP THEN 'Breached'
-         WHEN (CAST(t.SLA_DUE_DATE AS DATE) - SYSDATE)
-              / NULLIF(CAST(t.SLA_DUE_DATE AS DATE) - CAST(t.CREATED_AT AS DATE), 0) <= 0.25
-              THEN 'At risk'
-         ELSE 'On track'
-       END                                           AS SLA_STATUS
-  FROM V_MY_TICKETS t
-  LEFT JOIN COMPANIES c ON c.COMPANY_ID = t.COMPANY_ID
-  LEFT JOIN PROJECTS  p ON p.PROJECT_ID = t.PROJECT_ID
-  LEFT JOIN APP_USERS a ON a.USER_ID    = t.ASSIGNED_TO
-```
+1. Select the region in `[Left Pane ▸ Rendering]`.
+2. Set `[Right Pane ▸ Source ▸ SQL Query]` to:
+
+   ```sql
+   SELECT t.TICKET_ID,
+          t.TICKET_REF,
+          t.SUBJECT,
+          t.TICKET_TYPE,
+          t.SEVERITY,
+          t.PRIORITY,
+          t.STATUS,
+          t.COMPANY_ID,
+          c.COMPANY_NAME,
+          t.PROJECT_ID,
+          p.PROJECT_NAME,
+          t.ASSIGNED_TO,
+          a.FULL_NAME                                   AS ASSIGNEE_NAME,
+          t.CREATED_AT,
+          t.SLA_DUE_DATE,
+          -- Age since raised (mirrors the mockup's "<1d" / "Nd")
+          CASE WHEN SYSDATE - CAST(t.CREATED_AT AS DATE) < 1
+               THEN '<1d'
+               ELSE FLOOR(SYSDATE - CAST(t.CREATED_AT AS DATE)) || 'd'
+          END                                           AS AGE,
+          -- SLA status (raw value; a later CSS pass turns it into a badge)
+          CASE
+            WHEN t.STATUS = 'Closed'        THEN 'Closed'
+            WHEN t.SLA_DUE_DATE IS NULL     THEN NULL
+            WHEN t.SLA_DUE_DATE <= SYSTIMESTAMP THEN 'Breached'
+            WHEN (CAST(t.SLA_DUE_DATE AS DATE) - SYSDATE)
+                 / NULLIF(CAST(t.SLA_DUE_DATE AS DATE) - CAST(t.CREATED_AT AS DATE), 0) <= 0.25
+                 THEN 'At risk'
+            ELSE 'On track'
+          END                                           AS SLA_STATUS
+     FROM V_MY_TICKETS t
+     LEFT JOIN COMPANIES c ON c.COMPANY_ID = t.COMPANY_ID
+     LEFT JOIN PROJECTS  p ON p.PROJECT_ID = t.PROJECT_ID
+     LEFT JOIN APP_USERS a ON a.USER_ID    = t.ASSIGNED_TO
+   ```
 
 ---
 
 ## Step 3: Quick-Filter Chips (with counts)
 
-A chip row above the results, exactly like the mockup — different chips per role, each
-showing a live count, one active at a time. Drive it with a page item `P3_QUICK`
-(create it from `[Gallery ▸ Items]`, dragging onto `[Central ▸ Layout]` above the results;
-`[Right ▸ Identification ▸ Type]` = Radio Group / Static Values) and a
-WHERE-clause predicate (declarative "Static Values" chips styled later).
+> *A chip row above the results, exactly like the mockup — different chips per role, each showing a live count, one active at a time.*
 
-| Role | Chips (in order) | Default |
-|------|------------------|---------|
-| Client User / Client Admin | `Open` · `All` | `Open` |
-| Support Agent | `Assigned to me` · `Unassigned` · `All` | `Assigned to me` |
-| System Admin | `Assigned to me` · `Unassigned` · `All` | `All` |
+1. From `[Central Pane ▸ Gallery ▸ Items]`, drag a new item onto `[Central Pane ▸ Layout]` above the results.
+2. Set its properties:
+   - `[Right Pane ▸ Identification ▸ Name]`: `P3_QUICK`
+   - `[Right Pane ▸ Identification ▸ Type]`: **Radio Group**
+   - `[Right Pane ▸ List of Values ▸ Type]`: **Static Values**
 
-Set `P3_QUICK`'s default with a computation `[Left ▸ Processing]` (Computation on the item,
-PL/SQL Function Body):
-`RETURN CASE WHEN :APP_ROLE = 'SUPPORT_AGENT' THEN 'MINE'
-            WHEN :APP_ROLE = 'SYSTEM_ADMIN'  THEN 'ALL'
-            ELSE 'OPEN' END;`
+> *The chips shown will vary by role:*
+> - *Client User / Admin:* `Open` · `All`
+> - *Support / System Admin:* `Assigned to me` · `Unassigned` · `All`
 
-Add this predicate to the region WHERE clause — back on the region, `[Right ▸ Source ▸ SQL Query]`
-(append to the SQL in Step 2):
+3. Set `P3_QUICK`'s default via a computation. Under `[Left Pane ▸ Processing]`, right-click **Computations** → **Create Computation**:
+   - `[Right Pane ▸ Identification ▸ Item Name]`: `P3_QUICK`
+   - `[Right Pane ▸ Execution ▸ Type]`: **PL/SQL Function Body**
+   - `[Right Pane ▸ Source ▸ PL/SQL Function Body]`:
+     ```sql
+     RETURN CASE WHEN :APP_ROLE = 'SUPPORT_AGENT' THEN 'MINE'
+                 WHEN :APP_ROLE = 'SYSTEM_ADMIN'  THEN 'ALL'
+                 ELSE 'OPEN' END;
+     ```
 
-```sql
- WHERE ( :P3_QUICK = 'ALL'
-      OR (:P3_QUICK = 'OPEN'       AND t.STATUS <> 'Closed')
-      OR (:P3_QUICK = 'MINE'       AND t.ASSIGNED_TO = :APP_USER_ID)
-      OR (:P3_QUICK = 'UNASSIGNED' AND t.ASSIGNED_TO IS NULL AND t.STATUS <> 'Closed') )
-```
+4. Select the search results region in `[Left Pane ▸ Rendering]`.
+5. Append this predicate to `[Right Pane ▸ Source ▸ SQL Query]`:
 
-> Counts: render each chip's number with a small scalar sub-select over `V_MY_TICKETS`
-> using the same predicate (or a companion "Filter counts" region). The count reflects the
-> user's scope automatically — it runs through the view.
+   ```sql
+    WHERE ( :P3_QUICK = 'ALL'
+         OR (:P3_QUICK = 'OPEN'       AND t.STATUS <> 'Closed')
+         OR (:P3_QUICK = 'MINE'       AND t.ASSIGNED_TO = :APP_USER_ID)
+         OR (:P3_QUICK = 'UNASSIGNED' AND t.ASSIGNED_TO IS NULL AND t.STATUS <> 'Closed') )
+   ```
 
 ---
 
 ## Step 4: Configure Report Columns
 
-Columns and **order** match the mockup's table exactly. Each column is a node under the
-region in `[Left ▸ Rendering]`; select one and edit it in the Property Editor. Company and
-Project are role-conditional via `[Right ▸ Server-side Condition ▸ Type]` on `:APP_ROLE`.
+> *Columns and order match the mockup's table exactly. Company and Project are role-conditional.*
 
-| # | Column | Notes |
-|---|--------|-------|
-| 1 | `TICKET_REF` | **Link to page 4** via `[Right ▸ Link]` (`P4_TICKET_ID` = `#TICKET_ID#`). Labelled "Ref". |
-| 2 | `SUBJECT` | Main display. |
-| 3 | `TICKET_TYPE` | Incident / Service Request (raw value; badge later). |
-| 4 | `COMPANY_NAME` | **Condition:** `:APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')` (staff only). |
-| 5 | `PROJECT_NAME` | **Condition:** staff always; clients only when they can see 2+ projects — see note. |
-| 6 | `SEVERITY` | Client-set business impact. |
-| 7 | `PRIORITY` | Show `NVL(PRIORITY,'Untriaged')`. |
-| 8 | `STATUS` | Raw value; badge later. |
-| 9 | `ASSIGNEE_NAME` | Blank/"Unassigned" when null. |
-| 10 | `AGE` | Already formatted (`<1d` / `Nd`). |
-| 11 | `SLA_STATUS` | Raw value; badge later. |
+1. In `[Left Pane ▸ Rendering]`, expand the search results region's **Columns** node.
+2. Select each column and edit its properties per the table below:
 
-> **Project column/facet condition (clients).** Staff always see Project. A client sees it
-> only when their scope spans 2+ projects (otherwise the column is constant noise). Express
-> it at `[Right ▸ Server-side Condition ▸ Type]` = **PL/SQL Function Body returning Boolean**:
-> `RETURN :APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')
->        OR (SELECT COUNT(*) FROM V_MY_PROJECTS) > 1;`
-> The count runs through `V_MY_PROJECTS`, so it already reflects Open + invited projects.
+   | # | Column | Notes |
+   |---|--------|-------|
+   | 1 | `TICKET_REF` | Set `[Right Pane ▸ Link]`: Target Page `4`, `P4_TICKET_ID` = `#TICKET_ID#`. Set Label: `Ref`. |
+   | 2 | `SUBJECT` | |
+   | 3 | `TICKET_TYPE` | |
+   | 4 | `COMPANY_NAME` | Set `[Right Pane ▸ Server-side Condition ▸ Type]`: **Expression** `APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')` |
+   | 5 | `PROJECT_NAME` | Set `[Right Pane ▸ Server-side Condition ▸ Type]`: **PL/SQL Function Body returning Boolean** (see below) |
+   | 6 | `SEVERITY` | |
+   | 7 | `PRIORITY` | Set `[Right Pane ▸ Source ▸ HTML Expression]`: `NVL(PRIORITY,'Untriaged')` |
+   | 8 | `STATUS` | |
+   | 9 | `ASSIGNEE_NAME` | |
+   | 10| `AGE` | |
+   | 11| `SLA_STATUS` | |
+
+3. For the `PROJECT_NAME` condition body, use this:
+   ```sql
+   RETURN :APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')
+          OR (SELECT COUNT(*) FROM V_MY_PROJECTS) > 1;
+   ```
 
 ---
 
 ## Step 5: Add Facets
 
-Create each facet under the search region in `[Left ▸ Rendering]` (right-click the **Facets**
-node → Create Facet); set its column at `[Right ▸ Source ▸ Column]`, and the Company/Project
-conditions at `[Right ▸ Server-side Condition ▸ Type]`. Facet order matches the mockup:
-**Status, Severity, Priority, Type, [Company], [Project], Assignee**, plus the keyword search.
+> *Facet order matches the mockup: Status, Severity, Priority, Type, [Company], [Project], Assignee, plus keyword search.*
 
-| # | Facet | Source Column | Notes |
-|---|-------|---------------|-------|
-| 1 | Status | `STATUS` | Checkbox group. |
-| 2 | Severity | `SEVERITY` | |
-| 3 | Priority | `PRIORITY` | Use `NVL(PRIORITY,'Untriaged')`. |
-| 4 | Type | `TICKET_TYPE` | Incident vs Service Request. |
-| 5 | Company | `COMPANY_ID` | **Condition:** `:APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')`. LOV on company name. |
-| 6 | Project | `PROJECT_ID` | **Condition:** same PL/SQL Boolean as the Project column (staff, or client with 2+ projects). LOV on project name. |
-| 7 | Assignee | `ASSIGNED_TO` | LOV on user full name; include an "Unassigned" bucket. |
-| — | Search | | Keyword search facet over `TICKET_REF` and `SUBJECT`. Placeholder: `Search reference or keyword…`. |
+1. In `[Left Pane ▸ Rendering]`, right-click the **Facets** node under the search region → **Create Facet**.
+2. Repeat for each facet below, setting the target column and any conditions:
+
+   | Facet | Source Column | Notes |
+   |-------|---------------|-------|
+   | Status | `STATUS` | Checkbox group. |
+   | Severity | `SEVERITY` | |
+   | Priority | `PRIORITY` | |
+   | Type | `TICKET_TYPE` | |
+   | Company | `COMPANY_ID` | Condition: `APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')`. LOV on company name. |
+   | Project | `PROJECT_ID` | Condition: Same PL/SQL Boolean as the column. LOV on project name. |
+   | Assignee | `ASSIGNED_TO` | LOV on user name; include an "Unassigned" bucket. |
+
+3. Add a **Search** facet (keyword search over `TICKET_REF` and `SUBJECT`), with placeholder: `Search reference or keyword…`.
 
 ---
 
 ## Step 6: Buttons & Row Actions
 
-### "＋ New Ticket" button (clients)
-Create it from `[Gallery ▸ Buttons]`, dragging onto `[Central ▸ Layout]`.
-- Placement: page-title bar, right-aligned — `[Right ▸ Layout ▸ Region/Position]` = the region's
-  title-bar Copy/Create slot (top-right of the region).
-- **Condition** `[Right ▸ Server-side Condition ▸ Type]`: `:APP_ROLE IN ('CLIENT_USER','CLIENT_ADMIN')` (only client roles raise tickets).
-- **Action** `[Right ▸ Behavior ▸ Action]`: redirect to page 5 (Raise a Ticket); if a Project filter is active, pass it through.
+> *This adds the "New Ticket" button and the row-level "Assign to Me" action.*
 
-### "Assign to Me" (agents)
-A per-row link column — add it under the region in `[Left ▸ Rendering]` (or a "Link" column).
-- **Condition** `[Right ▸ Server-side Condition ▸ Type]`: `ASSIGNED_TO IS NULL AND :APP_ROLE = 'SUPPORT_AGENT'`
-- **Action** `[Right ▸ Link]`: redirect to page 6 (Assign) with the ticket pre-filled.
-- The assign process **re-checks visibility server-side** (see Isolation Checklist).
+1. From `[Central Pane ▸ Gallery ▸ Buttons]`, drag a button onto `[Central Pane ▸ Layout]` (region's title-bar Copy/Create slot).
+2. Set the "＋ New Ticket" button properties:
+   - `[Right Pane ▸ Server-side Condition ▸ Type]`: **Expression** `:APP_ROLE IN ('CLIENT_USER','CLIENT_ADMIN')`
+   - `[Right Pane ▸ Behavior ▸ Action]`: **Redirect to Page in this Application**
+   - `[Right Pane ▸ Behavior ▸ Target]`: Page `5`
 
-### "Action Needed" cue (clients)
-When `STATUS = 'Resolved'`, surface a cue so the client knows to confirm/close — via the
-`STATUS` column's `[Right ▸ Appearance ▸ HTML Expression]`. **Escape all substituted data**
-(`APEX_ESCAPE`).
+3. In `[Left Pane ▸ Rendering]`, add a new column to the search results region for "Assign to Me" (Link column).
+4. Set the Link column properties:
+   - `[Right Pane ▸ Server-side Condition ▸ Type]`: **Expression** `ASSIGNED_TO IS NULL AND :APP_ROLE = 'SUPPORT_AGENT'`
+   - `[Right Pane ▸ Link]`: Target Page `6`, `P6_TICKET_ID` = `#TICKET_ID#`.
+
+5. Select the `STATUS` column in `[Left Pane ▸ Rendering]`.
+6. Surface a client action cue for Resolved tickets by setting `[Right Pane ▸ Appearance ▸ HTML Expression]` (ensure all data is escaped).
 
 ---
 

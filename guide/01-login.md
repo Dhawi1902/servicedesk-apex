@@ -1,6 +1,6 @@
 # Step 1 — Login & Security Foundation (MUST)
 
-> This sets up everything every other page depends on. Don't skip anything here.
+> *This sets up everything every other page depends on. Don't skip anything here.*
 
 ---
 
@@ -93,4 +93,4 @@ Log in as each test user and verify via **Developer Toolbar → Session → Appl
 
 ---
 
-**Next:** move to `02-home.md` to build the Home page and app shell (navigation + role switcher).
+**Next:** move to `02-home.md`.

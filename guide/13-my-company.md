@@ -1,20 +1,41 @@
 # Step 13 — My Company (p12) (SHOULD)
 
-> One page, two hats: clients see their **own** company (read-only); System Admin opens **any**
+> *One page, two hats: clients see their **own** company (read-only); System Admin opens **any**
 > company (editable, via the Manage/View link on page 9 Companies). Support Agents don't get this page.
 > Mirrors the mockup Company Detail (page 17): a stat header + three tabs — **Projects**,
-> **Departments**, **Client Admins**.
+> **Departments**, **Client Admins**.*
 
 ---
 
 ## Step 1: Create the Page
 
-**App Builder → Create Page → Blank Page**
-- Page Number: `12`
-- Name: `My Company`
-- Condition (page-level): `:APP_ROLE != 'SUPPORT_AGENT'`
+This page is a **Blank Page** — an empty canvas we fill by hand (no data-source wizard, because it's a
+tabbed hub, not a single report or form). Open your app in **App Builder** and click the green
+**Create Page** button (top-right), then pick the **Blank Page** tile. The **Create Blank Page** wizard is
+a **single screen**:
 
-Add hidden items ([Gallery ▸ Items] drag a Hidden item onto [Central ▸ Layout]):
+> **Page already blank?** This page is a Blank Page anyway. If page 12 already exists, open it in Page
+> Designer and skip the create step — set the page **Condition** below, then continue.
+
+**Wizard screen — Create Blank Page:**
+
+| Field | Set to | Notes |
+|-------|--------|-------|
+| Page Number | `12` | The My Company page (also opened from page 9 Companies via Manage/View). |
+| Name | `My Company` | Also becomes the page Title. |
+| Page Mode | `Normal` | Full page, not a dialog. |
+| Use Breadcrumb | **Off** | Breadcrumb / title text is set below and wired with nav in Step 19. |
+| Use Navigation | **Off** | The nav entry (clients only) is added in Step 19. |
+
+There is **no data-source screen** — a Blank Page has no region yet.
+
+Click **Create Page**. APEX drops you into Page Designer with an **empty** page 12 (no regions). Every
+tile and tab is added by hand in the Steps that follow (Step 3 the stat header, Steps 4–6 the three
+tabs). First, set the **page-level Condition** so Support Agents never load it: select the page root node
+in `[Left Pane ▸ Rendering]` and set `[Right Pane ▸ Server-side Condition ▸ Type]` to *Expression* (PL/SQL) with
+`:APP_ROLE != 'SUPPORT_AGENT'` (also summarised in Step 7).
+
+Add hidden items (`[Central Pane ▸ Gallery ▸ Items]` drag a Hidden item onto `[Central Pane ▸ Layout]`):
 - `P12_COMPANY_ID` — the company being viewed (locked below).
 
 Breadcrumb / title text (Title region or page title):
@@ -25,7 +46,7 @@ Breadcrumb / title text (Title region or page title):
 
 ## Step 2: Lock the Company
 
-**Before Header** process — non-admins can only ever see their own company. [Left ▸ Processing] create a **Process**, Point = *Before Header*; PL/SQL goes in [Right ▸ Source ▸ PL/SQL Code]:
+**Before Header** process — non-admins can only ever see their own company. `[Left Pane ▸ Processing]` create a **Process**, Point = *Before Header*; PL/SQL goes in `[Right Pane ▸ Source ▸ PL/SQL Code]`:
 
 ```sql
 BEGIN
@@ -37,7 +58,7 @@ BEGIN
 END;
 ```
 
-**Before Header** process — fetch the company header (name + status), fail-closed. A second [Left ▸ Processing] Process (Point = *Before Header*, sequenced after the lock); PL/SQL in [Right ▸ Source ▸ PL/SQL Code]:
+**Before Header** process — fetch the company header (name + status), fail-closed. A second `[Left Pane ▸ Processing]` Process (Point = *Before Header*, sequenced after the lock); PL/SQL in `[Right Pane ▸ Source ▸ PL/SQL Code]`:
 
 ```sql
 BEGIN
@@ -61,10 +82,10 @@ END;
 
 ## Step 3: Header Stats (Static Content / Cards region)
 
-Five stat tiles across the top, matching the mockup header. [Gallery ▸ Regions] drag a **Cards**
-region (or a Classic Report) onto [Central ▸ Layout] and set [Right ▸ Identification ▸ Type] = Cards.
+Five stat tiles across the top, matching the mockup header. `[Central Pane ▸ Gallery ▸ Regions]` drag a **Cards**
+region (or a Classic Report) onto `[Central Pane ▸ Layout]` and set `[Right Pane ▸ Identification ▸ Type]` = Cards.
 **SLA Breached** shows only when the count > 0 — put its `> 0` rule in
-[Right ▸ Server-side Condition ▸ Type].
+`[Right Pane ▸ Server-side Condition ▸ Type]`.
 
 | Tile | Value SQL (bind on `:P12_COMPANY_ID`) |
 |------|----------------------------------------|
@@ -74,18 +95,18 @@ region (or a Classic Report) onto [Central ▸ Layout] and set [Right ▸ Identi
 | **Users** | `SELECT COUNT(*) FROM APP_USERS WHERE COMPANY_ID = :P12_COMPANY_ID` |
 | **Client Admins** | `SELECT COUNT(DISTINCT ur.USER_ID) FROM USER_ROLES ur JOIN APP_USERS u ON u.USER_ID = ur.USER_ID WHERE u.COMPANY_ID = :P12_COMPANY_ID AND ur.ROLE = 'CLIENT_ADMIN'` |
 
-> The ticket/project tiles read `V_MY_*`, so a Client User's counts already exclude uninvited
+> *The ticket/project tiles read `V_MY_*`, so a Client User's counts already exclude uninvited
 > Restricted projects (isolation stays in the view, not the tile). `Users`/`Client Admins` are
-> company-metadata counts and are safe to read from base tables once `P12_COMPANY_ID` is locked.
+> company-metadata counts and are safe to read from base tables once `P12_COMPANY_ID` is locked.*
 
 ---
 
 ## Step 4: Tab — Projects (default)
 
-[Gallery ▸ Regions] drag a **Classic Report** (or Interactive Report) onto [Central ▸ Layout];
-[Right ▸ Appearance ▸ Template] = *Tabs Container* child (or place under a Tabs region) with **Tab: Projects**.
+`[Central Pane ▸ Gallery ▸ Regions]` drag a **Classic Report** (or Interactive Report) onto `[Central Pane ▸ Layout]`;
+`[Right Pane ▸ Appearance ▸ Template]` = *Tabs Container* child (or place under a Tabs region) with **Tab: Projects**.
 
-Region Source ([Right ▸ Source ▸ SQL Query]):
+Region Source (`[Right Pane ▸ Source ▸ SQL Query]`):
 
 ```sql
 SELECT p.PROJECT_ID,
@@ -113,13 +134,13 @@ Columns, in this order:
 **Actions** (per-row links):
 - System Admin: **⚙ Manage** → `19-project-detail.html` equivalent (Project Detail page, `id = PROJECT_ID`) **and** **✎ Edit** (project edit modal).
 - Client: **👁 View** → Project Detail page (read-only), `id = PROJECT_ID`.
-  Express as two link columns, each gated at [Right ▸ Server-side Condition ▸ Type] on `:APP_ROLE`.
+  Express as two link columns, each gated at `[Right Pane ▸ Server-side Condition ▸ Type]` on `:APP_ROLE`.
 
-**Region button** (top-right, System Admin only): [Gallery ▸ Buttons] drag a button into the region
+**Region button** (top-right, System Admin only): `[Central Pane ▸ Gallery ▸ Buttons]` drag a button into the region
 header, **+ Add Project** → project create modal, pre-set company = `:P12_COMPANY_ID`. Gate it at
-[Right ▸ Security ▸ Authorization Scheme] = `System Admin`.
+`[Right Pane ▸ Security ▸ Authorization Scheme]` = `System Admin`.
 
-Empty state ([Right ▸ Appearance ▸ No Data Found Message]): `No projects for this company.`
+Empty state (`[Right Pane ▸ Appearance ▸ No Data Found Message]`): `No projects for this company.`
 
 Footer note (static): *Support team, SLA policy, categories and invitations are configured per
 project — use ⚙ Manage (one door, one truth).*
@@ -128,10 +149,10 @@ project — use ⚙ Manage (one door, one truth).*
 
 ## Step 5: Tab — Departments
 
-[Gallery ▸ Regions] drag a **Classic Report** onto [Central ▸ Layout], **Tab: Departments**.
+`[Central Pane ▸ Gallery ▸ Regions]` drag a **Classic Report** onto `[Central Pane ▸ Layout]`, **Tab: Departments**.
 Departments are **metadata only** (decision N) — routing/reporting, never a visibility filter.
 
-Region Source ([Right ▸ Source ▸ SQL Query]):
+Region Source (`[Right Pane ▸ Source ▸ SQL Query]`):
 
 ```sql
 SELECT d.DEPARTMENT_ID,
@@ -150,11 +171,11 @@ Columns:
 | Users | `USERS` | count |
 | Actions | link column | System Admin only — **✎ Edit** (department edit modal) |
 
-**Region button** (top-right, System Admin only): [Gallery ▸ Buttons] into the region header,
+**Region button** (top-right, System Admin only): `[Central Pane ▸ Gallery ▸ Buttons]` into the region header,
 **+ Add Department** → department create modal, company = `:P12_COMPANY_ID`. Gate it at
-[Right ▸ Security ▸ Authorization Scheme] = `System Admin`.
+`[Right Pane ▸ Security ▸ Authorization Scheme]` = `System Admin`.
 
-Empty state ([Right ▸ Appearance ▸ No Data Found Message]): `No departments yet — users and tickets can be filed without one.`
+Empty state (`[Right Pane ▸ Appearance ▸ No Data Found Message]`): `No departments yet — users and tickets can be filed without one.`
 
 Footer note (static): *Departments are metadata only (decision N) — stamped on users and tickets
 for routing/reporting, never a visibility filter. Set a user's department on the Users page (✎ Edit).*
@@ -163,10 +184,10 @@ for routing/reporting, never a visibility filter. Set a user's department on the
 
 ## Step 6: Tab — Client Admins
 
-[Gallery ▸ Regions] drag a **Classic Report** onto [Central ▸ Layout], **Tab: Client Admins**.
+`[Central Pane ▸ Gallery ▸ Regions]` drag a **Classic Report** onto `[Central Pane ▸ Layout]`, **Tab: Client Admins**.
 Who manages this company's side of the desk.
 
-Region Source ([Right ▸ Source ▸ SQL Query]):
+Region Source (`[Right Pane ▸ Source ▸ SQL Query]`):
 
 ```sql
 SELECT u.FULL_NAME,
@@ -189,10 +210,10 @@ Columns, in this order:
 | Status | `STATUS` | raw `ACTIVE` / `INACTIVE` |
 | Last Login | — | mockup shows a Last Login column; `APP_USERS` has no such column in v1. Display `—`, or wire from APEX Accounts (`APEX_WORKSPACE_ACTIVITY_LOG` / access log) if surfaced later. Keep the column to match the mockup; don't add a schema column just for it. |
 
-**Region link** (top-right, System Admin only): [Gallery ▸ Buttons] into the region header,
-**Manage on Users page →** → page 10 (Users). Gate it at [Right ▸ Security ▸ Authorization Scheme] = `System Admin`.
+**Region link** (top-right, System Admin only): `[Central Pane ▸ Gallery ▸ Buttons]` into the region header,
+**Manage on Users page →** → page 10 (Users). Gate it at `[Right Pane ▸ Security ▸ Authorization Scheme]` = `System Admin`.
 
-Empty state ([Right ▸ Appearance ▸ No Data Found Message]): `⚠ No Client Admin — this company cannot manage its own users or Restricted-project
+Empty state (`[Right Pane ▸ Appearance ▸ No Data Found Message]`): `⚠ No Client Admin — this company cannot manage its own users or Restricted-project
 invitations; assign the CLIENT_ADMIN role on the Users page.`
 
 Footer note (static): *Client Admins see all company tickets, manage company users and
@@ -203,8 +224,8 @@ Restricted-project invitations (decision Q), and can assign/reassign agents on a
 ## Step 7: Authorization
 
 The named schemes (`System Admin`, etc.) come from [Shared Components ▸ Authorization Schemes] (built
-on page 1). Apply each per element at [Right ▸ Security ▸ Authorization Scheme]; the page-level and
-link-level rules on `:APP_ROLE` go in [Right ▸ Server-side Condition ▸ Type].
+on page 1). Apply each per element at `[Right Pane ▸ Security ▸ Authorization Scheme]`; the page-level and
+link-level rules on `:APP_ROLE` go in `[Right Pane ▸ Server-side Condition ▸ Type]`.
 
 | Element | Authorization Scheme |
 |---------|----------------------|

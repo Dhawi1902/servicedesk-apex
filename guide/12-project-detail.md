@@ -1,23 +1,42 @@
 # Step 12 — Project Detail Hub (p11) (MUST)
 
-> One door for everything about a project: **Details · Support Team · SLA Policy · Categories · Access**. Flat pages browse; this hub configures.
+> *One door for everything about a project: **Details · Support Team · SLA Policy · Categories · Access**. Flat pages browse; this hub configures.*
 
 ---
 
 ## Step 1: Create the Page
 
-**App Builder → Create Page → Blank Page**
-- Page Number: `11`
-- Name: `Project Detail`
-- Breadcrumb entry: `<Company> / Projects / <Project Name>`
+> *This page is a **Blank Page** — an empty canvas we fill by hand (no data-source wizard, because it's a tabbed hub, not a single report or form).*
 
-Add a hidden item `P11_PROJECT_ID` (passed from page 10) — `[Gallery ▸ Items]` drag a Hidden item onto `[Central ▸ Layout]`, then `[Right ▸ Identification ▸ Type]` = Hidden. Add a **Back to Projects** button (top-right) — `[Gallery ▸ Buttons]` onto `[Central ▸ Layout]`, then `[Right ▸ Behavior ▸ Action]` = Redirect to Page in this Application → page 10.
+Open your app in **App Builder** and click the green **Create Page** button (top-right), then pick the **Blank Page** tile. The **Create Blank Page** wizard is a **single screen**:
+
+> *__Page already blank?__ This page is a Blank Page anyway. If page 11 already exists, open it in Page Designer and skip the create step — keep the hidden `P11_PROJECT_ID` item and Back button below, then continue.*
+
+**Wizard screen — Create Blank Page:**
+
+| Field | Set to | Notes |
+|-------|--------|-------|
+| Page Number | `11` | Opened from the Projects list (page 10) row link. |
+| Name | `Project Detail` | Also becomes the page Title. |
+| Page Mode | `Normal` | Full page, not a dialog. |
+| Use Breadcrumb | **Off** | The breadcrumb entry (`<Company> / Projects / <Project Name>`) is wired with nav in Step 19. |
+| Use Navigation | **Off** | This hub is reached from a row link, not the nav menu. |
+
+There is **no data-source screen** — a Blank Page has no region yet.
+
+Click **Create Page**.
+
+> *APEX drops you into Page Designer with an **empty** page 11 (no regions). Every part of this hub is added by hand in the Steps that follow: this Step adds the hidden key + Back button, Step 2 the access guard, Step 3 the stats header, and Step 4 the five tabs and their regions.*
+
+Add a hidden item `P11_PROJECT_ID` (passed from page 10) — `[Central Pane ▸ Gallery ▸ Items]` drag a Hidden item onto `[Central Pane ▸ Layout]`, then `[Right Pane ▸ Identification ▸ Type]` = Hidden. Add a **Back to Projects** button (top-right) — `[Central Pane ▸ Gallery ▸ Buttons]` onto `[Central Pane ▸ Layout]`, then `[Right Pane ▸ Behavior ▸ Action]` = Redirect to Page in this Application → page 10.
 
 ---
 
 ## Step 2: Add the Access Guard
 
-`[Left ▸ Processing]` add a Before-Header PL/SQL process (`[Right ▸ Execution ▸ Point]` = Before Header, `[Right ▸ Identification ▸ Type]` = PL/SQL Code, code into `[Right ▸ Source ▸ PL/SQL Code]`) — anyone who can't see this project in `V_MY_PROJECTS` is bounced. This covers URL-tampering for every role (System Admin all, Client Admin own company, Agent via `AGENT_PROJECTS`, Client User via Open + invited Restricted):
+> *Anyone who can't see this project in `V_MY_PROJECTS` is bounced. This covers URL-tampering for every role (System Admin all, Client Admin own company, Agent via `AGENT_PROJECTS`, Client User via Open + invited Restricted).*
+
+`[Left Pane ▸ Processing]` add a Before-Header PL/SQL process (`[Right Pane ▸ Execution ▸ Point]` = Before Header, `[Right Pane ▸ Identification ▸ Type]` = PL/SQL Code, code into `[Right Pane ▸ Source ▸ PL/SQL Code]`):
 
 ```sql
 DECLARE l_ok PLS_INTEGER;
@@ -33,7 +52,9 @@ END;
 
 ## Step 3: Add the Header (stats region)
 
-`[Gallery ▸ Regions]` drag a region onto `[Central ▸ Layout]`, `[Right ▸ Source ▸ SQL Query]` = the query below. Breadcrumb `<Company> / Project`, then the project name + key, a **visibility** badge (Open / Restricted) and an **active** badge, followed by stat cards.
+> *Breadcrumb `<Company> / Project`, then the project name + key, a **visibility** badge (Open / Restricted) and an **active** badge, followed by stat cards.*
+
+`[Central Pane ▸ Gallery ▸ Regions]` drag a region onto `[Central Pane ▸ Layout]`, `[Right Pane ▸ Source ▸ SQL Query]` = the query below.
 
 ```sql
 SELECT p.PROJECT_NAME, p.PROJECT_KEY, c.COMPANY_NAME, p.VISIBILITY, p.IS_ACTIVE,
@@ -48,16 +69,18 @@ SELECT p.PROJECT_NAME, p.PROJECT_KEY, c.COMPANY_NAME, p.VISIBILITY, p.IS_ACTIVE,
  WHERE p.PROJECT_ID = :P11_PROJECT_ID
 ```
 
-Stat cards, in mockup order: **Open Tickets** · **SLA Breached** (show only when `> 0` — `[Right ▸ Server-side Condition ▸ Type]`) · **Team Agents** · **Invited Users** (show only when visibility = `RESTRICTED` — `[Right ▸ Server-side Condition ▸ Type]`).
+Stat cards, in mockup order: **Open Tickets** · **SLA Breached** (show only when `> 0` — `[Right Pane ▸ Server-side Condition ▸ Type]`) · **Team Agents** · **Invited Users** (show only when visibility = `RESTRICTED` — `[Right Pane ▸ Server-side Condition ▸ Type]`).
 
 ---
 
 ## Step 4: Add Tabs (Region Display Selector)
 
-`[Gallery ▸ Regions]` drag a parent region onto `[Central ▸ Layout]` and set `[Right ▸ Appearance ▸ Template]` = Region Display Selector; each tab below is a child region under it. Five tabs, exactly as the mockup: **Details · Support Team · SLA Policy · Categories · Access**.
+> *Each tab below is a child region under it. Five tabs, exactly as the mockup: **Details · Support Team · SLA Policy · Categories · Access**.*
+
+`[Central Pane ▸ Gallery ▸ Regions]` drag a parent region onto `[Central Pane ▸ Layout]` and set `[Right Pane ▸ Appearance ▸ Template]` = Region Display Selector.
 
 ### Tab 1 — Details
-`[Gallery ▸ Regions]` drag a child region onto `[Central ▸ Layout]`, `[Right ▸ Source ▸ SQL Query]` = the query below. Read-only display fields, in mockup order: **Project Name · Key · Company · Created · Description**. Add an **✎ Edit** button (`[Gallery ▸ Buttons]`; Authorization via `[Right ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`) that opens the project edit modal (Name, Key, Description, Visibility, Active, SLA Policy LOV). Below the fields, a note explaining Open vs Restricted (decision Q).
+`[Central Pane ▸ Gallery ▸ Regions]` drag a child region onto `[Central Pane ▸ Layout]`, `[Right Pane ▸ Source ▸ SQL Query]` = the query below. Read-only display fields, in mockup order: **Project Name · Key · Company · Created · Description**. Add an **✎ Edit** button (`[Central Pane ▸ Gallery ▸ Buttons]`; Authorization via `[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`) that opens the project edit modal (Name, Key, Description, Visibility, Active, SLA Policy LOV). Below the fields, a note explaining Open vs Restricted (decision Q).
 
 ```sql
 SELECT p.PROJECT_NAME, p.PROJECT_KEY, c.COMPANY_NAME,
@@ -67,7 +90,7 @@ SELECT p.PROJECT_NAME, p.PROJECT_KEY, c.COMPANY_NAME,
 ```
 
 ### Tab 2 — Support Team
-`[Gallery ▸ Regions]` drag a child region onto `[Central ▸ Layout]`, `[Right ▸ Identification ▸ Type]` = Classic Report (or Interactive Grid), `[Right ▸ Source ▸ SQL Query]` = the query below. Classic Report / IG on `AGENT_PROJECTS` for this project.
+`[Central Pane ▸ Gallery ▸ Regions]` drag a child region onto `[Central Pane ▸ Layout]`, `[Right Pane ▸ Identification ▸ Type]` = Classic Report (or Interactive Grid), `[Right Pane ▸ Source ▸ SQL Query]` = the query below. Classic Report / IG on `AGENT_PROJECTS` for this project.
 
 ```sql
 SELECT u.FULL_NAME, ap.TIER, u.STATUS,
@@ -87,20 +110,20 @@ SELECT u.FULL_NAME, ap.TIER, u.STATUS,
 | `STATUS` | Active / Inactive |
 | `OPEN_HERE` | Open tickets this agent holds **on this project** |
 | `PROJECTS_COVERED` | How many projects the agent covers total |
-| Actions | **✕ Remove** button — Authorization `IS_SYSTEM_ADMIN` (`[Right ▸ Security ▸ Authorization Scheme]`) |
+| Actions | **✕ Remove** button — Authorization `IS_SYSTEM_ADMIN` (`[Right Pane ▸ Security ▸ Authorization Scheme]`) |
 
-- Button **+ Add Agent** (`[Gallery ▸ Buttons]`; Authorization `[Right ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`) opens the map-agent modal (agent + tier).
+- Button **+ Add Agent** (`[Central Pane ▸ Gallery ▸ Buttons]`; Authorization `[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`) opens the map-agent modal (agent + tier).
 - Region header carries the coverage warnings (cosmetic badges): **⚠ No L1** (clients could assign nobody, FR-10) and **⚠ No L2+** (auto-escalation has nowhere to go, FR-35).
 - Empty state: *"No agents mapped — this project is in a broken state (FR-10)."*
-- **Remove** validation (`[Left ▸ Processing]` a Validation, or a guard in the Remove process): block when the agent still holds open tickets here, and keep ≥1 active **L1** on an active project (Flows 3/4 gates).
+- **Remove** validation (`[Left Pane ▸ Processing]` a Validation, or a guard in the Remove process): block when the agent still holds open tickets here, and keep ≥1 active **L1** on an active project (Flows 3/4 gates).
 
 ### Tab 3 — SLA Policy (FR-23)
-`[Gallery ▸ Regions]` drag a child region onto `[Central ▸ Layout]`. The **one door** for changing a project's SLA. A select assigns the policy (System Admin), then a read-only targets table shows that policy's per-severity rows.
+`[Central Pane ▸ Gallery ▸ Regions]` drag a child region onto `[Central Pane ▸ Layout]`. The **one door** for changing a project's SLA. A select assigns the policy (System Admin), then a read-only targets table shows that policy's per-severity rows.
 
-- **Assign policy** (Authorization `[Right ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`): a Select item `P11_SLA_POLICY_ID` (`[Gallery ▸ Items]`; `[Right ▸ Identification ▸ Type]` = Select List, `[Right ▸ List of Values ▸ Type]` = SQL Query from `SLA_POLICIES`, first option *"— Default policy (<name>) —"* = NULL). Its change process (`[Left ▸ Processing]`, `[Right ▸ Source ▸ PL/SQL Code]`) updates `PROJECTS.SLA_POLICY_ID` after re-checking the project is visible. Non-admins see the assigned policy name as read-only.
+- **Assign policy** (Authorization `[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`): a Select item `P11_SLA_POLICY_ID` (`[Central Pane ▸ Gallery ▸ Items]`; `[Right Pane ▸ Identification ▸ Type]` = Select List, `[Right Pane ▸ List of Values ▸ Type]` = SQL Query from `SLA_POLICIES`, first option *"— Default policy (<name>) —"* = NULL). Its change process (`[Left Pane ▸ Processing]`, `[Right Pane ▸ Source ▸ PL/SQL Code]`) updates `PROJECTS.SLA_POLICY_ID` after re-checking the project is visible. Non-admins see the assigned policy name as read-only.
 - **Manage policies →** link to the SLA Policies page (page 16).
 
-Targets table — `[Gallery ▸ Regions]` a Classic Report, `[Right ▸ Source ▸ SQL Query]` = the query below (resolves to the assigned policy, else the default policy):
+Targets table — `[Central Pane ▸ Gallery ▸ Regions]` a Classic Report, `[Right Pane ▸ Source ▸ SQL Query]` = the query below (resolves to the assigned policy, else the default policy):
 
 ```sql
 SELECT st.SEVERITY, st.RESPONSE_HOURS, st.RESOLUTION_DAYS, st.ESCALATION_PCT
@@ -122,7 +145,7 @@ SELECT st.SEVERITY, st.RESPONSE_HOURS, st.RESOLUTION_DAYS, st.ESCALATION_PCT
 Note: targets are the policy's — edit them on the SLA Policies page (affects every project on that policy). New tickets stamp `SLA_DUE_DATE` from the policy at creation; existing tickets keep their stamped dates.
 
 ### Tab 4 — Categories
-`[Gallery ▸ Regions]` drag a child region (Classic Report / IG) onto `[Central ▸ Layout]`, `[Right ▸ Source ▸ SQL Query]` = the query below. Hybrid model, two doors / one table. Lists project-specific rows plus inherited company-wide / global rows applicable here. Source `V_MY_CATEGORIES` (never the base table).
+`[Central Pane ▸ Gallery ▸ Regions]` drag a child region (Classic Report / IG) onto `[Central Pane ▸ Layout]`, `[Right Pane ▸ Source ▸ SQL Query]` = the query below. Hybrid model, two doors / one table. Lists project-specific rows plus inherited company-wide / global rows applicable here. Source `V_MY_CATEGORIES` (never the base table).
 
 ```sql
 SELECT c.CATEGORY_NAME,
@@ -146,14 +169,14 @@ SELECT c.CATEGORY_NAME,
 | `SCOPE` | Project-specific / Company-wide (inherited) / Global (inherited) |
 | `DESCRIPTION` | Guidance text (FR-34 pattern) |
 | `STATUS` | Literal `Active` — `CATEGORIES` has **no status column** in the 13-table schema; flagged as a mockup-only field (do not invent a column) |
-| Actions | Project-specific rows: **✎ Edit** (Authorization `[Right ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`); inherited rows: read-only, *"managed on Categories page"* |
+| Actions | Project-specific rows: **✎ Edit** (Authorization `[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`); inherited rows: read-only, *"managed on Categories page"* |
 
-Button **+ Add Project Category** (`[Gallery ▸ Buttons]`; Authorization `[Right ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`). Empty state: *"No categories apply to this project."*
+Button **+ Add Project Category** (`[Central Pane ▸ Gallery ▸ Buttons]`; Authorization `[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`). Empty state: *"No categories apply to this project."*
 
 ### Tab 5 — Access
-`[Gallery ▸ Regions]` drag a child region onto `[Central ▸ Layout]`. Two variants keyed on visibility (both always available; the tab is not hidden) — build each as its own report region with a `[Right ▸ Server-side Condition ▸ Type]` on the project's visibility:
+`[Central Pane ▸ Gallery ▸ Regions]` drag a child region onto `[Central Pane ▸ Layout]`. Two variants keyed on visibility (both always available; the tab is not hidden) — build each as its own report region with a `[Right Pane ▸ Server-side Condition ▸ Type]` on the project's visibility:
 
-**Restricted** (`VISIBILITY = 'RESTRICTED'` — `[Right ▸ Server-side Condition ▸ Type]`) — invited users only (`USER_PROJECTS`, decision Q); `[Right ▸ Source ▸ SQL Query]` = the query below:
+**Restricted** (`VISIBILITY = 'RESTRICTED'` — `[Right Pane ▸ Server-side Condition ▸ Type]`) — invited users only (`USER_PROJECTS`, decision Q); `[Right Pane ▸ Source ▸ SQL Query]` = the query below:
 
 ```sql
 SELECT u.FULL_NAME, u.EMAIL, d.DEPARTMENT_NAME, up.USER_ID
@@ -163,9 +186,9 @@ SELECT u.FULL_NAME, u.EMAIL, d.DEPARTMENT_NAME, up.USER_ID
  WHERE up.PROJECT_ID = :P11_PROJECT_ID
 ```
 
-Columns **User · Email · Department · Actions** (Actions = **✕ Revoke**). Button **+ Invite User** (`[Gallery ▸ Buttons]`). Empty state: *"Nobody invited yet — this project is invisible to all &lt;Company&gt; users."*
+Columns **User · Email · Department · Actions** (Actions = **✕ Revoke**). Button **+ Invite User** (`[Central Pane ▸ Gallery ▸ Buttons]`). Empty state: *"Nobody invited yet — this project is invisible to all &lt;Company&gt; users."*
 
-**Open** (`VISIBILITY = 'OPEN'` — `[Right ▸ Server-side Condition ▸ Type]`) — read-only roster; every active company user sees the project automatically; `[Right ▸ Source ▸ SQL Query]` = the query below:
+**Open** (`VISIBILITY = 'OPEN'` — `[Right Pane ▸ Server-side Condition ▸ Type]`) — read-only roster; every active company user sees the project automatically; `[Right Pane ▸ Source ▸ SQL Query]` = the query below:
 
 ```sql
 SELECT u.FULL_NAME, u.EMAIL, u.DEFAULT_ROLE AS LANDING_ROLE, d.DEPARTMENT_NAME
@@ -177,7 +200,7 @@ SELECT u.FULL_NAME, u.EMAIL, u.DEFAULT_ROLE AS LANDING_ROLE, d.DEPARTMENT_NAME
 
 Columns **User · Email · Landing Role · Department** (all read-only).
 
-**Access authorization** (Invite / Revoke buttons, and the Restricted grid) — apply this as the button/region `[Right ▸ Security ▸ Authorization Scheme]` (or a `[Right ▸ Server-side Condition ▸ Type]` where an authorization scheme isn't reusable): visible when
+**Access authorization** (Invite / Revoke buttons, and the Restricted grid) — apply this as the button/region `[Right Pane ▸ Security ▸ Authorization Scheme]` (or a `[Right Pane ▸ Server-side Condition ▸ Type]` where an authorization scheme isn't reusable): visible when
 
 ```
 :APP_ROLE = 'SYSTEM_ADMIN'
@@ -185,7 +208,7 @@ Columns **User · Email · Landing Role · Department** (all read-only).
       AND (SELECT COMPANY_ID FROM PROJECTS WHERE PROJECT_ID = :P11_PROJECT_ID) = :APP_COMPANY_ID)
 ```
 
-Invite/Revoke DML (`[Left ▸ Processing]`, `[Right ▸ Source ▸ PL/SQL Code]`) must re-verify server-side: the project is Restricted **and** visible to the caller (`V_MY_PROJECTS`), and the invited user belongs to the project's company.
+Invite/Revoke DML (`[Left Pane ▸ Processing]`, `[Right Pane ▸ Source ▸ PL/SQL Code]`) must re-verify server-side: the project is Restricted **and** visible to the caller (`V_MY_PROJECTS`), and the invited user belongs to the project's company.
 
 ---
 
@@ -223,4 +246,4 @@ Invite/Revoke DML (`[Left ▸ Processing]`, `[Right ▸ Source ▸ PL/SQL Code]`
 
 ---
 
-**Next:** you've finished all MUST pages! Move to `13-my-company.md` for SHOULD pages.
+**Next:** move to `13-my-company.md`.

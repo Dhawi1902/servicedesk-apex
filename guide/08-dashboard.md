@@ -1,28 +1,43 @@
 # Step 8 — Dashboard (p2) (MUST)
 
-> Judge non-negotiable. Build this after the ticket spine (pages 3–7) so there's data to show.
-> Mirrors the mockup `Overview / Dashboard` page: an **8-tile KPI row**, a **4-chart row**
-> (Status · Severity · Priority · Type), staff-only **by-Client** and **by-Project** tables,
-> and an **Operational Analytics (FR-28)** card. Every region aggregates `V_MY_TICKETS`, so the
-> role matrix scopes the numbers automatically — zero role-specific WHERE clauses.
+> *Judge non-negotiable. Build this after the ticket spine (pages 3–7) so there's data to show. Mirrors the mockup `Overview / Dashboard` page: an **8-tile KPI row**, a **4-chart row** (Status · Severity · Priority · Type), staff-only **by-Client** and **by-Project** tables, and an **Operational Analytics (FR-28)** card. Every region aggregates `V_MY_TICKETS`, so the role matrix scopes the numbers automatically — zero role-specific WHERE clauses.*
 
 ---
 
 ## Step 1: Create the Page
 
-**App Builder → Create Page → Blank Page**
-- Page Number: `2`
-- Name: `Dashboard`
-- Breadcrumb / title: `Dashboard` (page bar shows `Overview / Dashboard`)
-- Navigation: add to nav menu (all roles)
+> **Page already blank?** This page is a Blank Page anyway. If page 2 already exists, just open it in Page
+> Designer and skip the create step — go straight to building the KPI row and charts below.
+
+This page is a **Blank Page** — an empty canvas. There's no data-source screen (the KPI cards,
+charts, and tables are added region-by-region in Steps 2–6). Open your app in **App Builder** and
+click the green **Create Page** button (top-right), then pick the **Blank Page** tile. That opens
+the **Create Blank Page** wizard — a single screen, then Create.
+
+**Wizard screen 1 — Page Definition:**
+
+| Field | Set to | Notes |
+|-------|--------|-------|
+| Page Number | `2` | Guide file number = APEX page number. |
+| Name | `Dashboard` | Also becomes the page Title. |
+| Page Mode | `Normal` | Full page, not a dialog. |
+| Use Breadcrumb | **On** | Entry `Dashboard` — the page bar shows `Overview / Dashboard`. |
+| Breadcrumb Entry Name | `Dashboard` | Text shown in the breadcrumb. |
+| Use Navigation | **On** | Add to the nav menu — all roles reach the dashboard. |
+
+(No **Data Source** section appears for a Blank Page — that's expected; regions bring their own SQL.)
+
+Click **Create Page**. APEX drops you into Page Designer on an **empty page** — no regions yet.
+Everything the mockup shows is built by hand from here: the KPI row (Step 2), the four charts
+(Step 3), the staff tables (Steps 4–5), and the analytics card (Step 6).
 
 ---
 
 ## Step 2: KPI Row (8 tiles)
 
-Add one region at the top — create it from `[Gallery ▸ Regions]` dragged onto `[Central ▸ Layout]`,
-then make it a **Cards** region via `[Right ▸ Identification ▸ Type]` = Cards (or Static Content styled
-as value tiles) laid out **4 across, 2 rows** via `[Right ▸ Layout]`. These are the exact tiles the
+Add one region at the top — create it from `[Central Pane ▸ Gallery ▸ Regions]` dragged onto `[Central Pane ▸ Layout]`,
+then make it a **Cards** region via `[Right Pane ▸ Identification ▸ Type]` = Cards (or Static Content styled
+as value tiles) laid out **4 across, 2 rows** via `[Right Pane ▸ Layout]`. These are the exact tiles the
 mockup shows, in order:
 
 | # | Tile label | Meaning | FR |
@@ -36,7 +51,7 @@ mockup shows, in order:
 | 7 | **Reopen Rate** | % of resolved/closed with `REOPEN_COUNT > 0` | — |
 | 8 | **CSAT Average** | avg `CSAT_SCORE` (out of 5) | FR-27 |
 
-One query returns all eight values — paste it into the selected region's `[Right ▸ Source ▸ SQL Query]`
+One query returns all eight values — paste it into the selected region's `[Right Pane ▸ Source ▸ SQL Query]`
 (bind to Cards columns, or eight Static-content substitutions):
 
 ```sql
@@ -63,22 +78,20 @@ SELECT
 FROM V_MY_TICKETS
 ```
 
-> Every tile reads `FROM V_MY_TICKETS` — the view handles all role scoping. No `WHERE company_id`
-> anywhere. Format tiles declaratively (append `%` to 5/7, `/5` to 8, `h`/`d` to 6). Tile icons/colours
-> are cosmetic — a later UI pass handles them.
+> *Every tile reads `FROM V_MY_TICKETS` — the view handles all role scoping. No `WHERE company_id` anywhere. Format tiles declaratively (append `%` to 5/7, `/5` to 8, `h`/`d` to 6). Tile icons/colours are cosmetic — a later UI pass handles them.*
 
 ---
 
 ## Step 3: Chart Row (4 charts)
 
 A second region row, **4 across**, in this exact order and with these titles. Build each chart the
-same way: drag a region from `[Gallery ▸ Regions]` onto `[Central ▸ Layout]`, set `[Right ▸ Identification ▸ Type]`
-= Chart, choose Bar/Donut on the chart's `[Right ▸ Attributes ▸ Type]`, name it via
-`[Right ▸ Identification ▸ Title]`, then select the chart's **Series** node `[Left ▸ Rendering]` and paste
-its query into `[Right ▸ Source ▸ SQL Query]` (map `label` → Label, `value` → Value).
+same way: drag a region from `[Central Pane ▸ Gallery ▸ Regions]` onto `[Central Pane ▸ Layout]`, set `[Right Pane ▸ Identification ▸ Type]`
+= Chart, choose Bar/Donut on the chart's `[Right Pane ▸ Attributes ▸ Type]`, name it via
+`[Right Pane ▸ Identification ▸ Title]`, then select the chart's **Series** node `[Left Pane ▸ Rendering]` and paste
+its query into `[Right Pane ▸ Source ▸ SQL Query]` (map `label` → Label, `value` → Value).
 
 ### Chart 1 — Tickets by Status (Bar)
-Region Type = Chart, `[Right ▸ Attributes ▸ Type]` = Bar; Series SQL in `[Right ▸ Source ▸ SQL Query]`:
+Region Type = Chart, `[Right Pane ▸ Attributes ▸ Type]` = Bar; Series SQL in `[Right Pane ▸ Source ▸ SQL Query]`:
 ```sql
 SELECT STATUS AS label, COUNT(*) AS value
   FROM V_MY_TICKETS
@@ -87,8 +100,8 @@ SELECT STATUS AS label, COUNT(*) AS value
 ```
 
 ### Chart 2 — Tickets by Severity (Bar or Donut)
-Client-set business impact — the four severities, ordered Critical → Low (`[Right ▸ Attributes ▸ Type]`
-= Bar or Donut; Series SQL in `[Right ▸ Source ▸ SQL Query]`):
+Client-set business impact — the four severities, ordered Critical → Low (`[Right Pane ▸ Attributes ▸ Type]`
+= Bar or Donut; Series SQL in `[Right Pane ▸ Source ▸ SQL Query]`):
 ```sql
 SELECT SEVERITY AS label, COUNT(*) AS value
   FROM V_MY_TICKETS
@@ -98,7 +111,7 @@ SELECT SEVERITY AS label, COUNT(*) AS value
 
 ### Chart 3 — Tickets by Priority (Bar or Donut)
 Support-set P1–P4, with **Untriaged** for nulls (FR-37 — priority is null until triaged)
-(`[Right ▸ Attributes ▸ Type]` = Bar or Donut; Series SQL in `[Right ▸ Source ▸ SQL Query]`):
+(`[Right Pane ▸ Attributes ▸ Type]` = Bar or Donut; Series SQL in `[Right Pane ▸ Source ▸ SQL Query]`):
 ```sql
 SELECT NVL(PRIORITY, 'Untriaged') AS label, COUNT(*) AS value
   FROM V_MY_TICKETS
@@ -107,8 +120,8 @@ SELECT NVL(PRIORITY, 'Untriaged') AS label, COUNT(*) AS value
 ```
 
 ### Chart 4 — Tickets by Type (Bar or Donut) · FR-30
-ITIL distinction — Incident vs Service Request (`[Right ▸ Attributes ▸ Type]` = Bar or Donut;
-Series SQL in `[Right ▸ Source ▸ SQL Query]`):
+ITIL distinction — Incident vs Service Request (`[Right Pane ▸ Attributes ▸ Type]` = Bar or Donut;
+Series SQL in `[Right Pane ▸ Source ▸ SQL Query]`):
 ```sql
 SELECT CASE TICKET_TYPE WHEN 'INCIDENT' THEN 'Incidents'
                         WHEN 'SERVICE_REQUEST' THEN 'Service Requests'
@@ -126,17 +139,17 @@ SELECT CASE TICKET_TYPE WHEN 'INCIDENT' THEN 'Incidents'
 ## Step 4: Tickets by Client (staff only)
 
 The mockup shows a per-company breakdown table **for staff only**. Add a **Classic Report** region —
-drag from `[Gallery ▸ Regions]` onto `[Central ▸ Layout]`, then `[Right ▸ Identification ▸ Type]` = Classic Report.
+drag from `[Central Pane ▸ Gallery ▸ Regions]` onto `[Central Pane ▸ Layout]`, then `[Right Pane ▸ Identification ▸ Type]` = Classic Report.
 
-**Title (server-side, by role)** — set the title expression in `[Right ▸ Identification ▸ Title]`:
+**Title (server-side, by role)** — set the title expression in `[Right Pane ▸ Identification ▸ Title]`:
 - System Admin → `Tickets by Client Company` *(cross-tenant view)*
 - Support Agent → `Tickets by Client`
 
-**Server-side Condition (region)** — `[Right ▸ Server-side Condition ▸ Type]` = *PL/SQL Expression* → `:APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')`
+**Server-side Condition (region)** — `[Right Pane ▸ Server-side Condition ▸ Type]` = *PL/SQL Expression* → `:APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')`
 
 **Columns (exact order):** `Company · Open · In Progress · Resolved/Closed · SLA Breach · SLA Compliance`
 
-Paste the query into `[Right ▸ Source ▸ SQL Query]`:
+Paste the query into `[Right Pane ▸ Source ▸ SQL Query]`:
 
 ```sql
 SELECT c.COMPANY_NAME AS company,
@@ -168,14 +181,14 @@ SELECT c.COMPANY_NAME AS company,
 
 ## Step 5: Tickets by Project (staff only)
 
-Second staff-only **Classic Report** (`[Gallery ▸ Regions]` → `[Right ▸ Identification ▸ Type]` = Classic Report),
+Second staff-only **Classic Report** (`[Central Pane ▸ Gallery ▸ Regions]` → `[Right Pane ▸ Identification ▸ Type]` = Classic Report),
 directly below the client table.
 
-**Title** — `[Right ▸ Identification ▸ Title]`: `Tickets by Project`
-**Server-side Condition** — `[Right ▸ Server-side Condition ▸ Type]` (PL/SQL Expression): `:APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')`
+**Title** — `[Right Pane ▸ Identification ▸ Title]`: `Tickets by Project`
+**Server-side Condition** — `[Right Pane ▸ Server-side Condition ▸ Type]` (PL/SQL Expression): `:APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')`
 **Columns (exact order):** `Project · Company · Open · Total · SLA Breach`
 
-Query into `[Right ▸ Source ▸ SQL Query]`:
+Query into `[Right Pane ▸ Source ▸ SQL Query]`:
 
 ```sql
 SELECT p.PROJECT_NAME AS project,
@@ -191,19 +204,18 @@ SELECT p.PROJECT_NAME AS project,
  ORDER BY c.COMPANY_NAME, p.PROJECT_NAME
 ```
 
-> Same guarantee: grouping `V_MY_TICKETS` means an agent only ever sees their `AGENT_PROJECTS`
-> projects here; the admin sees all. Never join `PROJECTS`/`TICKETS` base tables directly.
+> *Same guarantee: grouping `V_MY_TICKETS` means an agent only ever sees their `AGENT_PROJECTS` projects here; the admin sees all. Never join `PROJECTS`/`TICKETS` base tables directly.*
 
 ---
 
 ## Step 6: Operational Analytics (FR-28) — all roles
 
-A final card the mockup shows to **every role** — so leave `[Right ▸ Security ▸ Authorization Scheme]`
+A final card the mockup shows to **every role** — so leave `[Right Pane ▸ Security ▸ Authorization Scheme]`
 empty (no server-side condition). Two stat values plus a per-agent table.
 
-**Title** — `[Right ▸ Identification ▸ Title]`: `Operational Analytics`
+**Title** — `[Right Pane ▸ Identification ▸ Title]`: `Operational Analytics`
 
-**6a — two stats** (one small query) — a Cards/Static Content region with SQL in `[Right ▸ Source ▸ SQL Query]`:
+**6a — two stats** (one small query) — a Cards/Static Content region with SQL in `[Right Pane ▸ Source ▸ SQL Query]`:
 ```sql
 SELECT ROUND(AVG(CASE WHEN RESOLVED_AT IS NOT NULL
                       THEN (CAST(RESOLVED_AT AS DATE) - CAST(CREATED_AT AS DATE)) * 24 END)) AS avg_resolution_hrs,
@@ -213,8 +225,8 @@ SELECT ROUND(AVG(CASE WHEN RESOLVED_AT IS NOT NULL
 - **Avg Resolution Time** — render as hours, or `/24` days when ≥ 24 (cosmetic).
 - **Resolved Tickets** — count with a `RESOLVED_AT`.
 
-**6b — Tickets per Agent** table — a **Classic Report** (`[Gallery ▸ Regions]` → `[Right ▸ Identification ▸ Type]`
-= Classic Report), query in `[Right ▸ Source ▸ SQL Query]`.
+**6b — Tickets per Agent** table — a **Classic Report** (`[Central Pane ▸ Gallery ▸ Regions]` → `[Right Pane ▸ Identification ▸ Type]`
+= Classic Report), query in `[Right Pane ▸ Source ▸ SQL Query]`.
 **Columns (exact order):** `Agent · Tier · Open · Resolved/Closed · Total`
 
 ```sql
@@ -240,7 +252,7 @@ SELECT u.FULL_NAME AS agent,
 ## Step 7: Chart Drill-Downs (optional polish)
 
 Each of the four charts can link a segment to the Ticket Queue (page 3) with a filter pre-set — select
-the chart's **Series** node `[Left ▸ Rendering]`, then set `[Right ▸ Link ▸ Target]`:
+the chart's **Series** node `[Left Pane ▸ Rendering]`, then set `[Right Pane ▸ Link ▸ Target]`:
 - Link Target: Page `3`
 - Set item, e.g. `P3_STATUS` = `&STATUS.` (or `P3_SEVERITY`, `P3_PRIORITY`, `P3_TICKET_TYPE`)
 
@@ -269,4 +281,4 @@ Keep drill-downs optional — the KPI/chart/table content above is what the mock
 
 ---
 
-**Next:** move to `09-companies.md` to start the admin pages.
+**Next:** move to `09-companies.md`.

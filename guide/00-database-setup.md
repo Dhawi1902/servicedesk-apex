@@ -1,6 +1,6 @@
 # Step 0 — Database Setup
 
-> Run these in **SQL Workshop → SQL Scripts** before touching App Builder.
+> *Run these in **SQL Workshop → SQL Scripts** before touching App Builder.*
 
 ---
 
@@ -76,4 +76,4 @@ Full account table with all 18 users is in `sql/README.md`.
 
 ---
 
-**Next:** move to `01-login.md` to create the APEX application and set up the security foundation.
+**Next:** move to `01-login.md`.

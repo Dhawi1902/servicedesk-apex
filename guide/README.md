@@ -36,29 +36,51 @@ each guide tells you exactly what to click, what SQL to paste, and what to test 
 
 ## Reading Page Designer (read this once)
 
-Almost every step happens in **Page Designer** (open a page from App Builder). It has **three panes**, and the guides point you to them with a shorthand like `[Right ▸ Source ▸ SQL Query]`. Learn these once and every step is unambiguous.
+Almost every step happens in **Page Designer** (open a page from App Builder). It has **three panes**, and the guides point you to them with a shorthand like `[Right Pane ▸ Source ▸ SQL Query]`. Learn these once and every step is unambiguous.
 
 **LEFT pane — the component tree.** Four tabs across the top, shown **icon-only** (hover for the label):
 
 | Tab | Icon | What lives here |
 |-----|------|-----------------|
-| **Rendering** | stacked pages / layers | Regions, page items, buttons — everything drawn on the page |
-| **Dynamic Actions** | lightning bolt | Client-side behaviour (on-change, on-click, …) |
-| **Processing** | **gear / cog** | Server-side page logic: **Processes, Computations, Validations, Branches**. ⚠️ Icon-only, 3rd from the left — this is where "add a process" always means |
-| **Page Shared Components** | shapes | Shared components this page references |
+| **Rendering** | ![Rendering](icons/rendering.png) | Regions, page items, buttons — everything drawn on the page |
+| **Dynamic Actions** | ![Dynamic Actions](icons/dynamic-actions.png) | Client-side behaviour (on-change, on-click, …) |
+| **Processing** | ![Processing](icons/processing.png) | Server-side page logic: **Processes, Computations, Validations, Branches**. ⚠️ Icon-only, 3rd from the left — this is where "add a process" always means |
+| **Page Shared Components** | ![Shared Components](icons/shared-components.png) | Shared components this page references |
 
 **CENTRAL pane — Layout + Gallery.** The **Layout** grid (WYSIWYG) is the working area. At the **bottom** is the **Gallery** with three tabs — **Regions · Items · Buttons** — the drag source: drag a *new* component up onto the Layout to create it.
 
 **RIGHT pane — the Property Editor.** Edits the **attributes** of whatever is selected. Attributes are organised into collapsible **groups** (Oracle's term — informally "sections"): commonly **Identification · Source · Layout · Appearance · Server-side Condition · Validation · Security · Advanced**. Use the **Filter Properties** box to find one fast.
 
 **Shorthand used in the guides** (`▸` = pane → group → attribute):
-- `[Left ▸ Rendering]` — select/create a region, item, or button
-- `[Left ▸ Processing]` — create a process / computation / validation / branch (the gear tab)
-- `[Left ▸ Dynamic Actions]` — work with a dynamic action
-- `[Gallery ▸ Items]` (or `▸ Regions` / `▸ Buttons`) — drag a **new** component onto the Layout
-- `[Right ▸ Group ▸ Attribute]` — set a property, e.g. `[Right ▸ Source ▸ SQL Query]`, `[Right ▸ Security ▸ Authorization Scheme]`, `[Right ▸ Identification ▸ Type]`
+- `[Left Pane ▸ Rendering]` — select/create a region, item, or button
+- `[Left Pane ▸ Processing]` — create a process / computation / validation / branch
+- `[Left Pane ▸ Dynamic Actions]` — work with a dynamic action
+- `[Central Pane ▸ Gallery ▸ Items]` (or `▸ Regions` / `▸ Buttons`) — drag a **new** component onto the Layout
+- `[Right Pane ▸ Group ▸ Attribute]` — set a property, e.g. `[Right Pane ▸ Source ▸ SQL Query]`, `[Right Pane ▸ Security ▸ Authorization Scheme]`
 
 > "Group" = the collapsible heading in the right pane; "attribute" = the individual field inside it.
+
+---
+
+## Reading the Create Page wizard (read this once)
+
+Every page starts the same way: open the app in **App Builder**, click the green **Create Page**
+button (top-right), and pick a **page-type tile** (Form, Interactive Grid, Interactive Report,
+Faceted Search, Master Detail, Blank Page, …). That launches a short wizard, and each guide's
+**Step 1** walks its screens field-by-field. A few things hold for *every* wizard, so the guides
+don't repeat them:
+
+- **Screen 1 is always the same shape** — Page Definition (Page Number, Name, Page Mode) + (for
+  data-bound pages) Data Source + Navigation. APEX may present these as one screen or as a couple of
+  sub-panels you click **Next** through — either way the fields are identical; set them and continue.
+- **Table / View Owner** always defaults to your workspace schema (e.g. `WKSP_DHAWIWORKSPACE`) —
+  **leave it as the default**. The guides never hardcode it.
+- **Navigation toggles** (Use Breadcrumb / Use Navigation) = **Off** on every page — the left nav
+  menu is built last, in Step 19.
+- **Blank Page** has *no* Data Source screen — you get an empty page and build its regions by hand
+  (used for dashboards and tabbed hubs).
+- After **Create Page** you land in **Page Designer**; each guide's Step 1 ends with a "what you land
+  on" note so you know what the wizard generated before the later steps refine it.
 
 ---
 
@@ -70,7 +92,8 @@ Almost every step happens in **Page Designer** (open a page from App Builder). I
 |------|------|-------|-----------------|
 | 0 | DB Setup | [`00-database-setup.md`](00-database-setup.md) | Schema, seed data, isolation views, APEX accounts |
 | 1 | Login (p9999) + Security | [`01-login.md`](01-login.md) | Auth scheme, 6 app items, post-auth process, 4 authorization schemes |
-| 2 | Home (p1) + App Shell | [`02-home.md`](02-home.md) | Navigation menu, combined banner + role switcher (nav bar → p20) |
+| 1b | Outlook / M365 Login | [`01b-outlook-sso.md`](01b-outlook-sso.md) | *Optional.* Microsoft Entra Social Sign-In alongside APEX Accounts — pure config, reuses the Step 1 post-auth proc (keys on email, fails closed). Needs Entra admin + a real M365 mailbox; **not** the demo login |
+| 2 | Home (p1) + App Shell | [`02-home.md`](02-home.md) | Combined banner + role switcher (nav bar → p20). Left nav menu deferred to Step 19 |
 
 ### Phase 1 — Ticket Spine (the demo core)
 
@@ -107,6 +130,12 @@ Almost every step happens in **Page Designer** (open a page from App Builder). I
 | 16 | SLA Policies (p15) | [`16-sla-policies.md`](16-sla-policies.md) | Master-detail for policies + targets |
 | 17 | Agent-Project Mapping (p16) | [`17-agent-projects.md`](17-agent-projects.md) | Global IG for agent coverage |
 | 18 | Audit Log (p17) | [`18-audit-log.md`](18-audit-log.md) | Admin action transparency |
+
+### Phase 5 — Wire It Together (do last)
+
+| Step | Page | Guide | What it builds |
+|------|------|-------|----------------|
+| 19 | Left Navigation Menu | [`19-navigation.md`](19-navigation.md) | Role-scoped nav menu linking all pages — built last, once every page exists |
 
 ## Irreducible Demo Spine
 

@@ -1,114 +1,129 @@
 # Step 15 — My Profile (p14) (SHOULD)
 
-> Every user's own account details. Agents also see their per-project support tiers.
-> Strictly own record — one user can only ever view or edit their own row.
-
-Breadcrumb: `Account / Profile` · Page title: `My Profile` · Card header: `Personal details`.
+> *Every user's own account details. Agents also see their per-project support tiers.
+> Strictly own record — one user can only ever view or edit their own row.*
 
 ---
 
 ## Step 1: Create the Page
 
-**App Builder → Create Page → Form**
-- Page Number: `14`
-- Name: `My Profile`
-- Data Source (Table): `APP_USERS`
-- Branch back to this same page on submit.
+> *A Form = one editable record. The wizard builds the region, one item per column, 4 buttons, and 2
+> processes — later steps only adjust them, never rebuild them.*
 
-Once the page exists, open it in Page Designer. Under the form heading, add a small
-**sub-header** — either drag a Static Content region `[Gallery ▸ Regions]` onto
-`[Central ▸ Layout]`, or use the form region's description `[Right ▸ Appearance ▸ Region Description]` —
-reading the active role and company, matching the mockup's avatar strip:
-`&APP_ROLE. · &company name.`
+1. Click **Create Page** (green button, top-right) → pick the **Form** tile.
+2. Wizard **screen 1** — fill this table, then **Next**:
+
+   | Field | Set to | Notes |
+   |-------|--------|-------|
+   | Page Number | `14` | — |
+   | Name | `My Profile` | — |
+   | Page Mode | `Normal` | — |
+   | Data Source | `Local Database` | — |
+   | Source Type | `Table` | — |
+   | Table / View Owner | *your workspace schema* (leave default) | — |
+   | Table / View Name | `APP_USERS` | — |
+   | Use Breadcrumb | **Off** | — |
+   | Use Navigation | **Off** | — |
+
+3. Wizard **screen 2** — fill this table, then **Create Page**:
+
+   | Field | Set to | Notes |
+   |-------|--------|-------|
+   | Primary Key Column 1 | `USER_ID (Number)` | — |
+   | Primary Key Column 2 | *(leave `- Select -`)* | — |
+   | Branch Here on Submit | `14` — **change from `1`** (reload this page after Save) | — |
+   | Cancel and Go To Page | `1` | — |
+
+4. Delete the **CREATE** and **DELETE** buttons (right-click → **Delete**). Keep **SAVE** and **CANCEL**.
+5. Add the role·company sub-header — from `[Central Pane ▸ Gallery ▸ Regions]`,
+   drag a **Static Content** region into `BODY`, dropped **above** the My Profile form. Then set:
+   - `[Right Pane ▸ Identification ▸ Title]` → *(clear it — blank)*
+   - `[Right Pane ▸ Appearance ▸ Template]` → **Blank with Attributes**
+   - `[Right Pane ▸ Source ▸ HTML Code]` → `&APP_ROLE_DISP. · &APP_COMPANY_NAME.`
+
+> `APP_ROLE_DISP` / `APP_COMPANY_NAME` are trusted app items set at login — safe to substitute directly.
+> **Shortcut for step 5:** skip the region and instead set the form region's
+> `[Right Pane ▸ Appearance ▸ Region Description]` to `&APP_ROLE_DISP. · &APP_COMPANY_NAME.`.
+> **Page 14 already exists blank?** Skip the wizard; add a **Form** region on `APP_USERS` by hand, then
+> do Steps 2–4 (a hand-added region has no auto items — you'll add every field in Step 3).
 
 ---
 
 ## Step 2: Fetch by Current User Only
 
-Select the form region `[Left ▸ Rendering]` and set its **Where Clause**
-`[Right ▸ Source ▸ Where Clause]`: `USER_ID = NV('APP_USER_ID')`
+> *The key must come only from the session, never from a URL parameter.*
 
-- The key comes **only** from the session item — **never** from a `P14_USER_ID` URL parameter.
-- Do not put `USER_ID` in a URL-settable page item. If the form auto-creates a primary-key
-  item, select it `[Left ▸ Rendering]`, set it to **Hidden** `[Right ▸ Identification ▸ Type]`
-  with *Value Protected = Yes* `[Right ▸ Security ▸ Value Protected]` and source it
-  `[Right ▸ Source ▸ Type]` = Expression from `NV('APP_USER_ID')`.
+1. Select the **form region** → set `[Right Pane ▸ Source ▸ Where Clause]` → `USER_ID = NV('APP_USER_ID')`.
+2. Select `P14_USER_ID` → `[Right Pane ▸ Identification ▸ Type]` → **Hidden**.
+3. Set `[Right Pane ▸ Security ▸ Value Protected]` → **On** _(this switch appears only after Type = Hidden)._
+4. Set `[Right Pane ▸ Source ▸ Type]` → **Expression** → `NV('APP_USER_ID')`.
 
 ---
 
 ## Step 3: Fields
 
-Match the mockup order and labels. Each item lives in the form region `[Left ▸ Rendering]`;
-set its editability per row via `[Right ▸ Identification ▸ Type]` (Text Field vs Display Only).
-Only **Full name** is editable; everything else is display-only.
+> *Only **Full name** is editable; everything else is Display Only. The wizard made an item per column, so
+> you hide the extras and add three items that aren't columns.*
 
-| # | Item | Label | Source | Editable? |
-|---|------|-------|--------|-----------|
-| 1 | `P14_FULL_NAME` | Full name | `APP_USERS.FULL_NAME` | **Yes** (Text Field) |
-| 2 | `P14_EMAIL` | Email | `APP_USERS.EMAIL` | No — Display Only |
-| 3 | `P14_ROLE` | Role | `:APP_ROLE` (active role) | No — Display Only |
-| 4 | `P14_COMPANY` | Company | `COMPANIES.NAME` for the user's `COMPANY_ID` | No — Display Only |
-| 5 | `P14_TIER` | Tier (per project) | `AGENT_PROJECTS` + `PROJECTS` — **agents only** | No — Display Only |
+1. Hide the columns the mockup omits — set each to `[Right Pane ▸ Identification ▸ Type]` → **Hidden**:
+   `P14_COMPANY_ID`, `P14_DEPARTMENT_ID`, `P14_DEFAULT_ROLE`, `P14_STATUS`.
+2. Add the 3 non-column items — for each: right-click the **My Profile** region → **Create Page Item**,
+   rename it `[Right Pane ▸ Identification ▸ Name]`, set **Type = Display Only**:
+   `P14_ROLE`, `P14_COMPANY`, `P14_TIER`.
+3. Set every field's Label + Source per this table (an item with no Source shows a **⚠️** until you set it):
 
-**Company name** (`P14_COMPANY`) — not a column on `APP_USERS`, so populate it with a
-**Pre-Rendering computation** `[Left ▸ Processing]` (with the PL/SQL/SQL in `[Right ▸ Source]`),
-or the item's SQL Query source `[Right ▸ Source ▸ SQL Query]`:
+   | # | Item | Label | Type | Source |
+   |---|------|-------|------|--------|
+   | 1 | `P14_FULL_NAME` | Full name | **Text Field** (editable) | `APP_USERS.FULL_NAME` |
+   | 2 | `P14_EMAIL` | Email | Display Only | `APP_USERS.EMAIL` |
+   | 3 | `P14_ROLE` | Role | Display Only | Item `APP_ROLE` |
+   | 4 | `P14_COMPANY` | Company | Display Only | SQL Query (below) |
+   | 5 | `P14_TIER` | Tier (per project) | Display Only | SQL Query (below) |
 
-```sql
-SELECT C.NAME
-  FROM COMPANIES C
-  JOIN APP_USERS U ON U.COMPANY_ID = C.COMPANY_ID
- WHERE U.USER_ID = NV('APP_USER_ID')
-```
+4. `P14_COMPANY` — set `[Right Pane ▸ Source ▸ Type]` → **SQL Query**:
 
-**Tier (per project)** (`P14_TIER`) — mirrors the mockup's `ACME-IT: L2, NW-APPS: L2`.
-Populate with a Pre-Rendering computation `[Left ▸ Processing]`:
+   ```sql
+   SELECT C.NAME
+     FROM COMPANIES C
+     JOIN APP_USERS U ON U.COMPANY_ID = C.COMPANY_ID
+    WHERE U.USER_ID = NV('APP_USER_ID')
+   ```
 
-```sql
-SELECT LISTAGG(P.PROJECT_KEY || ': ' || AP.TIER, ', ')
-         WITHIN GROUP (ORDER BY P.PROJECT_KEY)
-  FROM AGENT_PROJECTS AP
-  JOIN PROJECTS P ON P.PROJECT_ID = AP.PROJECT_ID
- WHERE AP.USER_ID = NV('APP_USER_ID')
-```
+5. `P14_TIER` — set `[Right Pane ▸ Source ▸ Type]` → **SQL Query**:
 
-Select `P14_TIER` `[Left ▸ Rendering]` and give it a **server-side Condition**
-`[Right ▸ Server-side Condition ▸ Type]` so it only renders for users who have mappings —
-*Type = Rows returned*, same query as above (or simply `Item is NOT NULL` on `P14_TIER`). A
-client with no `AGENT_PROJECTS` rows sees no tier field, exactly like the mockup.
+   ```sql
+   SELECT LISTAGG(P.PROJECT_KEY || ': ' || AP.TIER, ', ')
+            WITHIN GROUP (ORDER BY P.PROJECT_KEY)
+     FROM AGENT_PROJECTS AP
+     JOIN PROJECTS P ON P.PROJECT_ID = AP.PROJECT_ID
+    WHERE AP.USER_ID = NV('APP_USER_ID')
+   ```
 
-> Not on this page (mockup does not show them here): **Department** and a **Roles Held**
-> list. Role-switching is handled by the nav-bar role toggle (decision P), not the profile.
+6. `P14_TIER` — set `[Right Pane ▸ Server-side Condition ▸ Type]` → **Item is NOT NULL** on `P14_TIER`, so
+   clients with no agent mappings don't see the field.
 
 ---
 
 ## Step 4: Save Process
 
-Create the save process under `[Left ▸ Processing]`. Automatic Row Processing (DML) is fine,
-but constrain it to the editable column only. If you keep a manual process, put this in
-`[Right ▸ Source ▸ PL/SQL Code]`:
+> *The wizard already made the save process — leave it. It works as-is for the demo (only Full name is editable).*
 
-```sql
-UPDATE APP_USERS
-   SET FULL_NAME = :P14_FULL_NAME
- WHERE USER_ID = NV('APP_USER_ID');
-```
+1. Add a **Not Null** validation on `P14_FULL_NAME` — under `[Left Pane ▸ Processing]`, create a Validation,
+   `[Right Pane ▸ Validation ▸ Type]` → **Item is NOT NULL**.
 
-- The `WHERE` re-keys on `NV('APP_USER_ID')` — the update can never touch another row.
-- Do **not** include `EMAIL`, `COMPANY_ID`, `DEPARTMENT_ID`, role, or tier in the SET list.
-  If using auto-DML, select each of those items `[Left ▸ Rendering]` and mark them
-  *Query Only* `[Right ▸ Source ▸ Query Only]` / *Source Used = Only when NULL* so they
-  are read but never written.
-
-Add a **Not Null** validation on `P14_FULL_NAME` — create it under `[Left ▸ Processing]`,
-*Type = Item is NOT NULL* `[Right ▸ Validation ▸ Type]`.
+> **Optional hardening** — to guarantee only `FULL_NAME` is written: delete the auto-DML process and add
+> one manual process with `[Right Pane ▸ Source ▸ PL/SQL Code]`:
+> ```sql
+> UPDATE APP_USERS SET FULL_NAME = :P14_FULL_NAME
+>  WHERE USER_ID = NV('APP_USER_ID');
+> ```
 
 ---
 
 ## Step 5: Authorization
 
-Any authenticated user may see their own profile — no role restriction needed. Isolation is
-enforced by the `NV('APP_USER_ID')` key, not by an authorization scheme.
+> *No action. Any authenticated user sees their own profile; isolation is the `NV('APP_USER_ID')` key, not
+> an authorization scheme.*
 
 ---
 
@@ -127,8 +142,8 @@ enforced by the `NV('APP_USER_ID')` key, not by an authorization scheme.
 
 - [ ] Fetch keys on `NV('APP_USER_ID')` only — no `P14_USER_ID` URL parameter, PK item Hidden + Value Protected.
 - [ ] Save `WHERE USER_ID = NV('APP_USER_ID')` — update can reach no other row.
-- [ ] Only `FULL_NAME` is writable; email, company, role, and tier are display-only / query-only.
-- [ ] `P14_COMPANY` and `P14_TIER` computations both filter on `NV('APP_USER_ID')` — no cross-user leak.
+- [ ] Only `FULL_NAME` is writable; email, company, role, and tier are display-only.
+- [ ] `P14_COMPANY` and `P14_TIER` queries both filter on `NV('APP_USER_ID')` — no cross-user leak.
 
 ---
 

@@ -1,20 +1,46 @@
 # Step 16 — SLA Policies (p15) (SHOULD)
 
-> Named SLA policies (Gold/Standard/Bronze/Internal) with per-severity targets, assigned to projects.
+> *Named SLA policies (Gold/Standard/Bronze/Internal) with per-severity targets, assigned to projects.
 > Two sections: the **policy editing surface** (define targets once per policy) and a read-only
-> **Project Assignments** rollup (which project runs on which policy). System Admin only.
+> **Project Assignments** rollup (which project runs on which policy). System Admin only.*
 
 ---
 
 ## Step 1: Create the Page
 
-**App Builder → Create Page → Blank Page**
-- Page Number: `15`
-- Name: `SLA Policies`
-- **Authorization:** `IS_SYSTEM_ADMIN` (in Page Designer this is the page-level `[Right ▸ Security ▸ Authorization Scheme]` — select the page root node in `[Left ▸ Rendering]` to set it)
+This page is built on a **Blank Page** — a master Interactive Grid (SLA policies) stacked above a detail
+Interactive Grid (per-severity targets), both added **by hand in Step 2**. The Create Page wizard just
+makes the empty page. Open your app in **App Builder**, click the green **Create Page** button (top-right),
+and pick the **Blank Page** tile. The **Create Blank Page** wizard is a single screen:
+
+> ***Page already blank?** If page 15 already exists as a blank page, skip the wizard and open it in Page
+> Designer — set the **Authorization** below, then continue from Step 2.*
+
+**Wizard screen — Page Definition:**
+
+| Field | Set to | Notes |
+|-------|--------|-------|
+| Page Number | `15` | Guide file number = APEX page number. |
+| Name | `SLA Policies` | Also becomes the page Title. |
+| Page Mode | `Normal` | Full page, not a dialog. |
+| Use Breadcrumb | **Off** | Nav is built later (Step 19). |
+| Use Navigation | **Off** | Same — skip for now. |
+
+Click **Create Page**. You land on an **empty** page — no data source, no regions. Step 2 builds the two
+Interactive Grids (master SLA policies + detail targets) and Step 3 adds the Project Assignments rollup.
+
+**Then set the page authorization** — select the page root node in `[Left Pane ▸ Rendering]` and set
+`[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN` (System Admin only; this is the
+**Authorization** the fallback callout above refers to).
+
+> **Faster alternative (optional):** APEX's **Master Detail → Stacked** wizard can auto-generate the two
+> linked grids for you (master `SLA_POLICIES`, detail `SLA_TARGETS`, foreign key
+> `SLA_TARGETS.SLA_POLICY_ID`) — it wires the master→detail link so you don't have to. The catch: you'd
+> then replace each generated grid's Source SQL and columns to match Step 2, so it only helps if you're
+> comfortable adapting the wizard's output. The Blank Page route above stays consistent with Steps 2–3.
 
 Now in **Page Designer**, add a **Static Content** region at the top (intro card) —
-`[Gallery ▸ Regions]` drag onto `[Central ▸ Layout]`, then `[Right ▸ Identification ▸ Type]` = Static Content:
+`[Central Pane ▸ Gallery ▸ Regions]` drag onto `[Central Pane ▸ Layout]`, then `[Right Pane ▸ Identification ▸ Type]` = Static Content:
 
 > **Named policies, assigned to projects** (industry pattern — service tiers). Targets are defined
 > once per policy; each project is assigned a policy on its SLA tab. Response = max time to first
@@ -25,13 +51,13 @@ Now in **Page Designer**, add a **Static Content** region at the top (intro card
 
 ## Step 2: Section 1 — Policy Editing Surface (master/detail)
 
-The mockup renders a card per policy, each with its severity grid and a governance footer. Build
-this as a **master Interactive Grid** on `SLA_POLICIES` plus a **detail Interactive Grid** on
-`SLA_TARGETS` filtered to the selected policy.
+> *The mockup renders a card per policy, each with its severity grid and a governance footer. Build
+> this as a **master Interactive Grid** on `SLA_POLICIES` plus a **detail Interactive Grid** on
+> `SLA_TARGETS` filtered to the selected policy.*
 
 ### Master IG — SLA Policies
 
-Create it from `[Gallery ▸ Regions]` (drag onto `[Central ▸ Layout]`), then `[Right ▸ Identification ▸ Type]` = Interactive Grid. Region Source SQL goes in `[Right ▸ Source ▸ SQL Query]`:
+Create it from `[Central Pane ▸ Gallery ▸ Regions]` (drag onto `[Central Pane ▸ Layout]`), then `[Right Pane ▸ Identification ▸ Type]` = Interactive Grid. Region Source SQL goes in `[Right Pane ▸ Source ▸ SQL Query]`:
 
 ```sql
 SELECT p.SLA_POLICY_ID,
@@ -53,7 +79,7 @@ SELECT p.SLA_POLICY_ID,
  ORDER BY p.IS_DEFAULT DESC, p.POLICY_NAME
 ```
 
-Columns (in the mockup's order) — each is a node under the region in `[Left ▸ Rendering]`; set its type/LOV/format via `[Right ▸ Identification ▸ Type]` and the relevant `[Right ▸ …]` groups:
+Columns (in the mockup's order) — each is a node under the region in `[Left Pane ▸ Rendering]`; set its type/LOV/format via `[Right Pane ▸ Identification ▸ Type]` and the relevant `[Right Pane ▸ …]` groups:
 
 | Column | Source | Notes |
 |--------|--------|-------|
@@ -65,7 +91,7 @@ Columns (in the mockup's order) — each is a node under the region in `[Left �
 | Notes | `NOTES` | free text |
 | Used By | `USED_BY_COUNT` | display-only — "blast radius" project count |
 
-**Only one default** — a master-IG row process (`[Left ▸ Processing]`) or DA (`[Left ▸ Dynamic Actions]`) that clears others when a row is set default; the PL/SQL goes in `[Right ▸ Source ▸ PL/SQL Code]`:
+**Only one default** — a master-IG row process (`[Left Pane ▸ Processing]`) or DA (`[Left Pane ▸ Dynamic Actions]`) that clears others when a row is set default; the PL/SQL goes in `[Right Pane ▸ Source ▸ PL/SQL Code]`:
 
 ```sql
 UPDATE SLA_POLICIES
@@ -78,7 +104,7 @@ UPDATE SLA_POLICIES
 
 ### Detail IG — SLA Targets (selected policy)
 
-Add a second `[Gallery ▸ Regions]` Interactive Grid (`[Right ▸ Identification ▸ Type]` = Interactive Grid). Region Source SQL in `[Right ▸ Source ▸ SQL Query]` — filtered to the master's selected policy:
+Add a second `[Central Pane ▸ Gallery ▸ Regions]` Interactive Grid (`[Right Pane ▸ Identification ▸ Type]` = Interactive Grid). Region Source SQL in `[Right Pane ▸ Source ▸ SQL Query]` — filtered to the master's selected policy:
 
 ```sql
 SELECT SLA_TARGET_ID,
@@ -92,7 +118,7 @@ SELECT SLA_TARGET_ID,
  ORDER BY DECODE(SEVERITY, 'Critical',1, 'Major',2, 'Minor',3, 'Low',4)
 ```
 
-Wire the master/detail link: create a hidden page item `P15_SLA_POLICY_ID` (`[Gallery ▸ Items]` → `[Right ▸ Identification ▸ Type]` = Hidden), then a `[Left ▸ Dynamic Actions]` on the master IG's **Selection Change [Interactive Grid]** event that sets `P15_SLA_POLICY_ID` to the selected `SLA_POLICY_ID` and refreshes the detail region. Columns (mockup order) — each column node lives under the detail region in `[Left ▸ Rendering]`:
+Wire the master/detail link: create a hidden page item `P15_SLA_POLICY_ID` (`[Central Pane ▸ Gallery ▸ Items]` → `[Right Pane ▸ Identification ▸ Type]` = Hidden), then a `[Left Pane ▸ Dynamic Actions]` on the master IG's **Selection Change [Interactive Grid]** event that sets `P15_SLA_POLICY_ID` to the selected `SLA_POLICY_ID` and refreshes the detail region. Columns (mockup order) — each column node lives under the detail region in `[Left Pane ▸ Rendering]`:
 
 | Column | Source | Display |
 |--------|--------|---------|
@@ -101,7 +127,7 @@ Wire the master/detail link: create a hidden page item `P15_SLA_POLICY_ID` (`[Ga
 | Resolution Time | `RESOLUTION_DAYS` | number, days (mockup shows `3d`) |
 | Escalation % | `ESCALATION_PCT` | number 1–100 (mockup shows `80%`) |
 
-**Validations (detail IG)** — add each as a Validation under `[Left ▸ Processing]` (set its rule via the `[Right ▸ Validation ▸ …]` attributes):
+**Validations (detail IG)** — add each as a Validation under `[Left Pane ▸ Processing]` (set its rule via the `[Right Pane ▸ Validation ▸ …]` attributes):
 - All 4 severities present per policy (Critical/Major/Minor/Low).
 - `RESPONSE_HOURS`, `RESOLUTION_DAYS` positive.
 - `ESCALATION_PCT` between 1 and 100.
@@ -110,10 +136,10 @@ Wire the master/detail link: create a hidden page item `P15_SLA_POLICY_ID` (`[Ga
 
 ## Step 3: Section 2 — Project Assignments (read-only rollup)
 
-A **Classic Report** showing which project runs on which policy, with live ticket counts. Read-only
-here — policy assignment is changed on each **project's** SLA tab (page 12), not on this page.
+> *A **Classic Report** showing which project runs on which policy, with live ticket counts. Read-only
+> here — policy assignment is changed on each **project's** SLA tab (page 12), not on this page.*
 
-Add it from `[Gallery ▸ Regions]` (drag onto `[Central ▸ Layout]`), `[Right ▸ Identification ▸ Type]` = Classic Report. Region Source SQL in `[Right ▸ Source ▸ SQL Query]`:
+Add it from `[Central Pane ▸ Gallery ▸ Regions]` (drag onto `[Central Pane ▸ Layout]`), `[Right Pane ▸ Identification ▸ Type]` = Classic Report. Region Source SQL in `[Right Pane ▸ Source ▸ SQL Query]`:
 
 ```sql
 SELECT pr.PROJECT_ID,
@@ -139,10 +165,10 @@ SELECT pr.PROJECT_ID,
  ORDER BY c.COMPANY_NAME, pr.PROJECT_KEY
 ```
 
-> Ticket counts read `V_MY_TICKETS`, never the base table — the one rule. On this System-Admin-only
-> page the view returns all tenants, which is exactly the cross-company overview intended here.
+> *Ticket counts read `V_MY_TICKETS`, never the base table — the one rule. On this System-Admin-only
+> page the view returns all tenants, which is exactly the cross-company overview intended here.*
 
-Columns (mockup order) — each is a column node under the report region in `[Left ▸ Rendering]`; the **Actions** link is set on that column via `[Right ▸ Link ▸ Target]` (page 12, `P12_PROJECT_ID = #PROJECT_ID#`):
+Columns (mockup order) — each is a column node under the report region in `[Left Pane ▸ Rendering]`; the **Actions** link is set on that column via `[Right Pane ▸ Link ▸ Target]` (page 12, `P12_PROJECT_ID = #PROJECT_ID#`):
 
 | Column | Source | Notes |
 |--------|--------|-------|
@@ -153,7 +179,7 @@ Columns (mockup order) — each is a column node under the report region in `[Le
 | Breached | `BREACHED_COUNT` | past `SLA_DUE_DATE` and still open |
 | Actions | link | **⚙ Manage** → page 12 (Project Detail, SLA tab) with `P12_PROJECT_ID = #PROJECT_ID#` |
 
-**Facet / filter:** a **Company** select — create `P15_COMPANY_FILTER` from `[Gallery ▸ Items]` (`[Right ▸ Identification ▸ Type]` = Select List), positioned above the report on `[Central ▸ Layout]`; set its LOV via `[Right ▸ List of Values ▸ …]` (SQL on `COMPANIES` where `STATUS = 'Active'`, default `all`); a **N projects** result count. Add a `[Left ▸ Dynamic Actions]` on its Change event to refresh the report region.
+**Facet / filter:** a **Company** select — create `P15_COMPANY_FILTER` from `[Central Pane ▸ Gallery ▸ Items]` (`[Right Pane ▸ Identification ▸ Type]` = Select List), positioned above the report on `[Central Pane ▸ Layout]`; set its LOV via `[Right Pane ▸ List of Values ▸ …]` (SQL on `COMPANIES` where `STATUS = 'Active'`, default `all`); a **N projects** result count. Add a `[Left Pane ▸ Dynamic Actions]` on its Change event to refresh the report region.
 
 The Manage link is the only action — it navigates to the project's own SLA tab; assignment is never
 edited on this rollup.

@@ -1,15 +1,52 @@
 # Step 7 — Add Comment (p7) (MUST)
 
-> Small page, three important behaviors: internal-note flag, first-response tracking, and comment notifications.
+> *Small page, three important behaviors: internal-note flag, first-response tracking, and comment notifications.*
 
 ---
 
 ## Step 1: Create the Page
 
-**App Builder → Create Page → Form**
-- Page Number: `7`
-- Name: `Add Comment`
-- Page Mode: **Modal Dialog**
+> *This page is a **Modal Form** — it opens as a dialog over the Ticket Detail page.*
+
+Open your app in **App Builder**, click the green **Create Page** button (top-right), and pick the **Form** tile to launch
+the **Create Form** wizard — two screens.
+
+> **Page already blank?** If page 7 already exists as a blank page, skip the wizard (creating on an
+> existing page number clashes). Open **page 7** in Page Designer and set **Page Mode = Modal Dialog**.
+> The items are all added by hand below, so a blank start loses nothing. The wizard route below still works
+> when building from scratch.
+
+**Wizard screen 1 — Page Definition + Data Source:**
+
+| Field | Set to | Notes |
+|-------|--------|-------|
+| Page Number | `7` | Guide file number = APEX page number. |
+| Name | `Add Comment` | Also becomes the page title. |
+| Page Mode | **Modal Dialog** | Opens as a dialog, not a full page. |
+| Data Source | `Local Database` | Data lives in this workspace's schema. |
+| Source Type | `Table` | The modal inserts one comment row. |
+| Table / View Owner | *your workspace schema* | Leave the default — do not hardcode a schema name. |
+| Table / View Name | `TICKET_COMMENTS` | The table a new comment is inserted into. |
+| Use Breadcrumb | **Off** | Nav is built later (Step 19). |
+| Use Navigation | **Off** | Same — skip for now. |
+
+Click **Next**.
+
+**Wizard screen 2 — Primary Key + Branch Pages:**
+
+| Field | Set to | Notes |
+|-------|--------|-------|
+| Primary Key Column 1 | `COMMENT_ID (Number)` | Auto-detected PK of `TICKET_COMMENTS`. |
+| Primary Key Column 2 | *(leave `- Select -`)* | Single-column key. |
+| Branch Here on Submit | `4` | Superseded by the **Close Dialog** branch in Step 4 (back to Ticket Detail). |
+| Cancel and Go To Page | `4` | Back to Ticket Detail. |
+
+Click **Create Page**. APEX opens Page Designer with a Modal Dialog page and a Form region on
+`TICKET_COMMENTS`. This build ignores the wizard's generated column items and its automatic DML
+process — Step 2 adds just the Comment textarea, the staff-only Internal-note switch, and the File
+Browse item by hand, and Step 3 inserts the comment with a manual PL/SQL process (so it can also stamp
+first-response, history, and attachments). Delete the auto-generated items and the automatic DML
+process, then add the hidden key item next.
 
 Add a hidden item `P7_TICKET_ID` (passed from page 4).
 
@@ -17,30 +54,31 @@ Add a hidden item `P7_TICKET_ID` (passed from page 4).
 
 ## Step 2: Add Form Items
 
-Match the mockup modal: one required **Comment** textarea, and — for staff only — an **Internal note** switch.
+> *Match the mockup modal: one required **Comment** textarea, and — for staff only — an **Internal note** switch.*
 
-> Create each item by dragging from `[Gallery ▸ Items]` onto `[Central ▸ Layout]`, then set its **Type** in `[Right ▸ Identification ▸ Type]` and its **Label** in `[Right ▸ Label ▸ Label]`.
+> *Create each item by dragging from `[Central Pane ▸ Gallery ▸ Items]` onto `[Central Pane ▸ Layout]`, then set its **Type** in `[Right Pane ▸ Identification ▸ Type]` and its **Label** in `[Right Pane ▸ Label ▸ Label]`.*
 
 | Item | Type | Label | Notes |
 |------|------|-------|-------|
-| `P7_COMMENT_TEXT` | Textarea | `Comment` | Required. Placeholder `Type your reply…` — set Required in `[Right ▸ Validation ▸ Value Required]` = Yes. |
-| `P7_IS_INTERNAL` | Switch (Y/N) | `Internal note (hidden from client)` | **Condition:** `:APP_ROLE IN ('SUPPORT_AGENT','SYSTEM_ADMIN')` — only staff (Support Agent / System Admin) see this switch, matching the mockup's `canInternalNote`. Default `N`. Put the condition in `[Right ▸ Server-side Condition ▸ Type]` (PL/SQL Expression); set the default in `[Right ▸ Default]`. |
+| `P7_COMMENT_TEXT` | Textarea | `Comment` | Required. Placeholder `Type your reply…` — set Required in `[Right Pane ▸ Validation ▸ Value Required]` = Yes. |
+| `P7_IS_INTERNAL` | Switch (Y/N) | `Internal note (hidden from client)` | **Condition:** `:APP_ROLE IN ('SUPPORT_AGENT','SYSTEM_ADMIN')` — only staff (Support Agent / System Admin) see this switch, matching the mockup's `canInternalNote`. Default `N`. Put the condition in `[Right Pane ▸ Server-side Condition ▸ Type]` (PL/SQL Expression); set the default in `[Right Pane ▸ Default]`. |
 | `P7_ATTACH` | **File Browse…** | `Attach file or screenshot` | **Optional** (FR-25) — matches the mockup's `attachZoneHtml` drop-zone. Files persist against **this comment** (`COMMENT_ID`). See the settings note below. |
 
-**File Browse item (`P7_ATTACH`) settings** — select it in `[Left ▸ Rendering]` and set:
-- `[Right ▸ Settings ▸ Storage Type]` = **Table APEX_APPLICATION_TEMP_FILES** (Step 3 moves the file into `TICKET_ATTACHMENTS` after the comment exists and has a `COMMENT_ID`).
-- `[Right ▸ Settings ▸ Allow Multiple Files]` = **On** (item value = colon-separated temp-file names).
-- `[Right ▸ Settings ▸ File Types]` = `image/*,application/pdf` — **client-side convenience only**; the real allowlist is the server-side Validation in Step 2a.
+**File Browse item (`P7_ATTACH`) settings** — select it in `[Left Pane ▸ Rendering]` and set:
+- `[Right Pane ▸ Settings ▸ Storage Type]` = **Table APEX_APPLICATION_TEMP_FILES** (Step 3 moves the file into `TICKET_ATTACHMENTS` after the comment exists and has a `COMMENT_ID`).
+- `[Right Pane ▸ Settings ▸ Allow Multiple Files]` = **On** (item value = colon-separated temp-file names).
+- `[Right Pane ▸ Settings ▸ File Types]` = `image/*,application/pdf` — **client-side convenience only**; the real allowlist is the server-side Validation in Step 2a.
 
-> The mockup titles the dialog **Add Comment · <ticket ref>**; APEX shows the page Name (`Add Comment`) as the modal title. Show the ticket reference in a read-only sub-label or the dialog subtitle if you want the exact wording — cosmetic only.
+> *The mockup titles the dialog **Add Comment · <ticket ref>**; APEX shows the page Name (`Add Comment`) as the modal title. Show the ticket reference in a read-only sub-label or the dialog subtitle if you want the exact wording — cosmetic only.*
 
 ---
 
 ## Step 2a: Attachment Validation (server-side allowlist)
 
-The `File Types` accept filter is client-side only. Re-check mime type and size on the
-server in a page Validation — identical to Raise Ticket Step 3a. `[Left ▸ Processing]`
-add a Validation; `[Right ▸ Identification ▸ Type]` = **PL/SQL Function Body (returning
+> *The `File Types` accept filter is client-side only. Re-check mime type and size on the
+> server in a page Validation — identical to Raise Ticket Step 3a.*
+
+`[Left Pane ▸ Processing]` add a Validation; `[Right Pane ▸ Identification ▸ Type]` = **PL/SQL Function Body (returning
 Error Text)**:
 
 ```sql
@@ -69,7 +107,9 @@ END;
 
 ## Step 3: Add the Create Process
 
-Create it in `[Left ▸ Processing]` (a Process, After Submit) and paste the PL/SQL into `[Right ▸ Source ▸ PL/SQL Code]`. It re-checks visibility against `V_MY_TICKETS` before inserting the comment (the write guard), then persists any uploaded files against the **new comment**.
+> *It re-checks visibility against `V_MY_TICKETS` before inserting the comment (the write guard), then persists any uploaded files against the **new comment**.*
+
+Create it in `[Left Pane ▸ Processing]` (a Process, After Submit) and paste the PL/SQL into `[Right Pane ▸ Source ▸ PL/SQL Code]`.
 
 ```sql
 DECLARE
@@ -119,14 +159,16 @@ END;
 
 ## Step 4: Buttons + Close Dialog After Submit
 
-Match the mockup's modal footer — two buttons. Drag each from `[Gallery ▸ Buttons]` onto `[Central ▸ Layout]` and set its **Action** in `[Right ▸ Behavior ▸ Action]`:
+> *Match the mockup's modal footer — two buttons.*
+
+Drag each from `[Central Pane ▸ Gallery ▸ Buttons]` onto `[Central Pane ▸ Layout]` and set its **Action** in `[Right Pane ▸ Behavior ▸ Action]`:
 
 | Button | Label | Action |
 |--------|-------|--------|
 | `CANCEL` | `Cancel` | Close Dialog (no submit) |
 | `CREATE` | `Post Comment` | Submit page → runs the Create process |
 
-Add the Branch in `[Left ▸ Processing]` → Close Dialog → refresh parent page (page 4) so the new comment appears in the thread.
+Add the Branch in `[Left Pane ▸ Processing]` → Close Dialog → refresh parent page (page 4) so the new comment appears in the thread.
 
 ---
 
@@ -148,7 +190,7 @@ Add the Branch in `[Left ▸ Processing]` → Close Dialog → refresh parent pa
 ## Isolation Checklist
 
 - [ ] Client roles cannot set `IS_INTERNAL` (switch hidden by Condition **and** forced to `'N'` server-side)
-- [ ] On-load visibility guard — a foreign `P7_TICKET_ID` can't even open the dialog (mockup's `canSee` gate): re-check `SELECT COUNT(*) FROM V_MY_TICKETS WHERE TICKET_ID = :P7_TICKET_ID` in a Before-Header process (`[Left ▸ Processing]` → Pre-Rendering ▸ Before Header), redirect/stop if 0
+- [ ] On-load visibility guard — a foreign `P7_TICKET_ID` can't even open the dialog (mockup's `canSee` gate): re-check `SELECT COUNT(*) FROM V_MY_TICKETS WHERE TICKET_ID = :P7_TICKET_ID` in a Before-Header process (`[Left Pane ▸ Processing]` → Pre-Rendering ▸ Before Header), redirect/stop if 0
 - [ ] Write guard blocks commenting on foreign tickets (`V_MY_TICKETS` count in the Create process)
 - [ ] Comment text escaped everywhere it renders (page 4 thread)
 - [ ] Internal notes never appear for client roles (`V_MY_COMMENTS` hides `IS_INTERNAL='Y'` from clients)
@@ -158,4 +200,4 @@ Add the Branch in `[Left ▸ Processing]` → Close Dialog → refresh parent pa
 
 ---
 
-**Next:** move to `08-dashboard.md` — you've finished the ticket spine!
+**Next:** move to `08-dashboard.md`.
