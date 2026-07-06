@@ -121,7 +121,7 @@ SELECT u.FULL_NAME, ap.TIER, u.STATUS,
 `[Central Pane ▸ Gallery ▸ Regions]` drag a child region onto `[Central Pane ▸ Layout]`. The **one door** for changing a project's SLA. A select assigns the policy (System Admin), then a read-only targets table shows that policy's per-severity rows.
 
 - **Assign policy** (Authorization `[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`): a Select item `P11_SLA_POLICY_ID` (`[Central Pane ▸ Gallery ▸ Items]`; `[Right Pane ▸ Identification ▸ Type]` = Select List, `[Right Pane ▸ List of Values ▸ Type]` = SQL Query from `SLA_POLICIES`, first option *"— Default policy (<name>) —"* = NULL). Its change process (`[Left Pane ▸ Processing]`, `[Right Pane ▸ Source ▸ PL/SQL Code]`) updates `PROJECTS.SLA_POLICY_ID` after re-checking the project is visible. Non-admins see the assigned policy name as read-only.
-- **Manage policies →** link to the SLA Policies page (page 16).
+- **Manage policies →** link to the SLA Policies page (page 15).
 
 Targets table — `[Central Pane ▸ Gallery ▸ Regions]` a Classic Report, `[Right Pane ▸ Source ▸ SQL Query]` = the query below (resolves to the assigned policy, else the default policy):
 

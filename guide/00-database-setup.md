@@ -16,7 +16,7 @@ Run each script one at a time, in this exact order:
 
 | # | Script | What it does |
 |---|--------|-------------|
-| 1 | `01_schema.sql` | Creates all 13 tables, the `TKT-` ticket-number sequence + trigger, foreign keys, check constraints, indexes. No data yet. |
+| 1 | `01_schema.sql` | Creates all 14 tables (13 core + `ADMIN_AUDIT_LOG`), the `TKT-` ticket-number sequence + trigger, foreign keys, check constraints, indexes. No data yet. |
 | 2 | `02_seed_data.sql` | Demo data: 5 companies, 7 departments, 18 users with roles, agent-project tier mappings, categories, SLA policies + targets, 14 tickets with comments and history. |
 | 3 | `03_attachments.sql` | `TICKET_ATTACHMENTS` BLOB table + tenant-key trigger (FR-25 attachments). Must run **before** `05` — the `V_MY_ATTACHMENTS` view guards on the table existing. |
 | 4 | `05_isolation_views.sql` | The isolation firewall: `V_MY_PROJECTS`, `V_MY_TICKETS`, `V_MY_COMMENTS`, `V_MY_HISTORY`, `V_MY_ATTACHMENTS`. Every page reads through these, never base tables. |

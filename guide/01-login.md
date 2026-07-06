@@ -76,10 +76,10 @@ Log in as each test user and verify via **Developer Toolbar → Session → Appl
 
 | User | Expected Role | Expected Company | Notes |
 |------|--------------|------------------|-------|
-| `sara@northwind.example` | SYSTEM_ADMIN | Northwind | `APP_HAS_MULTI_ROLE = Y` |
+| `sara@northwind.example` | SYSTEM_ADMIN | Northwind IT | `APP_HAS_MULTI_ROLE = Y` |
 | `anna@acme.example` | CLIENT_USER | Acme Corp | single role |
 | `bob@acme.example` | CLIENT_ADMIN | Acme Corp | single role |
-| `mike@northwind.example` | SUPPORT_AGENT | Northwind | `APP_HAS_MULTI_ROLE = Y` |
+| `mike@northwind.example` | SUPPORT_AGENT | Northwind IT | `APP_HAS_MULTI_ROLE = Y` |
 | `tom@globex.example` | — | — | **Login must fail** (inactive account) |
 
 ---

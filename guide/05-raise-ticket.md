@@ -14,7 +14,7 @@
 
    | Field | Set to | Notes |
    |-------|--------|-------|
-   | Page Number | `5` | Guide file number = APEX page number. |
+   | Page Number | `5` | The Raise Ticket page. |
    | Name | `Raise a Ticket` | Also becomes the dialog title. |
    | Page Mode | **Modal Dialog** | Set the dialog **Size = Large** in Page Designer after the wizard. |
    | Data Source | `Local Database` | Data lives in this workspace's schema. |
@@ -38,8 +38,13 @@
 6. Set `[Right Pane ▸ Source ▸ HTML Code]` to the following tenant banner HTML:
 
    ```html
-   🔒 Filed under <b>&APP_COMPANY_NAME.</b> / <b>&APP_DEPARTMENT_NAME.</b>.
+   🔒 Filed under <b>&APP_COMPANY_NAME.</b>.
    ```
+
+   > `APP_COMPANY_NAME` is a trusted app item set at login (safe to substitute directly). Do **not**
+   > reference `&APP_DEPARTMENT_NAME.` here — no such session item exists (the login stamps only
+   > `APP_USER_ID` / `APP_COMPANY_ID` / `APP_COMPANY_NAME` / `APP_ROLE` / `APP_ROLE_DISP` /
+   > `APP_HAS_MULTI_ROLE`); the ticket's department is derived server-side at insert (Step 4).
 
 ---
 

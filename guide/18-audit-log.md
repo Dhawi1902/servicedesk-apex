@@ -51,7 +51,7 @@ VALUES (NV('APP_USER_ID'), 'VISIBILITY_CHANGE', 'Project', :P11_PROJECT_NAME,
 -- Agent added to a project team at a tier (AGENT_PROJECTS)
 INSERT INTO ADMIN_AUDIT_LOG (USER_ID, ACTION, ENTITY, RECORD_KEY, OLD_VALUE, NEW_VALUE)
 VALUES (NV('APP_USER_ID'), 'TEAM_ADD', 'Agent-Project',
-        :P19_AGENT_NAME || ' -> ' || :P19_PROJECT_KEY, NULL, :P19_TIER);
+        :P11_AGENT_NAME || ' -> ' || :P11_PROJECT_KEY, NULL, :P11_TIER);
 ```
 
 > *Always bind `NV('APP_USER_ID')` for the actor and `:Pn_*` items for values — never concatenate

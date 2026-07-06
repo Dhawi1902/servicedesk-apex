@@ -24,7 +24,7 @@
 4. From `[Central Pane ▸ Gallery ▸ Items]`, drag a **Select List** item into the Content Body region.
 5. Set its properties:
    - `[Right Pane ▸ Identification ▸ Name]`: `P20_NEW_ROLE`
-   - `[Right Pane ▸ Identification ▸ Label]`: `Switch to`
+   - `[Right Pane ▸ Label ▸ Label]`: `Switch to`
    - `[Right Pane ▸ List of Values ▸ Type]`: **SQL Query**
    - `[Right Pane ▸ List of Values ▸ SQL Query]`:
      ```sql
@@ -94,19 +94,19 @@
 ### Role switcher test
 
 1. Log in as `mike@northwind.example`
-2. Click the **banner** (top-right nav bar, shows `Northwind · Support Agent`) → switcher modal opens
+2. Click the **banner** (top-right nav bar, shows `Northwind IT · Support Agent`) → switcher modal opens
 3. Select **Client User** → click **Switch**
 4. Nav changes: "Raise a Ticket" and "My Company" appear; admin entries stay hidden
-5. Banner now reads `Northwind · Client User`
+5. Banner now reads `Northwind IT · Client User`
 6. Switch back to **Support Agent** → nav and banner revert
 
 ### Tenant banner test
 
 | User | Banner shows |
 |------|-------------|
-| Sara | `Northwind · System Admin` |
+| Sara | `Northwind IT · System Admin` |
 | Anna | `Acme Corp · Client User` |
-| Mike | `Northwind · Support Agent` (then `Northwind · Client User` after switch) |
+| Mike | `Northwind IT · Support Agent` (then `Northwind IT · Client User` after switch) |
 
 ---
 

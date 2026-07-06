@@ -14,7 +14,7 @@
 
    | Field | Set to | Notes |
    |-------|--------|-------|
-   | Page Number | `4` | Guide file number = APEX page number. |
+   | Page Number | `4` | The Ticket Detail page. |
    | Name | `Ticket Detail` | Also becomes the page Title. |
    | Page Mode | `Normal` | Full page, not a dialog. |
    | Data Source | `Local Database` | Data lives in this workspace's schema. |

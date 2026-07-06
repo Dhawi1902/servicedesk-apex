@@ -22,7 +22,7 @@
 
    | Field | Set to | Notes |
    |-------|--------|-------|
-   | Page Number | `3` | Guide file number = APEX page number. |
+   | Page Number | `3` | The Ticket Queue page. |
    | Name | `Ticket Queue` | Also becomes the page Title. |
    | Page Mode | `Normal` | Full page, not a dialog. |
    | Data Source | `Local Database` | Data lives in this workspace's schema. |
@@ -54,7 +54,7 @@
           t.SUBJECT,
           t.TICKET_TYPE,
           t.SEVERITY,
-          t.PRIORITY,
+          NVL(t.PRIORITY, 'Untriaged')                  AS PRIORITY,
           t.STATUS,
           t.COMPANY_ID,
           c.COMPANY_NAME,
@@ -138,16 +138,24 @@
    | 4 | `COMPANY_NAME` | Set `[Right Pane ▸ Server-side Condition ▸ Type]`: **Expression** `APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')` |
    | 5 | `PROJECT_NAME` | Set `[Right Pane ▸ Server-side Condition ▸ Type]`: **PL/SQL Function Body returning Boolean** (see below) |
    | 6 | `SEVERITY` | |
-   | 7 | `PRIORITY` | Set `[Right Pane ▸ Source ▸ HTML Expression]`: `NVL(PRIORITY,'Untriaged')` |
+   | 7 | `PRIORITY` | Shows **Untriaged** when null — already handled by the `NVL(t.PRIORITY,'Untriaged')` in the Step 2 query. (Don't try to do this in an HTML Expression: that field takes `#COLUMN#` substitutions, not SQL functions like `NVL`.) |
    | 8 | `STATUS` | |
    | 9 | `ASSIGNEE_NAME` | |
    | 10| `AGE` | |
    | 11| `SLA_STATUS` | |
 
-3. For the `PROJECT_NAME` condition body, use this:
+3. For the `PROJECT_NAME` condition body, use this. **A scalar `(SELECT …)` can't sit inside a PL/SQL
+   expression (raises PLS-00405) — fetch the count with `SELECT … INTO` first, then `RETURN`:**
    ```sql
-   RETURN :APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')
-          OR (SELECT COUNT(*) FROM V_MY_PROJECTS) > 1;
+   DECLARE
+     l_ok PLS_INTEGER;
+   BEGIN
+     IF :APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT') THEN
+       RETURN TRUE;
+     END IF;
+     SELECT COUNT(*) INTO l_ok FROM V_MY_PROJECTS;
+     RETURN l_ok > 1;
+   END;
    ```
 
 ---
@@ -189,7 +197,7 @@
    - `[Right Pane ▸ Link]`: Target Page `6`, `P6_TICKET_ID` = `#TICKET_ID#`.
 
 5. Select the `STATUS` column in `[Left Pane ▸ Rendering]`.
-6. Surface a client action cue for Resolved tickets by setting `[Right Pane ▸ Appearance ▸ HTML Expression]` (ensure all data is escaped).
+6. Surface a client action cue for Resolved tickets by setting `[Right Pane ▸ Column Formatting ▸ HTML Expression]` (ensure all data is escaped).
 
 ---
 

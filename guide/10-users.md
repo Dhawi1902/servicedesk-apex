@@ -19,7 +19,7 @@ Grid** tile. That opens the **Create Interactive Grid** wizard — two screens:
 
 | Field | Set to | Notes |
 |-------|--------|-------|
-| Page Number | `9` | Guide file number = APEX page number. |
+| Page Number | `9` | The Users page. |
 | Name | `Users` | Also becomes the page Title and the region title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
 | Data Source | `Local Database` | Data lives in this workspace's schema. |

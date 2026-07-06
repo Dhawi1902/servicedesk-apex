@@ -14,7 +14,7 @@
 
    | Field | Set to | Notes |
    |-------|--------|-------|
-   | Page Number | `6` | Guide file number = APEX page number. |
+   | Page Number | `6` | The Assign / Reassign page. |
    | Name | `Assign Ticket` | Also becomes the page title. |
    | Page Mode | **Modal Dialog** | Opens as a dialog, not a full page. |
    | Data Source | `Local Database` | Data lives in this workspace's schema. |
@@ -39,7 +39,7 @@
 
    | Item | Type | Purpose |
    |------|------|---------|
-   | `P6_TICKET_ID` | Hidden (value-protected) | Passed from page 5 detail |
+   | `P6_TICKET_ID` | Hidden (value-protected) | Passed from page 4 detail |
    | `P6_TICKET_REF` | Display Only | Header + context line |
    | `P6_SUBJECT` | Display Only | "Put an agent on **…**" |
    | `P6_COMPANY_NAME` | Display Only | Context line |

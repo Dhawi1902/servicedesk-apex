@@ -20,7 +20,7 @@ the **Create Form** wizard — two screens.
 
 | Field | Set to | Notes |
 |-------|--------|-------|
-| Page Number | `7` | Guide file number = APEX page number. |
+| Page Number | `7` | The Add Comment page. |
 | Name | `Add Comment` | Also becomes the page title. |
 | Page Mode | **Modal Dialog** | Opens as a dialog, not a full page. |
 | Data Source | `Local Database` | Data lives in this workspace's schema. |

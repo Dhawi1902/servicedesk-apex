@@ -18,7 +18,7 @@ the **Create Blank Page** wizard — a single screen, then Create.
 
 | Field | Set to | Notes |
 |-------|--------|-------|
-| Page Number | `2` | Guide file number = APEX page number. |
+| Page Number | `2` | The Dashboard page — page numbers follow feature order (Home is p1), so from here the page number no longer matches the guide-file number. |
 | Name | `Dashboard` | Also becomes the page Title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
 | Use Breadcrumb | **On** | Entry `Dashboard` — the page bar shows `Overview / Dashboard`. |
@@ -174,7 +174,9 @@ SELECT c.COMPANY_NAME AS company,
 > already role-scoped. A System Admin sees every company; a Support Agent's rows only ever contain
 > their assigned projects' companies — so the same query yields the admin's cross-tenant view *and*
 > the agent's "my clients" view with **no cross-tenant leak**. (Companies with zero visible tickets
-> won't appear; for the admin's full roster, `RIGHT JOIN COMPANIES … WHERE c.STATUS='Active'`.)
+> won't appear. **Do not** switch to `RIGHT JOIN COMPANIES` to show the full roster — this region is
+> shared with Support Agents, so a RIGHT JOIN would surface **every** active company name to an agent as a
+> zero-count row: a cross-tenant leak. Keep the INNER `JOIN`.)
 > Append `%` to SLA Compliance declaratively.
 
 ---

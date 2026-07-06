@@ -24,7 +24,7 @@ Source step and no second screen):
 
 | Field | Set to | Notes |
 |-------|--------|-------|
-| Page Number | `16` | Guide file number = APEX page number. |
+| Page Number | `16` | The Agent-Project Mapping page. |
 | Name | `Agent-Project Mapping` | Also becomes the page Title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
 | Use Breadcrumb | **On** — entry `Administration / Agent Mapping` | Matches the mockup's breadcrumb; the nav-menu link is wired later (Step 19). |

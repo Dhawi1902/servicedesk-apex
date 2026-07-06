@@ -23,7 +23,7 @@ Grid** tile. That opens the **Create Interactive Grid** wizard — two screens:
 
 | Field | Set to | Notes |
 |-------|--------|-------|
-| Page Number | `13` | Guide file number = APEX page number. |
+| Page Number | `13` | The Categories page. |
 | Name | `Categories` | Also becomes the page Title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
 | Data Source | `Local Database` | Data lives in this workspace's schema. |
@@ -107,7 +107,7 @@ On the `COMPANY_ID` column `[Left Pane ▸ Rendering]`, set `[Right Pane ▸ Ide
 ```sql
 SELECT COMPANY_NAME AS d, COMPANY_ID AS r
 FROM   COMPANIES
-WHERE  STATUS = 'Active'
+WHERE  STATUS = 'ACTIVE'
 ORDER  BY COMPANY_NAME
 ```
 

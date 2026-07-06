@@ -20,7 +20,7 @@ and pick the **Blank Page** tile. The **Create Blank Page** wizard is a single s
 
 | Field | Set to | Notes |
 |-------|--------|-------|
-| Page Number | `15` | Guide file number = APEX page number. |
+| Page Number | `15` | The SLA Policies page. |
 | Name | `SLA Policies` | Also becomes the page Title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
 | Use Breadcrumb | **Off** | Nav is built later (Step 19). |
@@ -137,7 +137,7 @@ Wire the master/detail link: create a hidden page item `P15_SLA_POLICY_ID` (`[Ce
 ## Step 3: Section 2 — Project Assignments (read-only rollup)
 
 > *A **Classic Report** showing which project runs on which policy, with live ticket counts. Read-only
-> here — policy assignment is changed on each **project's** SLA tab (page 12), not on this page.*
+> here — policy assignment is changed on each **project's** SLA tab (page 11), not on this page.*
 
 Add it from `[Central Pane ▸ Gallery ▸ Regions]` (drag onto `[Central Pane ▸ Layout]`), `[Right Pane ▸ Identification ▸ Type]` = Classic Report. Region Source SQL in `[Right Pane ▸ Source ▸ SQL Query]`:
 
@@ -168,7 +168,7 @@ SELECT pr.PROJECT_ID,
 > *Ticket counts read `V_MY_TICKETS`, never the base table — the one rule. On this System-Admin-only
 > page the view returns all tenants, which is exactly the cross-company overview intended here.*
 
-Columns (mockup order) — each is a column node under the report region in `[Left Pane ▸ Rendering]`; the **Actions** link is set on that column via `[Right Pane ▸ Link ▸ Target]` (page 12, `P12_PROJECT_ID = #PROJECT_ID#`):
+Columns (mockup order) — each is a column node under the report region in `[Left Pane ▸ Rendering]`; the **Actions** link is set on that column via `[Right Pane ▸ Link ▸ Target]` (page 11, `P11_PROJECT_ID = #PROJECT_ID#`):
 
 | Column | Source | Notes |
 |--------|--------|-------|
@@ -177,9 +177,9 @@ Columns (mockup order) — each is a column node under the report region in `[Le
 | SLA Policy | `SLA_POLICY_NAME` | resolved policy; show "(default)" when `IS_DEFAULT_APPLIED = 'Y'`; "⚠ none" if no policy and no default exists |
 | Open | `OPEN_COUNT` | open (non-Resolved/Closed) tickets |
 | Breached | `BREACHED_COUNT` | past `SLA_DUE_DATE` and still open |
-| Actions | link | **⚙ Manage** → page 12 (Project Detail, SLA tab) with `P12_PROJECT_ID = #PROJECT_ID#` |
+| Actions | link | **⚙ Manage** → page 11 (Project Detail, SLA tab) with `P11_PROJECT_ID = #PROJECT_ID#` |
 
-**Facet / filter:** a **Company** select — create `P15_COMPANY_FILTER` from `[Central Pane ▸ Gallery ▸ Items]` (`[Right Pane ▸ Identification ▸ Type]` = Select List), positioned above the report on `[Central Pane ▸ Layout]`; set its LOV via `[Right Pane ▸ List of Values ▸ …]` (SQL on `COMPANIES` where `STATUS = 'Active'`, default `all`); a **N projects** result count. Add a `[Left Pane ▸ Dynamic Actions]` on its Change event to refresh the report region.
+**Facet / filter:** a **Company** select — create `P15_COMPANY_FILTER` from `[Central Pane ▸ Gallery ▸ Items]` (`[Right Pane ▸ Identification ▸ Type]` = Select List), positioned above the report on `[Central Pane ▸ Layout]`; set its LOV via `[Right Pane ▸ List of Values ▸ …]` (SQL on `COMPANIES` where `STATUS = 'ACTIVE'`, default `all`); a **N projects** result count. Add a `[Left Pane ▸ Dynamic Actions]` on its Change event to refresh the report region.
 
 The Manage link is the only action — it navigates to the project's own SLA tab; assignment is never
 edited on this rollup.
@@ -196,7 +196,7 @@ edited on this rollup.
 | Project Assignments section | Every active project listed with its resolved policy, Open + Breached counts |
 | Project with no policy assigned | SLA Policy shows the Default policy name + "(default)" |
 | Filter Company = Acme | Rollup narrows to Acme's projects; count updates |
-| Click ⚙ Manage on a row | Navigates to page 12 (Project Detail) for that project |
+| Click ⚙ Manage on a row | Navigates to page 11 (Project Detail) for that project |
 | Anna (Client User) URL-jumps to page 15 | Authorization error (`IS_SYSTEM_ADMIN`) |
 
 ---
@@ -207,7 +207,7 @@ edited on this rollup.
 - [ ] `SLA_POLICIES` / `SLA_TARGETS` are global config (no `company_id`) — edited only by System Admin.
 - [ ] Project Assignments ticket counts read `FROM V_MY_TICKETS`, never `TICKETS` (cross-tenant view is intentional for the admin-only overview).
 - [ ] Company filter bound as `:P15_COMPANY_FILTER` — never string-concatenated.
-- [ ] Manage link passes `PROJECT_ID` only; page 12 re-checks access server-side.
+- [ ] Manage link passes `PROJECT_ID` only; page 11 re-checks access server-side.
 
 ---
 

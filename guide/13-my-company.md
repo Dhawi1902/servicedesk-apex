@@ -1,7 +1,7 @@
 # Step 13 — My Company (p12) (SHOULD)
 
 > *One page, two hats: clients see their **own** company (read-only); System Admin opens **any**
-> company (editable, via the Manage/View link on page 9 Companies). Support Agents don't get this page.
+> company (editable, via the Manage/View link on page 8 Companies). Support Agents don't get this page.
 > Mirrors the mockup Company Detail (page 17): a stat header + three tabs — **Projects**,
 > **Departments**, **Client Admins**.*
 
@@ -21,7 +21,7 @@ a **single screen**:
 
 | Field | Set to | Notes |
 |-------|--------|-------|
-| Page Number | `12` | The My Company page (also opened from page 9 Companies via Manage/View). |
+| Page Number | `12` | The My Company page (also opened from page 8 Companies via Manage/View). |
 | Name | `My Company` | Also becomes the page Title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
 | Use Breadcrumb | **Off** | Breadcrumb / title text is set below and wired with nav in Step 19. |
@@ -51,7 +51,7 @@ Breadcrumb / title text (Title region or page title):
 ```sql
 BEGIN
   IF :APP_ROLE = 'SYSTEM_ADMIN' THEN
-    NULL;                                   -- keep the URL value (from page 9 Manage)
+    NULL;                                   -- keep the URL value (from page 8 Manage)
   ELSE
     :P12_COMPANY_ID := NV('APP_COMPANY_ID');-- overwrite any tampered URL value
   END IF;
@@ -138,7 +138,7 @@ Columns, in this order:
 
 **Region button** (top-right, System Admin only): `[Central Pane ▸ Gallery ▸ Buttons]` drag a button into the region
 header, **+ Add Project** → project create modal, pre-set company = `:P12_COMPANY_ID`. Gate it at
-`[Right Pane ▸ Security ▸ Authorization Scheme]` = `System Admin`.
+`[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`.
 
 Empty state (`[Right Pane ▸ Appearance ▸ No Data Found Message]`): `No projects for this company.`
 
@@ -173,7 +173,7 @@ Columns:
 
 **Region button** (top-right, System Admin only): `[Central Pane ▸ Gallery ▸ Buttons]` into the region header,
 **+ Add Department** → department create modal, company = `:P12_COMPANY_ID`. Gate it at
-`[Right Pane ▸ Security ▸ Authorization Scheme]` = `System Admin`.
+`[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`.
 
 Empty state (`[Right Pane ▸ Appearance ▸ No Data Found Message]`): `No departments yet — users and tickets can be filed without one.`
 
@@ -211,7 +211,7 @@ Columns, in this order:
 | Last Login | — | mockup shows a Last Login column; `APP_USERS` has no such column in v1. Display `—`, or wire from APEX Accounts (`APEX_WORKSPACE_ACTIVITY_LOG` / access log) if surfaced later. Keep the column to match the mockup; don't add a schema column just for it. |
 
 **Region link** (top-right, System Admin only): `[Central Pane ▸ Gallery ▸ Buttons]` into the region header,
-**Manage on Users page →** → page 10 (Users). Gate it at `[Right Pane ▸ Security ▸ Authorization Scheme]` = `System Admin`.
+**Manage on Users page →** → page 9 (Users). Gate it at `[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`.
 
 Empty state (`[Right Pane ▸ Appearance ▸ No Data Found Message]`): `⚠ No Client Admin — this company cannot manage its own users or Restricted-project
 invitations; assign the CLIENT_ADMIN role on the Users page.`
@@ -223,17 +223,17 @@ Restricted-project invitations (decision Q), and can assign/reassign agents on a
 
 ## Step 7: Authorization
 
-The named schemes (`System Admin`, etc.) come from [Shared Components ▸ Authorization Schemes] (built
+The named schemes (`IS_SYSTEM_ADMIN`, etc.) come from [Shared Components ▸ Authorization Schemes] (built
 on page 1). Apply each per element at `[Right Pane ▸ Security ▸ Authorization Scheme]`; the page-level and
 link-level rules on `:APP_ROLE` go in `[Right Pane ▸ Server-side Condition ▸ Type]`.
 
 | Element | Authorization Scheme |
 |---------|----------------------|
 | Page | `:APP_ROLE != 'SUPPORT_AGENT'` (condition) |
-| **+ Add Project / + Add Department** buttons | `System Admin` |
-| Project **⚙ Manage / ✎ Edit**, Dept **✎ Edit** | `System Admin` |
+| **+ Add Project / + Add Department** buttons | `IS_SYSTEM_ADMIN` |
+| Project **⚙ Manage / ✎ Edit**, Dept **✎ Edit** | `IS_SYSTEM_ADMIN` |
 | Project **👁 View** link | shown when `:APP_ROLE` in (`CLIENT_USER`,`CLIENT_ADMIN`) |
-| **Manage on Users page →** link | `System Admin` |
+| **Manage on Users page →** link | `IS_SYSTEM_ADMIN` |
 
 ---
 
@@ -244,7 +244,7 @@ link-level rules on `:APP_ROLE` go in `[Right Pane ▸ Server-side Condition ▸
 | Anna (Client User) edits URL to another company's id | `P12_COMPANY_ID` overwritten → still renders Acme |
 | Anna's Projects tab | Only Open + invited Restricted Acme projects (via `V_MY_PROJECTS`) |
 | Anna sees no + Add / ✎ Edit / Manage buttons | Read-only; only **👁 View** links |
-| Sara (System Admin) clicks Manage on page 9 | Opens that company, all buttons visible & editable |
+| Sara (System Admin) clicks Manage on page 8 | Opens that company, all buttons visible & editable |
 | SLA Breached tile | Hidden when count = 0, red when > 0 |
 | Mike (Support Agent) | Page not accessible |
 
@@ -257,7 +257,7 @@ link-level rules on `:APP_ROLE` go in `[Right Pane ▸ Server-side Condition ▸
 - [ ] Projects tab reads `V_MY_PROJECTS` (excludes uninvited Restricted projects for Client Users)
 - [ ] Ticket/SLA stat tiles read `V_MY_TICKETS` (never base `TICKETS`)
 - [ ] Departments/Users/Client-Admins queries all filter `WHERE COMPANY_ID = :P12_COMPANY_ID`
-- [ ] Every Add/Edit/Manage action authorization-gated to `System Admin`
+- [ ] Every Add/Edit/Manage action authorization-gated to `IS_SYSTEM_ADMIN`
 - [ ] Project detail links pass `PROJECT_ID` only from rows the view already returned (no IDOR)
 
 ---
