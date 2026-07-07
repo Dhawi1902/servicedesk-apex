@@ -75,8 +75,10 @@ don't repeat them:
   sub-panels you click **Next** through — either way the fields are identical; set them and continue.
 - **Table / View Owner** always defaults to your workspace schema (e.g. `WKSP_DHAWIWORKSPACE`) —
   **leave it as the default**. The guides never hardcode it.
-- **Navigation toggles** (Use Breadcrumb / Use Navigation) = **Off** on every page — the left nav
-  menu is built last, in Step 19.
+- **Use Breadcrumb = On** on every **Normal** page — set **Breadcrumb Entry Name** to the page name
+  so its title shows in the breadcrumb bar. Leave it **Off** on **Modal Dialog** pages (Raise Ticket,
+  Assign, Add Comment, Switch Role) and Login — a dialog has no breadcrumb bar.
+- **Use Navigation = Off** on every page — the left nav menu is built last, in Step 19.
 - **Blank Page** has *no* Data Source screen — you get an empty page and build its regions by hand
   (used for dashboards and tabbed hubs).
 - After **Create Page** you land in **Page Designer**; each guide's Step 1 ends with a "what you land

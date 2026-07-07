@@ -65,7 +65,21 @@
 
 ---
 
-## Step 3: Combine the Banner + Role Switcher into One Nav-Bar Entry
+## Step 3: Show the Home page title (breadcrumb)
+
+> *Page 1 already existed before this guide, so it never went through the Create Page wizard's **Use Breadcrumb** toggle — which is why its title bar is blank. Add the breadcrumb by hand so Home matches every other Normal page (see the [breadcrumb convention](README.md)).*
+
+1. Open **page 1** in Page Designer.
+2. Under `[Left Pane ▸ Rendering]`, right-click the **Breadcrumb Bar** position → **Create Region**.
+3. Set the region:
+   - `[Right Pane ▸ Identification ▸ Type]`: **Breadcrumb**
+   - `[Right Pane ▸ Settings ▸ Breadcrumb]`: **Breadcrumb** (the app-default component). *If the list is empty, no page has created it yet — go to **Shared Components → Breadcrumbs**, create one named `Breadcrumb`, then come back.*
+4. Create this page's entry: **Shared Components → Breadcrumbs → Breadcrumb → Create Breadcrumb Entry** — **Page** = `1`, **Entry Name** = `Home`, **Parent Entry** = *(none)*.
+5. Save. The Home page now shows **Home** in the breadcrumb bar.
+
+---
+
+## Step 4: Combine the Banner + Role Switcher into One Nav-Bar Entry
 
 > *Rather than a separate tenant banner and a separate "Switch Role" button, we make **one** Navigation Bar entry that shows the company + role and opens the switcher modal when clicked.*
 
@@ -87,7 +101,7 @@
 
 ---
 
-## Step 4: Test It
+## Step 5: Test It
 
 > *The per-role **left-nav** click-through is tested in [`19-navigation.md`](19-navigation.md).*
 

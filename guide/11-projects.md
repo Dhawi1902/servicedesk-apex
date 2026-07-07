@@ -22,7 +22,8 @@ Open your app in **App Builder** and click the green **Create Page** button (top
 | Data Source | `Local Database` | Data lives in this workspace's schema. |
 | Source Type | `SQL Query` | Not Table — this report joins the isolation view to `COMPANIES`, so it's a query, not one table. |
 | SQL Query | *(paste the Step 2 query — or leave blank now)* | Source view is `V_MY_PROJECTS`; the full query and why is set in Step 2. |
-| Use Breadcrumb | **Off** | Nav is built later (Step 19). |
+| Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+| Breadcrumb Entry Name | `Projects` | The page name — shown in the breadcrumb bar. |
 | Use Navigation | **Off** | Same — the nav entry (all roles) is added in Step 19. |
 
 Click **Next**.

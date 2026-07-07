@@ -26,7 +26,8 @@ Grid** tile. That opens the **Create Interactive Grid** wizard — two screens:
 | Source Type | `Table` | Point at a table now; **Step 2 replaces this with the full SQL join** (roles/company/dept). |
 | Table / View Owner | *your workspace schema* | e.g. `WKSP_DHAWIWORKSPACE` — leave the default. |
 | Table / View Name | `APP_USERS` | The base table; Step 2 joins in `COMPANIES`, `DEPARTMENTS`, `USER_ROLES`. |
-| Use Breadcrumb | **Off** | Nav is built later (Step 19). |
+| Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+| Breadcrumb Entry Name | `Users` | The page name — shown in the breadcrumb bar. |
 | Use Navigation | **Off** | Same — skip for now. |
 
 Click **Next**.

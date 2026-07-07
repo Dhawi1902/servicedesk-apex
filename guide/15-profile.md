@@ -22,7 +22,8 @@
    | Source Type | `Table` | — |
    | Table / View Owner | *your workspace schema* (leave default) | — |
    | Table / View Name | `APP_USERS` | — |
-   | Use Breadcrumb | **Off** | — |
+   | Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+   | Breadcrumb Entry Name | `My Profile` | The page name — shown in the breadcrumb bar. |
    | Use Navigation | **Off** | — |
 
 3. Wizard **screen 2** — fill this table, then **Create Page**:

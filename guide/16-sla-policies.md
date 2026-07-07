@@ -23,7 +23,8 @@ and pick the **Blank Page** tile. The **Create Blank Page** wizard is a single s
 | Page Number | `15` | The SLA Policies page. |
 | Name | `SLA Policies` | Also becomes the page Title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
-| Use Breadcrumb | **Off** | Nav is built later (Step 19). |
+| Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+| Breadcrumb Entry Name | `SLA Policies` | The page name — shown in the breadcrumb bar. |
 | Use Navigation | **Off** | Same — skip for now. |
 
 Click **Create Page**. You land on an **empty** page — no data source, no regions. Step 2 builds the two

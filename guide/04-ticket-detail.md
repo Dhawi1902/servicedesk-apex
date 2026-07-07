@@ -21,7 +21,8 @@
    | Source Type | `Table` | We point at a named object; the field below accepts a view. |
    | Table / View Owner | *your workspace schema* | Leave the default. |
    | Table / View Name | `V_MY_TICKETS` | The tenant-scoped view — never base `TICKETS`. |
-   | Use Breadcrumb | **Off** | Nav is built later (Step 19). |
+   | Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+   | Breadcrumb Entry Name | `Ticket Detail` | The page name — shown in the breadcrumb bar. |
    | Use Navigation | **Off** | Same — skip for now. |
 
 3. Wizard **screen 2** — fill this table, then click **Create Page**:

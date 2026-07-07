@@ -19,7 +19,8 @@ Open your app in **App Builder** and click the green **Create Page** button (top
 | Page Number | `11` | Opened from the Projects list (page 10) row link. |
 | Name | `Project Detail` | Also becomes the page Title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
-| Use Breadcrumb | **Off** | The breadcrumb entry (`<Company> / Projects / <Project Name>`) is wired with nav in Step 19. |
+| Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+| Breadcrumb Entry Name | `Project Detail` | The page name — shown in the breadcrumb bar. |
 | Use Navigation | **Off** | This hub is reached from a row link, not the nav menu. |
 
 There is **no data-source screen** — a Blank Page has no region yet.

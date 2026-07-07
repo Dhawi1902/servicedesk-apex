@@ -34,7 +34,8 @@
    | Source Type | `Table / View` | Point at the isolation view; Step 2 swaps in the enriched query. |
    | Table / View Owner | *your workspace schema* | Leave the default. |
    | Table / View Name | `V_MY_TICKETS` | The tenant-scoped view — never base `TICKETS`. |
-   | Use Breadcrumb | **Off** | Nav is built later (Step 19). |
+   | Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+   | Breadcrumb Entry Name | `Ticket Queue` | The page name — shown in the breadcrumb bar. |
    | Use Navigation | **Off** | Same — skip for now. |
 
 > *APEX drops you into Page Designer with **two regions** on this page: a **Faceted Search** region and a **Search Results** classic-report region. Right now both are generic — the report shows every column of the view (raw ids and all) and the facets are plain text boxes. Steps 3 and 5 fix that.*
@@ -248,12 +249,15 @@ For every facet above set `[Right Pane ▸ Settings]`:
 
 ---
 
-## Step 6: Buttons, Row Actions & the New-Ticket Modal
+## Step 6: The ＋ New Ticket Button & Modal
 
-> *Adds **＋ New Ticket** (opens the Raise-a-Ticket modal and refreshes the queue on close) and the
-> row-level **Assign to Me** action.*
+> *Adds **＋ New Ticket** (opens the Raise-a-Ticket modal and refreshes the queue on close).*
+>
+> *There is deliberately **no** per-row "Assign to Me" action here — matching the mockup, the queue is a
+> pure browse/filter screen. Agents self-assign from the **ticket detail page** (the `✎ Self-Assign`
+> button in `04-ticket-detail.md`), where the write runs the `V_MY_TICKETS` guard. Click a ticket's Ref
+> to get there.*
 
-**6a. ＋ New Ticket button (→ modal).**
 1. From `[Central Pane ▸ Gallery ▸ Buttons]`, drag a button onto the search results region's title bar (the **Copy/Create** position).
 2. Set:
    - `[Right Pane ▸ Identification ▸ Label]`: `＋ New Ticket`
@@ -276,16 +280,6 @@ For every facet above set `[Right Pane ▸ Settings]`:
    > The **Dialog Closed** event only fires on the element that *launched* the dialog — so the DA lives
    > on the **button**, not on the region. Refreshing the results region also recomputes the facet counts.
 
-**6b. Assign to Me row action (agents only).**
-1. In `[Left Pane ▸ Rendering]`, add a **Link** column to the search results region for "Assign to Me".
-2. Set:
-   - `[Right Pane ▸ Server-side Condition ▸ Type]`: **PL/SQL Expression** `:APP_ROLE = 'SUPPORT_AGENT'`
-   - `[Right Pane ▸ Link ▸ Link Text]`: `Assign to me` (render conditionally — see below).
-   - `[Right Pane ▸ Link]`: Target Page `6`, `P6_TICKET_ID` = `#TICKET_ID#`.
-3. Show the link only on **unassigned** rows via `[Right Pane ▸ Column Formatting ▸ HTML Expression]` — test `#ASSIGNED_TO#` (a Hidden Column, still substitutable) and emit the link only when it's empty; keep all data escaped.
-
-> Page 6 (Assign) re-checks visibility server-side (`SELECT COUNT(*) FROM V_MY_TICKETS WHERE TICKET_ID = :P6_TICKET_ID`) before writing — the row condition here is UX, not the security boundary.
-
 ---
 
 ## Step 7: Test It
@@ -294,7 +288,7 @@ For every facet above set `[Right Pane ▸ Settings]`:
 |------|----------|
 | Log in as `anna@acme.example` (Client User) | Title reads **My Tickets**; chips **Open / All** (Open active); no Company column/facet; **＋ New Ticket** visible; **no raw id columns** |
 | Log in as `bob@acme.example` (Client Admin) | Sees all Acme tickets across all projects; Project column + facet show (2+ projects); **＋ New Ticket** visible |
-| Log in as `mike@northwind.example` (Agent) | Title **Ticket Queue**; chips **Assigned to me / Unassigned / All** (mine active); tickets from his assigned projects only — no Initech; no New Ticket button; **Assign to me** on unassigned rows |
+| Log in as `mike@northwind.example` (Agent) | Title **Ticket Queue**; chips **Assigned to me / Unassigned / All** (mine active); tickets from his assigned projects only — no Initech; no New Ticket button; the Ref link opens the detail page where **Self-Assign** lives |
 | Log in as `sara@northwind.example` (System Admin) | Sees everything; Company + Project columns/facets visible; chips default to **All** |
 | Tick a **Status** facet | Results filter; each facet value shows a live count badge |
 | Change a quick-filter chip | Results refilter immediately (no stale rows) |
@@ -311,7 +305,6 @@ For every facet above set `[Right Pane ▸ Settings]`:
 - [ ] Project column/facet condition runs through `V_MY_PROJECTS` (count > 1), never a raw project list
 - [ ] Every facet uses **Distinct Values** off the `V_MY_TICKETS` query — **no facet has a SQL-Query LOV hitting base `TICKETS`/`APP_USERS`** (that would leak other tenants' names into the sidebar)
 - [ ] Quick-filter predicate binds `:P3_QUICK` / `:APP_USER_ID` — no string-concatenation
-- [ ] "Assign to Me" (page 6) re-checks `SELECT COUNT(*) FROM V_MY_TICKETS WHERE TICKET_ID = :P6_TICKET_ID` before writing
 - [ ] Anna sees only her scope; Mike never sees Initech
 
 ---

@@ -80,7 +80,8 @@ Open your app in **App Builder** and click the green **Create Page** button (top
 | Data Source | `Local Database` | Data lives in this workspace's schema. |
 | Source Type | `SQL Query` | The report is a joined, filtered query (Region Source below), not a single table. |
 | SQL Query | *(paste the Region Source query below — or leave blank now)* | Reads the **base** `ADMIN_AUDIT_LOG` (cross-tenant by design — see the note under Region Source); set now or right after the wizard. |
-| Use Breadcrumb | **Off** | The breadcrumb (**Administration / Audit Log**) is wired with nav in Step 19. |
+| Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+| Breadcrumb Entry Name | `Audit Log` | The page name — shown in the breadcrumb bar. |
 | Use Navigation | **Off** | Same — the nav entry is added in Step 19. |
 
 Click **Next**.

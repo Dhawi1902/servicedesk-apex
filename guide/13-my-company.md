@@ -24,7 +24,8 @@ a **single screen**:
 | Page Number | `12` | The My Company page (also opened from page 8 Companies via Manage/View). |
 | Name | `My Company` | Also becomes the page Title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
-| Use Breadcrumb | **Off** | Breadcrumb / title text is set below and wired with nav in Step 19. |
+| Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+| Breadcrumb Entry Name | `My Company` | The page name — shown in the breadcrumb bar. |
 | Use Navigation | **Off** | The nav entry (clients only) is added in Step 19. |
 
 There is **no data-source screen** — a Blank Page has no region yet.

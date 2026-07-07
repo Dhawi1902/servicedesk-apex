@@ -30,7 +30,8 @@ Grid** tile. That opens the **Create Interactive Grid** wizard — two screens:
 | Source Type | `Table` | Point at a table now; Step 2 swaps in a SQL Query for the Open-count column. |
 | Table / View Owner | *your workspace schema* | e.g. `WKSP_DHAWIWORKSPACE` — leave the default. |
 | Table / View Name | `CATEGORIES` | The **base** table (admin sees all rows); not `V_MY_CATEGORIES` — see Step 2. |
-| Use Breadcrumb | **Off** | Nav is built later (Step 19). |
+| Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+| Breadcrumb Entry Name | `Categories` | The page name — shown in the breadcrumb bar. |
 | Use Navigation | **Off** | Same — skip for now. |
 
 Click **Next**.

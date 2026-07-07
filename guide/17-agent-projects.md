@@ -27,7 +27,8 @@ Source step and no second screen):
 | Page Number | `16` | The Agent-Project Mapping page. |
 | Name | `Agent-Project Mapping` | Also becomes the page Title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
-| Use Breadcrumb | **On** — entry `Administration / Agent Mapping` | Matches the mockup's breadcrumb; the nav-menu link is wired later (Step 19). |
+| Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+| Breadcrumb Entry Name | `Agent-Project Mapping` | The page name — shown in the breadcrumb bar. |
 | Use Navigation | **Off** | Nav menu built later (Step 19). |
 
 Click **Create Page**. Because it's a Blank Page, APEX drops you into Page Designer on an **empty**

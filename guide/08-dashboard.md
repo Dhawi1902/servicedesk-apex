@@ -21,8 +21,8 @@ the **Create Blank Page** wizard — a single screen, then Create.
 | Page Number | `2` | The Dashboard page — page numbers follow feature order (Home is p1), so from here the page number no longer matches the guide-file number. |
 | Name | `Dashboard` | Also becomes the page Title. |
 | Page Mode | `Normal` | Full page, not a dialog. |
-| Use Breadcrumb | **On** | Entry `Dashboard` — the page bar shows `Overview / Dashboard`. |
-| Breadcrumb Entry Name | `Dashboard` | Text shown in the breadcrumb. |
+| Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+| Breadcrumb Entry Name | `Dashboard` | The page name — shown in the breadcrumb bar. |
 | Use Navigation | **On** | Add to the nav menu — all roles reach the dashboard. |
 
 (No **Data Source** section appears for a Blank Page — that's expected; regions bring their own SQL.)

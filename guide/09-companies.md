@@ -27,7 +27,8 @@ Grid** tile. That opens the **Create Interactive Grid** wizard — two screens:
 | Source Type | `Table` | Point at a table now; Step 2 swaps in a SQL Query for the count columns. |
 | Table / View Owner | *your workspace schema* | e.g. `WKSP_DHAWIWORKSPACE` — leave the default. |
 | Table / View Name | `COMPANIES` | The tenant table — read as a **base table** on purpose (see below). |
-| Use Breadcrumb | **Off** | Nav is built later (Step 19). |
+| Use Breadcrumb | **On** | Shows the page title in the breadcrumb bar; the nav-menu link is still wired later (Step 19). |
+| Breadcrumb Entry Name | `Companies` | The page name — shown in the breadcrumb bar. |
 | Use Navigation | **Off** | Same — skip for now. |
 
 Click **Next**.
