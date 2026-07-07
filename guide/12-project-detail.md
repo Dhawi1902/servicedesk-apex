@@ -112,7 +112,9 @@ SELECT u.FULL_NAME, ap.TIER, u.STATUS,
 | `PROJECTS_COVERED` | How many projects the agent covers total |
 | Actions | **✕ Remove** button — Authorization `IS_SYSTEM_ADMIN` (`[Right Pane ▸ Security ▸ Authorization Scheme]`) |
 
-- Button **+ Add Agent** (`[Central Pane ▸ Gallery ▸ Buttons]`; Authorization `[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`) opens the map-agent modal (agent + tier).
+> *`USER_ID` is selected only to target the **Remove** action — set its column `[Right Pane ▸ Identification ▸ Type]` = **Hidden Column** so it doesn't render as a raw *User Id* column (a Classic Report / IG shows every query column otherwise). It still substitutes in the link.*
+
+- Button **+ Add Agent** (`[Central Pane ▸ Gallery ▸ Buttons]`; Authorization `[Right Pane ▸ Security ▸ Authorization Scheme]` = `IS_SYSTEM_ADMIN`) opens the map-agent modal (agent + tier). **Refresh on close:** the modal is a separate Modal Dialog page, so add a Dynamic Action on the **+ Add Agent** button — `[Right Pane ▸ When ▸ Event]` = **Dialog Closed**, True action **Refresh** targeting this agents region — or the newly-mapped agent won't appear until a manual reload (same pattern as page 4, Step 7a).
 - Region header carries the coverage warnings (cosmetic badges): **⚠ No L1** (clients could assign nobody, FR-10) and **⚠ No L2+** (auto-escalation has nowhere to go, FR-35).
 - Empty state: *"No agents mapped — this project is in a broken state (FR-10)."*
 - **Remove** validation (`[Left Pane ▸ Processing]` a Validation, or a guard in the Remove process): block when the agent still holds open tickets here, and keep ≥1 active **L1** on an active project (Flows 3/4 gates).

@@ -67,7 +67,7 @@ comment appears in the same chronological who/what/when timeline as status/assig
 events (FR-9). **Verified against `05_isolation_views.sql`:** `V_MY_HISTORY` (lines 80–83)
 filters only on ticket visibility — it carries **no** `is_internal` predicate, while
 `V_MY_COMMENTS` (lines 70–75) is the one that hides internal notes from clients
-(`IS_INTERNAL = 'N' OR APP_ROLE IN ('SUPPORT_AGENT','SYSTEM_ADMIN')`). Therefore:
+(`IS_INTERNAL = 'N' OR V('APP_ROLE') IN ('SUPPORT_AGENT','SYSTEM_ADMIN')`). Therefore:
 - Internal comments (`TICKET_COMMENTS.IS_INTERNAL = 'Y'`) must **never** be mirrored into
   `TICKET_HISTORY` as a `COMMENT` row — doing so would strip the internal-note filter FR-14
   depends on and leak agent-only notes to clients through the audit trail.

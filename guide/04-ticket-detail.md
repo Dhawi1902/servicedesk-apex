@@ -251,6 +251,27 @@
 
 ---
 
+## Step 7a: Refresh after a dialog closes
+
+> *The **Assign**, **Escalate**, and **Comment** buttons (and the Conversation header's **＋ Add Comment**, Step 4) open **modal pages** (6 / 7). When the dialog closes, this page must repaint — otherwise a new comment or a changed assignee won't show until a manual reload. Same trap as the Ticket Queue's ＋ New Ticket.*
+
+1. Tag every button that opens a **modal page** so one dynamic action can catch them all. For the **Add Comment** button (Step 4), and the header **Comment**, **Assign**, and **Escalate** buttons (Step 7), set `[Right Pane ▸ Advanced ▸ CSS Classes]` = `js-refresh-on-close`.
+   > Only buttons whose Action is **Redirect to Page in this Application** → a Modal Dialog page need this. **Resolve / Close / Set Priority** open **Inline Dialogs** and submit the page (Branch back to page 4), so they already repaint — don't tag them. The Submit-Page buttons (Self-Assign, Start Work, Put On Hold, Resume, Reopen) reload too.
+2. Create one page-level Dynamic Action: in `[Left Pane ▸ Dynamic Actions]`, right-click → **Create Dynamic Action**.
+   - `[Right Pane ▸ Identification ▸ Name]`: `Refresh on dialog close`
+   - `[Right Pane ▸ When ▸ Event]`: **Dialog Closed**
+   - `[Right Pane ▸ When ▸ Selection Type]`: **jQuery Selector**
+   - `[Right Pane ▸ When ▸ jQuery Selector]`: `.js-refresh-on-close`
+3. Add one **Refresh** true action per region a dialog can change — for each, set `[Right Pane ▸ Identification ▸ Action]` = **Refresh**, `[Right Pane ▸ Affected Elements ▸ Selection Type]` = **Region**, and pick:
+   - the **ticket form** region (Step 2) — repaints the Properties display items (Status, Assignee, Priority)
+   - **Conversation** (Step 4)
+   - **Attachments** (Step 4a)
+   - **Activity History** (Step 6)
+
+> **Why one DA covers all four buttons:** `Dialog Closed` fires on the element that *launched* the dialog and bubbles, so a single jQuery-selector DA on `.js-refresh-on-close` handles every launcher — no per-button DA. If a Display-Only item still shows a stale value after the refresh, fall back to a full reload: replace the region refreshes with an **Execute JavaScript Code** true action that redirects to page 4 with the current `P4_TICKET_ID` (`apex.navigation.redirect(...)`) — a reload guarantees every item repaints.
+
+---
+
 ## Step 8: Button processes (status transitions)
 
 > *Every write process follows this pattern: visibility guard first, update base table, insert history row.*

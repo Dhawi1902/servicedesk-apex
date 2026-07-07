@@ -73,6 +73,8 @@ SELECT p.PROJECT_ID,
 
 Select each column under the IR region `[Left Pane ▸ Rendering]` and set its Label `[Right Pane ▸ Heading ▸ Heading]`, per-column visibility `[Right Pane ▸ Server-side Condition ▸ Type]`, and the row link `[Right Pane ▸ Link ▸ Target]`.
 
+> **Hide the raw id first.** `PROJECT_ID` is selected only to feed the row link (`#PROJECT_ID#`) — set its `[Right Pane ▸ Identification ▸ Type]` = **Hidden Column** so it doesn't render as a raw *Project Id* column. A Hidden Column still substitutes in the link Target. (An Interactive Report shows every query column by default; the PK is the one you almost always hide.)
+
 | # | Column | Label | Notes |
 |---|--------|-------|-------|
 | 1 | `PROJECT_NAME` | Project Name | Link → **page 11** (`P11_PROJECT_ID` = `#PROJECT_ID#`) |
