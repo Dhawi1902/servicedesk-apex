@@ -45,10 +45,12 @@ Click **Create Page**. APEX opens Page Designer with a Modal Dialog page and a F
 `TICKET_COMMENTS`. This build ignores the wizard's generated column items and its automatic DML
 process — Step 2 adds just the Comment textarea, the staff-only Internal-note switch, and the File
 Browse item by hand, and Step 3 inserts the comment with a manual PL/SQL process (so it can also stamp
-first-response, history, and attachments). Delete the auto-generated items and the automatic DML
-process, then add the hidden key item next.
+first-response, history, and attachments). Delete the auto-generated **column** items and the automatic DML
+process, then add the two hidden key items next.
 
-Add a hidden item `P7_TICKET_ID` (passed from page 4). Set its `[Right Pane ▸ Security ▸ Session State Protection]` to **Restricted — may not be set from browser** so the value can't be tampered on the way in.
+**1. The Form region's primary key — `P7_COMMENT_ID`.** The Form region on `TICKET_COMMENTS` needs a PK item or the page throws *"No Primary Key item has been defined for form region Add Comment"* (`WWV_FLOW_FORM_REGION.NO_PRIMARY_KEY_ITEM`) on load. Add a hidden item `P7_COMMENT_ID`, then set `[Right Pane ▸ Source ▸ Type]` = **Database Column**, **Database Column** = `COMMENT_ID`, **Primary Key** = **On**. It stays empty (`COMMENT_ID` is an identity stamped on insert), but the region still requires the item to *exist*. The PK is flagged on the item's **Source** group, not on the region's Attributes tab.
+
+**2. The foreign key — `P7_TICKET_ID`** (this is *not* the PK). Add a hidden item `P7_TICKET_ID` (passed from page 4). Set its `[Right Pane ▸ Security ▸ Session State Protection]` to **Restricted — may not be set from browser** so the value can't be tampered on the way in.
 
 ### Before-Header IDOR guard
 

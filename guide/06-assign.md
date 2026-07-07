@@ -33,13 +33,13 @@
    | Branch Here on Submit | *(leave blank)* | A Modal Dialog closes via the wizard's **Close Dialog** process (Step 7), not a page branch. A stray page branch throws *"Page Number is required"* on Save. |
    | Cancel and Go To Page | `4` | Back to Ticket Detail. |
 
-4. Delete the auto-generated items and the automatic DML process.
+4. Delete the auto-generated **column** items and the automatic DML process (this modal updates via a manual process in Step 3, not the wizard's DML). **But the Form region still needs a primary-key item** — you re-create it as `P6_TICKET_ID` in step 6, and it **must** carry the PK flag (step 7 below) or the page throws *"No Primary Key item has been defined for form region Assign Ticket"* (`WWV_FLOW_FORM_REGION.NO_PRIMARY_KEY_ITEM`) on load.
 5. Set the dialog **Title** to `Assign &middot; &P6_TICKET_REF.` on the page's Dialog attributes.
 6. Create the items below by dragging from `[Central Pane ▸ Gallery ▸ Items]` onto `[Central Pane ▸ Layout]`, top to bottom, matching the mockup:
 
    | Item | Type | Purpose |
    |------|------|---------|
-   | `P6_TICKET_ID` | Hidden (value-protected) | Passed from page 4 detail |
+   | `P6_TICKET_ID` | Hidden (value-protected) | Passed from page 4 detail — **also the Form region's PK** (step 7) |
    | `P6_TICKET_REF` | Display Only | Header + context line |
    | `P6_SUBJECT` | Display Only | "Put an agent on **…**" |
    | `P6_COMPANY_NAME` | Display Only | Context line |
@@ -48,6 +48,8 @@
    | `P6_SEVERITY` | Display Only | Context line |
    | `P6_ASSIGNED_TO` | Select List | The agent to assign (the one required field) |
    | `P6_SEND_EMAIL` | Switch (Y/N, default `Y`) | "Send assignment email" |
+
+7. **Flag `P6_TICKET_ID` as the Form region's primary key.** Select it and set `[Right Pane ▸ Source ▸ Type]` = **Database Column**, **Database Column** = `TICKET_ID`, **Primary Key** = **On**. In this APEX version the PK is flagged on the *item* (Source group), not on the region's Attributes tab. Without it the Form region's Initialize process fails with `WWV_FLOW_FORM_REGION.NO_PRIMARY_KEY_ITEM` on load — even though this modal never uses the region's DML (it updates via the Step 3 process). The value still arrives from page 4 and stays browser-protected (Hidden, value-protected).
 
 ---
 

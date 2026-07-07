@@ -33,7 +33,24 @@
    | Branch Here on Submit | *(leave blank)* | A Modal Dialog closes via the wizard's **Close Dialog** process (Step 5), not a page branch. A stray page branch throws *"Page Number is required"* on Save. |
    | Cancel and Go To Page | `3` | Back to the Ticket Queue. |
 
-4. Delete the wizard's generated items and its automatic DML process once Steps 2 and 4 are in place (we use manual items and a manual PL/SQL process).
+4. **Prune the wizard's generated items — keep 8, delete the rest.** The wizard created one `P5_*` item per `TICKETS` column (24 of them). This form only collects what the *client* provides; everything else is stamped server-side by the manual `Create Ticket` process (Step 4). So rather than delete all and rebuild, **keep these 8 and delete every other generated item**:
+
+   | Keep (8) | Why keep it | What to do in Step 2 |
+   |----------|-------------|----------------------|
+   | `P5_TICKET_ID` | **Form region's primary key** — delete it and the page throws *"No Primary Key item has been defined"* | Leave as **Hidden**; confirm **Source ▸ Primary Key = On** (see note below) |
+   | `P5_PROJECT_ID` | Client picks the project | Retype to **Select List** + LOV |
+   | `P5_TICKET_TYPE` | Incident vs Service Request | Retype to **Select List** + static LOV |
+   | `P5_CATEGORY_ID` | ITIL categorization | Retype to **Select List** + cascading LOV |
+   | `P5_SUBJECT` | Ticket title | Keep as Text Field; mark Required |
+   | `P5_DESCRIPTION` | Ticket body | Keep as Textarea; mark Required |
+   | `P5_SEVERITY` | Client-set business impact | Retype to **Select List** + static LOV |
+   | `P5_ASSIGNED_TO` | Optional client pre-assign (L1) | Retype to **Select List** + cascading LOV |
+
+   **Delete these 16** — all server-stamped, trigger-set, or lifecycle-only, so a client must never touch them: `P5_TICKET_REF` (trigger), `P5_COMPANY_ID` (derived from project), `P5_DEPARTMENT_ID` (from creator), `P5_PRIORITY` (support-set at triage), `P5_STATUS` (New/Assigned set in code), `P5_CREATED_BY` (session), `P5_CREATED_AT`, `P5_UPDATED_AT`, `P5_FIRST_RESPONSE_AT`, `P5_RESOLVED_AT`, `P5_CLOSED_AT`, `P5_SLA_DUE_DATE`, `P5_RESOLUTION_CODE`, `P5_RESOLUTION_SUMMARY`, `P5_REOPEN_COUNT`, `P5_CSAT_SCORE`.
+
+   Also **delete the wizard's automatic DML process** (named *"Process form Raise a Ticket"* or similar) — the manual `Create Ticket` process (Step 4) is the only thing that writes. Leaving both risks a double insert. (The *"Initialize form"* process is harmless once `P5_TICKET_ID` exists; you may leave or delete it.)
+
+   > ⚠️ **The primary key lives on the item, not the region.** With `P5_TICKET_ID` selected, `[Right Pane ▸ Source ▸ Type]` should be **Database Column**, **Database Column** = `TICKET_ID`, **Primary Key** = **On**. If you accidentally deleted `P5_TICKET_ID`, re-create it: right-click the **Raise a Ticket** region → **Create Page Item** → Name `P5_TICKET_ID`, Type **Hidden**, then set those three Source properties. Missing it throws `WWV_FLOW_FORM_REGION.NO_PRIMARY_KEY_ITEM` on load.
 5. From `[Central Pane ▸ Gallery ▸ Regions]`, drag a **Static Content** region onto `[Central Pane ▸ Layout]` (above the form).
 6. Set `[Right Pane ▸ Source ▸ HTML Code]` to the following tenant banner HTML:
 
@@ -48,32 +65,34 @@
 
 ---
 
-## Step 2: Add Form Items (mockup order)
+## Step 2: Configure the Form Items (mockup order)
 
-> *The mockup groups fields under two section headers. We add two **Display-Only / static** sub-headings (`1 · Project & type`, `2 · Issue details`) to match.*
-> *Note: There is deliberately no Priority, Department, or "On behalf of" field. These are set via server-side defaults, session metadata, or triage agents.*
+> *You're **reconfiguring the 8 items you kept** from Step 1.4, not adding them from scratch — the wizard already mapped each to its `TICKETS` column and pre-set the `NOT NULL` Required flags. You only **add 3 items** that have no column behind them: the two section sub-headings and the file-upload.*
+> *Note: There is deliberately no Priority, Department, or "On behalf of" field — those are server-side defaults, session metadata, or set by triage agents (that's why they were deleted in Step 1.4).*
 
-1. Add two **Display-Only** items to act as sub-headings: `1 · Project & type` and `2 · Issue details`.
-2. Drag items from `[Central Pane ▸ Gallery ▸ Items]` onto `[Central Pane ▸ Layout]`.
-3. Set their Type (`[Right Pane ▸ Identification ▸ Type]`), Required flag (`[Right Pane ▸ Validation ▸ Value Required]`), and Help/Placeholder text.
+1. **Add the 2 sub-heading items** (not columns): create two **Display-Only** items `P5_SECTION_1` (label `1 · Project & type`) and `P5_SECTION_2` (label `2 · Issue details`) to match the mockup's two groups.
+2. **Add the file-upload item** (not a column): create `P5_ATTACH`, Type **File Browse…** (settings in step 4 below).
+3. For each **kept** item, set its Type (`[Right Pane ▸ Identification ▸ Type]`), Required flag (`[Right Pane ▸ Validation ▸ Value Required]`), and Help/Placeholder text, then **drag it into mockup order** under the right sub-heading:
 
 **Section 1 · Project & type**
 
-| Item | Type | Notes |
+| Item | Set Type to | Notes |
 |------|------|-------|
-| `P5_PROJECT_ID` | Select List | **Required.** LOV from `V_MY_PROJECTS` (Step 3). |
+| `P5_PROJECT_ID` | Select List | **Required.** LOV from `V_MY_PROJECTS` (Step 3). Wizard made it a Number/Text field — retype it. |
 | `P5_TICKET_TYPE` | Select List | **Required.** Static LOV: `INCIDENT` / `SERVICE_REQUEST`, default `INCIDENT`. |
 | `P5_CATEGORY_ID` | Select List | **Required.** Cascading LOV on `P5_PROJECT_ID` from `V_MY_CATEGORIES` (Step 3). |
 
 **Section 2 · Issue details**
 
-| Item | Type | Notes |
+| Item | Set Type to | Notes |
 |------|------|-------|
-| `P5_SUBJECT` | Text Field | **Required.** Placeholder "Short summary". |
+| `P5_SUBJECT` | Text Field | **Required** (already set by wizard — `SUBJECT` is `NOT NULL`). Placeholder "Short summary". |
 | `P5_DESCRIPTION` | Textarea | **Required.** Placeholder "Describe the issue…". |
 | `P5_SEVERITY` | Select List | **Required.** Static LOV: Critical / Major / Minor / Low, default `Minor`. |
 | `P5_ASSIGNED_TO` | Select List | **Optional.** LOV of agents (Step 3). Null display value `— Unassigned —`. |
-| `P5_ATTACH` | File Browse… | **Optional.** Matches mockup drop-zone. See settings below. |
+| `P5_ATTACH` | File Browse… | **Optional.** New item from step 2 above. Matches mockup drop-zone. See settings below. |
+
+> *Keep each kept item's `[Right Pane ▸ Source]` as **Database Column** mapped to its column — retyping to Select List does not change the Source mapping. `P5_ATTACH` has **no** Source (Source Type = Always Null / no column) because attachments go to `APEX_APPLICATION_TEMP_FILES`, then to `TICKET_ATTACHMENTS` in Step 4.*
 
 4. For the `P5_ATTACH` File Browse item, set the following properties:
    - `[Right Pane ▸ Settings ▸ Storage Type]`: **Table APEX_APPLICATION_TEMP_FILES**
@@ -118,7 +137,7 @@
     ORDER BY PROJECT_NAME
    ```
 
-2. Set the cascading LOV for **Category** (`P5_CATEGORY_ID`). Set `[Right Pane ▸ List of Values ▸ Cascading LOV Parent Item(s)]` to `P5_PROJECT_ID`.
+2. Set the cascading LOV for **Category** (`P5_CATEGORY_ID`). **You must set `[Right Pane ▸ List of Values ▸ Cascading LOV Parent Item(s)]` to `P5_PROJECT_ID`** — this is not optional. Without it the dropdown never re-queries when a project is picked and stays **permanently empty**. (Categories only load *after* a project is selected — an empty Category before then is correct, cascading-by-design.)
 
    ```sql
    SELECT CATEGORY_NAME AS d, CATEGORY_ID AS r
@@ -128,7 +147,7 @@
     ORDER BY CATEGORY_NAME
    ```
 
-3. Set the cascading LOV for **Assign to** (`P5_ASSIGNED_TO`). Set the parent item to `P5_PROJECT_ID`.
+3. Set the cascading LOV for **Assign to** (`P5_ASSIGNED_TO`). **Set the Cascading LOV Parent Item to `P5_PROJECT_ID`** (same as Category — without it this dropdown also stays empty).
 
    ```sql
    SELECT au.FULL_NAME || ' [' || ap.TIER || '] · '
@@ -335,6 +354,19 @@
 - [ ] Attachment mime **and** size re-validated server-side (Step 3a) — the `accept` filter is not trusted
 - [ ] `TICKET_ATTACHMENTS.COMPANY_ID` comes from the trigger (parent ticket), never a page item
 - [ ] Files persist only **after** the ticket insert, keyed to the real `TICKET_ID`, `COMMENT_ID = NULL`
+
+---
+
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| *"No Primary Key item has been defined for form region Raise a Ticket"* (`WWV_FLOW_FORM_REGION.NO_PRIMARY_KEY_ITEM`) on load | The hidden `P5_TICKET_ID` item was deleted with the wizard's other items, so the Form region has no PK | Re-create hidden `P5_TICKET_ID`, set **Source ▸ Type** = Database Column, **Database Column** = `TICKET_ID`, **Primary Key** = **On** (Step 1.4) |
+| **Category** / **Assign to** dropdown is empty even after picking a project | Cascading LOV Parent Item not set on the child item | Set **List of Values ▸ Cascading LOV Parent Item(s)** = `P5_PROJECT_ID` on both (Step 3.2 / 3.3) |
+| **Project** dropdown itself is empty (and everything downstream) | Session context not stamped — `V_MY_*` views fail-closed with no `APP_ROLE`/`APP_COMPANY_ID` | Wire `STAMP_TENANT_CONTEXT` as the auth scheme's Post-Authentication Procedure, then log out/in |
+| Category empty *only before* a project is picked | Correct — cascading LOVs are empty until the parent has a value | No action; pick a project |
+
+> Testing `SELECT * FROM V_MY_CATEGORIES;` in **SQL Workshop returns 0 rows even when everything is correct** — SQL Workshop has no APEX session, so `V('APP_ROLE')` is NULL and the view fail-closes. Only trust these views inside a logged-in app session.
 
 ---
 
