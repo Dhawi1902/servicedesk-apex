@@ -142,7 +142,7 @@
    | 1 | `TICKET_REF` | Set `[Right Pane ▸ Link]`: Target Page `4`, `P4_TICKET_ID` = `#TICKET_ID#`. Set Label: `Ref`. |
    | 2 | `SUBJECT` | |
    | 3 | `TICKET_TYPE` | |
-   | 4 | `COMPANY_NAME` | Set `[Right Pane ▸ Server-side Condition ▸ Type]`: **Expression** `APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')` |
+   | 4 | `COMPANY_NAME` | Set `[Right Pane ▸ Server-side Condition ▸ Type]`: **PL/SQL Expression** `:APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')` (the `:` is required — a bare `APP_ROLE` is read as an undeclared PL/SQL identifier → `PLS-00201`). |
    | 5 | `PROJECT_NAME` | Set `[Right Pane ▸ Server-side Condition ▸ Type]`: **PL/SQL Function Body returning Boolean** (see below) |
    | 6 | `SEVERITY` | |
    | 7 | `PRIORITY` | Shows **Untriaged** when null — already handled by the `NVL(t.PRIORITY,'Untriaged')` in the Step 2 query. (Don't try to do this in an HTML Expression: that field takes `#COLUMN#` substitutions, not SQL functions like `NVL`.) |
@@ -180,7 +180,7 @@
    | Severity | `SEVERITY` | |
    | Priority | `PRIORITY` | |
    | Type | `TICKET_TYPE` | |
-   | Company | `COMPANY_ID` | Condition: `APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')`. LOV on company name. |
+   | Company | `COMPANY_ID` | Condition (PL/SQL Expression): `:APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')`. LOV on company name. |
    | Project | `PROJECT_ID` | Condition: Same PL/SQL Boolean as the column. LOV on project name. |
    | Assignee | `ASSIGNED_TO` | Include an "Unassigned" bucket. **Isolation:** source the LOV from users on the caller's own tickets, not base `APP_USERS` — e.g. `SELECT DISTINCT au.FULL_NAME d, t.ASSIGNED_TO r FROM V_MY_TICKETS t JOIN APP_USERS au ON au.USER_ID = t.ASSIGNED_TO ORDER BY 1`. A raw `FROM APP_USERS` list would leak every tenant's user/agent names into the dropdown. |
 
