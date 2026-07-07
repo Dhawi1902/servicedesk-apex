@@ -30,7 +30,7 @@
    |-------|--------|-------|
    | Primary Key Column 1 | `TICKET_ID (Number)` | Auto-detected PK of `TICKETS`. |
    | Primary Key Column 2 | *(leave `- Select -`)* | Single-column key. |
-   | Branch Here on Submit | `4` | Superseded by the **Close Dialog** branch in Step 7. |
+   | Branch Here on Submit | *(leave blank)* | A Modal Dialog closes via the wizard's **Close Dialog** process (Step 7), not a page branch. A stray page branch throws *"Page Number is required"* on Save. |
    | Cancel and Go To Page | `4` | Back to Ticket Detail. |
 
 4. Delete the auto-generated items and the automatic DML process.
@@ -57,7 +57,7 @@
 
 1. Under `[Left Pane ▸ Processing]`, right-click **Before Header** → **Create Process**.
 2. Set its properties:
-   - `[Right Pane ▸ Identification ▸ Type]`: **PL/SQL Code**
+   - `[Right Pane ▸ Identification ▸ Type]`: **Execute Code** (the anonymous-PL/SQL process type; older APEX labelled it *PL/SQL Code*)
    - `[Right Pane ▸ Source ▸ PL/SQL Code]`:
 
    ```sql
@@ -154,7 +154,7 @@
 > *Re-runs the full tier check server-side, guards the ticket via `V_MY_TICKETS`, updates the base table, and writes history.*
 
 1. Under `[Left Pane ▸ Processing]`, right-click **Processes** → **Create Process**.
-2. Set `[Right Pane ▸ Identification ▸ Type]` to **PL/SQL Code**.
+2. Set `[Right Pane ▸ Identification ▸ Type]` to **Execute Code** (the anonymous-PL/SQL process type; older APEX labelled it *PL/SQL Code*). Leave `[Right Pane ▸ Source ▸ Language]` = **PL/SQL**.
 3. Set `[Right Pane ▸ Execution ▸ Point]` to **Processing** (After Submit).
 4. Paste the code into `[Right Pane ▸ Source ▸ PL/SQL Code]`:
 
@@ -221,8 +221,10 @@
 
 ## Step 7: Close Dialog After Submit
 
-1. Under `[Left Pane ▸ Processing]`, right-click **Branches** → **Create Branch**.
-2. Set `[Right Pane ▸ Behavior ▸ Type]` to **Close Dialog**.
+> *In this APEX version, **Close Dialog is a Process type, not a Branch type**. The Modal Dialog wizard already added a `Close Dialog` process — don't create a branch for it.*
+
+1. Confirm the wizard's **Close Dialog** process exists under `[Left Pane ▸ Processing ▸ Processes]`, and that it runs **after** your assignment process (lower `[Right Pane ▸ Execution ▸ Sequence]` on the assignment process). If it's missing, right-click **Processes** → **Create Process** and set `[Right Pane ▸ Identification ▸ Type]` to **Close Dialog**.
+2. Delete any stray branch (red ✕) under `[Left Pane ▸ Processing ▸ Branches]` — a branch with no Page Number blocks Save with *"Page Number is required"*.
 3. Add a **Cancel** button to the dialog footer via `[Central Pane ▸ Gallery ▸ Buttons]`, setting its Action to **Redirect to Page in this Application** (Page `4`).
 4. Add a primary **Assign** submit button, setting its Action to **Submit Page**.
 

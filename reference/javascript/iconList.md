@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html -->
 <!-- Widgets: iconList -->
 
 # Widget: iconList
@@ -37,21 +37,21 @@
 
 ## iconList
 
-IconList is a ListBox where the items (options) in the list are arranged in a grid; across then down. All the items in the list must be the same size; height and width set with CSS. Arrow key movement is naturally extended to two dimensions. The number of columns depends on the width of the iconList element and the items within it. The iconList does not handle scrolling the item contents but it can be put inside a container that does scroll. It can be used from [tableModelView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html) to support pagination including scroll paging over a model.
+IconList is a ListBox where the items (options) in the list are arranged in a grid; across then down. All the items in the list must be the same size; height and width set with CSS. Arrow key movement is naturally extended to two dimensions. The number of columns depends on the width of the iconList element and the items within it. The iconList does not handle scrolling the item contents but it can be put inside a container that does scroll. It can be used from [tableModelView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html) to support pagination including scroll paging over a model.
 
 The primary purpose of an itemList is to allow the user to select one or more items. It also supports type to select, copy to clipboard, context menus, and item activation. Items are activated with double click (single click in navigation mode) or the Enter key. When activated the activate callback is called. This can be used to perform an action such as opening a dialog or navigating.
 
-The expected markup (for best accessibility) is a `<ul>` (or `<ol>`) containing `<li>` elements, however it only depends on a single parent element where all the children are the items. The initially selected item(s) can be indicated by giving the item(s) a class of `is-selected`. The contents of the item is mostly of no concern to this widget but typically include an icon and a label. The contents must not overflow (spill outside of) the item. The item content typically does not have interactive elements such as inputs or buttons. To include interactive elements use the [iconList#tabbableContent](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#tabbableContent) and [iconList#noNavKeyContent](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#noNavKeyContent) options.
+The expected markup (for best accessibility) is a `<ul>` (or `<ol>`) containing `<li>` elements, however it only depends on a single parent element where all the children are the items. The initially selected item(s) can be indicated by giving the item(s) a class of `is-selected`. The contents of the item is mostly of no concern to this widget but typically include an icon and a label. The contents must not overflow (spill outside of) the item. The item content typically does not have interactive elements such as inputs or buttons. To include interactive elements use the [iconList#tabbableContent](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#tabbableContent) and [iconList#noNavKeyContent](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#noNavKeyContent) options.
 
 ### Navigation Mode
 
-As an alternative to selection an iconList has a navigation mode where the list items are essentially links. A single click on the item will activate it. This is controlled with the [iconList#navigation](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#navigation) option. If the item is or contains an anchor the default behavior for activation is to navigate to the `href` value. (only one anchor per item is allowed.) When used for navigation the widget should be wrapped in an element with role navigation.
+As an alternative to selection an iconList has a navigation mode where the list items are essentially links. A single click on the item will activate it. This is controlled with the [iconList#navigation](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#navigation) option. If the item is or contains an anchor the default behavior for activation is to navigate to the `href` value. (only one anchor per item is allowed.) When used for navigation the widget should be wrapped in an element with role navigation.
 
 ### Selection
 
-An iconList can support single or multiple selection. See option [iconList#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#multiple).
+An iconList can support single or multiple selection. See option [iconList#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#multiple).
 
-It is also possible to include a checkbox for multiple selection using the [iconList#itemSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#itemSelector) option. The item markup can include `` if checkbox selection is desired. Must also set option `itemSelector` to true. If the markup doesn't contain this u-selector span then it can be added for you if option [iconList#addItemSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#addItemSelector) is true.
+It is also possible to include a checkbox for multiple selection using the [iconList#itemSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#itemSelector) option. The item markup can include `` if checkbox selection is desired. Must also set option `itemSelector` to true. If the markup doesn't contain this u-selector span then it can be added for you if option [iconList#addItemSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#addItemSelector) is true.
 
 On a touch enabled device where the user has interacted with touch a multi select iconList will automatically enable checkbox selection.
 
@@ -59,24 +59,24 @@ Like options in a select element the option items can have a value using the dat
 
 ### Context Menus
 
-The iconList has easy integration with the [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget to provide context menu support. The [iconList#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenu) option is used to provide a [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget options object. When the `contextMenu` option is used the [menu#event:beforeOpen](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html#event:beforeOpen) event/callback ui argument has these additional properties:
+The iconList has easy integration with the [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget to provide context menu support. The [iconList#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenu) option is used to provide a [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget options object. When the `contextMenu` option is used the [menu#event:beforeOpen](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html#event:beforeOpen) event/callback ui argument has these additional properties:
 
 - menuElement: The menu jQuery object.
 - iconList: This iconList jQuery object.
 - selection: A jQuery object with the selected items at the time the menu was opened.
 
-Also the [menu#event:afterClose](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html#event:afterClose) event/callback will automatically focus the iconList if the menu action didn't take the focus and the ui argument has these additional properties:
+Also the [menu#event:afterClose](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html#event:afterClose) event/callback will automatically focus the iconList if the menu action didn't take the focus and the ui argument has these additional properties:
 
 - menuElement: The menu jQuery object.
 - iconList: This iconList jQuery object.
 
-If using the `contextMenu` option the [iconList#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenuId) option can be used to give the menu element an ID. This is useful if other code must refer to the menu element or widget.
+If using the `contextMenu` option the [iconList#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenuId) option can be used to give the menu element an ID. This is useful if other code must refer to the menu element or widget.
 
-You can reference an already existing [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget by specifying the [iconList#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenuId) in place of the [iconList#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenu) option.
+You can reference an already existing [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget by specifying the [iconList#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenuId) in place of the [iconList#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenu) option.
 
-If for any reason you don't want to use the [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget, the [iconList#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenuAction) option allows you to respond to mouse or keyboard interactions that typically result in a context menu. Specifically Right Mouse click (via `contextmenu` event), Shift-F10 key (via `keydown` event) and the Windows context menu key (via `contextmenu` event). The original event is passed to the [iconList#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenuAction) function. The event object can be used to position the menu. If you implement your own menu it is best if you put focus back on the iconList using the [iconList#focus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#focus) method when the menu closes (unless the menu action directs focus elsewhere).
+If for any reason you don't want to use the [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget, the [iconList#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenuAction) option allows you to respond to mouse or keyboard interactions that typically result in a context menu. Specifically Right Mouse click (via `contextmenu` event), Shift-F10 key (via `keydown` event) and the Windows context menu key (via `contextmenu` event). The original event is passed to the [iconList#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenuAction) function. The event object can be used to position the menu. If you implement your own menu it is best if you put focus back on the iconList using the [iconList#focus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#focus) method when the menu closes (unless the menu action directs focus elsewhere).
 
-Only one of [iconList#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenuAction) and [iconList#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenu) or [iconList#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenuId) can be specified. The [iconList#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenu) and [iconList#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenuId) options can only be set when the iconList is initialized and it can't be changed. The [iconList#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenuAction) cannot be set if the [iconList#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenu) or [iconList#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#contextMenuId) options were given when the iconList was created.
+Only one of [iconList#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenuAction) and [iconList#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenu) or [iconList#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenuId) can be specified. The [iconList#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenu) and [iconList#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenuId) options can only be set when the iconList is initialized and it can't be changed. The [iconList#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenuAction) cannot be set if the [iconList#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenu) or [iconList#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#contextMenuId) options were given when the iconList was created.
 
 ### Accessibility
 
@@ -153,9 +153,9 @@ $("#navList").iconList({
 
 #### addItemSelector :boolean
 
-If [iconList#itemSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#itemSelector) option is true and the initial iconList markup does not include the markup needed to show the selector then this option should be set to true so that the markup is automatically added.
+If [iconList#itemSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#itemSelector) option is true and the initial iconList markup does not include the markup needed to show the selector then this option should be set to true so that the markup is automatically added.
 
-This is ignored if [iconList#itemSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#itemSelector) is false.
+This is ignored if [iconList#itemSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#itemSelector) is false.
 
 The markup to show the checkbox selector is:
 ``
@@ -186,7 +186,7 @@ Get or set option addItemSelector after initialization.
 ```
 // get
 
-let value = $( ".selector" ).iconList( "option", "addItemSelector" );
+var value = $( ".selector" ).iconList( "option", "addItemSelector" );
 
 // set
 
@@ -221,7 +221,7 @@ Get or set option allowCopy after initialization.
 ```
 // get
 
-let value = $( ".selector" ).iconList( "option", "allowCopy" );
+var value = $( ".selector" ).iconList( "option", "allowCopy" );
 
 // set
 
@@ -230,7 +230,7 @@ $( ".selector" ).iconList( "option", "allowCopy", false );
 
 #### contextMenu :object
 
-A [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget options object use to create the context menu.
+A [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget options object use to create the context menu.
 
 Only specify one of `contextMenu` or `contextMenuId` and `contextMenuAction`. If none of `contextMenu`, `contextMenuId` or `contextMenuAction` are specified there is no context menu.
 
@@ -289,9 +289,9 @@ $( ".selector" ).iconList( {
 
 #### (nullable) contextMenuId :string
 
-If option `contextMenu` is given then this is the element id to give the context [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) created. This allows other code to interact with the created context [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget.
+If option `contextMenu` is given then this is the element id to give the context [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) created. This allows other code to interact with the created context [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget.
 
-If option `contextMenu` is not given then this is the element id of an existing [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget.
+If option `contextMenu` is not given then this is the element id of an existing [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget.
 
 This option cannot be set or changed after the widget is initialized.
 
@@ -316,7 +316,7 @@ $( ".selector" ).iconList( {
 
 #### itemSelector :boolean
 
-If true a selector control is added before the item icon and label. The selector is a checkbox if multiple is true and a radio button if multiple is false. The iconList markup must include the necessary markup for the checkbox selector if [iconList#addItemSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#addItemSelector) is false. See [iconList#addItemSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#addItemSelector) for the needed markup.
+If true a selector control is added before the item icon and label. The selector is a checkbox if multiple is true and a radio button if multiple is false. The iconList markup must include the necessary markup for the checkbox selector if [iconList#addItemSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#addItemSelector) is false. See [iconList#addItemSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#addItemSelector) for the needed markup.
 
 ##### Type:
 
@@ -342,7 +342,7 @@ Get or set option itemSelector after initialization.
 ```
 // get
 
-let value = $( ".selector" ).iconList( "option", "itemSelector" );
+var value = $( ".selector" ).iconList( "option", "itemSelector" );
 
 // set
 
@@ -377,7 +377,7 @@ Get or set option label after initialization.
 ```
 // get
 
-let value = $( ".selector" ).iconList( "option", "label" );
+var value = $( ".selector" ).iconList( "option", "label" );
 
 // set
 
@@ -414,7 +414,7 @@ Get or set option multiple after initialization.
 ```
 // get
 
-let value = $( ".selector" ).iconList( "option", "multiple" );
+var value = $( ".selector" ).iconList( "option", "multiple" );
 
 // set
 
@@ -449,7 +449,7 @@ Get or set option navigation after initialization.
 ```
 // get
 
-let value = $( ".selector" ).iconList( "option", "navigation" );
+var value = $( ".selector" ).iconList( "option", "navigation" );
 
 // set
 
@@ -458,7 +458,7 @@ $( ".selector" ).iconList( "option", "navigation", true );
 
 #### noNavKeyContent :string
 
-A jQuery selector that identifies item content that uses navigation keys or contains elements that use navigation keys. Navigation keys are used to change the focus or selection state, they include the arrow keys, Home, End, Space and Enter as well as keys used in the type to select feature. When the iconList contains tabbable content ([iconList#tabbableContent](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#tabbableContent) is a valid selector) that can also take keyboard input, such as an `<input>` element this option is used to allow the specified elements to use the navigation keys usually used by the iconList. This is ignored when [iconList#navigation](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#navigation) is true.
+A jQuery selector that identifies item content that uses navigation keys or contains elements that use navigation keys. Navigation keys are used to change the focus or selection state, they include the arrow keys, Home, End, Space and Enter as well as keys used in the type to select feature. When the iconList contains tabbable content ([iconList#tabbableContent](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#tabbableContent) is a valid selector) that can also take keyboard input, such as an `<input>` element this option is used to allow the specified elements to use the navigation keys usually used by the iconList. This is ignored when [iconList#navigation](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#navigation) is true.
 
 ##### Type:
 
@@ -484,7 +484,7 @@ Get or set option noNavKeyContent after initialization.
 ```
 // get
 
-let value = $( ".selector" ).iconList( "option", "noNavKeyContent" );
+var value = $( ".selector" ).iconList( "option", "noNavKeyContent" );
 
 // set
 
@@ -493,7 +493,7 @@ $( ".selector" ).iconList( "option", "noNavKeyContent", "input" );
 
 #### tabbableContent :string
 
-A jQuery selector that identifies item content that can be a tab stop when an item has focus. This is ignored when [iconList#navigation](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html#navigation) is true.
+A jQuery selector that identifies item content that can be a tab stop when an item has focus. This is ignored when [iconList#navigation](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html#navigation) is true.
 
 ##### Type:
 
@@ -519,7 +519,7 @@ Get or set option tabbableContent after initialization.
 ```
 // get
 
-let value = $( ".selector" ).iconList( "option", "tabbableContent" );
+var value = $( ".selector" ).iconList( "option", "tabbableContent" );
 
 // set
 

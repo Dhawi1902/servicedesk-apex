@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html -->
 <!-- Widgets: recordView -->
 
 # Widget: recordView
@@ -58,24 +58,24 @@
 
 ## recordView
 
-RecordView is a dynamically generated form for displaying or editing a record from an APEX data [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html). It uses standard APEX column items to display and edit record fields.
+RecordView is a dynamically generated form for displaying or editing a record from an APEX data [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html). It uses standard APEX column items to display and edit record fields.
 
-The markup expected by this widget is simply an empty `<div>`. The record view displays and optionally edits data stored in an APEX data [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html). If the recordView is editable then the `<div>` must be proceeded by a `<div>` with class `u-vh` (to visually hide the contents) that contains each of the rendered column items. Each column item needs to be wrapped in a `<div>` with class `a-GV-columnItem`. See [grid](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html) for an example of the markup.
+The markup expected by this widget is simply an empty `<div>`. The record view displays and optionally edits data stored in an APEX data [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html). If the recordView is editable then the `<div>` must be proceeded by a `<div>` with class `u-vh` (to visually hide the contents) that contains each of the rendered column items. Each column item needs to be wrapped in a `<div>` with class `a-GV-columnItem`. See [grid](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html) for an example of the markup.
 
-RecordView is designed to share the same column/field configuration and column items with a [grid](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html) widget, but it can also be used standalone. What the grid widget calls column configuration recordView calls field configuration.
+RecordView is designed to share the same column/field configuration and column items with a [grid](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html) widget, but it can also be used standalone. What the grid widget calls column configuration recordView calls field configuration.
 
 ### Editing
 
-The record view can be editable or not editable. This is controlled by the [recordView#editable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html#editable) option. If not editable then no UI is provided to do any editing, however it will still respond to any changes to the model data. The editable property can be changed after the record view is created provided the necessary column items are available on the page. See the [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) documentation for how it can be used to provide fine-grained control over what kinds of edits are allowed. The field definition can specify fields that are read-only. For a field to be editable the recordView must be editable, the row must be editable (as determined by the model), the field configuration must include property `elementId` and property `readonly` must not be true and the model field metadata must not have a checksum (`ck`) property.
+The record view can be editable or not editable. This is controlled by the [recordView#editable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html#editable) option. If not editable then no UI is provided to do any editing, however it will still respond to any changes to the model data. The editable property can be changed after the record view is created provided the necessary column items are available on the page. See the [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) documentation for how it can be used to provide fine-grained control over what kinds of edits are allowed. The field definition can specify fields that are read-only. For a field to be editable the recordView must be editable, the row must be editable (as determined by the model), the field configuration must include property `elementId` and property `readonly` must not be true and the model field metadata must not have a checksum (`ck`) property.
 
 Column Edit Items:
 When the record view is editable and a field can be edited, it is a column item that does the editing. Column items are essentially the same as page items except they edit a column/field value rather than a page item. A grid and recordView on the same page can share the same column items as long as the two widgets are not visible or actively in edit mode at the same time.
 
 ### Actions
 
-The recordView uses [actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html) to implement some functionality. This section lists each action along with a brief description. The actions are exposed through toolbar controls and menus.
+The recordView uses [actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html) to implement some functionality. This section lists each action along with a brief description. The actions are exposed through toolbar controls and menus.
 
-Use the [recordView#getActions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html#getActions) method to access the [actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html) context for the recordView.
+Use the [recordView#getActions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html#getActions) method to access the [actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html) context for the recordView.
 
 | Name | Type | Description |
 |----|----|----|
@@ -140,17 +140,17 @@ $( "#myRecordForm" ).recordView( {
 
 ### Extends
 
-- [tableModelViewBase](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html)
+- [tableModelViewBase](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html)
 
 ### Options
 
-#### actionsContext :[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)
+#### actionsContext :[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)
 
-Actions context to use. If null or not provided a new context is created. Specifying a context allows this widget to be contained within another one and share the same context. See [actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html) for information on what an actions context is and [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext) for how to create one.
+Actions context to use. If null or not provided a new context is created. Specifying a context allows this widget to be contained within another one and share the same context. See [actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html) for information on what an actions context is and [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext) for how to create one.
 
 ##### Type:
 
-- [actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)
+- [actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)
 
 Default Value:
 - null
@@ -172,7 +172,7 @@ Get or set option actionsContext after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "actionsContext" );
+var value = $( ".selector" ).recordView( "option", "actionsContext" );
 
 // set
 
@@ -181,7 +181,7 @@ $( ".selector" ).recordView( "option", "actionsContext", myContext );
 
 #### alwaysEdit :boolean
 
-Only applies if [recordView#editable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html#editable) is true. If true, the recordView will start out in edit mode and double click, Enter, and Escape will not change the mode. Calling method [recordView#setEditMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html#setEditMode) can still change the edit mode.
+Only applies if [recordView#editable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html#editable) is true. If true, the recordView will start out in edit mode and double click, Enter, and Escape will not change the mode. Calling method [recordView#setEditMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html#setEditMode) can still change the edit mode.
 
 ##### Type:
 
@@ -207,7 +207,7 @@ Get or set option alwaysEdit after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "alwaysEdit" );
+var value = $( ".selector" ).recordView( "option", "alwaysEdit" );
 
 // set
 
@@ -216,14 +216,14 @@ $( ".selector" ).recordView( "option", "alwaysEdit", true );
 
 #### applyTemplateOptions :object
 
-Options to pass to the [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate) function when processing any templates. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate) for details on the option properties.
+Options to pass to the [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate) function when processing any templates. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate) for details on the option properties.
 
 ##### Type:
 
 - object
 
 Inherited From:
-- [tableModelViewBase#applyTemplateOptions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#applyTemplateOptions)
+- [tableModelViewBase#applyTemplateOptions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#applyTemplateOptions)
 
 Default Value:
 - {}
@@ -248,7 +248,7 @@ Get or set option applyTemplateOptions after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "applyTemplateOptions" );
+var value = $( ".selector" ).recordView( "option", "applyTemplateOptions" );
 
 // set
 
@@ -267,7 +267,7 @@ Specifies if a new record should be automatically added when the model doesn't c
 - boolean
 
 Inherited From:
-- [tableModelViewBase#autoAddRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#autoAddRecord)
+- [tableModelViewBase#autoAddRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#autoAddRecord)
 
 Default Value:
 - false
@@ -289,7 +289,7 @@ Get or set option autoAddRecord after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "autoAddRecord" );
+var value = $( ".selector" ).recordView( "option", "autoAddRecord" );
 
 // set
 
@@ -298,14 +298,14 @@ $( ".selector" ).recordView( "option", "autoAddRecord", true );
 
 #### editable :boolean
 
-Determine if the view allows editing. If true the [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) must also allow editing but if false the model could still allow editing. If true the view data can be edited according to what the model allows. Only applies if the view supports editing.
+Determine if the view allows editing. If true the [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) must also allow editing but if false the model could still allow editing. If true the view data can be edited according to what the model allows. Only applies if the view supports editing.
 
 ##### Type:
 
 - boolean
 
 Inherited From:
-- [tableModelViewBase#editable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#editable)
+- [tableModelViewBase#editable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#editable)
 
 Default Value:
 - false
@@ -327,7 +327,7 @@ Get or set option editable after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "editable" );
+var value = $( ".selector" ).recordView( "option", "editable" );
 
 // set
 
@@ -336,7 +336,7 @@ $( ".selector" ).recordView( "option", "editable", true );
 
 #### fieldGroups :Object
 
-Defines headings that fields are grouped together under. Fields specify which group they belong under with the [recordView#fields](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html#fields) `groupName` property. A recordView can have one level of headings.
+Defines headings that fields are grouped together under. Fields specify which group they belong under with the [recordView#fields](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html#fields) `groupName` property. A recordView can have one level of headings.
 
 ##### Type:
 
@@ -420,7 +420,7 @@ $( ".selector" ).recordView( {
 
 Defines the fields in the recordView form. These fields are also fields in the model. The value is an array of exactly one object that maps the field name to a field definition object. The properties are the field names. The property value is a field definition. Wrapping the object in an array simply keeps the widget from making a copy of the fields so that the same definition can be shared.
 
-The same structure can be shared with the view [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) and a [grid](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html) widget. This option is required.
+The same structure can be shared with the view [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) and a [grid](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html) widget. This option is required.
 
 ##### Type:
 
@@ -611,7 +611,7 @@ Get or set option formCssClasses after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "formCssClasses" );
+var value = $( ".selector" ).recordView( "option", "formCssClasses" );
 
 // set
 
@@ -633,7 +633,7 @@ The container width must always be defined.
 - boolean
 
 Inherited From:
-- [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#hasSize)
+- [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#hasSize)
 
 Default Value:
 - false
@@ -678,7 +678,7 @@ Get or set option idPrefix after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "idPrefix" );
+var value = $( ".selector" ).recordView( "option", "idPrefix" );
 
 // set
 
@@ -713,23 +713,23 @@ Get or set option labelAlignment after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "labelAlignment" );
+var value = $( ".selector" ).recordView( "option", "labelAlignment" );
 
 // set
 
 $( ".selector" ).recordView( "option", "labelAlignment", "start" );
 ```
 
-#### modelName :[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+#### modelName :[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
-Identifier of model that this view widget will display data from. Can include an instance as well. The model must already exist. This option is required. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) `modelId` argument.
+Identifier of model that this view widget will display data from. Can include an instance as well. The model must already exist. This option is required. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) `modelId` argument.
 
 ##### Type:
 
-- [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+- [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
 Inherited From:
-- [tableModelViewBase#modelName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#modelName)
+- [tableModelViewBase#modelName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#modelName)
 
 ##### Examples
 
@@ -748,7 +748,7 @@ Get or set option modelName after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "modelName" );
+var value = $( ".selector" ).recordView( "option", "modelName" );
 
 // set
 
@@ -764,7 +764,7 @@ Icon to display when there is no data. The icon is displayed above the `noDataMe
 - string
 
 Inherited From:
-- [tableModelViewBase#noDataIcon](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#noDataIcon)
+- [tableModelViewBase#noDataIcon](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#noDataIcon)
 
 Default Value:
 - "icon-irr-no-results"
@@ -786,7 +786,7 @@ Get or set option noDataIcon after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "noDataIcon" );
+var value = $( ".selector" ).recordView( "option", "noDataIcon" );
 
 // set
 
@@ -802,7 +802,7 @@ Text to display when there is no data.
 - string
 
 Inherited From:
-- [tableModelViewBase#noDataMessage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#noDataMessage)
+- [tableModelViewBase#noDataMessage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#noDataMessage)
 
 Default Value:
 - ""
@@ -824,7 +824,7 @@ Get or set option noDataMessage after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "noDataMessage" );
+var value = $( ".selector" ).recordView( "option", "noDataMessage" );
 
 // set
 
@@ -833,14 +833,14 @@ $( ".selector" ).recordView( "option", "noDataMessage", "No records found." );
 
 #### progressOptions :object
 
-Options object to pass to [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.showSpinner). The default depends on the `hasSize` option.
+Options object to pass to [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.showSpinner). The default depends on the `hasSize` option.
 
 ##### Type:
 
 - object
 
 Inherited From:
-- [tableModelViewBase#progressOptions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#progressOptions)
+- [tableModelViewBase#progressOptions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#progressOptions)
 
 Default Value:
 - { fixed: !options.hasSize }
@@ -862,7 +862,7 @@ Get or set option progressOptions after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "progressOptions" );
+var value = $( ".selector" ).recordView( "option", "progressOptions" );
 
 // set
 
@@ -897,7 +897,7 @@ Get or set option recordOffset after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "recordOffset" );
+var value = $( ".selector" ).recordView( "option", "recordOffset" );
 
 // set
 
@@ -932,7 +932,7 @@ Get or set option showExcludeHiddenFields after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "showExcludeHiddenFields" );
+var value = $( ".selector" ).recordView( "option", "showExcludeHiddenFields" );
 
 // set
 
@@ -967,7 +967,7 @@ Get or set option showExcludeNullValues after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "showExcludeNullValues" );
+var value = $( ".selector" ).recordView( "option", "showExcludeNullValues" );
 
 // set
 
@@ -983,7 +983,7 @@ Text to display when the value is null or empty string.
 - string
 
 Overrides:
-- [tableModelViewBase#showNullAs](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#showNullAs)
+- [tableModelViewBase#showNullAs](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#showNullAs)
 
 Default Value:
 - "-"
@@ -1005,7 +1005,7 @@ Get or set option showNullAs after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "showNullAs" );
+var value = $( ".selector" ).recordView( "option", "showNullAs" );
 
 // set
 
@@ -1040,7 +1040,7 @@ Get or set option skipDeletedRecords after initialization.
 ```
 // get
 
-let value = $( ".selector" ).recordView( "option", "skipDeletedRecords" );
+var value = $( ".selector" ).recordView( "option", "skipDeletedRecords" );
 
 // set
 
@@ -1222,7 +1222,7 @@ Any code that wants to interact with the model should call this method to make s
 Note: This does not affect any edit mode.
 
 Inherited From:
-- [tableModelViewBase#finishEditing](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#finishEditing)
+- [tableModelViewBase#finishEditing](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#finishEditing)
 
 ##### Returns:
 
@@ -1233,11 +1233,11 @@ Promise
 
 ##### Example
 
-The following function saves the grid view model for the Interactive Grid region given by HTML DOM id `igRegion`. This shows how `finishEditing` is used but it is generally much better to use the built-in Interactive Grid "save" action.
+The following function saves the grid view model for the Interactive Grid region given by static id `igRegion`. This shows how `finishEditing` is used but it is generally much better to use the built-in Interactive Grid "save" action.
 
 ```
 function doSave( igRegion ) {
-    let p, finished,
+    var p, finished,
         grid = apex.region( igRegion ).call( "getViews" ).grid;
 
     finished = grid.view$.grid( "finishEditing" );
@@ -1263,16 +1263,16 @@ Focus the recordView.
 $( ".selector" ).recordView( "focus" );
 ```
 
-#### getActions() → {[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)}
+#### getActions() → {[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)}
 
-Returns the actions context for this recordView instance. See [actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html) for details on how to use the actions context.
+Returns the actions context for this recordView instance. See [actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html) for details on how to use the actions context.
 
 ##### Returns:
 
 The actions context for this instance.
 
 Type
-[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)
+[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)
 
 ##### Examples
 
@@ -1289,26 +1289,26 @@ To get a list of all actions from the browser JavaScript console.
 console.log( JSON.stringify( $( ".selector" ).recordView( "getActions" ).list(), null, 4 ) );
 ```
 
-#### getActiveRecord() → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)}
+#### getActiveRecord() → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)}
 
 Returns the active record or null if there is no active record. The active record is the one currently being edited.
 
 Inherited From:
-- [tableModelViewBase#getActiveRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getActiveRecord)
+- [tableModelViewBase#getActiveRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getActiveRecord)
 
 ##### Returns:
 
 Active record.
 
 Type
-[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)
+[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)
 
 #### getActiveRecordId() → {string}
 
 Returns the identity of the active record or null if there is no active record. The active record is the one currently being edited.
 
 Inherited From:
-- [tableModelViewBase#getActiveRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getActiveRecordId)
+- [tableModelViewBase#getActiveRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getActiveRecordId)
 
 ##### Returns:
 
@@ -1328,21 +1328,21 @@ Array of field definition objects.
 Type
 Array
 
-#### getModel() → {[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)}
+#### getModel() → {[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)}
 
-Return the model currently being used by this view. The model can change over time so the returned model should not be saved and used later. If you need to store a reference to the model use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.get) and release it with [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.release).
+Return the model currently being used by this view. The model can change over time so the returned model should not be saved and used later. If you need to store a reference to the model use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.get) and release it with [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.release).
 
 Inherited From:
-- [tableModelViewBase#getModel](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getModel)
+- [tableModelViewBase#getModel](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getModel)
 
 ##### Returns:
 
-The current [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html).
+The current [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html).
 
 Type
-[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)
+[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)
 
-#### getRecord() → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)}
+#### getRecord() → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)}
 
 Returns the current model record that this view is viewing/editing.
 
@@ -1351,7 +1351,7 @@ Returns the current model record that this view is viewing/editing.
 The current record from the model that the recordView is viewing/editing
 
 Type
-[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)
+[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)
 
 #### getToolbar() → {jQuery}
 
@@ -1412,7 +1412,7 @@ $( ".selector" ).recordView( "gotoField", "0100091", "NAME" );
 
 #### inEditMode() → {boolean}
 
-Determine if recordView is in edit mode. See also [recordView#setEditMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html#setEditMode)
+Determine if recordView is in edit mode. See also [recordView#setEditMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html#setEditMode)
 
 ##### Returns:
 
@@ -1437,16 +1437,16 @@ Call to lock the active row while async processing is in progress.
 
 The view edits one row/record at a time. This is known as the active row. In edit mode as the user changes the focused cell with the mouse, tab or enter keys if the new cell is on a different row the previous row is deactivated and the new row is activated. Any dynamic actions or other code that manipulates Column items are acting on the active row. If any actions are asynchronous such as using Ajax to set a column item value then the row must not be deactivated while the async action is in progress otherwise the result would be applied to the wrong row!
 
-So this method must be called before starting an async operation. It can be called multiple times if there are multiple async operations. For each call to `lockActive` there must be exactly one call to `unlockActive`. See also See [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#unlockActive)
+So this method must be called before starting an async operation. It can be called multiple times if there are multiple async operations. For each call to `lockActive` there must be exactly one call to `unlockActive`. See also See [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#unlockActive)
 
-If the view is part of an APEX region plugin, that region should implement the `beforeAsync` and `afterAsync` functions on the object returned from region#getSessionState by calling `lockActive` and `unlockActive` respectively. Then if an appropriate target option is passed to [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin) then the locking will be done automatically. Dynamic Actions that act on column items pass the correct target option. The bottom line is that for Dynamic Actions on columns of an Interactive Grid these lock/unlock methods are called automatically.
+If the view is part of an APEX region plugin, that region should implement the `beforeAsync` and `afterAsync` functions on the object returned from region#getSessionState by calling `lockActive` and `unlockActive` respectively. Then if an appropriate target option is passed to [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin) then the locking will be done automatically. Dynamic Actions that act on column items pass the correct target option. The bottom line is that for Dynamic Actions on columns of an Interactive Grid these lock/unlock methods are called automatically.
 
 Inherited From:
-- [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#lockActive)
+- [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#lockActive)
 
 ##### Example
 
-See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setActiveRecordValue) for an example.
+See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setActiveRecordValue) for an example.
 
 #### refresh(pFocusopt)
 
@@ -1482,7 +1482,7 @@ Refreshes the recordView with data from the model. This method is rarely needed 
 
 #### refreshFields()
 
-Let the recordView know that field metadata has changed so that the next time it is refreshed all the fields will be rendered. Call this method after any [recordView#fields](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html#fields) metadata has changed external to this widget. Refresh must be called after this but typically this happens due to the [model#event:refresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:refresh) notification.
+Let the recordView know that field metadata has changed so that the next time it is refreshed all the fields will be rendered. Call this method after any [recordView#fields](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html#fields) metadata has changed external to this widget. Refresh must be called after this but typically this happens due to the [model#event:refresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:refresh) notification.
 
 #### resize()
 
@@ -1492,7 +1492,7 @@ Call this method anytime the container that the recordView is in changes its siz
 
 Use after a column item value is set without triggering a change event to update the model and grid view. Has no effect if there is no active record.
 
-When a dynamic action or other event handler on a change event updates the value of the same item that triggered the change event, the change event from setting the value should be suppressed to avoid an infinite loop. However, the model is only updated from a change event. This method offers a solution to the model not being updated if the value is set asynchronously. Call this method anytime a column item is updated and the change event is suppressed.
+When a dynamic action or other event handler on a change event updates the value of the same item that triggered the change event, the change event from setting the value should be suppressed to avoid an infinite loop. However the model is only updated from a change event. This method offers a solution to the model not being updated if the value is set asynchronously. Call this method anytime a column item is updated and the change event is suppressed.
 
 ##### Parameters:
 
@@ -1501,17 +1501,17 @@ When a dynamic action or other event handler on a change event updates the value
 | `pColumn` | string | The name of the column. |
 
 Inherited From:
-- [tableModelViewBase#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#setActiveRecordValue)
+- [tableModelViewBase#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#setActiveRecordValue)
 
 ##### Example
 
-This example updates the "SALARY" column, which has HTML DOM id "C_SALARY", in interactive grid with HTML DOM id "MyGrid", to add 10 to whatever the user enters. `setTimeout` is used to simulate an async value update. The active row must be locked around the async update.
+This example updates the "SALARY" column, which has static id "C_SALARY", in interactive grid with static id "MyGrid", to add 10 to whatever the user enters. `setTimeout` is used to simulate an async value update. The active row must be locked around the async update.
 
 ```
-let salary = apex.item( "C_SALARY" );
-$( salary.node ).on( "change", function( event ) {
+var salary = apex.item( "C_SALARY" );
+$( salary.node ).change( function( event ) {
     // assume the current view is grid and not single row view.
-    const grid$ = apex.region( "MyGrid" ).call( "getCurrentView" ).view$;
+    var grid$ = apex.region( "MyGrid" ).call( "getCurrentView" ).view$;
     grid$.grid("lockActive");
     setTimeout( function() {
         // suppress this change otherwise this handler will be triggered again
@@ -1525,7 +1525,7 @@ $( salary.node ).on( "change", function( event ) {
 
 #### setEditMode(pEditMode)
 
-Set the current edit mode. Should only be used if the recordView model is editable. Triggers [recordView#event:modechange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html#event:modechange) event.
+Set the current edit mode. Should only be used if the recordView model is editable. Triggers [recordView#event:modechange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html#event:modechange) event.
 
 ##### Parameters:
 
@@ -1545,11 +1545,11 @@ $( ".selector" ).recordView( "setEditMode", true );
 
 Call to unlock the active row after async processing is complete.
 
-Call after the async operation completes. See [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#lockActive) for more information.
+Call after the async operation completes. See [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#lockActive) for more information.
 
 Inherited From:
-- [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#unlockActive)
+- [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#unlockActive)
 
 ##### Example
 
-See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setActiveRecordValue) for an example.
+See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setActiveRecordValue) for an example.

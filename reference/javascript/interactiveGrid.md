@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html -->
 <!-- Widgets: interactiveGrid -->
 
 # Widget: interactiveGrid
@@ -62,16 +62,16 @@ A jQuery UI widget for the Interactive Grid component of APEX. It is a modern co
 
 This widget is used as the main interface with APEX, and is comprised of a number of other widgets and making use of a number of other JavaScript modules including its own data model layer, which are important to understand when performing customizations. The Interactive Grid widget uses the following:
 
-- [grid widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html)
-- [recordView widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html)
-- [tableModelView widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html)
-- [tableModelViewBase widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html)
+- [grid widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html)
+- [recordView widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html)
+- [tableModelView widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html)
+- [tableModelViewBase widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html)
 - toolbar widget (see widget.toolbar.js file for further information)
-- [menu widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html)
-- [iconList widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html)
-- [apex.actions module](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html)
-- [apex.model module](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html)
-- [apex.item module](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html)
+- [menu widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html)
+- [iconList widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html)
+- [apex.actions module](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html)
+- [apex.model module](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html)
+- [apex.item module](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html)
 
 See each for further details, although the interactiveGrid widget documentation will make numerous mention of them to demonstrate certain concepts.
 
@@ -79,13 +79,13 @@ The intention is not to enable developers to create their own Interactive Grid i
 
 ### Actions
 
-[Actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html) are used extensively both by the Interactive Grid widget, and by the other widgets it orchestrates. Below we list all the actions pre-defined by the Interactive Grid widget, along with the type of action, and a description of the functionality the action handles.
+[Actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html) are used extensively both by the Interactive Grid widget, and by the other widgets it orchestrates. Below we list all the actions pre-defined by the Interactive Grid widget, along with the type of action, and a description of the functionality the action handles.
 
 Note: To find out more about a specific action, you can lookup the action as follows:
 
-`apex.region( `*`region HTML DOM id`*` ).call( "getActions" ).lookup( `*`action name`*` );`
+`apex.region( "[region static ID]" ).call( "getActions" ).lookup( "[action name]" );`
 
-Note: The Interactive Grid may hide or disable various actions depending on what is allowed at a given time or in a particular context. Hidden or disabled actions do nothing when invoked. The declarative option to not include a Save button simply hides the save action (see [interactiveGrid#toolbar](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#toolbar) `save` property). If you don't want a Save button but need to invoke the save action then you have to leave the declarative option on and remove the Save button from the toolbar. See [interactiveGrid#toolbarData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#toolbarData).
+Note: The Interactive Grid may hide or disable various actions depending on what is allowed at a given time or in a particular context. Hidden or disabled actions do nothing when invoked. The declarative option to not include a Save button simply hides the save action (see [interactiveGrid#toolbar](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#toolbar) `save` property). If you don't want a Save button but need to invoke the save action then you have to leave the declarative option on and remove the Save button from the toolbar. See [interactiveGrid#toolbarData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#toolbarData).
 
 | Name | Type | Description |
 |----|----|----|
@@ -159,7 +159,7 @@ Please bear the following in mind when dealing with interactiveGrid widget optio
           return options;
       }
 
-  A simpler way to accomplish the same is to use the [apex.util.getNestedObject](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.getNestedObject) which creates any needed objects automatically. The following example is equvelent to the previous one:
+  A simpler way to accomplish the same is to use the [apex.util.getNestedObject](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.getNestedObject) which creates any needed objects automatically. The following example is equvelent to the previous one:
 
       function( options ) {
 
@@ -177,7 +177,7 @@ Since:
 
 #### defaultDetailViewOptions :Object
 
-This option allows passing options to the underlying tableModelView widget for detail view. See [tableModelView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html) for the options it supports. Interactive Grid may override some of these settings. Some settings may interfere with the proper functioning of Interactive Grid.
+This option allows passing options to the underlying tableModelView widget for detail view. See [tableModelView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html) for the options it supports. Interactive Grid may override some of these settings. Some settings may interfere with the proper functioning of Interactive Grid.
 
 ##### Type:
 
@@ -201,7 +201,7 @@ function( options ) {
 
 #### defaultGridViewOptions :Object
 
-This option allows passing options to the underlying grid widget for grid view. See [grid](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html) for the options it supports. Interactive Grid may override some of these settings. Some settings may interfere with the proper functioning of Interactive Grid.
+This option allows passing options to the underlying grid widget for grid view. See [grid](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html) for the options it supports. Interactive Grid may override some of these settings. Some settings may interfere with the proper functioning of Interactive Grid.
 
 ##### Type:
 
@@ -226,7 +226,7 @@ function( options ) {
 
 #### defaultIconViewOptions :Object
 
-This option allows passing options to the underlying tableModelView widget for icon view. See [tableModelView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html) for the options it supports. Interactive Grid may override some of these settings. Some settings may interfere with the proper functioning of Interactive Grid.
+This option allows passing options to the underlying tableModelView widget for icon view. See [tableModelView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html) for the options it supports. Interactive Grid may override some of these settings. Some settings may interfere with the proper functioning of Interactive Grid.
 
 ##### Type:
 
@@ -250,7 +250,7 @@ function( options ) {
 
 #### defaultModelOptions :Object
 
-This option allows passing options not explicitly set by Interactive Grid to the underlying view models. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) for the supported model options. Some settings may interfere with the proper functioning of Interactive Grid.
+This option allows passing options not explicitly set by Interactive Grid to the underlying view models. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) for the supported model options. Some settings may interfere with the proper functioning of Interactive Grid.
 
 ##### Type:
 
@@ -274,7 +274,7 @@ function( options ) {
 
 #### defaultSingleRowOptions :Object
 
-This option allows passing options to the underlying recordView widget for the single row view of grid view. See [recordView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html) for the options it supports. Interactive Grid may override some of these settings. Some settings may interfere with the proper functioning of Interactive Grid.
+This option allows passing options to the underlying recordView widget for the single row view of grid view. See [recordView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html) for the options it supports. Interactive Grid may override some of these settings. Some settings may interfere with the proper functioning of Interactive Grid.
 
 ##### Type:
 
@@ -361,7 +361,7 @@ function( options ) {
 
 Allows you to add or modify *actions*. `function( actions )` Function has one argument 'actions', which is the Interactive Grid's action's interface object. Note: Within the function, the actions.context property can be used to access the main interactiveGrid widget element (the context for the actions).
 
-Please see [Actions](#actions-section) for a listing of all the predefined actions used by the Interactive Grid widget, and [actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html) for further general information about actions.
+Please see [Actions](#actions-section) for a listing of all the predefined actions used by the Interactive Grid widget, and [actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html) for further general information about actions.
 
 ##### Type:
 
@@ -458,7 +458,7 @@ function( options ) {
 
 #### saveLoadingIndicator :string\|jQuery\|Element\|function
 
-A loading indicator suitable for the [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin) `loadingIndicator` option to be used during the save action.
+A loading indicator suitable for the [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin) `loadingIndicator` option to be used during the save action.
 
 This overrides the default model loading indicator that shows a progress spinner for any related visible models that have changes.
 
@@ -473,7 +473,7 @@ Default Value:
 
 #### saveLoadingIndicatorPosition :string
 
-A loading indicator position suitable for the [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin) `loadingIndicatorPosition` option to be used during the save action.
+A loading indicator position suitable for the [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin) `loadingIndicatorPosition` option to be used during the save action.
 
 This overrides the default model loading indicator that shows a progress spinner for any related visible models that have changes.
 
@@ -536,7 +536,7 @@ function( options ) {
 
 Controls which functionality of the default Interactive Grid toolbar is displayed. If false or null, there will be no toolbar.
 
-Note: To make further customizations to the toolbar including adding new buttons, please see [interactiveGrid#toolbarData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#toolbarData).
+Note: To make further customizations to the toolbar including adding new buttons, please see [interactiveGrid#toolbarData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#toolbarData).
 
 ##### Type:
 
@@ -626,14 +626,14 @@ function( options ) {
 
 Contains the metadata for the toolbar displayed at the top of the Interactive Grid. If no value is provided, the toolbar defaults to the standard toolbar required in APEX.
 
-To customize the default toolbar used by the Interactive Grid in APEX, typically you would start with a copy of the default toolbar metadata. Please see [interactiveGrid.copyDefaultToolbar](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#.copyDefaultToolbar) for details on how to do this.
+To customize the default toolbar used by the Interactive Grid in APEX, typically you would start with a copy of the default toolbar metadata. Please see [interactiveGrid.copyDefaultToolbar](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#.copyDefaultToolbar) for details on how to do this.
 
 ##### Type:
 
 - Array
 
 Default Value:
-- Return value from [interactiveGrid.copyDefaultToolbar](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#.copyDefaultToolbar)
+- Return value from [interactiveGrid.copyDefaultToolbar](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#.copyDefaultToolbar)
 
 ##### Example
 
@@ -678,7 +678,7 @@ function( options ) {
 
 #### trackParentSelection :boolean
 
-Determines if a detail Interactive Grid will change the detail instance automatically when the selection in the master region changes. When true, the default, this detail Interactive Grid creates a selection change event handler for the master region and updates the data shown in this region to correspond to the selected row of the master region. Set to false to manually control the detail instance shown in this region using the [interactiveGrid#setMasterRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#setMasterRecord) method.
+Determines if a detail Interactive Grid will change the detail instance automatically when the selection in the master region changes. When true, the default, this detail Interactive Grid creates a selection change event handler for the master region and updates the data shown in this region to correspond to the selected row of the master region. Set to false to manually control the detail instance shown in this region using the [interactiveGrid#setMasterRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#setMasterRecord) method.
 
 This option only applies if this Interactive Grid has a master region defined.
 
@@ -1023,7 +1023,7 @@ Triggered when the model for the given view is created. Handle this event to sub
 
 Sets focus to the search field if present, and if not delegates to the current view's focus handling.
 
-#### getActions() → {[apex.actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html)}
+#### getActions() → {[apex.actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html)}
 
 Returns the actions context for this Interactive Grid instance
 
@@ -1032,7 +1032,7 @@ Returns the actions context for this Interactive Grid instance
 the actions context
 
 Type
-[apex.actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html)
+[apex.actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html)
 
 ##### Example
 
@@ -1040,7 +1040,7 @@ Type
 apex.region("emp").widget().interactiveGrid("getActions").invoke("save");
 ```
 
-#### getCurrentView() → {[interactiveGridView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGridView.html)}
+#### getCurrentView() → {[interactiveGridView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGridView.html)}
 
 Return the current Interactive Grid view interface.
 
@@ -1049,7 +1049,7 @@ Return the current Interactive Grid view interface.
 View interface.
 
 Type
-[interactiveGridView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGridView.html)
+[interactiveGridView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGridView.html)
 
 #### getCurrentViewId() → {string}
 
@@ -1064,11 +1064,7 @@ string
 
 #### getSelectedRecords() → {Array}
 
-Return the underlying data model records corresponding to the current selection in the current view. Use the apex.model API to manipulate these records. Make sure you are using the model for the current view for example:
-
-` apex.region(`*`region HTML DOM id`*`).widget().interactiveGrid("getCurrentView").model `
-
-Note: Depending on the view and the submitSelectedRows option the selected records returned could span multiple pages. To get just the records that are selected in the current page requires using view widget specific methods.
+Return the underlying data model records corresponding to the current selection in the current view. Use the apex.model API to manipulate these records. Make sure you are using the model for the current view for example: apex.region().widget().interactiveGrid("getCurrentView").model Note: Depending on the view and the submitSelectedRows option the selected records returned could span multiple pages. To get just the records that are selected in the current page requires using view widget specific methods.
 
 ##### Returns:
 
@@ -1088,7 +1084,7 @@ jQuery object of the interactive grid toolbar or null if there is no toolbar
 Type
 jQuery
 
-#### getViews(pViewIdopt) → {[interactiveGridView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGridView.html)}
+#### getViews(pViewIdopt) → {[interactiveGridView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGridView.html)}
 
 Return the Interactive Grid view interface for the given view id or if no view id is given return a map of all the view interfaces.
 
@@ -1125,7 +1121,7 @@ Return the Interactive Grid view interface for the given view id or if no view i
 View interface.
 
 Type
-[interactiveGridView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGridView.html)
+[interactiveGridView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGridView.html)
 
 #### gotoCell(pModelInstanceIdopt, pRecordId, pColumnopt)
 
@@ -1182,14 +1178,14 @@ Call this method when the size of the widget element changes. This can happen if
 
 #### setMasterRecord(pMasterModel, pMasterRecord)
 
-Set the instance of this Interactive Grid to correspond to the specified master record. Normally this is done automatically when the master region selection changes. However, it can also be done manually when the [interactiveGrid#trackParentSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#trackParentSelection) option is false.
+Set the instance of this Interactive Grid to correspond to the specified master record. Normally this is done automatically when the master region selection changes. However, it can also be done manually when the [interactiveGrid#trackParentSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#trackParentSelection) option is false.
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pMasterModel` | [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) | The model of the master region. |
-| `pMasterRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record) | The record of the master region that determines which records this detail region will show. |
+| `pMasterModel` | [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) | The model of the master region. |
+| `pMasterRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record) | The record of the master region that determines which records this detail region will show. |
 
 #### setSelectedRecords(pRecords, pFocusopt, pNoNotifyopt)
 
@@ -1236,18 +1232,18 @@ Set the current selection to the records specified. Only applies for views that 
 </tbody>
 </table>
 
-#### (static) copyDefaultToolbar() → {[interactiveGrid.toolbarData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#.toolbarData)}
+#### (static) copyDefaultToolbar() → {[interactiveGrid.toolbarData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#.toolbarData)}
 
-Returns a copy of the default Interactive Grid toolbar data structure. This is a copy of the array that will be used as the data option when the Interactive Grid's toolbar is created. This is typically used from the Advanced JavaScript code function to customize the return value of this function and then assign to the [interactiveGrid#toolbarData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#toolbarData) config property.
+Returns a copy of the default Interactive Grid toolbar data structure. This is a copy of the array that will be used as the data option when the Interactive Grid's toolbar is created. This is typically used from the Advanced JavaScript code function to customize the return value of this function and then assign to the [interactiveGrid#toolbarData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#toolbarData) config property.
 
-Note the array returned has additional methods to make it easier to find and manipulate the toolbar structure. See [interactiveGrid.toolbarData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#.toolbarData) for details.
+Note the array returned has additional methods to make it easier to find and manipulate the toolbar structure. See [interactiveGrid.toolbarData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#.toolbarData) for details.
 
 ##### Returns:
 
 Returns an array containing a copy of the default Interactive Grid toolbar metadata.
 
 Type
-[interactiveGrid.toolbarData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#.toolbarData)
+[interactiveGrid.toolbarData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#.toolbarData)
 
 ##### Examples
 
@@ -1305,9 +1301,9 @@ function( options) {
 
 #### toolbarData
 
-Toolbar widget metadata returned by [interactiveGrid.copyDefaultToolbar](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#.copyDefaultToolbar).
+Toolbar widget metadata returned by [interactiveGrid.copyDefaultToolbar](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#.copyDefaultToolbar).
 
-The toolbar data structure is an array of control groups for different parts of the toolbar. These control groups all have unique IDs, which can be used in conjunction with the the functions defined below to assist in customizing the toolbar. See option [interactiveGrid#toolbarData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#toolbarData) and method [interactiveGrid.copyDefaultToolbar](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#.copyDefaultToolbar) for examples of customizing the toolbar.
+The toolbar data structure is an array of control groups for different parts of the toolbar. These control groups all have unique IDs, which can be used in conjunction with the the functions defined below to assist in customizing the toolbar. See option [interactiveGrid#toolbarData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#toolbarData) and method [interactiveGrid.copyDefaultToolbar](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#.copyDefaultToolbar) for examples of customizing the toolbar.
 
 Control group IDs defined in the default toolbar data structure
 

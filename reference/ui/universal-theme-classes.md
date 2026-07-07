@@ -1,4 +1,4 @@
-# Universal Theme 26.1 — CSS selector & styling cheat-sheet
+# Universal Theme 24.2 — CSS selector & styling cheat-sheet
 
 Grounding reference for styling Oracle APEX (Universal Theme) **without inventing
 selectors**. APEX's reference under `reference/plsql|javascript|apexlang/` is *API*
@@ -204,7 +204,7 @@ the delivery vectors in §1 — not selectors. Source: `docs/mockups/assets/apex
 
 ### Brand target
 
-> **Oracle APEX 26.1 default Universal Theme — Vita, light.** Light header, light side nav,
+> **Oracle APEX 24.2 default Universal Theme — Vita, light.** Light header, light side nav,
 > a single APEX-blue accent, small (4px) corner radius. Deliver this in **Theme Roller**
 > (it's the default Theme Style with the primary color set), not custom CSS.
 
@@ -265,7 +265,7 @@ This file is only useful while it's **trusted** — the `apex-ui-stylist` agent 
 selectors it finds here. Most of §2–§10 comes from general Universal Theme knowledge, not
 from this instance, so confirm and extend it as the real app gets built:
 
-- **Add a selector only after you've seen it.** Inspect the element in a running APEX 26.1
+- **Add a selector only after you've seen it.** Inspect the element in a running APEX 24.2
   page (browser DevTools) or the UT sample app (<https://apex.oracle.com/ut>). Never add a
   class from memory.
 - **Record enough to trust it later** — the class, the component/part it belongs to, and

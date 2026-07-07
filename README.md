@@ -1,8 +1,8 @@
-# Service Desk Ticketing System — Oracle APEX 26.1
+# Service Desk Ticketing System — Oracle APEX 24.2
 
 A multi-tenant **service desk / ticketing system** built on Oracle APEX — a self-hosted
 alternative to Jira Service Management. This repo is both the **project workspace** and a
-**clone-and-go APEX toolkit**: it ships an offline APEX 26.1 API reference and a Claude
+**clone-and-go APEX toolkit**: it ships an offline APEX 24.2 API reference and a Claude
 Code agent + skill so anyone who clones it can start building with zero setup.
 
 ## What's in here
@@ -12,8 +12,9 @@ Two things live side by side:
 1. **The hackathon project** — a multi-tenant support desk where client companies raise
    tickets and our agents triage, assign, and resolve them, with strict tenant isolation.
    ➡️ Start at **[docs/ticketing-system-brief.md](docs/ticketing-system-brief.md)** (the source-of-truth design doc).
-2. **An offline Oracle APEX 26.1 API reference** — a faithful local copy of the official
-   docs so APEX capabilities can be **looked up, not assumed**.
+2. **An offline Oracle APEX 24.2 API reference** — a faithful local copy of the official
+   docs (PL/SQL + JavaScript, matching the company instance) so APEX capabilities can be
+   **looked up, not assumed**. (The bundled APEXlang reference is 26.1 — no 24.2 edition exists.)
    ➡️ Start at **[CAPABILITIES.md](CAPABILITIES.md)** (task-oriented map: "to do X, use API Y").
 
 ## Using Claude Code in this workspace (plain-English guide)
@@ -118,7 +119,8 @@ servicedesk-apex/
 
 ## Notes for use
 
-- This is **26.1**. Confirm the running instance's version before relying on newer APIs.
+- The PL/SQL + JavaScript reference is **24.2** (company instance). `reference/apexlang/` is
+  **26.1** (Oracle ships no 24.2 APEXlang reference) — don't assume its features exist in 24.2.
 - Most PL/SQL APIs need an APEX session/workspace context. Outside a session, call
   `APEX_UTIL.SET_WORKSPACE` / `APEX_UTIL.SET_SECURITY_GROUP_ID` first.
 - Relative links in the docs are rewritten to absolute Oracle URLs, so they stay valid.
@@ -131,6 +133,7 @@ is **not committed** — it's regenerated locally on the first crawl.
 
 - `tools/crawl2.py`         — concurrent crawler for the PL/SQL book → `_backup/raw_html/` + manifest
 - `tools/build_md.py`       — builds `reference/plsql/`
-- `tools/build_js_apxln.py` — downloads + builds `reference/javascript/` and `reference/apexlang/`
+- `tools/build_js_apxln.py` — downloads + builds `reference/javascript/` (24.2) and `reference/apexlang/` (26.1)
 
-Source landing page: <https://docs.oracle.com/en/database/oracle/apex/26.1/api-references.html>
+Source landing page: <https://docs.oracle.com/en/database/oracle/apex/24.2/api-references.html>
+(APEXlang is pulled from the 26.1 book — 24.2 has no APEXlang reference.)

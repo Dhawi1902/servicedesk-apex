@@ -1,27 +1,27 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 12 APEX_AUTOMATION
 
 The `APEX_AUTOMATION` package provides automated functionality to your environment. Automations are a sequential set of actions which are triggered by query results. Use automations to monitor data and then perform the appropriate action, such as auto-approving specific requests and sending email alerts.
 
-- [ABORT Procedure (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_ABORT-Procedure.html#GUID-8C2D23EB-8245-4159-B265-59DC11466856)
-- [DISABLE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_DISABLE-Procedure.html#GUID-902B0AB6-54A1-4845-A31F-58E86CBE3616)
-- [ENABLE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_ENABLE-Procedure.html#GUID-F26ABF18-0B0A-428F-A595-794ECD52C407)
-- [EXECUTE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_EXECUTE-Procedure-Signature-1.html#GUID-EFAA0508-792C-462D-92C2-A351D4EE9191)
-- [EXECUTE Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_EXECUTE-Procedure-Signature-2.html#GUID-C4C147B8-F507-4BE4-B68D-8160908CA47F)
-- [EXECUTE for Query Context Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_EXECUTE-for-Query-Context.html#GUID-E6592669-10F6-4816-9999-E2EB8A83A337)
-- [EXIT Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_EXIT-Procedure.html#GUID-7CB51015-E945-48EC-A97C-618D8DD1CEDF)
-- [GET_LAST_RUN Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_GET_LAST_RETURN-Function.html#GUID-9A8BB4FF-D522-4AAB-9102-81010E085686)
-- [GET_LAST_RUN_TIMESTAMP Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_GET_LAST_RUN_TIMESTAMP-Procedure.html#GUID-7F5AA067-AF9E-4C4E-BFEF-D451CC8A74D4)
-- [GET_SCHEDULER_JOB_NAME Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_GET_SCHEDULER_JOB_NAME-Function.html#GUID-71C5DBF1-5E89-43D8-AF34-7FEEE3CE2B13)
-- [IS_RUNNING Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_IS_RUNNING-Function.html#GUID-C8E7EB86-2E80-4B4A-817B-EC7F44BDC7A9)
-- [LOG_ERROR Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_LOG_ERROR-Procedure.html#GUID-A6218EAE-BFEA-4244-853C-11C3A6AB4D1D)
-- [LOG_INFO Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_LONG_INFO-Procedure.html#GUID-569DBB08-BD4A-41F9-800A-07F64E4D0531)
-- [LOG_WARN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_LOG_WARN-Procedure.html#GUID-77E12F46-A9F6-48FD-9697-5705382C6647)
-- [RESCHEDULE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_RESCHEDULE-Procedure.html#GUID-AEA1FD5A-135C-4B8E-84D4-FDD8076BFD3D)
-- [SKIP_CURRENT_ROW Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_SKIP_CURRENT_ROW-Procedure.html#GUID-5C32EC9E-B0EC-4C4C-B5AE-59D90CB89250)
-- [TERMINATE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_TERMINATE-Procedure.html#GUID-1E2C0DA9-64A1-452A-B5E4-F9BA0132206C)
+- [ABORT Procedure (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_ABORT-Procedure.html#GUID-8C2D23EB-8245-4159-B265-59DC11466856)
+- [DISABLE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_DISABLE-Procedure.html#GUID-902B0AB6-54A1-4845-A31F-58E86CBE3616)
+- [ENABLE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_ENABLE-Procedure.html#GUID-F26ABF18-0B0A-428F-A595-794ECD52C407)
+- [EXECUTE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_EXECUTE-Procedure-Signature-1.html#GUID-EFAA0508-792C-462D-92C2-A351D4EE9191)
+- [EXECUTE Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_EXECUTE-Procedure-Signature-2.html#GUID-C4C147B8-F507-4BE4-B68D-8160908CA47F)
+- [EXECUTE for Query Context Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_EXECUTE-for-Query-Context.html#GUID-E6592669-10F6-4816-9999-E2EB8A83A337)
+- [EXIT Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_EXIT-Procedure.html#GUID-7CB51015-E945-48EC-A97C-618D8DD1CEDF)
+- [GET_LAST_RUN Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_GET_LAST_RETURN-Function.html#GUID-9A8BB4FF-D522-4AAB-9102-81010E085686)
+- [GET_LAST_RUN_TIMESTAMP Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_GET_LAST_RUN_TIMESTAMP-Procedure.html#GUID-7F5AA067-AF9E-4C4E-BFEF-D451CC8A74D4)
+- [GET_SCHEDULER_JOB_NAME Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_GET_SCHEDULER_JOB_NAME-Function.html#GUID-71C5DBF1-5E89-43D8-AF34-7FEEE3CE2B13)
+- [IS_RUNNING Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_IS_RUNNING-Function.html#GUID-C8E7EB86-2E80-4B4A-817B-EC7F44BDC7A9)
+- [LOG_ERROR Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_LOG_ERROR-Procedure.html#GUID-A6218EAE-BFEA-4244-853C-11C3A6AB4D1D)
+- [LOG_INFO Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_LONG_INFO-Procedure.html#GUID-569DBB08-BD4A-41F9-800A-07F64E4D0531)
+- [LOG_WARN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_LOG_WARN-Procedure.html#GUID-77E12F46-A9F6-48FD-9697-5705382C6647)
+- [RESCHEDULE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_RESCHEDULE-Procedure.html#GUID-AEA1FD5A-135C-4B8E-84D4-FDD8076BFD3D)
+- [SKIP_CURRENT_ROW Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_SKIP_CURRENT_ROW-Procedure.html#GUID-5C32EC9E-B0EC-4C4C-B5AE-59D90CB89250)
+- [TERMINATE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_TERMINATE-Procedure.html#GUID-1E2C0DA9-64A1-452A-B5E4-F9BA0132206C)
 
 ------------------------------------------------------------------------
 
@@ -64,9 +64,9 @@ END;
 
 See Also:
 
-- [TERMINATE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION_TERMINATE-Procedure.html#GUID-1E2C0DA9-64A1-452A-B5E4-F9BA0132206C)
+- [TERMINATE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION_TERMINATE-Procedure.html#GUID-1E2C0DA9-64A1-452A-B5E4-F9BA0132206C)
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -101,7 +101,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -136,7 +136,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -185,7 +185,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -224,7 +224,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -269,7 +269,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -307,7 +307,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -338,7 +338,7 @@ select *
  where created_at > apex_automation.get_last_run;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -384,7 +384,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -427,7 +427,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -469,7 +469,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -508,7 +508,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -545,7 +545,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -583,7 +583,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -621,7 +621,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -659,7 +659,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
 
 ------------------------------------------------------------------------
 
@@ -694,4 +694,4 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)
+**Parent topic:** [APEX_AUTOMATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTOMATION.html#GUID-4E2C8FAA-1A65-49A4-9712-12730775ABE7)

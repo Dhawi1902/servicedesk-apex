@@ -1,12 +1,12 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_SETTING.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_SETTING.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 5 APEX_APP_SETTING
 
 The `APEX_APP_SETTING` package provides utilities you can use when programming in the Oracle APEX environment related to application setting shared components. You can use the `APEX_APP_SETTING` package to get and set the value of application settings.
 
-- [GET_VALUE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_SETTING.GET_VALUE-Function.html#GUID-5CA958F9-E071-424F-9AE5-BB662494ADE2)
-- [SET_VALUE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_SETTING.SET_VALUE-Procedure.html#GUID-55FC3585-DE0F-494C-8F57-A8F7F51EA29D)
+- [GET_VALUE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_SETTING.GET_VALUE-Function.html#GUID-5CA958F9-E071-424F-9AE5-BB662494ADE2)
+- [SET_VALUE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_SETTING.SET_VALUE-Procedure.html#GUID-55FC3585-DE0F-494C-8F57-A8F7F51EA29D)
 
 ------------------------------------------------------------------------
 
@@ -32,14 +32,14 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d23685e72" style="text-align: left;" data-valign="bottom" width="23%">Parameters</th>
-<th id="d23685e74" style="text-align: left;" data-valign="bottom" width="77%">Description</th>
+<th id="d19488e70" style="text-align: left;" data-valign="bottom" width="23%">Parameters</th>
+<th id="d19488e72" style="text-align: left;" data-valign="bottom" width="77%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d23685e78" style="text-align: left;" data-valign="top" width="23%" headers="d23685e72 "><code class="codeph">p_name</code></td>
-<td style="text-align: left;" data-valign="top" width="77%" headers="d23685e78 d23685e74 "><div class="p">
+<td id="d19488e76" style="text-align: left;" data-valign="top" width="23%" headers="d19488e70 "><code class="codeph">p_name</code></td>
+<td style="text-align: left;" data-valign="top" width="77%" headers="d19488e76 d19488e72 "><div class="p">
 The case insensitive name of the application setting. An error raises if:
 <ul>
 <li>the application setting name does not exist</li>
@@ -48,8 +48,8 @@ The case insensitive name of the application setting. An error raises if:
 </div></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d23685e90" style="text-align: left;" data-valign="top" width="23%" headers="d23685e72 "><code class="codeph">p_raise_error</code></td>
-<td style="text-align: left;" data-valign="top" width="77%" headers="d23685e90 d23685e74 ">If <code class="codeph">TRUE</code>, the procedure raises an error if an application setting with a passed name does not exist.</td>
+<td id="d19488e88" style="text-align: left;" data-valign="top" width="23%" headers="d19488e70 "><code class="codeph">p_raise_error</code></td>
+<td style="text-align: left;" data-valign="top" width="77%" headers="d19488e88 d19488e72 ">If <code class="codeph">TRUE</code>, the procedure raises an error if an application setting with a passed name does not exist.</td>
 </tr>
 </tbody>
 </table>
@@ -66,7 +66,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APP_SETTING](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_SETTING.html#GUID-22D1A770-2748-42CB-A679-F89CD33B1335)
+**Parent topic:** [APEX_APP_SETTING](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_SETTING.html#GUID-22D1A770-2748-42CB-A679-F89CD33B1335)
 
 ------------------------------------------------------------------------
 
@@ -92,30 +92,30 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d23881e77" style="text-align: left;" data-valign="bottom" width="23%">Parameters</th>
-<th id="d23881e79" style="text-align: left;" data-valign="bottom" width="77%">Description</th>
+<th id="d19684e75" style="text-align: left;" data-valign="bottom" width="23%">Parameters</th>
+<th id="d19684e77" style="text-align: left;" data-valign="bottom" width="77%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d23881e83" style="text-align: left;" data-valign="top" width="23%" headers="d23881e77 "><code class="codeph">p_name</code></td>
-<td style="text-align: left;" data-valign="top" width="77%" headers="d23881e83 d23881e79 "><p>The case-insensitive name of the application setting. An error raises if:</p>
+<td id="d19684e81" style="text-align: left;" data-valign="top" width="23%" headers="d19684e75 "><code class="codeph">p_name</code></td>
+<td style="text-align: left;" data-valign="top" width="77%" headers="d19684e81 d19684e77 "><p>The case-insensitive name of the application setting. An error raises if:</p>
 <ul>
 <li>the application setting name does not exist</li>
 <li>the build option associated with the application setting is disabled</li>
 </ul></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d23881e95" style="text-align: left;" data-valign="top" width="23%" headers="d23881e77 "><code class="codeph">p_value</code></td>
-<td style="text-align: left;" data-valign="top" width="77%" headers="d23881e95 d23881e79 "><p>The value of the application setting. An error raises if:</p>
+<td id="d19684e93" style="text-align: left;" data-valign="top" width="23%" headers="d19684e75 "><code class="codeph">p_value</code></td>
+<td style="text-align: left;" data-valign="top" width="77%" headers="d19684e93 d19684e77 "><p>The value of the application setting. An error raises if:</p>
 <ul>
 <li>the value is set to required, but a null value passes</li>
 <li>the valid values are defined, but the value is not in one of the valid values</li>
 </ul></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d23881e107" style="text-align: left;" data-valign="top" width="23%" headers="d23881e77 "><code class="codeph">p_raise_error</code></td>
-<td style="text-align: left;" data-valign="top" width="77%" headers="d23881e107 d23881e79 "><p>If set to <code class="codeph">TRUE</code> and an error occurs, then this procedure raises an error message.</p>
+<td id="d19684e105" style="text-align: left;" data-valign="top" width="23%" headers="d19684e75 "><code class="codeph">p_raise_error</code></td>
+<td style="text-align: left;" data-valign="top" width="77%" headers="d19684e105 d19684e77 "><p>If set to <code class="codeph">TRUE</code> and an error occurs, then this procedure raises an error message.</p>
 <p>If set to <code class="codeph">FALSE</code>, all error messages are suppressed.</p>
 <p>In either case, this API never updates application setting values when an error occurs.</p></td>
 </tr>
@@ -134,4 +134,4 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APP_SETTING](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_SETTING.html#GUID-22D1A770-2748-42CB-A679-F89CD33B1335)
+**Parent topic:** [APEX_APP_SETTING](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_SETTING.html#GUID-22D1A770-2748-42CB-A679-F89CD33B1335)

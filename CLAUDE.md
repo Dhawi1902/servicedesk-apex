@@ -6,9 +6,11 @@ Guidance for Claude Code (and teammates) working in this repository.
 
 Two things live here:
 
-1. **An offline Oracle APEX 26.1 API reference** — a faithful local copy of the official
-   docs, so APEX capabilities can be **looked up, not assumed**. Entry point:
-   [`CAPABILITIES.md`](CAPABILITIES.md) (task-oriented map → links to full API files under `reference/`).
+1. **An offline Oracle APEX 24.2 API reference** — a faithful local copy of the official
+   docs (PL/SQL + JavaScript, matching the company instance), so APEX capabilities can be
+   **looked up, not assumed**. Entry point: [`CAPABILITIES.md`](CAPABILITIES.md) (task-oriented
+   map → links to full API files under `reference/`). (The bundled `reference/apexlang/` is
+   **26.1** — Oracle ships no APEXlang reference for 24.2 — and is flagged as such.)
 2. **A hackathon project** — building a **multi-tenant service desk / ticketing system** in
    Oracle APEX. All planning artifacts are in [`docs/`](docs/). Start with
    [`docs/ticketing-system-brief.md`](docs/ticketing-system-brief.md).
@@ -19,7 +21,9 @@ Before claiming APEX can or cannot do something, **check the reference**:
 
 - Start at `CAPABILITIES.md` ("to do X, use API Y") → open the linked file for signatures/params.
 - PL/SQL packages: `reference/plsql/` · JavaScript: `reference/javascript/` · APEXlang: `reference/apexlang/`.
-- This is **version 26.1**. Confirm the running instance's version before relying on newer APIs.
+- The PL/SQL + JavaScript reference is **version 24.2**, matching the company instance. The
+  `reference/apexlang/` doc is **26.1** (no 24.2 edition exists) — don't assume its features
+  exist in 24.2; verify in App Builder.
 - Most PL/SQL APIs need an APEX session/workspace context (set `APEX_UTIL.SET_WORKSPACE` outside a session).
 
 Do not edit `_backup/` (source HTML caches, used to regenerate the reference).

@@ -1,24 +1,24 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 2 APEX_ACL
 
 The `APEX_ACL` package provides utilities that you can use when programming in the Oracle APEX environment related to the Shared Components for application access control. You can use the `APEX_ACL` package to add, remove, or replace user roles. You can also use the `INSTEAD OF` trigger on the `APEX_APPL_ACL_USERS` view to edit user roles with DML statements (INSERT, UPDATE, and DELETE).
 
-If you use the package outside of an APEX environment, set the `security_group_id` with `APEX_UTIL.SET_WORKSPACE` or `APEX_UTIL.SET_SECURITY_GROUP_ID` before you make the call.
+If the package is used outside of an APEX environment, the `security_group_id` must be set using either `APEX_UTIL.SET_WORKSPACE` or `APEX_UTIL.SET_SECURITY_GROUP_ID` before the call.
 
 Use the related APEX views `APEX_APPL_ACL_ROLES`, `APEX_APPL_ACL_USERS`, and `APEX_APPL_ACL_USER_ROLES` to get more information on application users and roles.
 
-- [ADD_USER_ROLE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_USER_ROLE-Procedure-Signature1.html#GUID-9371025F-7E1B-4C52-A8A2-EA5581BC7FC3)
-- [ADD_USER_ROLE Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_USER_ROLE-Procedure-Signature2.html#GUID-0323BCE8-6D8B-45E6-91B6-377025844BDF)
-- [HAS_USER_ANY_ROLES Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HAS_USER_ANY_ROLES-Function.html#GUID-97D53D94-AAF9-4ACE-86C9-CD856B21116A)
-- [HAS_USER_ROLE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HAS_USER_ROLE-Function.html#GUID-39D0A194-58ED-4411-B9C1-F1DB8015DA54)
-- [IS_ROLE_REMOVED_FROM_USER Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_ROLE_REMOVED_FROM_USER-Function.html#GUID-1B650723-4E97-4179-91BB-4AE626379AA9)
-- [REMOVE_USER_ROLE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_USER_ROLE-Procedure-Signature1.html#GUID-D846C00D-AD16-4463-8839-103CB3873D7A)
-- [REMOVE_USER_ROLE Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_USER_ROLE-Procedure-Signature2.html#GUID-F54C8EC5-DFC3-455A-B84D-F524BFFBD47E)
-- [REPLACE_USER_ROLES Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REPLACE_USER_ROLES-Procedure-Signature1.html#GUID-24C89315-91F7-4F9A-85EC-3748C082111E)
-- [REPLACE_USER_ROLES Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REPLACE_USER_ROLES-Procedure-Signature2.html#GUID-01CED8FC-CAEF-482B-AF8D-5D5A85A5D02B)
-- [REMOVE_ALL_USER_ROLES Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_ALL_USER_ROLES-Procedure.html#GUID-B69043B9-9CE2-46F0-A900-C71F2912638A)
+- [ADD_USER_ROLE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_USER_ROLE-Procedure-Signature1.html#GUID-9371025F-7E1B-4C52-A8A2-EA5581BC7FC3)
+- [ADD_USER_ROLE Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_USER_ROLE-Procedure-Signature2.html#GUID-0323BCE8-6D8B-45E6-91B6-377025844BDF)
+- [HAS_USER_ANY_ROLES Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/HAS_USER_ANY_ROLES-Function.html#GUID-97D53D94-AAF9-4ACE-86C9-CD856B21116A)
+- [HAS_USER_ROLE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/HAS_USER_ROLE-Function.html#GUID-39D0A194-58ED-4411-B9C1-F1DB8015DA54)
+- [IS_ROLE_REMOVED_FROM_USER Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/IS_ROLE_REMOVED_FROM_USER-Function.html#GUID-1B650723-4E97-4179-91BB-4AE626379AA9)
+- [REMOVE_USER_ROLE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REMOVE_USER_ROLE-Procedure-Signature1.html#GUID-D846C00D-AD16-4463-8839-103CB3873D7A)
+- [REMOVE_USER_ROLE Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REMOVE_USER_ROLE-Procedure-Signature2.html#GUID-F54C8EC5-DFC3-455A-B84D-F524BFFBD47E)
+- [REPLACE_USER_ROLES Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REPLACE_USER_ROLES-Procedure-Signature1.html#GUID-24C89315-91F7-4F9A-85EC-3748C082111E)
+- [REPLACE_USER_ROLES Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REPLACE_USER_ROLES-Procedure-Signature2.html#GUID-01CED8FC-CAEF-482B-AF8D-5D5A85A5D02B)
+- [REMOVE_ALL_USER_ROLES Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REMOVE_ALL_USER_ROLES-Procedure.html#GUID-B69043B9-9CE2-46F0-A900-C71F2912638A)
 
 ------------------------------------------------------------------------
 
@@ -40,12 +40,12 @@ Parameters
 | Parameter | Description |
 |:---|:---|
 | `p_application_id` | The application ID for which you want to assign a role to a user. Defaults to the current application. |
-| `p_user_name` | The case-insensitive name of the application user to assign the role to. |
+| `p_user_name` | The case insensitive name of the application user to assign the role to. |
 | `p_role_id ` | The ID of the role. |
 
 Example
 
-The following example uses the `ADD_USER_ROLE` procedure to assign the role ID of `2505704029884282` to the user name called `SCOTT` in the application `255`.
+The following example uses the `ADD_USER_ROLE` procedure to assign the role ID of `2505704029884282` to the user name called `'SCOTT'` in the application `255`.
 
 ```
 BEGIN
@@ -56,7 +56,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
+**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
 
 ------------------------------------------------------------------------
 
@@ -83,7 +83,7 @@ Parameters
 
 Example
 
-The following example uses the `ADD_USER_ROLE` procedure to assign the role static ID `'ADMINISTRATOR'` to the user name called `SCOTT` in application `255`.
+The following example uses the `ADD_USER_ROLE` procedure to assign the role static ID `'ADMINISTRATOR'` to the user name called `'SCOTT'` in application `255`.
 
 ```
 BEGIN
@@ -94,7 +94,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
+**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
 
 ------------------------------------------------------------------------
 
@@ -136,7 +136,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
+**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
 
 ------------------------------------------------------------------------
 
@@ -181,7 +181,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
+**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
 
 ------------------------------------------------------------------------
 
@@ -241,7 +241,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
+**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
 
 ------------------------------------------------------------------------
 
@@ -279,7 +279,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
+**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
 
 ------------------------------------------------------------------------
 
@@ -317,7 +317,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
+**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
 
 ------------------------------------------------------------------------
 
@@ -355,7 +355,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
+**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
 
 ------------------------------------------------------------------------
 
@@ -393,7 +393,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
+**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
 
 ------------------------------------------------------------------------
 
@@ -428,4 +428,4 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)
+**Parent topic:** [APEX_ACL](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ACL.html#GUID-C59214CB-8138-4CB4-89CC-4CC357A67288)

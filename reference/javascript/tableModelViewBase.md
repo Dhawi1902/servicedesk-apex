@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html -->
 <!-- Widgets: tableModelViewBase -->
 
 # Widget: tableModelViewBase
@@ -56,9 +56,9 @@
 
 ## tableModelViewBase
 
-This is a base widget that supports pagination over a [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) as well as base support for model editing. It is not intended to be used directly. The examples may use a specific derived widget such as grid or a generic "derived-view". See the [grid](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html) and [tableModelView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html) widgets.
+This is a base widget that supports pagination over a [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) as well as base support for model editing. It is not intended to be used directly. The examples may use a specific derived widget such as grid or a generic "derived-view". See the [grid](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html) and [tableModelView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html) widgets.
 
-Any widget that uses column items to edit a model can benefit from the editing support in this base widget. Even if this base widget isn't used similar logic should be implemented for initializing column items, setting model values from the column items, setting column item values from the model, rendering read only view of model field values, and triggering the [apex.event:apexbeginrecordedit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexbeginrecordedit) and [apex.event:apexendrecordedit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexendrecordedit) events.
+Any widget that uses column items to edit a model can benefit from the editing support in this base widget. Even if this base widget isn't used similar logic should be implemented for initializing column items, setting model values from the column items, setting column item values from the model, rendering read only view of model field values, and triggering the [apex.event:apexbeginrecordedit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexbeginrecordedit) and [apex.event:apexendrecordedit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexendrecordedit) events.
 
 Since:
 - 5.1
@@ -67,7 +67,7 @@ Since:
 
 #### applyTemplateOptions :object
 
-Options to pass to the [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate) function when processing any templates. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate) for details on the option properties.
+Options to pass to the [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate) function when processing any templates. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate) for details on the option properties.
 
 ##### Type:
 
@@ -96,7 +96,7 @@ Get or set option applyTemplateOptions after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "applyTemplateOptions" );
+var value = $( ".selector" ).derived-view( "option", "applyTemplateOptions" );
 
 // set
 
@@ -134,7 +134,7 @@ Get or set option autoAddRecord after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "autoAddRecord" );
+var value = $( ".selector" ).derived-view( "option", "autoAddRecord" );
 
 // set
 
@@ -143,7 +143,7 @@ $( ".selector" ).derived-view( "option", "autoAddRecord", true );
 
 #### editable :boolean
 
-Determine if the view allows editing. If true the [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) must also allow editing but if false the model could still allow editing. If true the view data can be edited according to what the model allows. Only applies if the view supports editing.
+Determine if the view allows editing. If true the [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) must also allow editing but if false the model could still allow editing. If true the view data can be edited according to what the model allows. Only applies if the view supports editing.
 
 ##### Type:
 
@@ -169,7 +169,7 @@ Get or set option editable after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "editable" );
+var value = $( ".selector" ).derived-view( "option", "editable" );
 
 // set
 
@@ -204,7 +204,7 @@ Get or set option entityTitlePlural after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "entityTitlePlural" );
+var value = $( ".selector" ).derived-view( "option", "entityTitlePlural" );
 
 // set
 
@@ -239,7 +239,7 @@ Get or set option entityTitleSingular after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "entityTitleSingular" );
+var value = $( ".selector" ).derived-view( "option", "entityTitleSingular" );
 
 // set
 
@@ -274,7 +274,7 @@ Get or set option fixedRowHeight after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "fixedRowHeight" );
+var value = $( ".selector" ).derived-view( "option", "fixedRowHeight" );
 
 // set
 
@@ -309,7 +309,7 @@ Get or set option footer after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "footer" );
+var value = $( ".selector" ).derived-view( "option", "footer" );
 
 // set
 
@@ -347,7 +347,7 @@ $( ".selector" ).derived-view( {
 
 #### hideDeletedRows :boolean
 
-Determine if deleted rows (records) are removed from the view right away or shown with a visual effect to indicate they are going to be deleted. If true (and the view is editable) deleted records will not be visible, otherwise they are visible but have a visual indication that they are deleted. The actual records are not deleted on the server until the model is saved. The visual effect is determined by CSS rules and is typically strike through. See also [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) `onlyMarkForDelete` option.
+Determine if deleted rows (records) are removed from the view right away or shown with a visual effect to indicate they are going to be deleted. If true (and the view is editable) deleted records will not be visible, otherwise they are visible but have a visual indication that they are deleted. The actual records are not deleted on the server until the model is saved. The visual effect is determined by CSS rules and is typically strike through. See also [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) `onlyMarkForDelete` option.
 
 ##### Type:
 
@@ -373,7 +373,7 @@ Get or set option hideDeletedRows after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "hideDeletedRows" );
+var value = $( ".selector" ).derived-view( "option", "hideDeletedRows" );
 
 // set
 
@@ -408,7 +408,7 @@ Get or set option hideEmptyFooter after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "hideEmptyFooter" );
+var value = $( ".selector" ).derived-view( "option", "hideEmptyFooter" );
 
 // set
 
@@ -525,26 +525,26 @@ Get or set option highlights after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "highlights" );
+var value = $( ".selector" ).derived-view( "option", "highlights" );
 
 // set
 
 $( ".selector" ).derived-view( "option", "highlights", {...} );
 ```
 
-#### loadIncompleteSelection :string
+#### loadIncompleteSelection :boolean
 
 Controls what happens when the selection is incomplete. When selection state is saved in the model, and because the model can fetch data on demand, it is possible to select records that are not yet loaded into the model resulting in an incomplete selection. This can happen when selecting all rows/items or when range selecting a large enough range.
 
-Only applies if [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#persistSelection) is true and with virtual pagination. The value is one of: "always", "never", or "on-demand". The default is "on-demand". When the selection is incomplete:
+Only applies if [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#persistSelection) is true and with virtual pagination. The value is one of: "always", "never", or "on-demand". The default is "on-demand". When the selection is incomplete:
 
 - "always": start fetching all the model data as soon as there is an incomplete selection
 - "never": do nothing
-- "on-demand": display a link for the user to click to cause all the model data to be fetched. The footer must be displayed for the user to access the link. If the footer is turned off and showing the selection count externally the developer is responsible for providing a button (or link) to load the model data on demand by calling [tableModelViewBase#fetchAllData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#fetchAllData). See also [tableModelViewBase#updateStatus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#updateStatus).
+- "on-demand": display a link for the user to click to cause all the model data to be fetched. The footer must be displayed for the user to access the link. If the footer is turned off and showing the selection count externally the developer is responsible for providing a button (or link) to load the model data on demand by calling [tableModelViewBase#fetchAllData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#fetchAllData). See also [tableModelViewBase#updateStatus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#updateStatus).
 
 ##### Type:
 
-- string
+- boolean
 
 Default Value:
 - "on-demand"
@@ -594,20 +594,20 @@ Get or set option loadIncompleteSelection after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "loadIncompleteSelection" );
+var value = $( ".selector" ).derived-view( "option", "loadIncompleteSelection" );
 
 // set
 
 $( ".selector" ).derived-view( "option", "loadIncompleteSelection", "always" );
 ```
 
-#### modelName :[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+#### modelName :[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
-Identifier of model that this view widget will display data from. Can include an instance as well. The model must already exist. This option is required. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) `modelId` argument.
+Identifier of model that this view widget will display data from. Can include an instance as well. The model must already exist. This option is required. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) `modelId` argument.
 
 ##### Type:
 
-- [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+- [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
 ##### Examples
 
@@ -626,7 +626,7 @@ Get or set option modelName after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "modelName" );
+var value = $( ".selector" ).derived-view( "option", "modelName" );
 
 // set
 
@@ -661,7 +661,7 @@ Get or set option noDataIcon after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "noDataIcon" );
+var value = $( ".selector" ).derived-view( "option", "noDataIcon" );
 
 // set
 
@@ -696,7 +696,7 @@ Get or set option noDataMessage after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "noDataMessage" );
+var value = $( ".selector" ).derived-view( "option", "noDataMessage" );
 
 // set
 
@@ -716,7 +716,7 @@ Pagination settings.
 | Name | Type | Description |
 |----|----|----|
 | `scroll` | boolean | If true the scroll bar is used to page through the results a.k.a. infinite scrolling or virtual paging. If false then next and previous buttons are shown. This is 'page at a time' or traditional pagination. Default is false. |
-| `virtual` | boolean | Only applies if `scroll` is true. If false new records are rendered and added to the DOM as the user scrolls to the bottom of the view. Records are never removed from the DOM. This is 'add more' (aka high-water-mark) scroll pagination. If true records can be removed from the DOM as the user scrolls and the records are no longer visible. If true and in addition `loadMore` is false and the model knows the total number of records (model option `hasTotalRecords` is true) then the view looks as if it contains all the records but only the records that are currently visible are rendered. This allows virtual scroll paging in both directions. This is 'virtual' scroll pagination (aka true virtual scrolling). In this case, if the view supports selection the [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#persistSelection) option should be true so that selection state isn't lost when records are removed from the DOM. Default is false. |
+| `virtual` | boolean | Only applies if `scroll` is true. If false new records are rendered and added to the DOM as the user scrolls to the bottom of the view. Records are never removed from the DOM. This is 'add more' (aka high-water-mark) scroll pagination. If true records can be removed from the DOM as the user scrolls and the records are no longer visible. If true and in addition `loadMore` is false and the model knows the total number of records (model option `hasTotalRecords` is true) then the view looks as if it contains all the records but only the records that are currently visible are rendered. This allows virtual scroll paging in both directions. This is 'virtual' scroll pagination (aka true virtual scrolling). In this case, if the view supports selection the [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#persistSelection) option should be true so that selection state isn't lost when records are removed from the DOM. Default is false. |
 | `loadMore` | boolean | If true show a load more button rather than auto paging. Only applies if `scroll` is true. Default is false. |
 | `showPageLinks` | boolean | If true show page links between buttons. Only applies if `scroll` is false The model must know the total number of rows for this to be true. Default is false. |
 | `maxLinks` | number | The maximum number of links to show when `showPageLinks` is true. Default is 5. |
@@ -747,7 +747,7 @@ Get or set option pagination after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "pagination" );
+var value = $( ".selector" ).derived-view( "option", "pagination" );
 
 // set
 
@@ -810,7 +810,7 @@ Get or set option persistSelection after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "persistSelection" );
+var value = $( ".selector" ).derived-view( "option", "persistSelection" );
 
 // set
 
@@ -819,7 +819,7 @@ $( ".selector" ).derived-view( "option", "persistSelection", true );
 
 #### progressOptions :object
 
-Options object to pass to [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.showSpinner). The default depends on the `hasSize` option.
+Options object to pass to [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.showSpinner). The default depends on the `hasSize` option.
 
 ##### Type:
 
@@ -845,7 +845,7 @@ Get or set option progressOptions after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "progressOptions" );
+var value = $( ".selector" ).derived-view( "option", "progressOptions" );
 
 // set
 
@@ -884,7 +884,7 @@ Get or set option rowsPerPage after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "rowsPerPage" );
+var value = $( ".selector" ).derived-view( "option", "rowsPerPage" );
 
 // set
 
@@ -893,7 +893,7 @@ $( ".selector" ).derived-view( "option", "rowsPerPage", 50 );
 
 #### selectionStatusMessageKey :string
 
-The text message key to use for showing the number of selected items/records in the footer. The message key must have exactly one parameter %0 which is replaced with the number of items/records selected. It is often better to use [tableModelViewBase#entityTitleSingular](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#entityTitleSingular) and [tableModelViewBase#entityTitlePlural](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#entityTitlePlural) rather than this option.
+The text message key to use for showing the number of selected items/records in the footer. The message key must have exactly one parameter %0 which is replaced with the number of items/records selected. It is often better to use [tableModelViewBase#entityTitleSingular](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#entityTitleSingular) and [tableModelViewBase#entityTitlePlural](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#entityTitlePlural) rather than this option.
 
 ##### Type:
 
@@ -919,7 +919,7 @@ Get or set option selectionStatusMessageKey after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "selectionStatusMessageKey" );
+var value = $( ".selector" ).derived-view( "option", "selectionStatusMessageKey" );
 
 // set
 
@@ -954,7 +954,7 @@ Get or set option showNullAs after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "showNullAs" );
+var value = $( ".selector" ).derived-view( "option", "showNullAs" );
 
 // set
 
@@ -989,7 +989,7 @@ Get or set option stickyFooter after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "stickyFooter" );
+var value = $( ".selector" ).derived-view( "option", "stickyFooter" );
 
 // set
 
@@ -1000,7 +1000,7 @@ $( ".selector" ).derived-view( "option", "stickyFooter", true );
 
 Determine if the header will stick to the top of the page as it scrolls.
 
-Only applies if [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#hasSize) is false. If false the header will not stick to the page. If true or a function the header will stick to the top of the page using the undocumented `stickyWidget` widget. If the value is a function then it is passed to the `stickyWidget` as the top option.
+Only applies if [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#hasSize) is false. If false the header will not stick to the page. If true or a function the header will stick to the top of the page using the undocumented `stickyWidget` widget. If the value is a function then it is passed to the `stickyWidget` as the top option.
 
 ##### Type:
 
@@ -1026,7 +1026,7 @@ Get or set option stickyTop after initialization.
 ```
 // get
 
-let value = $( ".selector" ).derived-view( "option", "stickyTop" );
+var value = $( ".selector" ).derived-view( "option", "stickyTop" );
 
 // set
 
@@ -1040,10 +1040,9 @@ A callback function that will handle display of report status information such a
 - deletedCount: The number of deleted records if option `hideDeletedRows` is true and null otherwise.
 - selectedCount: The number of selected records
 - total: The total number of records if model option `hasTotalRecords` is true and null otherwise.
-- incomplete: True if the selection is incomplete and false otherwise. The selection is incomplete if the view has selected more records than the model currently has loaded. See option [tableModelViewBase#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#loadIncompleteSelection).
-- altMessage: Message text to display until the next call to `updateStatus`. Currently used for paste operation messages.
+- incomplete: True if the selection is incomplete and false otherwise. The selection is incomplete if the view has selected more records than the model currently has loaded. See option [tableModelViewBase#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#loadIncompleteSelection).
 
-Use this callback to display the selected record count in a custom location in the page. This is most useful when the report footer is not shown [tableModelViewBase#footer](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#footer) is false.
+Use this callback to display the selected record count in a custom location in the page. This is most useful when the report footer is not shown [tableModelViewBase#footer](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#footer) is false.
 
 ##### Type:
 
@@ -1076,7 +1075,7 @@ $( ".selector" ).derived-view( {
 
 #### fetchAllData(pShowProgressopt)
 
-Fetch all report data into the view's model. This is mostly a simple wrapper around the [model#fetchAll](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetchAll) method that doesn't provide access to the callback function and therefore there is no way to be notified when all the data is fetched. This method keeps the selection state up to date.
+Fetch all report data into the view's model. This is mostly a simple wrapper around the [model#fetchAll](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetchAll) method that doesn't provide access to the callback function and therefore there is no way to be notified when all the data is fetched. This method keeps the selection state up to date.
 
 If you need notification use the model `fetchAll` method.
 
@@ -1125,11 +1124,11 @@ Promise
 
 ##### Example
 
-The following function saves the grid view model for the Interactive Grid region given by HTML DOM id `igRegion`. This shows how `finishEditing` is used but it is generally much better to use the built-in Interactive Grid "save" action.
+The following function saves the grid view model for the Interactive Grid region given by static id `igRegion`. This shows how `finishEditing` is used but it is generally much better to use the built-in Interactive Grid "save" action.
 
 ```
 function doSave( igRegion ) {
-    let p, finished,
+    var p, finished,
         grid = apex.region( igRegion ).call( "getViews" ).grid;
 
     finished = grid.view$.grid( "finishEditing" );
@@ -1162,7 +1161,7 @@ This example goes to the first page.
 $( ".selector" ).grid( "firstPage" );
 ```
 
-#### getActiveRecord() → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)}
+#### getActiveRecord() → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)}
 
 Returns the active record or null if there is no active record. The active record is the one currently being edited.
 
@@ -1171,7 +1170,7 @@ Returns the active record or null if there is no active record. The active recor
 Active record.
 
 Type
-[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)
+[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)
 
 #### getActiveRecordId() → {string}
 
@@ -1184,25 +1183,25 @@ Active record id.
 Type
 string
 
-#### getModel() → {[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)}
+#### getModel() → {[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)}
 
-Return the model currently being used by this view. The model can change over time so the returned model should not be saved and used later. If you need to store a reference to the model use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.get) and release it with [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.release).
+Return the model currently being used by this view. The model can change over time so the returned model should not be saved and used later. If you need to store a reference to the model use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.get) and release it with [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.release).
 
 ##### Returns:
 
-The current [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html).
+The current [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html).
 
 Type
-[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)
+[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)
 
-#### getPageInfo() → (nullable) {[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#.pageInfo)}
+#### getPageInfo() → (nullable) {[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#.pageInfo)}
 
 Return information about the current pagination state of the view. Returns null if there is no data in the report.
 
 ##### Returns:
 
 Type
-[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#.pageInfo)
+[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#.pageInfo)
 
 #### gotoPage(pPageNumber) → {boolean}
 
@@ -1257,13 +1256,13 @@ Call to lock the active row while async processing is in progress.
 
 The view edits one row/record at a time. This is known as the active row. In edit mode as the user changes the focused cell with the mouse, tab or enter keys if the new cell is on a different row the previous row is deactivated and the new row is activated. Any dynamic actions or other code that manipulates Column items are acting on the active row. If any actions are asynchronous such as using Ajax to set a column item value then the row must not be deactivated while the async action is in progress otherwise the result would be applied to the wrong row!
 
-So this method must be called before starting an async operation. It can be called multiple times if there are multiple async operations. For each call to `lockActive` there must be exactly one call to `unlockActive`. See also See [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#unlockActive)
+So this method must be called before starting an async operation. It can be called multiple times if there are multiple async operations. For each call to `lockActive` there must be exactly one call to `unlockActive`. See also See [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#unlockActive)
 
-If the view is part of an APEX region plugin, that region should implement the `beforeAsync` and `afterAsync` functions on the object returned from region#getSessionState by calling `lockActive` and `unlockActive` respectively. Then if an appropriate target option is passed to [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin) then the locking will be done automatically. Dynamic Actions that act on column items pass the correct target option. The bottom line is that for Dynamic Actions on columns of an Interactive Grid these lock/unlock methods are called automatically.
+If the view is part of an APEX region plugin, that region should implement the `beforeAsync` and `afterAsync` functions on the object returned from region#getSessionState by calling `lockActive` and `unlockActive` respectively. Then if an appropriate target option is passed to [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin) then the locking will be done automatically. Dynamic Actions that act on column items pass the correct target option. The bottom line is that for Dynamic Actions on columns of an Interactive Grid these lock/unlock methods are called automatically.
 
 ##### Example
 
-See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setActiveRecordValue) for an example.
+See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setActiveRecordValue) for an example.
 
 #### nextPage() → {boolean}
 
@@ -1307,7 +1306,7 @@ $( ".selector" ).grid( "previousPage" );
 
 Use after a column item value is set without triggering a change event to update the model and grid view. Has no effect if there is no active record.
 
-When a dynamic action or other event handler on a change event updates the value of the same item that triggered the change event, the change event from setting the value should be suppressed to avoid an infinite loop. However, the model is only updated from a change event. This method offers a solution to the model not being updated if the value is set asynchronously. Call this method anytime a column item is updated and the change event is suppressed.
+When a dynamic action or other event handler on a change event updates the value of the same item that triggered the change event, the change event from setting the value should be suppressed to avoid an infinite loop. However the model is only updated from a change event. This method offers a solution to the model not being updated if the value is set asynchronously. Call this method anytime a column item is updated and the change event is suppressed.
 
 ##### Parameters:
 
@@ -1317,13 +1316,13 @@ When a dynamic action or other event handler on a change event updates the value
 
 ##### Example
 
-This example updates the "SALARY" column, which has HTML DOM id "C_SALARY", in interactive grid with HTML DOM id "MyGrid", to add 10 to whatever the user enters. `setTimeout` is used to simulate an async value update. The active row must be locked around the async update.
+This example updates the "SALARY" column, which has static id "C_SALARY", in interactive grid with static id "MyGrid", to add 10 to whatever the user enters. `setTimeout` is used to simulate an async value update. The active row must be locked around the async update.
 
 ```
-let salary = apex.item( "C_SALARY" );
-$( salary.node ).on( "change", function( event ) {
+var salary = apex.item( "C_SALARY" );
+$( salary.node ).change( function( event ) {
     // assume the current view is grid and not single row view.
-    const grid$ = apex.region( "MyGrid" ).call( "getCurrentView" ).view$;
+    var grid$ = apex.region( "MyGrid" ).call( "getCurrentView" ).view$;
     grid$.grid("lockActive");
     setTimeout( function() {
         // suppress this change otherwise this handler will be triggered again
@@ -1339,11 +1338,11 @@ $( salary.node ).on( "change", function( event ) {
 
 Call to unlock the active row after async processing is complete.
 
-Call after the async operation completes. See [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#lockActive) for more information.
+Call after the async operation completes. See [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#lockActive) for more information.
 
 ##### Example
 
-See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setActiveRecordValue) for an example.
+See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setActiveRecordValue) for an example.
 
 ### Type Definitions
 
@@ -1414,7 +1413,7 @@ An object with properties that describe the current pagination state.
 <td class="type">number</td>
 <td class="attributes">&lt;optional&gt;<br />
 </td>
-<td class="description last">The number of records in the report. Only present if the model knows the total number of records (model option <code class="prettyprint">hasTotalRecords</code> is true). See <a href="model.html#getServerTotalRecords">model#getServerTotalRecords</a>.</td>
+<td class="description last">The number of records in the report. Only present if the model knows the total number of records (model option <code class="prettyprint">hasTotalRecords</code> is true).</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>scrollOffset</code></th>
@@ -1428,7 +1427,7 @@ An object with properties that describe the current pagination state.
 <td class="type">number</td>
 <td class="attributes">&lt;optional&gt;<br />
 </td>
-<td class="description last">The 0 based offset of the first record in the viewport. Only present for scroll pagination.</td>
+<td class="description last">The 0 based offset of the first record in the vieport. Only present for scroll pagination.</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>currentPage</code></th>

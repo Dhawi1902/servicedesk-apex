@@ -3,7 +3,7 @@
 **Prepared for:** Hackathon team kickoff meeting
 **Date:** 2026-06-30
 **Status:** Draft for team discussion — nothing here is final until the team agrees
-**Timebox:** Hackathon demo on **16 July 2026** · Continues as a **production system** afterward · Platform: Oracle APEX 26.1 (company instance)
+**Timebox:** Hackathon demo on **16 July 2026** · Continues as a **production system** afterward · Platform: Oracle APEX 24.2 (company instance)
 **Framework:** ITIL 4 (Incident Management + Service Request Management practices)
 
 ---
@@ -92,7 +92,7 @@ We organize features by priority so we **always have a working demo**, even if l
 - AI assist (APEX has a built-in `APEX_AI` package — e.g. auto-suggest a ticket's category/priority). Strong demo moment *if* time allows. **Blocked for the demo: every Generative AI provider needs an API key, which we don't have (checked 2026-07-05).**
 - Knowledge base
 
-> **Lead's recommendation:** cut AI entirely. SLA breach highlighting is promoted to **SHOULD** — it's cheap (a lookup table + a computed column + conditional formatting) and gives the demo a production feel. The SHOULD items above are all verified feasible in APEX 26.1 and low-cost, so they're worth committing to.
+> **Lead's recommendation:** cut AI entirely. SLA breach highlighting is promoted to **SHOULD** — it's cheap (a lookup table + a computed column + conditional formatting) and gives the demo a production feel. The SHOULD items above are all verified feasible in APEX 24.2 and low-cost, so they're worth committing to.
 
 **FUTURE / WON'T (this time) — explicitly out of scope for the hackathon demo; recorded for the production roadmap.**
 *The MoSCoW "Won't-have-this-time" tier: not built before the 16 July demo, but captured so the vision is on record and the ideas don't leak into the build. Unlike a typical hackathon, this system continues as a **production product** — these items form the real backlog, prioritized by ITIL importance.*
@@ -395,7 +395,7 @@ How we enforce it (from simplest to most robust — pick based on comfort):
 
 ### 5.1 File / screenshot attachments (FR-25 — SHOULD, built 2026-07-05)
 
-A client raising a ticket — or anyone commenting — can attach a file or screenshot as proof/evidence; a support agent views or downloads it while working the ticket. This is **almost entirely declarative** in APEX (verified against the offline 26.1 reference) and is a **half-day to one-day** build, so it stays a **COULD** — only built if MUST + SHOULD finish early — but is documented here ready to go.
+A client raising a ticket — or anyone commenting — can attach a file or screenshot as proof/evidence; a support agent views or downloads it while working the ticket. This is **almost entirely declarative** in APEX (verified against the offline 24.2 reference) and is a **half-day to one-day** build, so it stays a **COULD** — only built if MUST + SHOULD finish early — but is documented here ready to go.
 
 **How it works (declarative path, minimal PL/SQL):**
 - **Upload:** a built-in **File Browse** page item. Uploads first land in APEX's session-scoped temp table (`APEX_APPLICATION_TEMP_FILES`, auto-purged at end of session) — so we point the item at a **BLOB column** instead, and APEX persists the file, filename, and mime type into `TICKET_ATTACHMENTS` with **no code** (an Interactive Grid / Form on the table).
@@ -434,7 +434,7 @@ CREATE INDEX TICKET_ATTACH_COMPANY_IX ON TICKET_ATTACHMENTS(COMPANY_ID);
 
 ## 6. APEX PAGE ARCHITECTURE — what we'll actually build
 
-Now that the requirements, workflow, and data model are set, we can name the **screens**. This is the bridge from "what the system does" to "who builds which page." (Advisory map, grounded in APEX 26.1 — confirm in the meeting.)
+Now that the requirements, workflow, and data model are set, we can name the **screens**. This is the bridge from "what the system does" to "who builds which page." (Advisory map, grounded in APEX 24.2 — confirm in the meeting.)
 
 ### The one design rule that keeps this small
 **One page serves many roles — we do *not* build one page per role.** APEX gives us two declarative levers to make a single page behave differently per role:
@@ -565,7 +565,7 @@ Balanced by **effort, not page count** (Ticket Detail alone is ~5× a Categories
 - **E.** Confirm the workstream split and who owns what.
 - **F.** Confirm the 3-week milestone shape.
 - **G.** ✅ **Decided (revised 2026-07-02): "Reassign" (manual) vs "Escalation" (automatic) — full design confirmed.** Manual tier transfer (FR-26) = agent/admin reassigns to a higher-tier agent + optionally raises priority, logged as `REASSIGN`. Automatic escalation (FR-35) = system-driven, two-stage: warning at 75% SLA → auto-reassign at 90% SLA (functional escalation to next tier within the ticket's project by lowest workload). Hierarchical fallback when functional is exhausted (notify management, flag `ESCALATION_BLOCKED`). Per-project threshold via `SLA_TARGETS.escalation_pct` (default 80%). Scheduler runs every 5 minutes. Grounded in ITIL 4 (functional + hierarchical escalation) and ISO 20000-1 §8.6.3 (documented, timely escalation path).
-- **H.** Confirm the SHOULD items (CSAT, dashboard analytics, auto-ack email, reassign, **SLA per severity per project**, auto-escalation) — all verified feasible in APEX 26.1. *(recommend: yes)*
+- **H.** Confirm the SHOULD items (CSAT, dashboard analytics, auto-ack email, reassign, **SLA per severity per project**, auto-escalation) — all verified feasible in APEX 24.2. *(recommend: yes)*
 - **I.** ✅ **Decided (revised 2026-07-03): agents are scoped to their projects via `AGENT_PROJECTS`, with explicit L1–L4 tiers (decision M).** A Support Agent sees only tickets for the **projects** they're assigned to (`AGENT_PROJECTS` join + `WHERE project_id IN (...)`). Each `AGENT_PROJECTS` mapping carries a `tier` column (L1/L2/L3/L4 — per project, decision M revised). Four roles stay; **Manager** = an overseer who doesn't take tickets (no separate role), **Project Lead** = deferred (`is_lead` flag later). See §2 and decision M.
 - **J.** ✅ **Decided (refined with L, revised 2026-07-03): clients can assign L1 agents directly.** Both Client User and Client Admin can assign a support agent to their ticket — the agent LOV is scoped to `AGENT_PROJECTS` for the ticket's `project_id` **and filtered to the mapping's `tier = 'L1'`** (decision L; tier is per project, decision M revised). Higher tiers are reached via reassignment by support staff. System Admin can still assign/reassign anyone.
 - **K.** ✅ **Decided: severity and priority are separate fields.** Severity (Critical/Major/Minor/Low) is set by the client at ticket creation to describe business impact. Priority (P1–P4) is set by the support team during triage to determine work order. SLA targets key off severity. See updated FR-7.

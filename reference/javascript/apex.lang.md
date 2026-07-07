@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html -->
 <!-- Namespaces: apex.lang -->
 
 # Namespace: lang
@@ -18,7 +18,7 @@
 - [loadMessages](#.loadMessages)
 - [loadMessagesIfNeeded](#.loadMessagesIfNeeded)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).lang
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).lang
 
 This namespace is used for text and message localization related functions of Oracle APEX.
 
@@ -26,7 +26,7 @@ This namespace is used for text and message localization related functions of Or
 
 #### (static) addMessages(pMessages)
 
-Add messages for use by [apex.lang.getMessage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.getMessage) and the format functions. Can be called multiple times. Additional messages are merged. It is generally not necessary to call this function, because it is automatically called with all the application text messages that have attribute *Used in JavaScript* set to on.
+Add messages for use by [apex.lang.getMessage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.getMessage) and the format functions. Can be called multiple times. Additional messages are merged. It is generally not necessary to call this function, because it is automatically called with all the application text messages that have attribute *Used in JavaScript* set to on.
 
 ##### Parameters:
 
@@ -58,7 +58,7 @@ apex.lang.clearMessages();
 
 #### (static) format(pPattern, …pValues) → {string}
 
-Formats a message. Same as [apex.lang.formatMessage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.formatMessage) except the message pattern is given directly. It is already localized or isn't supposed to be. It is not a key. The replacement arguments are HTML escaped.
+Formats a message. Same as [apex.lang.formatMessage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.formatMessage) except the message pattern is given directly. It is already localized or isn't supposed to be. It is not a key. The replacement arguments are HTML escaped.
 
 ##### Parameters:
 
@@ -89,7 +89,7 @@ Formats a message. Same as [apex.lang.formatMessage](https://docs.oracle.com/en/
 <td class="type">*</td>
 <td class="attributes">&lt;repeatable&gt;<br />
 </td>
-<td class="description last">If using positional parameters, any number of replacement values, one for each message parameter %0 to %9. If using named parameters, a single object with name value pairs. Non string arguments are converted to strings.</td>
+<td class="description last">Any number of replacement values, one for each message parameter %0 to %9. Non string arguments are converted to strings.</td>
 </tr>
 </tbody>
 </table>
@@ -101,23 +101,17 @@ The formatted message text.
 Type
 string
 
-##### Examples
+##### Example
 
-This example using positional parameters returns "Total cost: \$34.00" assuming the orderTotal variable equals "34.00".
+This example returns "Total cost: \$34.00" assuming the orderTotal variable equals "34.00".
 
 ```
 apex.lang.format( "Total cost: $%0", orderTotal );
 ```
 
-This example using named parameters returns "Total cost: \$34.00" assuming the orderTotal variable equals "34.00".
-
-```
-apex.lang.format( "Total cost: $%cost", {cost: orderTotal} );
-```
-
 #### (static) formatMessage(pKey, …pValues) → {string}
 
-Format a message. Parameters in the message are replaced with the corresponding function argument. Parameters can be named parameters (for example %process %complete) or positional parameters %0 to %9
+Format a message. Parameters in the message, %0 to %9, are replaced with the corresponding function argument. Use %% to include a single %. The replacement arguments are HTML escaped.
 
 ##### Parameters:
 
@@ -148,7 +142,7 @@ Format a message. Parameters in the message are replaced with the corresponding 
 <td class="type">*</td>
 <td class="attributes">&lt;repeatable&gt;<br />
 </td>
-<td class="description last">If using positional parameters, any number of replacement values, one for each message parameter %0 to %9. If using named parameters, a single object with name value pairs. Non string arguments are converted to strings.</td>
+<td class="description last">Any number of replacement values, one for each message parameter %0 to %9. Non string arguments are converted to strings.</td>
 </tr>
 </tbody>
 </table>
@@ -160,23 +154,17 @@ The localized and formatted message text. If the key is not found then the key i
 Type
 string
 
-##### Examples
+##### Example
 
-This example using positional parameters returns "Process 60% complete" when the PROCESS_STATUS message text is "Process %0% complete" and the progress variable value is 60.
+This example returns "Process 60% complete" when the PROCESS_STATUS message text is "Process %0%% complete" and the progress variable value is 60.
 
 ```
   apex.lang.formatMessage( "PROCESS_STATUS", progress );
 ```
 
-This example using named parameters returns "Process 60% complete" when the PROCESS_STATUS message text is "Process %processComplete% complete" and the progress variable value is 60.
-
-```
-  apex.lang.formatMessage( "PROCESS_STATUS", { processComplete: progress } );
-```
-
 #### (static) formatMessageNoEscape(pKey, …pValues) → {string}
 
-Same as [apex.lang.formatMessage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.formatMessage) except the replacement arguments are not HTML escaped. They must be known to be safe or will be used in a context that is safe.
+Same as [apex.lang.formatMessage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.formatMessage) except the replacement arguments are not HTML escaped. They must be known to be safe or will be used in a context that is safe.
 
 ##### Parameters:
 
@@ -207,7 +195,7 @@ Same as [apex.lang.formatMessage](https://docs.oracle.com/en/database/oracle/ape
 <td class="type">*</td>
 <td class="attributes">&lt;repeatable&gt;<br />
 </td>
-<td class="description last">If using positional parameters, any number of replacement values, one for each message parameter %0 to %9. If using named parameters, a single object with name value pairs. Non string arguments are converted to strings.</td>
+<td class="description last">Any number of replacement values, one for each message parameter %0 to %9. Non string arguments are converted to strings.</td>
 </tr>
 </tbody>
 </table>
@@ -219,23 +207,17 @@ The localized and formatted message text. If the key is not found then the key i
 Type
 string
 
-##### Examples
+##### Example
 
-This example using positional parameters returns "You entered \<ok\>" when the CONFIRM message text is "You entered %0" and the inputValue variable value is "\<ok\>". Note this string must be used in a context where HTML escaping is done to avoid XSS vulnerabilities.
+This example returns "You entered \<ok\>" when the CONFIRM message text is "You entered %0" and the inputValue variable value is "\<ok\>". Note this string must be used in a context where HTML escaping is done to avoid XSS vulnerabilities.
 
 ```
 apex.lang.formatMessageNoEscape( "CONFIRM", inputValue );
 ```
 
-This example using named parameters returns "You entered \<ok\>" when the CONFIRM message text is "You entered %confirmMsg" and the inputValue variable value is "\<ok\>". Note this string must be used in a context where HTML escaping is done to avoid XSS vulnerabilities.
-
-```
-apex.lang.formatMessageNoEscape( "CONFIRM", {confirmMsg: inputValue} );
-```
-
 #### (static) formatNoEscape(pPattern, …pValues) → {string}
 
-Same as [apex.lang.format](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.format), except the replacement arguments are not HTML escaped. They must be known to be safe or are used in a context that is safe.
+Same as [apex.lang.format](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.format), except the replacement arguments are not HTML escaped. They must be known to be safe or are used in a context that is safe.
 
 ##### Parameters:
 
@@ -266,7 +248,7 @@ Same as [apex.lang.format](https://docs.oracle.com/en/database/oracle/apex/26.1/
 <td class="type">*</td>
 <td class="attributes">&lt;repeatable&gt;<br />
 </td>
-<td class="description last">if using positional parameters, any number of replacement values, one for each message parameter %0 to %9. If using named parameters, a single object with name value pairs. Non string arguments are converted to strings.</td>
+<td class="description last">Any number of replacement values, one for each message parameter %0 to %9. Non string arguments are converted to strings.</td>
 </tr>
 </tbody>
 </table>
@@ -278,23 +260,17 @@ The formatted message text.
 Type
 string
 
-##### Examples
+##### Example
 
-This example using positional parameters returns "You entered \<ok\>" when the inputValue variable value is "\<ok\>". Note this string must be used in a context where HTML escaping is done to avoid XSS vulnerabilities.
+This example returns "You entered \<ok\>" when the inputValue variable value is "\<ok\>". Note this string must be used in a context where HTML escaping is done to avoid XSS vulnerabilities.
 
 ```
 apex.lang.formatNoEscape( "You entered %0", inputValue );
 ```
 
-This example using named parameters returns "You entered \<ok\>" when the inputValue variable value is "\<ok\>". Note this string must be used in a context where HTML escaping is done to avoid XSS vulnerabilities.
-
-```
-apex.lang.formatNoEscape( "You entered %confirmMsg", { confirmMsg: inputValue } );
-```
-
 #### (static) getMessage(pKey) → {string}
 
-Return the message associated with the given key. The key is looked up in the messages added with the [apex.lang.addMessages](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.addMessages), [apex.lang.loadMessages](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.loadMessages), or [apex.lang.loadMessagesIfNeeded](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.loadMessagesIfNeeded) functions.
+Return the message associated with the given key. The key is looked up in the messages added with the [apex.lang.addMessages](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.addMessages), [apex.lang.loadMessages](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.loadMessages), or [apex.lang.loadMessagesIfNeeded](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.loadMessagesIfNeeded) functions.
 
 ##### Parameters:
 
@@ -319,7 +295,7 @@ apex.lang.getMessage( "OK_BTN_LABEL" );
 
 #### (static) hasMessage(pKey) → {boolean}
 
-Return true if pKey exists in the messages added with the [apex.lang.addMessages](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.addMessages), [apex.lang.loadMessages](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.loadMessages), or [apex.lang.loadMessagesIfNeeded](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.loadMessagesIfNeeded) functions.
+Return true if pKey exists in the messages added with the [apex.lang.addMessages](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.addMessages), [apex.lang.loadMessages](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.loadMessages), or [apex.lang.loadMessagesIfNeeded](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.loadMessagesIfNeeded) functions.
 
 ##### Parameters:
 

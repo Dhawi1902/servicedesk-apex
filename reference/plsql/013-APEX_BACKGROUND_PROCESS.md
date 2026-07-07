@@ -1,20 +1,20 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 13 APEX_BACKGROUND_PROCESS
 
 This package enables background process reporting (status and progress) and the option to forcefully cancel a running process.
 
-- [Constants](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS-Constants.html#GUID-F8B2006B-AEF3-4F50-96A2-8DE5349C2A94)
-- [Data Types](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS-Data-Types.html#GUID-FF0174C9-EFF7-4DC8-A2AB-06BCA95F3E30)
-- [ABORT Procedure Signature 1 (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.ABORT-Procedure-Signature-1.html#GUID-454814A2-BDB0-4097-B036-979D71603565)
-- [ABORT Procedure Signature 2 (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.ABORT-Procedure-Signature-2.html#GUID-FE0F2941-8BCE-4E92-85AC-14340B8DA945)
-- [GET_CURRENT_EXECUTION Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.GET_CURRENT_EXECUTION-Function.html#GUID-276F85A9-0B16-4F06-BE7F-70A54DE5B2B0)
-- [GET_EXECUTION Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.GET_EXECUTION-Function.html#GUID-E9D6735E-04F0-4B5F-8589-0FB845DA6E69)
-- [SET_PROGRESS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.SET_PROGRESS-Procedure.html#GUID-505AA39D-2619-4DCA-A7C1-65939448E0B8)
-- [SET_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.SET_STATUS-Procedure.html#GUID-C992D7EC-FE31-46BA-BA40-F5F47089F0BD)
-- [TERMINATE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.TERMINATE-Procedure-Signature-1.html#GUID-ECEE1B03-FC3F-4D4E-A949-D2C5B879CDCF)
-- [TERMINATE Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.TERMINATE-Procedure-Signature-2.html#GUID-AFCFBAD4-5D1A-4479-8D26-F4009EA36DDA)
+- [Constants](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS-Constants.html#GUID-F8B2006B-AEF3-4F50-96A2-8DE5349C2A94)
+- [Data Types](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS-Data-Types.html#GUID-FF0174C9-EFF7-4DC8-A2AB-06BCA95F3E30)
+- [ABORT Procedure Signature 1 (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS.ABORT-Procedure-Signature-1.html#GUID-454814A2-BDB0-4097-B036-979D71603565)
+- [ABORT Procedure Signature 2 (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS.ABORT-Procedure-Signature-2.html#GUID-FE0F2941-8BCE-4E92-85AC-14340B8DA945)
+- [GET_CURRENT_EXECUTION Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS.GET_CURRENT_EXECUTION-Function.html#GUID-276F85A9-0B16-4F06-BE7F-70A54DE5B2B0)
+- [GET_EXECUTION Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS.GET_EXECUTION-Function.html#GUID-E9D6735E-04F0-4B5F-8589-0FB845DA6E69)
+- [SET_PROGRESS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS.SET_PROGRESS-Procedure.html#GUID-505AA39D-2619-4DCA-A7C1-65939448E0B8)
+- [SET_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS.SET_STATUS-Procedure.html#GUID-C992D7EC-FE31-46BA-BA40-F5F47089F0BD)
+- [TERMINATE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS.TERMINATE-Procedure-Signature-1.html#GUID-ECEE1B03-FC3F-4D4E-A949-D2C5B879CDCF)
+- [TERMINATE Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS.TERMINATE-Procedure-Signature-2.html#GUID-AFCFBAD4-5D1A-4479-8D26-F4009EA36DDA)
 
 ------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ c_status_terminated  constant t_execution_state := 'ABORTED';
 c_status_aborted     constant t_execution_state := 'ABORTED';
 ```
 
-**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html)
+**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html)
 
 ------------------------------------------------------------------------
 
@@ -90,9 +90,9 @@ Attributes
 
 See Also:
 
-- [Constants](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS-Constants.html#GUID-F8B2006B-AEF3-4F50-96A2-8DE5349C2A94)
+- [Constants](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS-Constants.html#GUID-F8B2006B-AEF3-4F50-96A2-8DE5349C2A94)
 
-**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html)
+**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html)
 
 ------------------------------------------------------------------------
 
@@ -133,7 +133,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html)
+**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html)
 
 ------------------------------------------------------------------------
 
@@ -174,7 +174,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html)
+**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html)
 
 ------------------------------------------------------------------------
 
@@ -214,7 +214,7 @@ END;
 => Execution ID: 4711
 ```
 
-**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html)
+**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html)
 
 ------------------------------------------------------------------------
 
@@ -260,7 +260,7 @@ END;
 => Execution State: EXECUTING
 ```
 
-**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html)
+**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html)
 
 ------------------------------------------------------------------------
 
@@ -319,9 +319,9 @@ END;
 
 See Also:
 
-- [GET_EXECUTION Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.GET_EXECUTION-Function.html#GUID-E9D6735E-04F0-4B5F-8589-0FB845DA6E69)
+- [GET_EXECUTION Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS.GET_EXECUTION-Function.html#GUID-E9D6735E-04F0-4B5F-8589-0FB845DA6E69)
 
-**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html)
+**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html)
 
 ------------------------------------------------------------------------
 
@@ -371,9 +371,9 @@ END;
 
 See Also:
 
-- [GET_EXECUTION Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BACKGROUND_PROCESS.GET_EXECUTION-Function.html#GUID-E9D6735E-04F0-4B5F-8589-0FB845DA6E69)
+- [GET_EXECUTION Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BACKGROUND_PROCESS.GET_EXECUTION-Function.html#GUID-E9D6735E-04F0-4B5F-8589-0FB845DA6E69)
 
-**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html)
+**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html)
 
 ------------------------------------------------------------------------
 
@@ -408,7 +408,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html)
+**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html)
 
 ------------------------------------------------------------------------
 
@@ -443,4 +443,4 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/apex_background_process.html)
+**Parent topic:** [APEX_BACKGROUND_PROCESS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/apex_background_process.html)

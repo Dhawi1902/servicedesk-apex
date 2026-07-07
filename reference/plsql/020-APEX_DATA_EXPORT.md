@@ -1,5 +1,5 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 20 APEX_DATA_EXPORT
 
@@ -7,15 +7,15 @@ The APEX_DATA_EXPORT package contains the implementation to export data from Ora
 
 Use the `EXPORT` function to pass a query context from the `APEX_EXEC` package and return the `t_export` type, which includes the contents in a LOB.
 
-- [Global Constants](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-Global-Constants.html#GUID-3E08E8B0-85B4-4AF4-A0EE-8DF81149B472)
-- [Data Types](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-Data-Types.html#GUID-89148B14-CBD1-48F9-9E83-898EEE765E39)
-- [ADD_AGGREGATE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-ADD_AGGREGATE-Procedure.html#GUID-9CC21557-27C8-45B4-BC70-8A9C18E2E683)
-- [ADD_COLUMN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-ADD_COLUMN-Procedure.html#GUID-C06428D3-6777-4DA5-B1E4-CC20535E8DAF)
-- [ADD_COLUMN_GROUP Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-ADD_COLUMN_GROUP-Procedure.html#GUID-AB1B0D6C-F964-4729-9DF3-D0DA8457C060)
-- [ADD_HIGHLIGHT Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-ADD_HIGHLIGHT-Procedure.html#GUID-7C0EDF89-1FA2-4DAE-8F51-8344E8EE0165)
-- [DOWNLOAD Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-DOWNLOAD-Procedure.html#GUID-A2095839-B801-40C0-98D6-0576766489EB)
-- [EXPORT Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-EXPORT-Function.html#GUID-6109A537-50C4-4FB2-8414-7A554B19EC8E)
-- [GET_PRINT_CONFIG Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT-GET_PRINT_CONFIG-Procedure.html#GUID-FEBD25E1-53E7-4C03-A30B-5859692188A7)
+- [Global Constants](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT-Global-Constants.html#GUID-3E08E8B0-85B4-4AF4-A0EE-8DF81149B472)
+- [Data Types](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT-Data-Types.html#GUID-89148B14-CBD1-48F9-9E83-898EEE765E39)
+- [ADD_AGGREGATE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT-ADD_AGGREGATE-Procedure.html#GUID-9CC21557-27C8-45B4-BC70-8A9C18E2E683)
+- [ADD_COLUMN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT-ADD_COLUMN-Procedure.html#GUID-C06428D3-6777-4DA5-B1E4-CC20535E8DAF)
+- [ADD_COLUMN_GROUP Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT-ADD_COLUMN_GROUP-Procedure.html#GUID-AB1B0D6C-F964-4729-9DF3-D0DA8457C060)
+- [ADD_HIGHLIGHT Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT-ADD_HIGHLIGHT-Procedure.html#GUID-7C0EDF89-1FA2-4DAE-8F51-8344E8EE0165)
+- [DOWNLOAD Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT-DOWNLOAD-Procedure.html#GUID-A2095839-B801-40C0-98D6-0576766489EB)
+- [EXPORT Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT-EXPORT-Function.html#GUID-6109A537-50C4-4FB2-8414-7A554B19EC8E)
+- [GET_PRINT_CONFIG Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT-GET_PRINT_CONFIG-Procedure.html#GUID-FEBD25E1-53E7-4C03-A30B-5859692188A7)
 
 ------------------------------------------------------------------------
 
@@ -119,7 +119,7 @@ c_font_weight_normal            constant t_font_weight          := 'normal';
 c_font_weight_bold              constant t_font_weight          := 'bold';
 ```
 
-**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
+**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
 
 ------------------------------------------------------------------------
 
@@ -247,7 +247,7 @@ type t_print_config is record (
     border_color                t_color );
 ```
 
-**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
+**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
 
 ------------------------------------------------------------------------
 
@@ -335,7 +335,7 @@ EXCEPTION
 END;
 ```
 
-**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
+**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
 
 ------------------------------------------------------------------------
 
@@ -421,7 +421,7 @@ EXCEPTION
 END;
 ```
 
-**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
+**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
 
 ------------------------------------------------------------------------
 
@@ -523,7 +523,7 @@ EXCEPTION
 END;
 ```
 
-**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
+**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
 
 ------------------------------------------------------------------------
 
@@ -595,7 +595,7 @@ EXCEPTION
 END;
 ```
 
-**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
+**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
 
 ------------------------------------------------------------------------
 
@@ -649,7 +649,7 @@ EXCEPTION
 END;
 ```
 
-**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
+**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
 
 ------------------------------------------------------------------------
 
@@ -735,11 +735,11 @@ EXCEPTION
 END;
 ```
 
-**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
+**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
 
 ------------------------------------------------------------------------
 
-## 20.9 GET_PRINT_CONFIG Function
+## 20.9 GET_PRINT_CONFIG Procedure
 
 This function prepares the print config to style the data export.
 
@@ -799,134 +799,134 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d83641e80" style="text-align: left;" data-valign="bottom">Parameter</th>
-<th id="d83641e82" style="text-align: left;" data-valign="bottom">Description</th>
+<th id="d76645e78" style="text-align: left;" data-valign="bottom">Parameter</th>
+<th id="d76645e80" style="text-align: left;" data-valign="bottom">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d83641e86" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_units</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e86 d83641e82 "><p>Select the units used to specify page width and height.</p>
+<td id="d76645e84" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_units</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e84 d76645e80 "><p>Select the units used to specify page width and height.</p>
 <p>Valid values are: Inches, Millimeters, Centimeters, Points</p></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e95" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_paper_size</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e95 d83641e82 "><p>PDF only. Select the report page size. To type in your own page width and height, select Custom.</p>
+<td id="d76645e93" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_paper_size</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e93 d76645e80 "><p>PDF only. Select the report page size. To type in your own page width and height, select Custom.</p>
 <p>Available options include: Letter, Legal, Tabloid, A4, A3, Custom</p></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e104" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_width_units</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e104 d83641e82 "><p>PDF only. Select the units used to specify column widths.</p>
+<td id="d76645e102" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_width_units</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e102 d76645e80 "><p>PDF only. Select the units used to specify column widths.</p>
 <p>Valid values are: Percentage, Points, Pixels</p></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e113" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_width</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e113 d83641e82 ">PDF only. The width of the page.</td>
+<td id="d76645e111" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_width</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e111 d76645e80 ">PDF only. The width of the page.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e119" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_height</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e119 d83641e82 ">PDF only. The height of the page.</td>
+<td id="d76645e117" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_height</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e117 d76645e80 ">PDF only. The height of the page.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e125" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_orientation</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e125 d83641e82 "><p>The orientation for the page. PDF only.</p>
+<td id="d76645e123" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_orientation</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e123 d76645e80 "><p>The orientation for the page. PDF only.</p>
 <p>Available options include: Vertical (Portrait), Horizontal (Landscape)</p></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e134" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_header</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e134 d83641e82 ">Text to appear in the header section of the document.</td>
+<td id="d76645e132" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_header</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e132 d76645e80 ">Text to appear in the header section of the document.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e140" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_header_font_color</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e140 d83641e82 ">The page header font color.</td>
+<td id="d76645e138" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_header_font_color</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e138 d76645e80 ">The page header font color.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e146" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_header_font_family</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e146 d83641e82 ">The page header font family.</td>
+<td id="d76645e144" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_header_font_family</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e144 d76645e80 ">The page header font family.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e152" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_header_font_weight</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e152 d83641e82 ">The page header font weight.</td>
+<td id="d76645e150" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_header_font_weight</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e150 d76645e80 ">The page header font weight.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e158" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_header_font_size</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e158 d83641e82 ">The page header font size.</td>
+<td id="d76645e156" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_header_font_size</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e156 d76645e80 ">The page header font size.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e165" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_header_alignment</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e165 d83641e82 ">The page header text alignment.</td>
+<td id="d76645e163" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_header_alignment</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e163 d76645e80 ">The page header text aligment.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e171" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_footer</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e171 d83641e82 ">Text to appear in the footer section of the document.</td>
+<td id="d76645e169" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_footer</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e169 d76645e80 ">Text to appear in the footer section of the document.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e177" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_footer_font_color</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e177 d83641e82 ">The page footer font color.</td>
+<td id="d76645e175" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_footer_font_color</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e175 d76645e80 ">The page footer font color.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e183" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_footer_font_family</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e183 d83641e82 ">The page footer font family.</td>
+<td id="d76645e181" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_footer_font_family</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e181 d76645e80 ">The page footer font family.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e189" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_footer_font_weight</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e189 d83641e82 ">The page footer font weight.</td>
+<td id="d76645e187" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_footer_font_weight</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e187 d76645e80 ">The page footer font weight.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e195" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_footer_font_size</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e195 d83641e82 ">The page footer font size.</td>
+<td id="d76645e193" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_footer_font_size</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e193 d76645e80 ">The page footer font size.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e201" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_page_footer_alignment</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e201 d83641e82 ">The page footer text aligment.</td>
+<td id="d76645e199" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_page_footer_alignment</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e199 d76645e80 ">The page footer text aligment.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e207" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_header_bg_color</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e207 d83641e82 ">The table header background color.</td>
+<td id="d76645e205" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_header_bg_color</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e205 d76645e80 ">The table header background color.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e213" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_header_font_color</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e213 d83641e82 ">The table header font color.</td>
+<td id="d76645e211" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_header_font_color</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e211 d76645e80 ">The table header font color.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e219" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_header_font_family</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e219 d83641e82 ">The table header font family.</td>
+<td id="d76645e217" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_header_font_family</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e217 d76645e80 ">The table header font family.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e225" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_header_font_weight</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e225 d83641e82 ">The table header font weight.</td>
+<td id="d76645e223" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_header_font_weight</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e223 d76645e80 ">The table header font weight.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e232" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_header_font_size</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e232 d83641e82 ">The table header font size.</td>
+<td id="d76645e230" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_header_font_size</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e230 d76645e80 ">The table header font size.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e238" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_body_bg_color</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e238 d83641e82 ">The table body background color.</td>
+<td id="d76645e236" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_body_bg_color</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e236 d76645e80 ">The table body background color.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e244" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_body_font_color</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e244 d83641e82 ">The table body font color.</td>
+<td id="d76645e242" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_body_font_color</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e242 d76645e80 ">The table body font color.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e250" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_body_font_family</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e250 d83641e82 ">The table body font family.</td>
+<td id="d76645e248" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_body_font_family</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e248 d76645e80 ">The table body font family.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e256" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_body_font_weight</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e256 d83641e82 ">The table body font weight.</td>
+<td id="d76645e254" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_body_font_weight</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e254 d76645e80 ">The table body font weight.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e262" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_body_font_size</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e262 d83641e82 ">The table body font size.</td>
+<td id="d76645e260" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_body_font_size</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e260 d76645e80 ">The table body font size.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e268" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_border_width</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e268 d83641e82 ">The width of the borders.</td>
+<td id="d76645e266" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_border_width</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e266 d76645e80 ">The width of the borders.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d83641e274" style="text-align: left;" data-valign="top" headers="d83641e80 "><code class="codeph">p_border_color</code></td>
-<td style="text-align: left;" data-valign="top" headers="d83641e274 d83641e82 ">The color of the borders.</td>
+<td id="d76645e272" style="text-align: left;" data-valign="top" headers="d76645e78 "><code class="codeph">p_border_color</code></td>
+<td style="text-align: left;" data-valign="top" headers="d76645e272 d76645e80 ">The color of the borders.</td>
 </tr>
 </tbody>
 </table>
@@ -967,4 +967,4 @@ EXCEPTION
 END;
 ```
 
-**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)
+**Parent topic:** [APEX_DATA_EXPORT](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_EXPORT.html#GUID-F195C61B-30DA-4462-93A3-465BCA6FCB78)

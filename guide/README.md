@@ -91,7 +91,7 @@ don't repeat them:
 | Step | Page | Guide | What it sets up |
 |------|------|-------|-----------------|
 | 0 | DB Setup | [`00-database-setup.md`](00-database-setup.md) | Schema, seed data, isolation views, APEX accounts |
-| 1 | Login (p9999) + Security | [`01-login.md`](01-login.md) | Auth scheme, 6 app items, post-auth process, 4 authorization schemes |
+| 1 | Login (p9999) + Security | [`01-login.md`](01-login.md) | Auth scheme, 6 app items, post-auth process, 5 authorization schemes |
 | 1b | Outlook / M365 Login | [`01b-outlook-sso.md`](01b-outlook-sso.md) | *Optional.* Microsoft Entra Social Sign-In alongside APEX Accounts — pure config, reuses the Step 1 post-auth proc (keys on email, fails closed). Needs Entra admin + a real M365 mailbox; **not** the demo login |
 | 2 | Home (p1) + App Shell | [`02-home.md`](02-home.md) | Combined banner + role switcher (nav bar → p20). Left nav menu deferred to Step 19 |
 

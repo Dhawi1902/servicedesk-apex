@@ -1,16 +1,16 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BARCODE.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BARCODE.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 14 APEX_BARCODE
 
 The `APEX_BARCODE` package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.
 
-- [GET_CODE128_PNG Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CODE128_PNG-Function.html#GUID-ABE51C99-16F1-4590-84A7-9A7D4B33C2FE)
-- [GET_CODE128_SVG Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CODE128_SVG-Function.html#GUID-68B3E5C3-20F6-4463-BCE4-6BA78EAA7DFC)
-- [GET_EAN8_PNG Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_EAN8_PNG-Function.html#GUID-0692F5E9-AE5D-406B-B073-E75A3CA7B493)
-- [GET_EAN8_SVG Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_EAN8_SVG-Function.html#GUID-D8E1D73B-6562-49FF-841C-D8EF3F4F5E4A)
-- [GET_QRCODE_PNG Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_QRCODE_PNG-Function.html#GUID-AB407002-93F7-4DA2-9004-F1E0E41B7313)
-- [GET_QRCODE_SVG Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_QRCODE_SVG-Function.html#GUID-6B4A6ED3-1A55-4960-9937-223D50CD5C27)
+- [GET_CODE128_PNG Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_CODE128_PNG-Function.html#GUID-ABE51C99-16F1-4590-84A7-9A7D4B33C2FE)
+- [GET_CODE128_SVG Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_CODE128_SVG-Function.html#GUID-68B3E5C3-20F6-4463-BCE4-6BA78EAA7DFC)
+- [GET_EAN8_PNG Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_EAN8_PNG-Function.html#GUID-0692F5E9-AE5D-406B-B073-E75A3CA7B493)
+- [GET_EAN8_SVG Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_EAN8_SVG-Function.html#GUID-D8E1D73B-6562-49FF-841C-D8EF3F4F5E4A)
+- [GET_QRCODE_PNG Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_QRCODE_PNG-Function.html#GUID-AB407002-93F7-4DA2-9004-F1E0E41B7313)
+- [GET_QRCODE_SVG Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_QRCODE_SVG-Function.html#GUID-6B4A6ED3-1A55-4960-9937-223D50CD5C27)
 
 ------------------------------------------------------------------------
 
@@ -59,7 +59,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
+**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
 
 ------------------------------------------------------------------------
 
@@ -109,7 +109,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
+**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
 
 ------------------------------------------------------------------------
 
@@ -162,7 +162,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
+**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
 
 ------------------------------------------------------------------------
 
@@ -214,7 +214,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
+**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
 
 ------------------------------------------------------------------------
 
@@ -244,26 +244,26 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d61141e72" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d61141e74" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
+<th id="d54492e70" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
+<th id="d54492e72" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d61141e78" style="text-align: left;" data-valign="top" width="42%" headers="d61141e72 "><code class="codeph">p_value</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61141e78 d61141e74 ">Value to be encoded into the QR Code.</td>
+<td id="d54492e76" style="text-align: left;" data-valign="top" width="42%" headers="d54492e70 "><code class="codeph">p_value</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54492e76 d54492e72 ">Value to be encoded into the QR Code.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d61141e84" style="text-align: left;" data-valign="top" width="42%" headers="d61141e72 "><code class="codeph">p_scale</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61141e84 d61141e74 ">Makes the orignial PNG <code class="codeph">p_scale</code> times larger (integer 1-10). Default <code class="codeph">1</code>. The original size is determined by the input length.</td>
+<td id="d54492e82" style="text-align: left;" data-valign="top" width="42%" headers="d54492e70 "><code class="codeph">p_scale</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54492e82 d54492e72 ">Makes the orignial PNG <code class="codeph">p_scale</code> times larger (integer 1-10). Default <code class="codeph">1</code>. The original size is determined by the input length.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d61141e96" style="text-align: left;" data-valign="top" width="42%" headers="d61141e72 "><code class="codeph">p_quiet</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61141e96 d61141e74 ">Blank area (positive integer value) around the QR Code used to help the scanners clearly distinguish the QR Code from its surroundings for good scannability. Defaults <code class="codeph">1</code>.</td>
+<td id="d54492e94" style="text-align: left;" data-valign="top" width="42%" headers="d54492e70 "><code class="codeph">p_quiet</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54492e94 d54492e72 ">Blank area (positive integer value) around the QR Code used to help the scanners clearly distinguish the QR Code from its surroundings for good scannability. Defaults <code class="codeph">1</code>.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d61141e105" style="text-align: left;" data-valign="top" width="42%" headers="d61141e72 "><code class="codeph">p_eclevel</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61141e105 d61141e74 "><p>The error-correction level. The level determines the percentage of the total QR code that can be dirty or damaged and still be valid.</p>
+<td id="d54492e103" style="text-align: left;" data-valign="top" width="42%" headers="d54492e70 "><code class="codeph">p_eclevel</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54492e103 d54492e72 "><p>The error-correction level. The level determines the percentage of the total QR code that can be dirty or damaged and still be valid.</p>
 <p>Default <code class="codeph">c_eclevel_type_high</code>.</p>
 <p>Possible values:</p>
 <ul>
@@ -274,12 +274,12 @@ Parameters
 </ul></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d61141e136" style="text-align: left;" data-valign="top" width="42%" headers="d61141e72 "><code class="codeph">p_foreground_color</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61141e136 d61141e74 ">Foreground color. Must be in hex format. Default <code class="codeph">#000000</code>.</td>
+<td id="d54492e134" style="text-align: left;" data-valign="top" width="42%" headers="d54492e70 "><code class="codeph">p_foreground_color</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54492e134 d54492e72 ">Foreground color. Must be in hex format. Default <code class="codeph">#000000</code>.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d61141e145" style="text-align: left;" data-valign="top" width="42%" headers="d61141e72 "><code class="codeph">p_background_color</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61141e145 d61141e74 ">Background color. Must be in hex format. Default null (transparent).</td>
+<td id="d54492e143" style="text-align: left;" data-valign="top" width="42%" headers="d54492e70 "><code class="codeph">p_background_color</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54492e143 d54492e72 ">Background color. Must be in hex format. Default null (transparent).</td>
 </tr>
 </tbody>
 </table>
@@ -306,7 +306,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
+**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
 
 ------------------------------------------------------------------------
 
@@ -336,34 +336,34 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d61522e72" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d61522e74" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
+<th id="d54873e70" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
+<th id="d54873e72" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d61522e78" style="text-align: left;" data-valign="top" width="42%" headers="d61522e72 "><code class="codeph">p_value</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61522e78 d61522e74 ">Value to be encoded into the QR code.</td>
+<td id="d54873e76" style="text-align: left;" data-valign="top" width="42%" headers="d54873e70 "><code class="codeph">p_value</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54873e76 d54873e72 ">Value to be encoded into the QR code.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d61522e84" style="text-align: left;" data-valign="top" width="42%" headers="d61522e72 "><code class="codeph">p_size</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61522e84 d61522e74 ">Size of the QR code (in pixels). Defaults to 256px.</td>
+<td id="d54873e82" style="text-align: left;" data-valign="top" width="42%" headers="d54873e70 "><code class="codeph">p_size</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54873e82 d54873e72 ">Size of the QR code (in pixels). Defaults to 256px.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d61522e90" style="text-align: left;" data-valign="top" width="42%" headers="d61522e72 "><code class="codeph">p_foreground_color</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61522e90 d61522e74 ">Foreground color. Must be in hex format. Default <code class="codeph">#000000</code>.</td>
+<td id="d54873e88" style="text-align: left;" data-valign="top" width="42%" headers="d54873e70 "><code class="codeph">p_foreground_color</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54873e88 d54873e72 ">Foreground color. Must be in hex format. Default <code class="codeph">#000000</code>.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d61522e99" style="text-align: left;" data-valign="top" width="42%" headers="d61522e72 "><code class="codeph">p_background_color</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61522e99 d61522e74 ">Background color. Must be in hex format. Default null (transparent).</td>
+<td id="d54873e97" style="text-align: left;" data-valign="top" width="42%" headers="d54873e70 "><code class="codeph">p_background_color</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54873e97 d54873e72 ">Background color. Must be in hex format. Default null (transparent).</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d61522e105" style="text-align: left;" data-valign="top" width="42%" headers="d61522e72 "><code class="codeph">p_quiet</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61522e105 d61522e74 ">Blank area (positive integer value) around the QR Code used to help the scanners clearly distinguish the QR code from its surroundings for good scannability. Defaults to <code class="codeph">1</code>.</td>
+<td id="d54873e103" style="text-align: left;" data-valign="top" width="42%" headers="d54873e70 "><code class="codeph">p_quiet</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54873e103 d54873e72 ">Blank area (positive integer value) around the QR Code used to help the scanners clearly distinguish the QR code from its surroundings for good scannability. Defaults to <code class="codeph">1</code>.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d61522e114" style="text-align: left;" data-valign="top" width="42%" headers="d61522e72 "><code class="codeph">p_eclevel</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d61522e114 d61522e74 "><p>The error-correction level. The level determines the percentage of the total QR code that can be dirty or damaged and still be valid.</p>
+<td id="d54873e112" style="text-align: left;" data-valign="top" width="42%" headers="d54873e70 "><code class="codeph">p_eclevel</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d54873e112 d54873e72 "><p>The error-correction level. The level determines the percentage of the total QR code that can be dirty or damaged and still be valid.</p>
 <p>Default <code class="codeph">c_eclevel_type_high</code>.</p>
 <p>Possible values:</p>
 <ul>
@@ -396,4 +396,4 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")
+**Parent topic:** [APEX_BARCODE](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_BARCODE.html#GUID-9909A709-4933-4076-8437-8E5CFBF9C367 "The APEX_BARCODE package contains the implementation to generate different types of barcodes. The supported output types are SVG value or PNG file BLOB.")

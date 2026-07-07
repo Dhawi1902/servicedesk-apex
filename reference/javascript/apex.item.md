@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html -->
 <!-- Namespaces: apex.item -->
 
 # Namespace: item
@@ -11,9 +11,9 @@
 - [create](#.create)
 - [isItem](#.isItem)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).item
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).item
 
-The apex.item namespace contains global functions related to Oracle APEX items. The [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html#.create) function defines the behavior for an item type. The [apex.item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.fn:item) function provides access to an [item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html) interface for a specific item.
+The apex.item namespace contains global functions related to Oracle APEX items. The [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html#.create) function defines the behavior for an item type. The [apex.item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.fn:item) function provides access to an [item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html) interface for a specific item.
 
 ### Functions
 
@@ -51,7 +51,7 @@ apex.item.addAttachHandler( attachMySuperInput );
 
 #### (static) create(pItemId, pItemImpl) → {object}
 
-This function is only for item plug-in developers. It provides a plug-in specific implementation for the item. This is necessary to seamlessly integrate a plug-in item type with the built-in item related client-side functionality of Oracle APEX. A plug-in should call this method even if it passes in an empty `pItemImpl` object. See also [apex.item.addAttachHandler](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html#.addAttachHandler).
+This function is only for item plug-in developers. It provides a plug-in specific implementation for the item. This is necessary to seamlessly integrate a plug-in item type with the built-in item related client-side functionality of Oracle APEX. A plug-in should call this method even if it passes in an empty `pItemImpl` object. See also [apex.item.addAttachHandler](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html#.addAttachHandler).
 
 ##### Parameters:
 
@@ -381,9 +381,9 @@ apex.item( itemName ).setToolbarMode( "EXPANDED" );
 
 #### (static) isItem(pItemId) → {boolean}
 
-This function returns true if and only if there is a DOM element with id equal to pItemId that has had an [item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html) interface created for it with [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html#.create).
+This function returns true if and only if there is a DOM element with id equal to pItemId that has had an [item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html) interface created for it with [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html#.create).
 
-For backward compatibility with items that don't call [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html#.create) a default implementation of [item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html) is used to treat any DOM element with an id as if it were an APEX item. There are some simple items with only default behavior that can be used as an item even though isItem returns false for it. This function allows you to distinguish items that explicitly create an [item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html) interface from arbitrary DOM elements.
+For backward compatibility with items that don't call [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html#.create) a default implementation of [item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html) is used to treat any DOM element with an id as if it were an APEX item. There are some simple items with only default behavior that can be used as an item even though isItem returns false for it. This function allows you to distinguish items that explicitly create an [item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html) interface from arbitrary DOM elements.
 
 ##### Parameters:
 

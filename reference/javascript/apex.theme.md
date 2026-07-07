@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.theme.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.theme.html -->
 <!-- Namespaces: apex.theme -->
 
 # Namespace: theme
@@ -12,7 +12,7 @@
 - [openRegion](#.openRegion)
 - [popupFieldHelp](#.popupFieldHelp)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).theme
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).theme
 
 The apex.theme namespace contains functions useful for theme developers or that work closely with theme related functionality. The functionality in this namespace may not be fully supported by all themes particularly legacy, custom, or third party themes.
 
@@ -26,7 +26,7 @@ Close a region that supports being opened such as an inline dialog, inline popup
 
 | Name | Type | Description |
 |----|----|----|
-| `pRegion` | string \| jQuery | The region to close. Either the region HTML DOM id string or a jQuery object. |
+| `pRegion` | string \| jQuery | The region to close. Either the region static id string or a jQuery object. |
 
 Since:
 - 18.2
@@ -40,7 +40,7 @@ jQuery
 
 ##### Example
 
-The following example closes an inline dialog region with HTML DOM id `myDialog`.
+The following example closes an inline dialog region with static id `myDialog`.
 
 ```
 apex.theme.closeRegion( "myDialog" );
@@ -86,7 +86,7 @@ Open a region that supports being opened such as an inline dialog, inline popup,
 
 | Name | Type | Description |
 |----|----|----|
-| `pRegion` | string \| jQuery | The region to open. Either the region HTML DOM id string or a jQuery object. |
+| `pRegion` | string \| jQuery | The region to open. Either the region static id string or a jQuery object. |
 
 Since:
 - 18.2
@@ -100,7 +100,7 @@ jQuery
 
 ##### Example
 
-The following example opens an inline dialog region with HTML DOM id `myDialog`.
+The following example opens an inline dialog region with static id `myDialog`.
 
 ```
 apex.theme.openRegion( "myDialog" );

@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/templateReportRegion.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/templateReportRegion.html -->
 <!-- Interfaces: templateReportRegion -->
 
 # Interface: templateReportRegion
@@ -31,7 +31,7 @@
 
 ## templateReportRegion
 
-The templateReportRegion interface is used to access the properties and methods of any Template Component Report region. You get access to the templateReportRegion interface with the [apex.region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.region.html) function when passed the regionId (HTML DOM id) of a Template Component Report region.
+The templateReportRegion interface is used to access the properties and methods of any Template Component Report region. You get access to the templateReportRegion interface with the [apex.region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.region.html) function when passed the regionId (static ID) of a Template Component Report region.
 
 Template Component Reports are server rendered regions and have only a few client side API methods. The contents of the report are called rows even if the template component UI may look different such as with cards where multiple cards/rows are on the same visual row.
 
@@ -40,7 +40,7 @@ Since:
 
 ### Extends
 
-- [region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html)
+- [region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html)
 
 ### Properties
 
@@ -53,7 +53,7 @@ The jQuery object for the region element.
 - jQuery
 
 Inherited From:
-- [region#element](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#element)
+- [region#element](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#element)
 
 ##### Example
 
@@ -65,14 +65,14 @@ var value = apex.region( "myRegionId" ).element;
 
 #### filterRegionId :string
 
-For region plug-ins which support Faceted Search / Smart Filters it is possible to pass in the DOM ID of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html) region in order for APEX to bind the two together. If provided, the region will be automatically refreshed as the filters change. Further, if the region's refresh callback returns a Promise, APEX will also automatically perform the appropriate locking and unlocking of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html) region during refresh.
+For region plug-ins which support Faceted Search / Smart Filters it is possible to pass in the DOM ID of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html) region in order for APEX to bind the two together. If provided, the region will be automatically refreshed as the filters change. Further, if the region's refresh callback returns a Promise, APEX will also automatically perform the appropriate locking and unlocking of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html) region during refresh.
 
 ##### Type:
 
 - string
 
 Inherited From:
-- [region#filterRegionId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#filterRegionId)
+- [region#filterRegionId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#filterRegionId)
 
 #### type :string
 
@@ -83,7 +83,7 @@ The templateReportRegion type is "TemplateComponent".
 - string
 
 Overrides:
-- [region#type](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#type)
+- [region#type](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#type)
 
 ### Methods
 
@@ -103,7 +103,7 @@ boolean
 This example goes to the first page.
 
 ```
-apex.region( "regionDomId" ).firstPage();
+apex.region( "regionStaticId" ).firstPage();
 ```
 
 #### focus()
@@ -111,14 +111,14 @@ apex.region( "regionDomId" ).firstPage();
 Set focus to the templateReport if possible. If the view supports selection or focus then the last focused (current) row will be focused. Otherwise, the first focusable element within the report, if any, will be focused.
 
 Overrides:
-- [region#focus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#focus)
+- [region#focus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#focus)
 
 ##### Example
 
 This example puts focus in the report.
 
 ```
-apex.region( "regionDomId" ).focus();
+apex.region( "regionStaticId" ).focus();
 ```
 
 #### getCurrentRow() → {jQuery}
@@ -139,7 +139,7 @@ jQuery
 This example get the current row in the report.
 
 ```
-var current$ = apex.region( "regionDomId" ).getCurrentRow();
+var current$ = apex.region( "regionStaticId" ).getCurrentRow();
 console.log( "make use of current row", current$ );
 ```
 
@@ -175,9 +175,9 @@ Return the currently selected rows as a jQuery collection.
 
 This is only applicable if the report supports selection.
 
-Because this returns a jQuery collection it can only return selected rows that are currently in the DOM. When using virtual scroll pagination with show total count on, it is better to use [templateReportRegion#getSelectedValues](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/templateReportRegion.html#getSelectedValues)
+Because this returns a jQuery collection it can only return selected rows that are currently in the DOM. When using virtual scroll pagination with show total count on, it is better to use [templateReportRegion#getSelectedValues](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/templateReportRegion.html#getSelectedValues)
 
-See also [templateReportRegion#setSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/templateReportRegion.html#setSelection).
+See also [templateReportRegion#setSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/templateReportRegion.html#setSelection).
 
 ##### Returns:
 
@@ -191,7 +191,7 @@ jQuery
 This example get the current selection.
 
 ```
-var selection$ = apex.region( "regionDomId" ).getSelection();
+var selection$ = apex.region( "regionStaticId" ).getSelection();
 console.log( "make use of selected rows", selection$ );
 ```
 
@@ -211,7 +211,7 @@ boolean
 This example goes to the last page.
 
 ```
-apex.region( "regionDomId" ).lastPage();
+apex.region( "regionStaticId" ).lastPage();
 ```
 
 #### nextPage() → {boolean}
@@ -230,7 +230,7 @@ boolean
 This example goes to the next page.
 
 ```
-apex.region( "regionDomId" ).nextPage();
+apex.region( "regionStaticId" ).nextPage();
 ```
 
 #### previousPage() → {boolean}
@@ -249,7 +249,7 @@ boolean
 This example goes to the previous page.
 
 ```
-apex.region( "regionDomId" ).previousPage();
+apex.region( "regionStaticId" ).previousPage();
 ```
 
 #### refresh() → {Promise}
@@ -257,7 +257,7 @@ apex.region( "regionDomId" ).previousPage();
 Refreshes the report with new data from the server.
 
 Overrides:
-- [region#refresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#refresh)
+- [region#refresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#refresh)
 
 ##### Returns:
 
@@ -268,7 +268,7 @@ Promise
 
 #### selectAll(pFocusopt, nullable, pNoNotifyopt)
 
-Select all the rows in the report that can be selected. Triggers the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
+Select all the rows in the report that can be selected. Triggers the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
 
 This is only applicable if the report supports multiple selection and if the report has a select all control.
 
@@ -296,7 +296,7 @@ This is only applicable if the report supports multiple selection and if the rep
 <td class="attributes">&lt;optional&gt;<br />
 &lt;nullable&gt;<br />
 </td>
-<td class="description last">If true the first selected row is given focus. If false the first selected row is made focusable. If null or not given the current row and focus is not changed.</td>
+<td class="description last">If true the first selected row is given focus.</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>pNoNotify</code></th>
@@ -313,7 +313,7 @@ This is only applicable if the report supports multiple selection and if the rep
 This example selects all the rows in the report.
 
 ```
-apex.region( "regionDomId" ).selectAll();
+apex.region( "regionStaticId" ).selectAll();
 ```
 
 #### setCurrentRow(pRow\$, pFocusopt)
@@ -322,7 +322,7 @@ Sets the last focused row to the given pRow\$. If pRow\$ is not a row or not in 
 
 This is only applicable if the report supports selection or focus navigation.
 
-The [apex.event:apexcurrentrowchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexcurrentrowchange) event is triggered any time the current row changes.
+The [apex.event:apexcurrentrowchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexcurrentrowchange) event is triggered any time the current row changes.
 
 ##### Parameters:
 
@@ -363,8 +363,8 @@ The [apex.event:apexcurrentrowchange](https://docs.oracle.com/en/database/oracle
 This example finds a particular row using jQuery and then makes it the current row and sets focus to it. In this example report rows have class "my-item".
 
 ```
-var current$ = $( "#regionDomId .my-item" ).first();
-apex.region( "regionDomId" ).setCurrentRow( current$, true );
+var current$ = $( "#regionStaticId .my-item" ).first();
+apex.region( "regionStaticId" ).setCurrentRow( current$, true );
 ```
 
 #### setCurrentRowValue(pRowValue, pFocusopt)
@@ -373,7 +373,7 @@ Sets the last focused row to the one with the given pRowValue. If no row has the
 
 This is only applicable if the report supports selection or focus navigation.
 
-The [apex.event:apexcurrentrowchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexcurrentrowchange) event is triggered any time the current row changes.
+The [apex.event:apexcurrentrowchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexcurrentrowchange) event is triggered any time the current row changes.
 
 ##### Parameters:
 
@@ -411,7 +411,7 @@ The [apex.event:apexcurrentrowchange](https://docs.oracle.com/en/database/oracle
 
 #### setSelectedValues(pValues, pFocusopt, pNoNotifyopt) → {number}
 
-Selects the report rows that correspond to the given values. The value of a row is the primary key in the `data-id` attribute. This attribute is typically added with the \#APEX\$ROW_IDENTIFICATION# placeholder. Triggers the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
+Selects the report rows that correspond to the given values. The value of a row is the primary key in the `data-id` attribute. This attribute is typically added with the \#APEX\$ROW_IDENTIFICATION# placeholder. Triggers the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
 
 This is only applicable if the report supports selection.
 
@@ -458,18 +458,18 @@ This is only applicable if the report supports selection.
 
 ##### Returns:
 
-Count of the rows actually selected or -1 if called before the report is initialized or selection is not supported.
+Count of the rows actually selected or -1 if called before the report is initialized or there is no data or selection is not supported.
 
 Type
 number
 
 #### setSelection(pElements\$, pFocusopt, pNoNotifyopt)
 
-Set the selected rows. Triggers the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
+Set the selected rows. Triggers the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
 
 This is only applicable if the report supports selection.
 
-See also [templateReportRegion#getSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/templateReportRegion.html#getSelection).
+See also [templateReportRegion#getSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/templateReportRegion.html#getSelection).
 
 ##### Parameters:
 
@@ -517,6 +517,6 @@ See also [templateReportRegion#getSelection](https://docs.oracle.com/en/database
 This example finds a particular row using jQuery and then selects it and sets focus to it. In this example report rows have class "my-item".
 
 ```
-var toSelect$ = $( "#regionDomId .my-item" ).first();
-apex.region( "regionDomId" ).setSelection( toSelect$, true );
+var toSelect$ = $( "#regionStaticId .my-item" ).first();
+apex.region( "regionStaticId" ).setSelection( toSelect$, true );
 ```

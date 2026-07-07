@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html -->
 <!-- Interfaces: cardsRegion -->
 
 # Interface: cardsRegion
@@ -44,16 +44,16 @@
 
 ## cardsRegion
 
-The cardsRegion interface is used to access the properties and methods of Cards regions. You get access to the cardsRegion interface with the [apex.region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.region.html) function when passed the regionId (HTML DOM id) of a Cards region.
+The cardsRegion interface is used to access the properties and methods of Cards regions. You get access to the cardsRegion interface with the [apex.region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.region.html) function when passed the regionId (static ID) of a Cards region.
 
-Cards is a client rendered region using [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) for the data layer and [tableModelView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html) widget for the view layer. This interface is a convenient wrapper for most of the methods of [tableModelView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html). The cards in the report are called items (not to be confused with APEX Page Items or Column Items). See [tableModelView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html) for information about report markup requirements.
+Cards is a client rendered region using [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) for the data layer and [tableModelView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html) widget for the view layer. This interface is a convenient wrapper for most of the methods of [tableModelView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html). The cards in the report are called items (not to be confused with APEX Page Items or Column Items). See [tableModelView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html) for information about report markup requirements.
 
 Since:
 - 24.1
 
 ### Extends
 
-- [region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html)
+- [region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html)
 
 ### Properties
 
@@ -66,7 +66,7 @@ The jQuery object for the region element.
 - jQuery
 
 Inherited From:
-- [region#element](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#element)
+- [region#element](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#element)
 
 ##### Example
 
@@ -78,14 +78,14 @@ var value = apex.region( "myRegionId" ).element;
 
 #### filterRegionId :string
 
-For region plug-ins which support Faceted Search / Smart Filters it is possible to pass in the DOM ID of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html) region in order for APEX to bind the two together. If provided, the region will be automatically refreshed as the filters change. Further, if the region's refresh callback returns a Promise, APEX will also automatically perform the appropriate locking and unlocking of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html) region during refresh.
+For region plug-ins which support Faceted Search / Smart Filters it is possible to pass in the DOM ID of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html) region in order for APEX to bind the two together. If provided, the region will be automatically refreshed as the filters change. Further, if the region's refresh callback returns a Promise, APEX will also automatically perform the appropriate locking and unlocking of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html) region during refresh.
 
 ##### Type:
 
 - string
 
 Inherited From:
-- [region#filterRegionId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#filterRegionId)
+- [region#filterRegionId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#filterRegionId)
 
 #### type :string
 
@@ -96,18 +96,18 @@ The cardsRegion type is "Cards".
 - string
 
 Overrides:
-- [region#type](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#type)
+- [region#type](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#type)
 
 #### widgetName :string
 
-For regions that are implemented with a jQuery UI style widget, this is the name of the widget. For other widget implementations it is null. It is used internally by the [region#call](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#call), [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#on) and [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#off) methods.
+For regions that are implemented with a jQuery UI style widget, this is the name of the widget. For other widget implementations it is null. It is used internally by the [region#call](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#call), [region#on](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#on) and [region#off](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#off) methods.
 
 ##### Type:
 
 - string
 
 Inherited From:
-- [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widgetName)
+- [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widgetName)
 
 ##### Example
 
@@ -158,7 +158,7 @@ Calls a method on the widget associated with the region. This method only applie
 </table>
 
 Inherited From:
-- [region#call](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#call)
+- [region#call](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#call)
 
 ##### Returns:
 
@@ -169,7 +169,7 @@ Type
 
 ##### Example
 
-The call method is a shorthand for calling methods on a widget. The following example shows an Interactive Grid region with HTML DOM id `emp` and two equivalent ways of invoking the `getSelectedRecords` method.
+The call method is a shorthand for calling methods on a widget. The following example shows an Interactive Grid region with Static ID `emp` and two equivalent ways of invoking the `getSelectedRecords` method.
 
 ```
 var records1 = apex.region( "emp" ).call( "getSelectedRecords" );
@@ -193,7 +193,7 @@ boolean
 This example goes to the first page.
 
 ```
-apex.region( "regionDomId" ).firstPage();
+apex.region( "regionStaticId" ).firstPage();
 ```
 
 #### focus()
@@ -201,21 +201,21 @@ apex.region( "regionDomId" ).firstPage();
 Set focus to the cards region if possible. If the view supports selection or focus then the last focused (current) item will be focused. Otherwise, the first focusable element within the report, if any, will be focused.
 
 Overrides:
-- [region#focus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#focus)
+- [region#focus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#focus)
 
 ##### Example
 
 This example puts focus in the report.
 
 ```
-apex.region( "regionDomId" ).focus();
+apex.region( "regionStaticId" ).focus();
 ```
 
 #### getCurrentItem() → {jQuery}
 
 Returns the current item as a jQuery object. The current item is the item that has or last had focus.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [cardsRegion#setCurrentItem](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#setCurrentItem).
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [cardsRegion#setCurrentItem](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#setCurrentItem).
 
 ##### Returns:
 
@@ -229,15 +229,15 @@ jQuery
 This example get the current item in the report.
 
 ```
-var currentItem$ = apex.region( "regionDomId" ).getCurrentItem();
+var currentItem$ = apex.region( "regionStaticId" ).getCurrentItem();
 console.log( "make use of current item", currentItem$ );
 ```
 
 #### getCurrentItemValue() → {string}
 
-Returns the value of the current item. The current item is the item that has or last had focus. The value of an item is its unique identifier as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId).
+Returns the value of the current item. The current item is the item that has or last had focus. The value of an item is its unique identifier as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId).
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "focus" or "select". See also [cardsRegion#setCurrentItemValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#setCurrentItemValue).
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "focus" or "select". See also [cardsRegion#setCurrentItemValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#setCurrentItemValue).
 
 ##### Returns:
 
@@ -246,36 +246,36 @@ The current item value or null if not supported.
 Type
 string
 
-#### getModel() → {[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)}
+#### getModel() → {[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)}
 
-Return the model currently being used by this view. The model can change over time so the returned model should not be saved and used later. If you need to store a reference to the model use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.get) and release it with [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.release).
+Return the model currently being used by this view. The model can change over time so the returned model should not be saved and used later. If you need to store a reference to the model use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.get) and release it with [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.release).
 
 ##### Returns:
 
-The current [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html).
+The current [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html).
 
 Type
-[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)
+[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)
 
-#### getPageInfo() → (nullable) {[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#.pageInfo)}
+#### getPageInfo() → (nullable) {[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#.pageInfo)}
 
 Return information about the current pagination state of the view. Returns null if there is no data in the report.
 
 ##### Returns:
 
 Type
-[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#.pageInfo)
+[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#.pageInfo)
 
 ##### Example
 
 This example logs to the console the current page and total number of pages The Cards region pagination type must be Page and Show Total Count must be on.
 
 ```
-var info = apex.region( "regionDomId" ).getPageInfo();
+var info = apex.region( "regionStaticId" ).getPageInfo();
 console.log("current and total pages", info.currentPage, info.totalPages );
 ```
 
-#### getRecords(pElements\$) → {Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\>}
+#### getRecords(pElements\$) → {Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\>}
 
 Given a jQuery object with one or more item elements return the corresponding model records. For this to work the elements must have a `data-id` attribute with the value of the record id.
 
@@ -283,37 +283,37 @@ Given a jQuery object with one or more item elements return the corresponding mo
 
 | Name | Type | Description |
 |----|----|----|
-| `pElements$` | jQuery | A jQuery object of item elements such as returned by [cardsRegion#getSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#getSelection). |
+| `pElements$` | jQuery | A jQuery object of item elements such as returned by [cardsRegion#getSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#getSelection). |
 
 ##### Returns:
 
 Array of records from the model corresponding to the item elements.
 
 Type
-Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\>
+Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\>
 
-#### getSelectedRecords() → (nullable) {Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\>}
+#### getSelectedRecords() → (nullable) {Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\>}
 
 Return the underlying data model records corresponding to the current selection.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select".
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select".
 
-When using virtual scroll pagination and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#persistSelection) is true it is possible for the user to select a range of records or all records when the model does not yet contain all the selected records. In this case the selection is incomplete and only the records currently in the model will be returned. See option [tableModelView#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#loadIncompleteSelection) for how an incomplete selection is handled.
+When using virtual scroll pagination and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#persistSelection) is true it is possible for the user to select a range of records or all records when the model does not yet contain all the selected records. In this case the selection is incomplete and only the records currently in the model will be returned. See option [tableModelView#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#loadIncompleteSelection) for how an incomplete selection is handled.
 
-See also [cardsRegion#setSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#setSelectedRecords).
+See also [cardsRegion#setSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#setSelectedRecords).
 
 ##### Returns:
 
 Array of records from the model corresponding to the selected items. Returns null if selection is not supported.
 
 Type
-Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\>
+Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\>
 
 #### getSelectedValues() → (nullable) {Array.\<string\>}
 
-Returns the value for each record returned by [cardsRegion#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#getSelectedRecords). The value of a record is its unique identifier as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId).
+Returns the value for each record returned by [cardsRegion#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#getSelectedRecords). The value of a record is its unique identifier as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId).
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select".
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select".
 
 ##### Returns:
 
@@ -326,11 +326,11 @@ Array.\<string\>
 
 Return the currently selected items as a jQuery collection.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select".
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select".
 
-Because this returns a jQuery collection it can only return selected items that are currently in the DOM. When using virtual scroll pagination and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#persistSelection) is true it is better to use [cardsRegion#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#getSelectedRecords)
+Because this returns a jQuery collection it can only return selected items that are currently in the DOM. When using virtual scroll pagination and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#persistSelection) is true it is better to use [cardsRegion#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#getSelectedRecords)
 
-See also [cardsRegion#setSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#setSelection).
+See also [cardsRegion#setSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#setSelection).
 
 ##### Returns:
 
@@ -361,7 +361,7 @@ boolean
 This example goes to 4th page. Note that the page numbers are zero based. If there are not that many pages then nothing happens.
 
 ```
-apex.region( "regionDomId" ).gotoPage( 3 );
+apex.region( "regionStaticId" ).gotoPage( 3 );
 ```
 
 #### lastPage() → {boolean}
@@ -380,7 +380,7 @@ boolean
 This example goes to the last page.
 
 ```
-apex.region( "regionDomId" ).lastPage();
+apex.region( "regionStaticId" ).lastPage();
 ```
 
 #### loadMore() → {boolean}
@@ -410,16 +410,16 @@ boolean
 This example goes to the next page.
 
 ```
-apex.region( "regionDomId" ).nextPage();
+apex.region( "regionStaticId" ).nextPage();
 ```
 
 #### off(events, …args)
 
-Removes an event handler from the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widget) method returns a value.
+Removes an event handler from the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widget) method returns a value.
 
 This is a shortcut for calling `apex.region(id).widget().off(...)`. Unlike the jQuery object `off` method this does not return the jQuery object and therefore is not chainable. See the jQuery documentation for details.
 
-See also [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#on).
+See also [region#on](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#on).
 
 ##### Parameters:
 
@@ -456,11 +456,11 @@ See also [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/
 </table>
 
 Inherited From:
-- [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#off)
+- [region#off](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#off)
 
 ##### Example
 
-This example removes all event handlers for the selectionChange event of an Interactive Grid region. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#event:selectionchange).
+This example removes all event handlers for the selectionChange event of an Interactive Grid region. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#event:selectionchange).
 
 ```
 apex.region( interactiveGridRegionId ).off( "selectionChange" );
@@ -468,11 +468,11 @@ apex.region( interactiveGridRegionId ).off( "selectionChange" );
 
 #### on(events, …args)
 
-Attaches an event handler to the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widget) method returns a value.
+Attaches an event handler to the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widget) method returns a value.
 
 This is a shortcut for calling `apex.region(id).widget().on(...)`. Unlike the jQuery object `on` method this does not return the jQuery object and therefore is not chainable. See the jQuery documentation for details.
 
-See also [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#off).
+See also [region#off](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#off).
 
 ##### Parameters:
 
@@ -509,11 +509,11 @@ See also [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs
 </table>
 
 Inherited From:
-- [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#on)
+- [region#on](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#on)
 
 ##### Example
 
-This example handles the selectionChange event of an Interactive Grid region by logging a message to the console. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#event:selectionchange)
+This example handles the selectionChange event of an Interactive Grid region by logging a message to the console. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#event:selectionchange)
 
 ```
 apex.region( interactiveGridRegionId ).on( "selectionChange", function(event, data) {
@@ -537,7 +537,7 @@ boolean
 This example goes to the previous page.
 
 ```
-apex.region( "regionDomId" ).previousPage();
+apex.region( "regionStaticId" ).previousPage();
 ```
 
 #### refresh() → {Promise}
@@ -545,7 +545,7 @@ apex.region( "regionDomId" ).previousPage();
 Refreshes the report with new data from the server.
 
 Overrides:
-- [region#refresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#refresh)
+- [region#refresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#refresh)
 
 ##### Returns:
 
@@ -560,11 +560,11 @@ Refreshes the view (re-renders the DOM) without fetching new data from the serve
 
 #### selectAll(pFocusopt, nullable, pNoNotifyopt)
 
-Select all the items in the report that can be selected. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#event:selectionchange) event and the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
+Select all the items in the report that can be selected. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#event:selectionchange) event and the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" and [tableModelView#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#multiple) and [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectAll1) options are both true.
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" and [tableModelView#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#multiple) and [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectAll1) options are both true.
 
-This only applies to the current page or what has been rendered so far unless the selection state is persisted in the model. See [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectAll1) for details about how pagination settings and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#persistSelection) affect the meaning of "all items".
+This only applies to the current page or what has been rendered so far unless the selection state is persisted in the model. See [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectAll1) for details about how pagination settings and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#persistSelection) affect the meaning of "all items".
 
 ##### Parameters:
 
@@ -590,7 +590,7 @@ This only applies to the current page or what has been rendered so far unless th
 <td class="attributes">&lt;optional&gt;<br />
 &lt;nullable&gt;<br />
 </td>
-<td class="description last">If true the first selected item is given focus. If false the first selected item is made focusable. If null or not given the current item and focus is not changed.</td>
+<td class="description last">If true the first selected item is given focus.</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>pNoNotify</code></th>
@@ -607,16 +607,16 @@ This only applies to the current page or what has been rendered so far unless th
 This example selects all the items in the report.
 
 ```
-apex.region( "regionDomId" ).selectAll();
+apex.region( "regionStaticId" ).selectAll();
 ```
 
 #### setCurrentItem(pItem\$, pFocusopt)
 
 Sets the last focused item to the given pItem\$. If pItem\$ is not an item or not in the report container the current item is not changed.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [cardsRegion#getCurrentItem](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#getCurrentItem).
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [cardsRegion#getCurrentItem](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#getCurrentItem).
 
-The [tableModelView#event:currentitemchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#event:currentitemchange) event and the [apex.event:apexcurrentrowchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexcurrentrowchange) event are triggered any time the current item changes.
+The [tableModelView#event:currentitemchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#event:currentitemchange) event and the [apex.event:apexcurrentrowchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexcurrentrowchange) event are triggered any time the current item changes.
 
 ##### Parameters:
 
@@ -657,17 +657,17 @@ The [tableModelView#event:currentitemchange](https://docs.oracle.com/en/database
 This example finds a particular item using jQuery and then makes it the current item and sets focus to it. In this example report items have class "my-item".
 
 ```
-var currentItem$ = $( "#regionDomId .my-item" ).first();
-apex.region( "regionDomId" ).setCurrentItem( currentItem$, true );
+var currentItem$ = $( "#regionStaticId .my-item" ).first();
+apex.region( "regionStaticId" ).setCurrentItem( currentItem$, true );
 ```
 
 #### setCurrentItemValue(pItemValue, pFocusopt)
 
 Sets the last focused item to the one with the given pItemValue. If no item has the given value the current item is not changed. The item must be rendered in order to be made the current item.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [cardsRegion#getCurrentItemValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#getCurrentItemValue).
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [cardsRegion#getCurrentItemValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#getCurrentItemValue).
 
-The [tableModelView#event:currentitemchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#event:currentitemchange) event and the [apex.event:apexcurrentrowchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexcurrentrowchange) event are triggered any time the current item changes.
+The [tableModelView#event:currentitemchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#event:currentitemchange) event and the [apex.event:apexcurrentrowchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexcurrentrowchange) event are triggered any time the current item changes.
 
 ##### Parameters:
 
@@ -705,11 +705,11 @@ The [tableModelView#event:currentitemchange](https://docs.oracle.com/en/database
 
 #### setSelectedRecords(pRecords, pFocusopt, pNoNotifyopt) → {number}
 
-Selects the report items that correspond to the given data model records. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#event:selectionchange) event and the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
+Selects the report items that correspond to the given data model records. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#event:selectionchange) event and the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select".
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select".
 
-See also [cardsRegion#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#getSelectedRecords).
+See also [cardsRegion#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#getSelectedRecords).
 
 ##### Parameters:
 
@@ -761,9 +761,9 @@ number
 
 #### setSelectedValues(pValues, pFocusopt, pNoNotifyopt) → {number}
 
-Selects the report items that correspond to the given values. The value of an item is the unique identifier of the corresponding model record as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId) and also the value of the item's `data-id` attribute. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#event:selectionchange) event and the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
+Selects the report items that correspond to the given values. The value of an item is the unique identifier of the corresponding model record as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId) and also the value of the item's `data-id` attribute. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#event:selectionchange) event and the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select".
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select".
 
 ##### Parameters:
 
@@ -808,18 +808,18 @@ This is only applicable if the [tableModelView#itemNavigationMode](https://docs.
 
 ##### Returns:
 
-Count of the items actually selected or -1 if called before the report is initialized or selection is not supported.
+Count of the items actually selected or -1 if called before the report is initialized or there is no data or selection is not supported.
 
 Type
 number
 
 #### setSelection(pElements\$, pFocusopt, pNoNotifyopt)
 
-Set the selected items. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#event:selectionchange) event and the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
+Set the selected items. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#event:selectionchange) event and the [apex.event:apexselectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexselectionchange) event if the selection changes unless `pNoNotify` is true.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select".
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select".
 
-See also [cardsRegion#getSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/cardsRegion.html#getSelection).
+See also [cardsRegion#getSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/cardsRegion.html#getSelection).
 
 ##### Parameters:
 
@@ -867,16 +867,16 @@ See also [cardsRegion#getSelection](https://docs.oracle.com/en/database/oracle/a
 This example finds a particular item using jQuery and then selects it and sets focus to it. In this example report items have class "my-item".
 
 ```
-var item$ = $( "#regionDomId .my-item" ).first();
-apex.region( "regionDomId" ).setSelection( item$, true );
+var item$ = $( "#regionStaticId .my-item" ).first();
+apex.region( "regionStaticId" ).setSelection( item$, true );
 ```
 
 #### widget() → {jQuery\|null}
 
-Returns the widget associated with the region or null if the region isn't implemented with a widget. Some advanced region types such as Calendar, Interactive Grid, or Tree are implemented using a widget. This function provides access to the widget typically by returning a jQuery object for the widget element. You can then call widget methods on the jQuery object. See also the [region#call](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#call) method.
+Returns the widget associated with the region or null if the region isn't implemented with a widget. Some advanced region types such as Calendar, Interactive Grid, or Tree are implemented using a widget. This function provides access to the widget typically by returning a jQuery object for the widget element. You can then call widget methods on the jQuery object. See also the [region#call](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#call) method.
 
 Inherited From:
-- [region#widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widget)
+- [region#widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widget)
 
 ##### Returns:
 
@@ -887,7 +887,7 @@ jQuery \| null
 
 ##### Example
 
-The following adds a row to an Interactive Grid by using the region widget method to access the interactiveGrid widget [interactiveGrid#getActions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#getActions) method and then invoking the `selection-add-row` action.
+The following adds a row to an Interactive Grid by using the region widget method to access the interactiveGrid widget [interactiveGrid#getActions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#getActions) method and then invoking the `selection-add-row` action.
 
 ```
 apex.region( "myGridRegion" ).widget().interactiveGrid( "getActions" ).invoke( "selection-add-row" );

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Concurrent crawler for the Oracle APEX 26.1 PL/SQL API Reference.
+"""Concurrent crawler for the Oracle APEX 24.2 PL/SQL API Reference.
 
 Discovers every page by BFS over same-directory .html links (child links +
 rel=next/prev), downloading with a thread pool. Reuses any HTML already on
@@ -15,7 +15,7 @@ import time
 import urllib.request
 import urllib.error
 
-BASE = "https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/"
+BASE = "https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/"
 START = "index.html"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, "_backup", "raw_html")

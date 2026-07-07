@@ -1,47 +1,47 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 15  APEX_COLLECTION
 
 Collections enable you to temporarily capture one or more nonscalar values. You can use collections to store rows and columns currently in session state so they can be accessed, manipulated, or processed during a user's specific session. You can think of a collection as a bucket in which you temporarily store and name rows of information.
 
-- [About the APEX_COLLECTION API](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/About-the-APEX_COLLECTION-API.html#GUID-56991245-9102-4301-AC86-7A43701649AD)
-- [ADD_MEMBER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_MEMBER-Procedure.html#GUID-C4A6C36B-F241-423A-9E3F-F7D89CB1E616)
-- [ADD_MEMBER Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_MEMBER-Function.html#GUID-60E9B7BF-EFD1-405E-9A9D-9CDFF967F789)
-- [ADD_MEMBERS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_MEMBERS-Procedure.html#GUID-8579068A-4BB5-4611-9598-30AF06787D32)
-- [COLLECTION_EXISTS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COLLECTION_EXISTS-Function.html#GUID-92AE3589-C89F-4CE4-8166-79A2B8E1C938)
-- [COLLECTION_HAS_CHANGED Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COLLECTION_HAS_CHANGED-Function.html#GUID-1DC33627-7413-4D71-88DF-60731B6CE8A4)
-- [COLLECTION_MEMBER_COUNT Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COLLECTION_MEMBER_COUNT-Function.html#GUID-30C0AF1E-C8FB-4D10-BF82-C964E8246D6F)
-- [CREATE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION-Procedure.html#GUID-99D165B6-26C8-4142-9013-9948AFD67FF2)
-- [CREATE_COLLECTION_FROM_QUERY Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERY-Procedure.html#GUID-E2940996-DCB5-4056-B1C4-94C93BD6FB44)
-- [CREATE_COLLECTION_FROM_QUERY2 Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERY2-Procedure.html#GUID-7800CD9E-FD29-4E49-B637-A426D78A644C)
-- [CREATE_COLLECTION_FROM_QUERY_B Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERY_B-Procedure.html#GUID-1C319954-50DF-4C28-8B57-2AA52066B900)
-- [CREATE_COLLECTION_FROM_QUERY_B Procedure (No bind version)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERY_B-Procedure-NBV.html#GUID-4F715772-4228-493E-8F3D-F58716078BC5)
-- [CREATE_COLLECTION_FROM_QUERYB2 Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERYB2-Procedure.html#GUID-A429035B-82A7-452F-94DE-AAD32B7C0821)
-- [CREATE_COLLECTION_FROM_QUERYB2 Procedure (No bind version)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_COLLECTION_FROM_QUERYB2-Procedure-NBV.html#GUID-A5F61B56-DFEA-48B1-BBE3-B4DF37551D8C)
-- [CREATE_OR_TRUNCATE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_OR_TRUNCATE_COLLECTION-Procedure.html#GUID-94CD827F-9C10-4362-B2A1-30145D451098)
-- [DELETE_ALL_COLLECTIONS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_ALL_COLLECTIONS-Procedure.html#GUID-5B981CC9-ABE7-4EDB-8EAC-14724BAE8F7D)
-- [DELETE_ALL_COLLECTIONS_SESSION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_ALL_COLLECTIONS_SESSION-Procedure.html#GUID-E139DBBC-9026-485B-84E0-CC95601CCCA3)
-- [DELETE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_COLLECTION-Procedure.html#GUID-53D9F8B7-79C6-4301-9D68-6B426216F470)
-- [DELETE_MEMBER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_MEMBER-Procedure.html#GUID-16D57A70-AAF9-43B8-A176-9AD7708193C4)
-- [DELETE_MEMBERS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELETE_MEMBERS-Procedure.html#GUID-527C6A66-3658-4DF6-8439-21DA4A6796FB)
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
-- [MERGE_MEMBERS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MERGE_MEMBERS-Procedure.html#GUID-B73EC254-C04A-496D-8389-E5BCC30E89A5)
-- [MOVE_MEMBER_DOWN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MOVE_MEMBER_DOWN-Procedure.html#GUID-B421E0EA-027F-45AF-8578-33BBC9710CCD)
-- [MOVE_MEMBER_UP Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MOVE_MEMBER_UP-Procedure.html#GUID-4B5A4C05-EB36-44F4-BDBC-09CE3A6E3278)
-- [RESEQUENCE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESEQUENCE_COLLECTION-Procedure.html#GUID-31A7CABB-A10C-4C4F-B7F4-B36006271662)
-- [RESET_COLLECTION_CHANGED Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_COLLECTION_CHANGED-Procedure.html#GUID-B63E77BD-479A-4B79-84AA-05CC6BA2F698)
-- [RESET_COLLECTION_CHANGED_ALL Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_COLLECTION_CHANGED_ALL-Procedure.html#GUID-9660DD2F-FC08-489D-8205-AF9F22B16549)
-- [SORT_MEMBERS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SORT_MEMBERS-Procedure.html#GUID-523A647A-58E6-419A-A817-C982D2402F25)
-- [TRUNCATE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TRUNCATE_COLLECTION-Procedure.html#GUID-F7066966-21B9-4AB1-817B-3C942E2FA24F)
-- [UPDATE_MEMBER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER-Procedure.html#GUID-FF926A72-D196-4D6F-BD41-EEA24E54D580)
-- [UPDATE_MEMBERS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBERS-Procedure.html#GUID-DD03C9D6-884F-425C-91DC-72C407ABCA6C)
-- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-1.html#GUID-DF709BF7-4B32-4713-88FA-E03F89609FEA)
-- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-2.html#GUID-202605C5-AEF1-4871-B0DB-62F3F01D43D8)
-- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 3](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-3.html#GUID-F31010E3-C88B-4750-B5EB-D3B0DEE7851F)
-- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 4](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-4.html#GUID-CC912D16-16EF-4945-A19F-846277791058)
-- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 5](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-5.html#GUID-B39AD809-F1E1-4E12-9D80-DFEF9AC26E50)
-- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 6](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-6.html#GUID-66674EE4-7CD0-4DC1-A49B-36DD30245AE0)
+- [About the APEX_COLLECTION API](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/About-the-APEX_COLLECTION-API.html#GUID-56991245-9102-4301-AC86-7A43701649AD)
+- [ADD_MEMBER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_MEMBER-Procedure.html#GUID-C4A6C36B-F241-423A-9E3F-F7D89CB1E616)
+- [ADD_MEMBER Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_MEMBER-Function.html#GUID-60E9B7BF-EFD1-405E-9A9D-9CDFF967F789)
+- [ADD_MEMBERS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_MEMBERS-Procedure.html#GUID-8579068A-4BB5-4611-9598-30AF06787D32)
+- [COLLECTION_EXISTS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/COLLECTION_EXISTS-Function.html#GUID-92AE3589-C89F-4CE4-8166-79A2B8E1C938)
+- [COLLECTION_HAS_CHANGED Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/COLLECTION_HAS_CHANGED-Function.html#GUID-1DC33627-7413-4D71-88DF-60731B6CE8A4)
+- [COLLECTION_MEMBER_COUNT Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/COLLECTION_MEMBER_COUNT-Function.html#GUID-30C0AF1E-C8FB-4D10-BF82-C964E8246D6F)
+- [CREATE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CREATE_COLLECTION-Procedure.html#GUID-99D165B6-26C8-4142-9013-9948AFD67FF2)
+- [CREATE_COLLECTION_FROM_QUERY Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CREATE_COLLECTION_FROM_QUERY-Procedure.html#GUID-E2940996-DCB5-4056-B1C4-94C93BD6FB44)
+- [CREATE_COLLECTION_FROM_QUERY2 Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CREATE_COLLECTION_FROM_QUERY2-Procedure.html#GUID-7800CD9E-FD29-4E49-B637-A426D78A644C)
+- [CREATE_COLLECTION_FROM_QUERY_B Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CREATE_COLLECTION_FROM_QUERY_B-Procedure.html#GUID-1C319954-50DF-4C28-8B57-2AA52066B900)
+- [CREATE_COLLECTION_FROM_QUERY_B Procedure (No bind version)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CREATE_COLLECTION_FROM_QUERY_B-Procedure-NBV.html#GUID-4F715772-4228-493E-8F3D-F58716078BC5)
+- [CREATE_COLLECTION_FROM_QUERYB2 Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CREATE_COLLECTION_FROM_QUERYB2-Procedure.html#GUID-A429035B-82A7-452F-94DE-AAD32B7C0821)
+- [CREATE_COLLECTION_FROM_QUERYB2 Procedure (No bind version)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CREATE_COLLECTION_FROM_QUERYB2-Procedure-NBV.html#GUID-A5F61B56-DFEA-48B1-BBE3-B4DF37551D8C)
+- [CREATE_OR_TRUNCATE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CREATE_OR_TRUNCATE_COLLECTION-Procedure.html#GUID-94CD827F-9C10-4362-B2A1-30145D451098)
+- [DELETE_ALL_COLLECTIONS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/DELETE_ALL_COLLECTIONS-Procedure.html#GUID-5B981CC9-ABE7-4EDB-8EAC-14724BAE8F7D)
+- [DELETE_ALL_COLLECTIONS_SESSION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/DELETE_ALL_COLLECTIONS_SESSION-Procedure.html#GUID-E139DBBC-9026-485B-84E0-CC95601CCCA3)
+- [DELETE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/DELETE_COLLECTION-Procedure.html#GUID-53D9F8B7-79C6-4301-9D68-6B426216F470)
+- [DELETE_MEMBER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/DELETE_MEMBER-Procedure.html#GUID-16D57A70-AAF9-43B8-A176-9AD7708193C4)
+- [DELETE_MEMBERS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/DELETE_MEMBERS-Procedure.html#GUID-527C6A66-3658-4DF6-8439-21DA4A6796FB)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [MERGE_MEMBERS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/MERGE_MEMBERS-Procedure.html#GUID-B73EC254-C04A-496D-8389-E5BCC30E89A5)
+- [MOVE_MEMBER_DOWN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/MOVE_MEMBER_DOWN-Procedure.html#GUID-B421E0EA-027F-45AF-8578-33BBC9710CCD)
+- [MOVE_MEMBER_UP Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/MOVE_MEMBER_UP-Procedure.html#GUID-4B5A4C05-EB36-44F4-BDBC-09CE3A6E3278)
+- [RESEQUENCE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/RESEQUENCE_COLLECTION-Procedure.html#GUID-31A7CABB-A10C-4C4F-B7F4-B36006271662)
+- [RESET_COLLECTION_CHANGED Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/RESET_COLLECTION_CHANGED-Procedure.html#GUID-B63E77BD-479A-4B79-84AA-05CC6BA2F698)
+- [RESET_COLLECTION_CHANGED_ALL Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/RESET_COLLECTION_CHANGED_ALL-Procedure.html#GUID-9660DD2F-FC08-489D-8205-AF9F22B16549)
+- [SORT_MEMBERS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SORT_MEMBERS-Procedure.html#GUID-523A647A-58E6-419A-A817-C982D2402F25)
+- [TRUNCATE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/TRUNCATE_COLLECTION-Procedure.html#GUID-F7066966-21B9-4AB1-817B-3C942E2FA24F)
+- [UPDATE_MEMBER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/UPDATE_MEMBER-Procedure.html#GUID-FF926A72-D196-4D6F-BD41-EEA24E54D580)
+- [UPDATE_MEMBERS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/UPDATE_MEMBERS-Procedure.html#GUID-DD03C9D6-884F-425C-91DC-72C407ABCA6C)
+- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-1.html#GUID-DF709BF7-4B32-4713-88FA-E03F89609FEA)
+- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-2.html#GUID-202605C5-AEF1-4871-B0DB-62F3F01D43D8)
+- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 3](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-3.html#GUID-F31010E3-C88B-4750-B5EB-D3B0DEE7851F)
+- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 4](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-4.html#GUID-CC912D16-16EF-4945-A19F-846277791058)
+- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 5](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-5.html#GUID-B39AD809-F1E1-4E12-9D80-DFEF9AC26E50)
+- [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 6](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-6.html#GUID-66674EE4-7CD0-4DC1-A49B-36DD30245AE0)
 
 ------------------------------------------------------------------------
 
@@ -55,13 +55,13 @@ The following are examples of when you might use collections:
 - When your application includes an update page on which a user updates multiple detail rows on one page. The user can make many updates, apply these updates to a collection and then call a final process to apply the changes to the database.
 - When you are building a wizard where you are collecting an arbitrary number of attributes. At the end of the wizard, the user then performs a task that takes the information temporarily stored in the collection and applies it to the database.
 
-Beginning in Oracle AI Database 12c, database columns of data type `VARCHAR2` can be defined up to 32,767 bytes. This requires that the database initialization parameter `MAX_STRING_SIZE` has a value of `EXTENDED`. If Oracle APEX was installed in Oracle AI Database 12c and with `MAX_STRING_SIZE=EXTENDED`, then the tables for the APEX collections will be defined to support up 32,767 bytes for the character attributes of a collection. For the methods in the APEX_COLLECTION API, all references to character attributes (`c001` through `c050`) can support up to 32,767 bytes.
+Beginning in Oracle Database 12c, database columns of data type `VARCHAR2` can be defined up to 32,767 bytes. This requires that the database initialization parameter `MAX_STRING_SIZE` has a value of `EXTENDED`. If Oracle APEX was installed in Oracle Database 12c and with `MAX_STRING_SIZE=EXTENDED`, then the tables for the APEX collections will be defined to support up 32,767 bytes for the character attributes of a collection. For the methods in the APEX_COLLECTION API, all references to character attributes (`c001` through `c050`) can support up to 32,767 bytes.
 
-- [Accessing a Collection](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Accessing-a-Collection.html#GUID-19432196-C604-475D-80AC-283CDCF4FF86)
-- [Determining Collection Status](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Determining-Collection-Status.html#GUID-1B9FBD91-D989-49D1-8005-CA2DF561B2F6)
-- [Clearing Collection Session State](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/Clearing-Collection-Session-State.html#GUID-888BA98D-CD54-4BC1-ADBF-2121A632DDBC)
+- [Accessing a Collection](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/Accessing-a-Collection.html#GUID-19432196-C604-475D-80AC-283CDCF4FF86)
+- [Determining Collection Status](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/Determining-Collection-Status.html#GUID-1B9FBD91-D989-49D1-8005-CA2DF561B2F6)
+- [Clearing Collection Session State](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/Clearing-Collection-Session-State.html#GUID-888BA98D-CD54-4BC1-ADBF-2121A632DDBC)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -103,7 +103,7 @@ SELECT c001, c002, c003, n001, d001, clob001
  WHERE collection_name = 'DEPARTMENTS'
 ```
 
-**Parent topic:** [About the APEX_COLLECTION API](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/About-the-APEX_COLLECTION-API.html#GUID-56991245-9102-4301-AC86-7A43701649AD)
+**Parent topic:** [About the APEX_COLLECTION API](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/About-the-APEX_COLLECTION-API.html#GUID-56991245-9102-4301-AC86-7A43701649AD)
 
 ------------------------------------------------------------------------
 
@@ -119,13 +119,13 @@ When you add a new member to a collection, an MD5 message digest is computed aga
 
 See Also:
 
-- "[RESET_COLLECTION_CHANGED Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_COLLECTION_CHANGED-Procedure.html#GUID-B63E77BD-479A-4B79-84AA-05CC6BA2F698)"
+- "[RESET_COLLECTION_CHANGED Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/RESET_COLLECTION_CHANGED-Procedure.html#GUID-B63E77BD-479A-4B79-84AA-05CC6BA2F698)"
 
-- "[COLLECTION_HAS_CHANGED Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COLLECTION_HAS_CHANGED-Function.html#GUID-1DC33627-7413-4D71-88DF-60731B6CE8A4)"
+- "[COLLECTION_HAS_CHANGED Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/COLLECTION_HAS_CHANGED-Function.html#GUID-1DC33627-7413-4D71-88DF-60731B6CE8A4)"
 
-- "[GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)"
+- "[GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)"
 
-**Parent topic:** [About the APEX_COLLECTION API](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/About-the-APEX_COLLECTION-API.html#GUID-56991245-9102-4301-AC86-7A43701649AD)
+**Parent topic:** [About the APEX_COLLECTION API](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/About-the-APEX_COLLECTION-API.html#GUID-56991245-9102-4301-AC86-7A43701649AD)
 
 ------------------------------------------------------------------------
 
@@ -148,9 +148,9 @@ f?p=App:Page:Session::NO:collection name
 
 See Also:
 
-[TRUNCATE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TRUNCATE_COLLECTION-Procedure.html#GUID-F7066966-21B9-4AB1-817B-3C942E2FA24F)
+[TRUNCATE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/TRUNCATE_COLLECTION-Procedure.html#GUID-F7066966-21B9-4AB1-817B-3C942E2FA24F)
 
-**Parent topic:** [About the APEX_COLLECTION API](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/About-the-APEX_COLLECTION-API.html#GUID-56991245-9102-4301-AC86-7A43701649AD)
+**Parent topic:** [About the APEX_COLLECTION API](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/About-the-APEX_COLLECTION-API.html#GUID-56991245-9102-4301-AC86-7A43701649AD)
 
 ------------------------------------------------------------------------
 
@@ -215,9 +215,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -286,9 +286,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -352,9 +352,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -387,7 +387,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -420,7 +420,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -454,7 +454,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -490,9 +490,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -539,9 +539,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -587,9 +587,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -602,7 +602,7 @@ This method offers significantly faster performance than the `CREATE_COLLECTION_
 This procedure uses bulk dynamic SQL to perform the fetch and insert operations into the named collection. Two limitations are imposed by this procedure:
 
 1.  The MD5 checksum for the member data is not computed.
-2.  No column value in query `p_query` can exceed 2,000 bytes. If a row is encountered that has a column value of more than 2,000 bytes, an error is raised during execution. In Oracle AI Database 11g Release 2 (11.2.0.1) or later, this column limit is 4,000 bytes.
+2.  No column value in query `p_query` can exceed 2,000 bytes. If a row is encountered that has a column value of more than 2,000 bytes, an error is raised during execution. In Oracle Database 11g Release 2 (11.2.0.1) or later, this column limit is 4,000 bytes.
 
 Syntax
 
@@ -646,9 +646,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -661,7 +661,7 @@ This method offers significantly faster performance than the `CREATE_COLLECTION_
 This procedure uses bulk dynamic SQL to perform the fetch and insert operations into the named collection. Two limitations are imposed by this procedure:
 
 1.  The MD5 checksum for the member data is not computed.
-2.  No column value in query `p_query` can exceed 2,000 bytes. If a row is encountered that has a column value of more than 2,000 bytes, an error occurs during execution. In Oracle AI Database 11g Release 2 (11.2.0.1) or later, this column limit is 4,000 bytes.
+2.  No column value in query `p_query` can exceed 2,000 bytes. If a row is encountered that has a column value of more than 2,000 bytes, an error occurs during execution. In Oracle Database 11g Release 2 (11.2.0.1) or later, this column limit is 4,000 bytes.
 
 Syntax
 
@@ -697,9 +697,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -714,7 +714,7 @@ This procedure is identical to `CREATE_COLLECTION_FROM_QUERY_B` except the first
 This procedure uses bulk dynamic SQL to perform the fetch and insert operations into the named collection. Two limitations are imposed by this procedure:
 
 1.  The MD5 checksum for the member data is not computed.
-2.  No column value in query `p_query` can exceed 2,000 bytes. If a row is encountered that has a column value of more than 2,000 bytes, an error is raised during execution. In Oracle AI Database 11g Release 2 (11.2.0.1) or later, this column limit is 4,000 bytes.
+2.  No column value in query `p_query` can exceed 2,000 bytes. If a row is encountered that has a column value of more than 2,000 bytes, an error is raised during execution. In Oracle Database 11g Release 2 (11.2.0.1) or later, this column limit is 4,000 bytes.
 
 Syntax
 
@@ -759,9 +759,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -776,7 +776,7 @@ This procedure is identical to `CREATE_COLLECTION_FROM_QUERY_B` except the first
 This procedure uses bulk dynamic SQL to perform the fetch and insert operations into the named collection. Two limitations are imposed by this procedure:
 
 1.  The MD5 checksum for the member data is not computed.
-2.  No column value in query `p_query` can exceed 2,000 bytes. If a row is encountered that has a column value of more than 2,000 bytes, an error is raised during execution. In Oracle AI Database 11g Release 2 (11.2.0.1) or later, this column limit is 4,000 bytes.
+2.  No column value in query `p_query` can exceed 2,000 bytes. If a row is encountered that has a column value of more than 2,000 bytes, an error is raised during execution. In Oracle Database 11g Release 2 (11.2.0.1) or later, this column limit is 4,000 bytes.
 
 Syntax
 
@@ -813,9 +813,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -849,9 +849,9 @@ END;
 
 See Also:
 
-- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
+- [GET_MEMBER_MD5 Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_MEMBER_MD5-Function.html#GUID-A456F18D-10D5-48F6-B75F-FD9534FD91FD)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -879,7 +879,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -907,7 +907,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -941,7 +941,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -978,7 +978,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1023,7 +1023,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1067,11 +1067,11 @@ END;
 
 See Also:
 
-- [COLLECTION_HAS_CHANGED Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COLLECTION_HAS_CHANGED-Function.html#GUID-1DC33627-7413-4D71-88DF-60731B6CE8A4)
-- [RESET_COLLECTION_CHANGED Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_COLLECTION_CHANGED-Procedure.html#GUID-B63E77BD-479A-4B79-84AA-05CC6BA2F698)
-- [RESET_COLLECTION_CHANGED_ALL Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RESET_COLLECTION_CHANGED_ALL-Procedure.html#GUID-9660DD2F-FC08-489D-8205-AF9F22B16549)
+- [COLLECTION_HAS_CHANGED Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/COLLECTION_HAS_CHANGED-Function.html#GUID-1DC33627-7413-4D71-88DF-60731B6CE8A4)
+- [RESET_COLLECTION_CHANGED Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/RESET_COLLECTION_CHANGED-Procedure.html#GUID-B63E77BD-479A-4B79-84AA-05CC6BA2F698)
+- [RESET_COLLECTION_CHANGED_ALL Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/RESET_COLLECTION_CHANGED_ALL-Procedure.html#GUID-9660DD2F-FC08-489D-8205-AF9F22B16549)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1155,7 +1155,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1196,7 +1196,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1237,7 +1237,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1273,10 +1273,10 @@ END;
 
 See Also:
 
-- [MOVE_MEMBER_DOWN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MOVE_MEMBER_DOWN-Procedure.html#GUID-B421E0EA-027F-45AF-8578-33BBC9710CCD)
-- [MOVE_MEMBER_UP Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/MOVE_MEMBER_UP-Procedure.html#GUID-4B5A4C05-EB36-44F4-BDBC-09CE3A6E3278)
+- [MOVE_MEMBER_DOWN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/MOVE_MEMBER_DOWN-Procedure.html#GUID-B421E0EA-027F-45AF-8578-33BBC9710CCD)
+- [MOVE_MEMBER_UP Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/MOVE_MEMBER_UP-Procedure.html#GUID-4B5A4C05-EB36-44F4-BDBC-09CE3A6E3278)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1310,7 +1310,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1338,7 +1338,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1375,7 +1375,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1411,9 +1411,9 @@ END;
 
 See Also:
 
-[CREATE_OR_TRUNCATE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_OR_TRUNCATE_COLLECTION-Procedure.html#GUID-94CD827F-9C10-4362-B2A1-30145D451098)
+[CREATE_OR_TRUNCATE_COLLECTION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CREATE_OR_TRUNCATE_COLLECTION-Procedure.html#GUID-94CD827F-9C10-4362-B2A1-30145D451098)
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1427,7 +1427,7 @@ If the member specified by sequence ID `p_seq` does not exist, an application er
 
 Note:
 
-Using this procedure sets the columns identified and nullifies any columns not identified. To update specific columns, without affecting the values of other columns, use [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-1.html#GUID-DF709BF7-4B32-4713-88FA-E03F89609FEA).
+Using this procedure sets the columns identified and nullifies any columns not identified. To update specific columns, without affecting the values of other columns, use [UPDATE_MEMBER_ATTRIBUTE Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/UPDATE_MEMBER_ATTRIBUTE-Procedure-Signature-1.html#GUID-DF709BF7-4B32-4713-88FA-E03F89609FEA).
 
 Syntax
 
@@ -1486,7 +1486,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1566,7 +1566,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1619,7 +1619,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1670,7 +1670,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1721,7 +1721,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1772,7 +1772,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1823,7 +1823,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
 
 ------------------------------------------------------------------------
 
@@ -1874,4 +1874,4 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)
+**Parent topic:** [APEX_COLLECTION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_COLLECTION.html#GUID-859B488C-2628-44D7-969F-50872C685B76)

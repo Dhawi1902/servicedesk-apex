@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html -->
 <!-- Namespaces: apex.model -->
 
 # Namespace: model
@@ -20,26 +20,26 @@
 - [save](#.save)
 - [setMaxCachedModels](#.setMaxCachedModels)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).model
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).model
 
-The apex.model namespace contains methods used to manage client side Oracle APEX data models. These models store data for display by UI components. They correspond to the view-model in the Model-View-ViewModel (MVVM) pattern. See [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) for details.
+The apex.model namespace contains methods used to manage client side Oracle APEX data models. These models store data for display by UI components. They correspond to the view-model in the Model-View-ViewModel (MVVM) pattern. See [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) for details.
 
 This namespace contains functions to manage the lifecycle of a model:
 
-- Use [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) to create a model.
-- Use [apex.model.list](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.list) to list all the existing models.
-- Use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.get) to return an existing model.
-- Use [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.release) to release a model once you are done with it.
+- Use [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) to create a model.
+- Use [apex.model.list](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.list) to list all the existing models.
+- Use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.get) to return an existing model.
+- Use [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.release) to release a model once you are done with it.
 
 Models are reference counted so for every call to `get` or `create` you must call `release`. Failure to do so can result in unused models taking up memory. Typically, the APEX region associated with the model will manage its life cycle.
 
 Models typically act as an intermediary between data persisted on the server and one or more views on the client. The `regionId` option associates the model with an APEX region for the purpose of fetching and saving data. Models can be created without a `regionId`. These are known as local models and they cannot fetch data from or save data to the server.
 
-There are also methods such as [apex.model.save](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.save), [apex.model.anyChanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.anyChanges), and [apex.model.anyErrors](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.anyErrors) that operate on multiple models.
+There are also methods such as [apex.model.save](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.save), [apex.model.anyChanges](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.anyChanges), and [apex.model.anyErrors](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.anyErrors) that operate on multiple models.
 
 ### Master Detail
 
-Models can be arranged in a master detail configuration. This is done by providing the `parentModel` and `parentRecordId` options when creating the detail models. A single master model can have multiple kinds of detail models. For example projects can have tasks and members as details. Each kind of detail model has one or more model instances; each related to a record in the master model. Detail instance models share the same name and field configuration but each has a distinct instance id and different data. A model is uniquely identified by a [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId), which in the case of a detail model contains the detail name and instance id. Detail models are cached so that data doesn't have to be fetched from the server unnecessarily. The view layer typically shows a view of the detail instance model that is associated with the current record of the master view. As the current record of the master changes the view layer changes the detail model instance the detail view is showing. The view layer will get a cached instance model if there is one and if not will create the instance model. The maximum number of detail instances to cache is controlled with the [apex.model.getMaxCachedModels](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.getMaxCachedModels) and [apex.model.setMaxCachedModels](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.setMaxCachedModels) functions. It is the least recently used model that is kicked out of the cache. Models that have changes are not destroyed unless [apex.model.destroy](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.destroy) is called.
+Models can be arranged in a master detail configuration. This is done by providing the `parentModel` and `parentRecordId` options when creating the detail models. A single master model can have multiple kinds of detail models. For example projects can have tasks and members as details. Each kind of detail model has one or more model instances; each related to a record in the master model. Detail instance models share the same name and field configuration but each has a distinct instance id and different data. A model is uniquely identified by a [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId), which in the case of a detail model contains the detail name and instance id. Detail models are cached so that data doesn't have to be fetched from the server unnecessarily. The view layer typically shows a view of the detail instance model that is associated with the current record of the master view. As the current record of the master changes the view layer changes the detail model instance the detail view is showing. The view layer will get a cached instance model if there is one and if not will create the instance model. The maximum number of detail instances to cache is controlled with the [apex.model.getMaxCachedModels](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.getMaxCachedModels) and [apex.model.setMaxCachedModels](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.setMaxCachedModels) functions. It is the least recently used model that is kicked out of the cache. Models that have changes are not destroyed unless [apex.model.destroy](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.destroy) is called.
 
 A detail model can be a master to its own set of sub-detail models. This relationship can be nested to any depth.
 
@@ -50,7 +50,7 @@ Since:
 
 #### (static) addChangesToSaveRequest(pRequestData, pModelIdopt, pIncludeRelatedopt) → {function}
 
-Low level function to add changes for any of the specified models to a request. Changes are added to the provided request data. This doesn't actually send the request to the server. In most cases [apex.model.save](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.save) should be used rather than this function.
+Low level function to add changes for any of the specified models to a request. Changes are added to the provided request data. This doesn't actually send the request to the server. In most cases [apex.model.save](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.save) should be used rather than this function.
 
 ##### Parameters:
 
@@ -226,9 +226,9 @@ if ( apex.model.anyErrors() ) {
 }
 ```
 
-#### (static) create(pModelId, pOptions, pDataopt, pTotalopt, pMoreDataopt, pDataOverflowopt) → {[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)}
+#### (static) create(pModelId, pOptions, pDataopt, pTotalopt, pMoreDataopt, pDataOverflowopt) → {[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)}
 
-Create a model with the given identity, options and optionally initial data. When you are done with the model you must call [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.release). Or if you are sure no one else is using it you can call [apex.model.destroy](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.destroy).
+Create a model with the given identity, options and optionally initial data. When you are done with the model you must call [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.release). Or if you are sure no one else is using it you can call [apex.model.destroy](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.destroy).
 
 ##### Parameters:
 
@@ -467,7 +467,7 @@ Create a model with the given identity, options and optionally initial data. Whe
 ##### Returns:
 
 Type
-[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)
+[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)
 
 ##### Examples
 
@@ -551,7 +551,7 @@ If `pModelId` is a string model name and there are one or more instances they wi
 
 | Name | Type | Description |
 |----|----|----|
-| `pModelId` | [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId) | Model identifier as given in call to [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) or just a model name. |
+| `pModelId` | [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId) | Model identifier as given in call to [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) or just a model name. |
 
 ##### Example
 
@@ -561,7 +561,7 @@ Destroy the model with model id MyModel.
 apex.model.destroy("MyModel");
 ```
 
-#### (static) get(pModelId) → {[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)}
+#### (static) get(pModelId) → {[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)}
 
 Get a model by its model identifier.
 
@@ -569,14 +569,14 @@ Get a model by its model identifier.
 
 | Name | Type | Description |
 |----|----|----|
-| `pModelId` | [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId) | Model identifier as given in call to [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create). |
+| `pModelId` | [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId) | Model identifier as given in call to [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create). |
 
 ##### Returns:
 
 The model identified by pModelId.
 
 Type
-[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)
+[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)
 
 ##### Example
 
@@ -599,7 +599,7 @@ Max cached detail instance models.
 Type
 number
 
-#### (static) list(pIncludeLocalopt, pModelIdopt, pIncludeRelatedopt) → {Array.\<[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)\>}
+#### (static) list(pIncludeLocalopt, pModelIdopt, pIncludeRelatedopt) → {Array.\<[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)\>}
 
 Returns an array of all the currently defined model identifiers in no particular order. If `pModelId` is null or not provided all models are listed. If `pModelId` contains just a model name then just that model if any and all instances with the same model name if any are returned. If `pModelId` contains a model and an instance then just that model instance is included. Specifying `pModelId` is most useful when `pIncludeRelated` is true.
 
@@ -650,7 +650,7 @@ Returns an array of all the currently defined model identifiers in no particular
 Array of model identifiers
 
 Type
-Array.\<[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)\>
+Array.\<[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)\>
 
 #### (static) multipleFetch(pRequestDataopt, pOptionsopt, pModelIds, pCallServeropt) → {null\|promise}
 
@@ -706,7 +706,7 @@ Fetches data for multiple models in a single Ajax request. In most cases there i
 
 ##### Returns:
 
-Returns the promise from [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin), if there is at least one model to fetch data for. The promise is resolved with the ajax response data. Returns null if there are no valid model ids given or if all models are already busy fetching data.
+Returns the promise from [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin), if there is at least one model to fetch data for. The promise is resolved with the ajax response data. Returns null if there are no valid model ids given or if all models are already busy fetching data.
 
 Type
 null \| promise
@@ -741,13 +741,13 @@ apex.model.multipleFetch( null, {
 
 Release a model if it is not being used but may be used again in the future. This allows the model to be destroyed if needed to conserve memory.
 
-Models are reference counted. For every call to [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.get) or [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) a call to [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.release) with the same model id is required. When the reference count is zero the model is destroyed unless it is changed or if it has a parent model, in which case it is cached.
+Models are reference counted. For every call to [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.get) or [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) a call to [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.release) with the same model id is required. When the reference count is zero the model is destroyed unless it is changed or if it has a parent model, in which case it is cached.
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pModelId` | [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId) | Model identifier as given in call to [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create). |
+| `pModelId` | [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId) | Model identifier as given in call to [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create). |
 
 ##### Example
 
@@ -821,7 +821,7 @@ Save any of the specified models that have changes. This consolidates all the mo
 
 ##### Returns:
 
-The promise from [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin) if a save request is sent or null if there are no changed models to save.
+The promise from [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin) if a save request is sent or null if there are no changed models to save.
 
 Type
 null \| promise

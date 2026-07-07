@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.message.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.message.html -->
 <!-- Namespaces: apex.message -->
 
 # Namespace: message
@@ -23,7 +23,7 @@
 - [showErrors](#.showErrors)
 - [showPageSuccess](#.showPageSuccess)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).message
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).message
 
 The apex.message namespace is used to handle client-side display and management of messages in Oracle APEX.
 
@@ -211,7 +211,7 @@ apex.message.alert( "Load complete.", function() {
 
 Emits ARIA live assertive alert message for screen reader users. No visual changes rendered.
 
-Use this function when meaningful dynamic changes to the UI are made that may not be perceivable to users of assistive technologies. It is best to keep the messages short and relevant. See also [apex.message.ariaMessage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.message.html#.ariaMessage).
+Use this function when meaningful dynamic changes to the UI are made that may not be perceivable to users of assistive technologies. It is best to keep the messages short and relevant. See also [apex.message.ariaMessage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.message.html#.ariaMessage).
 
 When this function is called, assistive technologies will immediately notify the user, and could potentially clear the speech queue of previous updates emitted by `apex.message.ariaMessage` and `apex.message.ariaAlertMessage`.
 
@@ -233,7 +233,7 @@ apex.message.ariaAlertMessage( "Load complete" );
 
 Emits ARIA live polite message for screen reader users. No visual changes rendered.
 
-Use this function when meaningful dynamic changes to the UI are made that may not be perceivable to users of assistive technologies. It is best to keep the messages short and relevant. See also [apex.message.ariaAlertMessage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.message.html#.ariaAlertMessage).
+Use this function when meaningful dynamic changes to the UI are made that may not be perceivable to users of assistive technologies. It is best to keep the messages short and relevant. See also [apex.message.ariaAlertMessage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.message.html#.ariaAlertMessage).
 
 When this function is called, assistive technologies will notify users of updates but generally do not interrupt the current task (such as speech), and updates take low priority.
 
@@ -589,12 +589,12 @@ apex.message.setThemeHooks({
 
 #### (static) showErrors(pErrors)
 
-This function displays all errors on the apex.message error stack. If you do not want to add to the stack, you must first call clearErrors(). Errors will display using the current app's theme's templates. For page level messages (where location = "page"), error messages use markup from the page template's 'Subtemplate \> Notification' attribute. For item level messages (where location = "inline"), error messages use markup from the item's label template's 'Error Display \> Error Template' attribute. A side effect of calling this function is that if there are page level errors, APEX will focus the errors container, please refer to [apex.message.setThemeHooks](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.message.html#.setThemeHooks) (specifically property pageErrorsContainerSelector), and if only displaying inline errors it will try to focus the first inline error on the page following the display order.
+This function displays all errors on the apex.message error stack. If you do not want to add to the stack, you must first call clearErrors(). Errors will display using the current app's theme's templates. For page level messages (where location = "page"), error messages use markup from the page template's 'Subtemplate \> Notification' attribute. For item level messages (where location = "inline"), error messages use markup from the item's label template's 'Error Display \> Error Template' attribute. A side effect of calling this function is that if there are page level errors, APEX will focus the errors container, please refer to [apex.message.setThemeHooks](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.message.html#.setThemeHooks) (specifically property pageErrorsContainerSelector), and if only displaying inline errors it will try to focus the first inline error on the page following the display order.
 
 Note Theme Developers should bear in mind the following:
 
 - To display errors for a theme correctly, it must define both of the template attributes described above. In addition, for inline errors the label template must reference the \#ERROR_TEMPLATE# substitution string in either the 'Before Item' or 'After Item' attributes of your label templates.
-- As a theme developer, you can influence or override what happens when showing page level errors. For more information, please refer to [apex.message.setThemeHooks](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.message.html#.setThemeHooks), (specifically the beforeShow callback function, where you would need to check for 'pMsgType === apex.message.TYPE.ERROR' to isolate when showing page level errors).
+- As a theme developer, you can influence or override what happens when showing page level errors. For more information, please refer to [apex.message.setThemeHooks](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.message.html#.setThemeHooks), (specifically the beforeShow callback function, where you would need to check for 'pMsgType === apex.message.TYPE.ERROR' to isolate when showing page level errors).
 
 ##### Parameters:
 
@@ -707,7 +707,7 @@ apex.message.showErrors( [
 
 Displays a page-level success message. This will clear any previous success messages displayed, and also assumes there are no errors, so will clear any errors previously displayed. Success messages will display using the current app's theme's template. Specifically for page success messages, the markup from the page template's 'Subtemplate \> Success Message' attribute will be used.
 
-Tip: As a theme developer, you can influence or override what happens when showing a page-level success message. For more information, please refer to the [apex.message.setThemeHooks](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.message.html#.setThemeHooks) function (specifically the `beforeShow` callback function, where you would need to check for `pMsgType === apex.message.TYPE.SUCCESS` to isolate when showing a page-level success message).
+Tip: As a theme developer, you can influence or override what happens when showing a page-level success message. For more information, please refer to the [apex.message.setThemeHooks](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.message.html#.setThemeHooks) function (specifically the `beforeShow` callback function, where you would need to check for `pMsgType === apex.message.TYPE.SUCCESS` to isolate when showing a page-level success message).
 
 ##### Parameters:
 

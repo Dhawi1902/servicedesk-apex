@@ -1,6 +1,11 @@
 <!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/apxln/index.html -->
 <!-- Oracle APEX 26.1 APEXlang API Reference (single-page doc) -->
 
+> ⚠️ **This reference is APEX 26.1, not 24.2.** Oracle ships no APEXlang API reference for
+> 24.2 (it was introduced later). The rest of this repo's reference is 24.2 to match the
+> company instance — treat this file as forward-looking only and verify in App Builder
+> before relying on anything here.
+
 ## Components
 
 ### `app`

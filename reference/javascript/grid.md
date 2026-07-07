@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html -->
 <!-- Widgets: grid -->
 
 # Widget: grid
@@ -10,11 +10,9 @@
 - [aggregateLabels](#aggregateLabels)
 - [aggregateTooltips](#aggregateTooltips)
 - [allowCopy](#allowCopy)
-- [allowCut](#allowCut)
 - [allowDelete](#allowDelete)
 - [allowEditMode](#allowEditMode)
 - [allowInsert](#allowInsert)
-- [allowPaste](#allowPaste)
 - [allowSelectHidden](#allowSelectHidden)
 - [applyTemplateOptions](#applyTemplateOptions)
 - [autoAddRecord](#autoAddRecord)
@@ -40,7 +38,6 @@
 - [modelName](#modelName)
 - [multiple](#multiple)
 - [multipleCells](#multipleCells)
-- [multipleRanges](#multipleRanges)
 - [noDataIcon](#noDataIcon)
 - [noDataMessage](#noDataMessage)
 - [pagination](#pagination)
@@ -55,8 +52,6 @@
 - [rowsPerPage](#rowsPerPage)
 - [selectAll](#selectAll1)
 - [selectCells](#selectCells)
-- [selectCellsColumn](#selectCellsColumn)
-- [selectCellsRow](#selectCellsRow)
 - [selectionStateItem](#selectionStateItem)
 - [selectionStatusMessageKey](#selectionStatusMessageKey)
 - [showNullAs](#showNullAs)
@@ -100,7 +95,6 @@
 - [getPageInfo](#getPageInfo)
 - [getRecords](#getRecords)
 - [getSelectedRange](#getSelectedRange)
-- [getSelectedRanges](#getSelectedRanges)
 - [getSelectedRecords](#getSelectedRecords)
 - [getSelection](#getSelection)
 - [gotoCell](#gotoCell)
@@ -122,25 +116,20 @@
 - [setColumnWidth](#setColumnWidth)
 - [setCurrentCell](#setCurrentCell)
 - [setEditMode](#setEditMode)
-- [setSelectedRanges](#setSelectedRanges)
 - [setSelectedRecords](#setSelectedRecords)
 - [setSelection](#setSelection)
 - [showColumn](#showColumn)
 - [unfreezeColumn](#unfreezeColumn)
 - [unlockActive](#unlockActive)
 
-### [Type Definitions](#typedefs-section)
-
-- [Range](#.Range)
-
 ## grid
 
-A UI widget that implements a navigable data grid that supports selection and editing. Derived from [tableModelViewBase](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html). It follows the DHTML Style Guide and WAI-ARIA design pattern for a data grid with these differences:
+A UI widget that implements a navigable data grid that supports selection and editing. Derived from [tableModelViewBase](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html). It follows the DHTML Style Guide and WAI-ARIA design pattern for a data grid with these differences:
 
-- In row selection mode the Shift and Ctrl modifiers work like a list control.
+- In row selection mode the Shift and Ctrl modifiers work like a list control. In cell selection mode discontinuous ranges are not supported so Shift-F8 is not supported.
 - In edit/actionable mode you can tab out of the grid at the beginning or end.
 
-The markup expected by this widget is simply an empty `<div>`. The grid displays and optionally edits table shaped data stored in an APEX data [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html). If the grid is editable then the grid `<div>` must be proceeded or followed by a `<div>` with class `u-vh` (to visually hide the contents) that contains each of the rendered column items. Each column item needs to be wrapped in a `<div>` with class `a-GV-columnItem`. The markup looks like this:
+The markup expected by this widget is simply an empty `<div>`. The grid displays and optionally edits table shaped data stored in an APEX data [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html). If the grid is editable then the grid `<div>` must be proceeded or followed by a `<div>` with class `u-vh` (to visually hide the contents) that contains each of the rendered column items. Each column item needs to be wrapped in a `<div>` with class `a-GV-columnItem`. The markup looks like this:
 
 ```
        <div class="a-GV-columnItem">column item markup goes here</div>
@@ -151,62 +140,39 @@ Only a single cell at a time is edited. The grid moves the column item in and ou
 
 ### Editing
 
-The grid can be editable or not editable. This is controlled by the [grid#editable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#editable) option. If not editable then no UI is provided to do any editing, however it will still respond to any changes to the model data. When the grid is editable it has two modes; navigation mode and editing mode. The distinction is mainly for the purpose of keyboard behavior. In navigation mode keyboard keys move among the grid cells. In editing mode most keys are passed through to the edit controls. Edit mode pertains to cell editing only. Other kinds of edits such as deleting rows is possible as long as the grid is editable. The [grid#editable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#editable) option can be changed after the grid is created provided the necessary column items are available on the page. See the [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) documentation for how it can be used to provide fine grained control over what kinds of edits are allowed. The column definition can specify columns that are read-only. For a cell to be editable the grid must be editable, the row must be editable (as determined by the model), the column configuration must include property `elementId` and property `readonly` must not be true and the cell field metadata must not have a checksum (`ck`) property.
+The grid can be editable or not editable. This is controlled by the [grid#editable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#editable) option. If not editable then no UI is provided to do any editing, however it will still respond to any changes to the model data. When the grid is editable it has two modes; navigation mode and editing mode. The distinction is mainly for the purpose of keyboard behavior. In navigation mode keyboard keys move among the grid cells. In editing mode most keys are passed through to the edit controls. Edit mode pertains to cell editing only. Other kinds of edits such as deleting rows is possible as long as the grid is editable. The [grid#editable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#editable) option can be changed after the grid is created provided the necessary column items are available on the page. See the [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) documentation for how it can be used to provide fine grained control over what kinds of edits are allowed. The column definition can specify columns that are read-only. For a cell to be editable the grid must be editable, the row must be editable (as determined by the model), the column configuration must include property `elementId` and property `readonly` must not be true and the cell field metadata must not have a checksum (`ck`) property.
 
 Column Edit Items:
-When the grid is editable and a column can be edited, it is a column item that does the editing. Column items are essentially the same as page items except they edit a column value rather than a page item. See [grid#columns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#columns) option property `elementId`.
+When the grid is editable and a column can be edited, it is a column item that does the editing. Column items are essentially the same as page items except they edit a column value rather than a page item. See [grid#columns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#columns) option property `elementId`.
 
 ### Selection
 
-The grid supports both row and cell range selection modes. The mode is determined by option [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells).
+The grid supports both row and cell range selection. For row selection the grid supports either single or multiple selection. Rows can be selected even for grids that are not editable. For multiple selection standard keyboard modifiers Shift and Ctrl are combined with arrow keys or mouse clicks to select multiple rows. See the [Keyboard End User Information](#keyboard-section) section for details. In addition the [grid#rowHeaderCheckbox](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#rowHeaderCheckbox) option allows for checkbox style selection behavior. If the user is interacting with touch the row header checkbox will be enabled automatically. Column heading, column group heading, aggregate, and control break rows are never included in the selection.
 
-For row selection the grid supports either single or multiple selection. See option [grid#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multiple). Rows can be selected even for grids that are not editable. For multiple selection standard keyboard modifiers Shift and Ctrl are combined with arrow keys or mouse clicks to select multiple rows. See the [Keyboard End User Information](#keyboard-section) section for details. In addition the [grid#rowHeaderCheckbox](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#rowHeaderCheckbox) option allows for checkbox style selection behavior. If the user is interacting with touch the row header checkbox will be enabled automatically. Column heading, column group heading, aggregate, and control break rows are never included in the row selection.
-
-The row selection state can be accessed with methods such as [grid#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelectedRecords) and changed with methods such as [grid#setSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setSelectedRecords). The [grid#selectionStateItem](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectionStateItem) option specifies an APEX page item that will have its value updated to reflect the current selection. See also options [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#persistSelection) and [grid#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectAll1).
-
-For range selection the grid supports single cell, a single range of cells (see [grid#multipleCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleCells)) or multiple ranges (see [grid#multipleRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleRanges)). Range selection is similar to that of spreadsheets. The Shift key is used with arrow keys or mouse clicks to extend a range. For multiple ranges the Ctrl key (Command key on macOS) with click or Shift+F8 key adds a new range. Aggregate cells can be selected but control breaks, row headers and column headers cannot be selected. See the [Keyboard End User Information](#keyboard-section) section for details.
-
-The range selection state can be accessed with method [grid#getSelectedRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelectedRanges) and set with method [grid#setSelectedRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setSelectedRanges). The range selection does not affect the `selectionStateItem`. See also options [grid#selectCellsColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCellsColumn), [grid#selectCellsRow](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCellsRow) and [grid#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectAll1).
-
-### Clipboard
-
-The grid supports clipboard operations copy, cut, and paste by default. See options [grid#allowCopy](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#allowCopy), [grid#allowCut](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#allowCut), and [grid#allowPaste](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#allowPaste) for how to disable. Cut and paste require that the grid is editable. The standard operating system specific keyboard shortcuts are supported. Paste to insert uses the Shift key modifier. All of these clipboard operations require that the grid is not in edit mode. When editing a cell, it is the column item that determines clipboard behavior.
-
-The row or cell range selection can be copied to the clipboard. The selection row header and any empty virtual columns such as the row actions menu column are not included. The cell contents are put on the clipboard in text/html and text/plain formats. Text format uses tab separated cells with carriage return line feed separated rows. HTML format uses table markup. A custom JSON format is used to facilitate copying from one grid and pasting to another or the same grid by including the underlying model values such as LOVs. Not all browsers support custom formats when pasting except when using the operating system keyboard shortcut. A single cell does not use table markup. When a cell contains a single link defined with the column `linkTargetColumn` property or the model field metadata `url` property the clipboard value will be an anchor element. See [grid#columns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#columns) `copyValueToClipboard` property for how to control the value copied.
-
-Non-selectable cells or rows can be copied to the clipboard when they are the current cell. This includes aggregates, control breaks, headers, and read-only cells in edit mode. To copy the whole header row or whole aggregate row focus the first cell in the row.
-
-For row selection, cut will delete the rows after copying them to the clipboard as long as the rows allow being deleted. For cell range selection cut will clear the cell contents as if by method [grid#fillSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#fillSelection) with an empty string fill value as long as the cells are not readonly and allow editing.
-
-The paste operation supports formats text/html and text/plain. The tabular data representation is the same as described above for clipboard copy. If the clipboard doesn't contain tabular data the text is considered the value for a single cell. The data is pasted starting at the current cell. The cell value is set as if the user typed in the value. This means that Dynamic Actions are run and client side validations are performed. The user is responsible for making sure that the pasted data is appropriate for the columns. Of particular concern are LOV columns (or any case where the display value doesn't match the model value). In the case of LOVs the paste data should contain the LOV item return values. Read only columns or any row or cell that can't be edited is skipped over. If there are more rows to paste than there are rows remaining in the report or the control break then the remaining rows are inserted. Use the Shift key to insert new rows rather than overwrite.
-
-Drag and drop can also be used to paste into the grid. Drag from an application that supports tabular data in the acceptable clipboard format and drop on a grid cell. Hold the Shift key to insert rather than overwrite.
-
-Limitations: Browsers may put implementation specific restrictions on use of the clipboard that are beyond the control of a web app. It may require the user opt in to clipboard access or provide an additional UI element to click. This is most common for paste but may also include cut.
+The selection state can be accessed with methods such as [grid#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getSelectedRecords) and changed with methods such as [grid#setSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setSelectedRecords). The [grid#selectionStateItem](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectionStateItem) option specifies an APEX page item that will have its value updated to reflect the current selection.
 
 ### Context Menus
 
-The grid has easy integration with the [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget to provide context menu support. The [grid#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenu) option is used to provide a [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget options object. When the `contextMenu` option is used the [menu#event:beforeOpen](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html#event:beforeOpen) event/callback ui argument has these additional properties:
+The grid has easy integration with the [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget to provide context menu support. The [grid#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenu) option is used to provide a [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget options object. When the `contextMenu` option is used the [menu#event:beforeOpen](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html#event:beforeOpen) event/callback ui argument has these additional properties:
 
 - menuElement: The menu jQuery object.
 - grid: This grid jQuery object.
 - selection: A jQuery object with the selected rows at the time the menu was opened.
-- selectedRecords: An array of the selected model records at the time the menu was opened. Only if [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) is false.
-- selectedRange: The range information returned by [grid#getSelectedRange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelectedRange). Only if [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) is true. This is deprecated.
-- selectedRanges: The range information returned by [grid#getSelectedRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelectedRanges). Only if [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) is true.
+- selectedRecords: An array of the selected model records at the time the menu was opened. Only if [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectCells) is false.
+- selectedRange: The range information returned by [grid#getSelectedRange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getSelectedRange). Only if [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectCells) is true.
 
-Also the [menu#event:afterClose](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html#event:afterClose) event/callback will automatically focus the grid if the menu action didn't take the focus and the ui argument has these additional properties:
+Also the [menu#event:afterClose](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html#event:afterClose) event/callback will automatically focus the grid if the menu action didn't take the focus and the ui argument has these additional properties:
 
 - menuElement: The menu jQuery object.
 - grid: This grid jQuery object.
 
-If using the `contextMenu` option the [grid#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenuId) option can be used to give the menu element an ID. This is useful if other code must refer to the menu element or widget.
+If using the `contextMenu` option the [grid#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenuId) option can be used to give the menu element an ID. This is useful if other code must refer to the menu element or widget.
 
-You can reference an already existing [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget by specifying the [grid#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenuId) in place of the [grid#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenu) option.
+You can reference an already existing [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget by specifying the [grid#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenuId) in place of the [grid#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenu) option.
 
-If for any reason you don't want to use the [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget, the [grid#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenuAction) option allows you to respond to mouse or keyboard interactions that typically result in a context menu. Specifically the `contextmenu` event triggered in response to a right Mouse click, the Windows context menu key or other keyboard equivalent such as Shift+F10. The original event is passed to the [grid#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenuAction) function. The event object can be used to position the menu. If you implement your own menu it is best if you put focus back on the grid using the [grid#focus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#focus) method when the menu closes (unless the menu action directs focus elsewhere).
+If for any reason you don't want to use the [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget, the [grid#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenuAction) option allows you to respond to mouse or keyboard interactions that typically result in a context menu. Specifically Right Mouse click (via `contextmenu` event), Shift-F10 key (via `keydown` event) and the Windows context menu key (via `contextmenu` event). The original event is passed to the [grid#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenuAction) function. The event object can be used to position the menu. If you implement your own menu it is best if you put focus back on the grid using the [grid#focus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#focus) method when the menu closes (unless the menu action directs focus elsewhere).
 
-Only one of [grid#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenuAction) and [grid#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenu) or [grid#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenuId) can be specified. The [grid#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenu) and [grid#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenuId) options can only be set when the grid is initialized and it can't be changed. The [grid#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenuAction) cannot be set if the [grid#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenu) or [grid#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#contextMenuId) options were given when the grid was created.
+Only one of [grid#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenuAction) and [grid#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenu) or [grid#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenuId) can be specified. The [grid#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenu) and [grid#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenuId) options can only be set when the grid is initialized and it can't be changed. The [grid#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenuAction) cannot be set if the [grid#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenu) or [grid#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#contextMenuId) options were given when the grid was created.
 
 ### Keyboard End User Information
 
@@ -218,38 +184,31 @@ Only one of [grid#contextMenuAction](https://docs.oracle.com/en/database/oracle/
 | Down Arrow | In navigation mode moves to the cell in the same column of the next row. |
 | Left Arrow | In navigation mode or when focus is on a column header, moves to the previous cell in the row. |
 | Right Arrow | In navigation mode or when focus is on a column header, moves to the next cell in the row. |
-| Home (Windows), Command+Left Arrow (macOS) | In navigation mode or when focus is on a column header, moves to the first cell in the row. |
-| End (Windwos), Command+Right Arrow (macOS) | In navigation mode or when focus is on a column header, moves to the last cell in the row. |
-| Ctrl+Home (Windows), Option+Up Arrow (macOS) | In navigation mode moves to the first cell in the report. |
-| Ctrl+End (Windows), Option+Down Arrow (macOS) | In navigation mode moves to the last cell in the report. |
-| Page Up | In navigation mode moves focus up one visible page of rows staying in the same column. When in page pagination mode and at the end of a page, will go to the next page. |
-| Page Down | In navigation mode moves focus down one visible page of rows staying in the same column. When in page pagination mode and at the start of a page, will go to the previous page. |
+| Home | In navigation mode or when focus is on a column header, moves to the first cell in the row. |
+| End | In navigation mode or when focus is on a column header, moves to the last cell in the row. |
+| Ctrl+Home (Windows), Option+Up Arrow (Mac) | In navigation mode moves to the first cell in the report. |
+| Ctrl+End (Windows), Option+Down Arrow (Mac) | In navigation mode moves to the last cell in the report. |
+| Page Up | In navigation mode moves focus up one visible page of rows staying in the same column. |
+| Page Down | In navigation mode moves focus down one visible page of rows staying in the same column. |
 | Enter, Space | When focus is in a column header cell, activates the column header. |
 | Shift+Enter | In edit mode moves to the cell in the same column of the previous row. |
 | Enter | In edit mode moves to the cell in the same column of the next row. |
 | Shift+Tab | In edit mode moves to the previous cell. If focus is in the first cell of the first row it will go to the previous tab stop before the grid. In navigation mode moves focus out of the grid to the previous tab stop before the grid. |
-| Tab | In edit mode moves to the next cell. If focus is in the last cell of the last row it will go to the next tab stop after the grid or if option [grid#autoAddRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#autoAddRecord) is true it will insert a new row. In navigation mode moves focus out of the grid to the next tab stop after the grid. The next tab stop may be in the grid footer. |
-| Insert | In navigation mode inserts a new record after the last selected row in row selection mode or after the current cell in cell selection mode. |
+| Tab | In edit mode moves to the next cell. If focus is in the last cell of the last row it will go to the next tab stop after the grid or if option [grid#autoAddRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#autoAddRecord) is true it will insert a new row. In navigation mode moves focus out of the grid to the next tab stop after the grid. The next tab stop may be in the grid footer. |
+| Insert | In navigation mode inserts a new record after the current focused row. |
 | Delete | In navigation mode deletes the currently selected rows. |
 | Alt+F1 | In navigation mode display help on the current column if there is any. |
+| Ctrl+A | In navigation mode selects all rows if allowed. |
 | Alt+Up Arrow | With focus in column header cell will sort ascending by that column. Adding the Shift key modifier will add the column to the existing sorted columns. |
 | Alt+Down Arrow | With focus in column header cell will sort descending by that column. Adding the Shift key modifier will add the column to the existing sorted columns. |
 | Ctrl+Left Arrow | With focus in column header cell will decrease the width of the column. |
 | Ctrl+Right Arrow | With focus in column header cell will increase the width of the column. |
 | Shift+Left Arrow | With focus in column header or group header cell will move the column or group to the left. |
 | Shift+Right Arrow | With focus in column header or group header cell will move the column or group to the right. |
-| Shift+F8 | When multiple cell range selection is enabled with option [grid#multipleRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleRanges) this key allows adding another range with the keyboard. |
-| Ctrl+Space | When cell range selection is enabled with option [grid#multipleCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleCells) this key will select all the cells in the current column. |
-| Shift+Space | When cell range selection is enabled with option [grid#multipleCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleCells) this key will select all the cells in the current row. |
-| Ctrl+A (Windows), Command+A (macOS) | In navigation mode, selects all rows in row selection mode or all cells in cell selection mode. When using page pagination and persisting the selection in the model add the Shift key modifier to select just the rows on the current page. |
-| Ctrl+C (Windows), Command+C (macOS) | Copy to clipboard. |
-| Ctrl+X (Windows), Command+X (macOS) | Cut to clipboard. |
-| Ctrl+V (Windows), Command+V (macOS) | Paste from clipboard, overwrite. |
-| Ctrl+Shift+V (Windows), Command+Shift+V (macOS) | Paste from clipboard, insert. |
 
 List of keyboard shortcuts
 
-In navigation mode the Ctrl and Shift keys modify how the arrow keys and Space key affect the selection. In row selection mode with multiple selection the Shift key extends the selection to include the new row. The Ctrl key moves focus without changing the selection. The Space key adds the currently focused row to the selection. Ctrl+Space will toggle selection for the current row. In cell range selection mode the Shift key extends the selection to include the new cell.
+In navigation mode the Ctrl and Shift keys modify how the arrow keys and Space key affect the selection. In row selection mode with multiple selection the Shift key extends the selection to include the new row. The Ctrl key moves focus without changing the selection. The Space key add the currently focused row to the selection. Ctrl+Space will toggle selection for the current row. In cell range selection mode the Shift key extends the selection to include the new cell.
 
 ### CSS Classes
 
@@ -292,7 +251,7 @@ Since:
 This example creates a very simple non-editable grid with just two columns; Id and Name. Only the required options are given; all others will have their default value. The element with id myGrid is an empty div.
 
 ```
-const fieldDefinitions = {
+var fieldDefinitions = {
     id: {
         index: 0,
         heading: "Id",
@@ -304,7 +263,7 @@ const fieldDefinitions = {
         seq: "2"
     }
 };
-const data = [
+var data = [
     ["1022", "Betty"],
     ["1023", "James"],
     ...
@@ -321,7 +280,7 @@ $( "#myGrid" ).grid( {
 
 ### Extends
 
-- [tableModelViewBase](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html)
+- [tableModelViewBase](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html)
 
 ### Options
 
@@ -404,7 +363,7 @@ Get or set option aggregateLabels after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "aggregateLabels" );
+var value = $( ".selector" ).grid( "option", "aggregateLabels" );
 
 // set
 
@@ -448,7 +407,7 @@ Get or set option aggregateTooltips after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "aggregateTooltips" );
+var value = $( ".selector" ).grid( "option", "aggregateTooltips" );
 
 // set
 
@@ -478,35 +437,9 @@ $( ".selector" ).grid( {
 } );
 ```
 
-#### allowCut :boolean
-
-If true the selection can be copied to the clipboard and deleted or cleared from the grid using the browsers cut event. Deleting or clearing data cells is subject to editing restrictions of the grid and model. This can only be set at initialization time.
-
-##### Type:
-
-- boolean
-
-Since:
-- 26.1
-
-Default Value:
-- true
-
-##### Example
-
-Initialize the grid with the allowCut option specified.
-
-```
-$( ".selector" ).grid( {
-
-    allowCut: false
-
-} );
-```
-
 #### allowDelete :boolean
 
-Only applies if [grid#editable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#editable) is true. If false then can't use Delete key to delete a row. This only affects the keyboard behavior. The model determines if rows can be deleted or not.
+Only applies if [grid#editable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#editable) is true. If false then can't use Delete key to delete a row. This only affects the keyboard behavior. The model determines if rows can be deleted or not.
 
 ##### Type:
 
@@ -532,7 +465,7 @@ Get or set option allowDelete after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "allowDelete" );
+var value = $( ".selector" ).grid( "option", "allowDelete" );
 
 // set
 
@@ -541,7 +474,7 @@ $( ".selector" ).grid( "option", "allowDelete", false );
 
 #### allowEditMode :boolean
 
-Only applies if [grid#editable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#editable) is true. If false then can't go in or out of edit mode using mouse or keyboard.
+Only applies if [grid#editable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#editable) is true. If false then can't go in or out of edit mode using mouse or keyboard.
 
 ##### Type:
 
@@ -567,7 +500,7 @@ Get or set option allowEditMode after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "allowEditMode" );
+var value = $( ".selector" ).grid( "option", "allowEditMode" );
 
 // set
 
@@ -576,7 +509,7 @@ $( ".selector" ).grid( "option", "allowEditMode", false );
 
 #### allowInsert :boolean
 
-Only applies if [grid#editable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#editable) is true. If false then can't use Insert key to add a row. This only affects the keyboard behavior. The model determines if rows can be added or not.
+Only applies if [grid#editable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#editable) is true. If false then can't use Insert key to add a row. This only affects the keyboard behavior. The model determines if rows can be added or not.
 
 ##### Type:
 
@@ -602,44 +535,16 @@ Get or set option allowInsert after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "allowInsert" );
+var value = $( ".selector" ).grid( "option", "allowInsert" );
 
 // set
 
 $( ".selector" ).grid( "option", "allowInsert", false );
 ```
 
-#### allowPaste :boolean
-
-If true and the grid is editable, the clipboard data can be pasted to the grid using the browsers paste event as long as the clipboard data is in an acceptable format. This can only be set at initialization time.
-
-##### Type:
-
-- boolean
-
-Since:
-- 26.1
-
-Default Value:
-- true
-
-##### Example
-
-Initialize the grid with the allowPaste option specified.
-
-```
-$( ".selector" ).grid( {
-
-    allowPaste: false
-
-} );
-```
-
 #### allowSelectHidden :boolean
 
-Normally hidden rows cannot be selected. This means that multiple selection across collapsed control breaks will not select any collapsed rows and if a control break is collapsed any selected rows within it are unselected. Setting this option to true will allow hidden rows to be selected.
-
-Note this setting does not apply to cell range selection ([grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells)).
+Normally hidden rows cannot be selected. This means that range selection across collapsed control breaks will not select any collapsed rows and if a control break is collapsed any selected rows within it are unselected. Setting this option to true will allow hidden rows to be selected.
 
 ##### Type:
 
@@ -665,7 +570,7 @@ Get or set option allowSelectHidden after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "allowSelectHidden" );
+var value = $( ".selector" ).grid( "option", "allowSelectHidden" );
 
 // set
 
@@ -674,14 +579,14 @@ $( ".selector" ).grid( "option", "allowSelectHidden", true );
 
 #### applyTemplateOptions :object
 
-Options to pass to the [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate) function when processing any templates. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate) for details on the option properties.
+Options to pass to the [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate) function when processing any templates. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate) for details on the option properties.
 
 ##### Type:
 
 - object
 
 Inherited From:
-- [tableModelViewBase#applyTemplateOptions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#applyTemplateOptions)
+- [tableModelViewBase#applyTemplateOptions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#applyTemplateOptions)
 
 Default Value:
 - {}
@@ -706,7 +611,7 @@ Get or set option applyTemplateOptions after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "applyTemplateOptions" );
+var value = $( ".selector" ).grid( "option", "applyTemplateOptions" );
 
 // set
 
@@ -725,7 +630,7 @@ Specifies if a new record should be automatically added when the model doesn't c
 - boolean
 
 Inherited From:
-- [tableModelViewBase#autoAddRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#autoAddRecord)
+- [tableModelViewBase#autoAddRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#autoAddRecord)
 
 Default Value:
 - false
@@ -747,7 +652,7 @@ Get or set option autoAddRecord after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "autoAddRecord" );
+var value = $( ".selector" ).grid( "option", "autoAddRecord" );
 
 // set
 
@@ -782,7 +687,7 @@ Get or set option collapsibleControlBreaks after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "collapsibleControlBreaks" );
+var value = $( ".selector" ).grid( "option", "collapsibleControlBreaks" );
 
 // set
 
@@ -884,7 +789,7 @@ $( ".selector" ).grid( {
 
 #### columnSort :boolean
 
-If true the mouse and keyboard can be used in column headings to adjust the sort order. The grid doesn't actually do any sorting. Something external to the grid must do the actual sorting by handling the [grid#event:sortchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#event:sortchange) event and updating the model.
+If true the mouse and keyboard can be used in column headings to adjust the sort order. The grid doesn't actually do any sorting. Something external to the grid must do the actual sorting by handling the [grid#event:sortchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#event:sortchange) event and updating the model.
 
 Note the sort order can still be adjusted external to the grid even if this is false.
 
@@ -912,7 +817,7 @@ Get or set option columnSort after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "columnSort" );
+var value = $( ".selector" ).grid( "option", "columnSort" );
 
 // set
 
@@ -921,7 +826,7 @@ $( ".selector" ).grid( "option", "columnSort", false );
 
 #### columnSortMultiple :boolean
 
-If true multiple columns can be sorted using Shift key modifier. This only applies if [grid#columnSort](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#columnSort) is true.
+If true multiple columns can be sorted using Shift key modifier. This only applies if [grid#columnSort](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#columnSort) is true.
 
 ##### Type:
 
@@ -961,7 +866,7 @@ Get or set option columnSortMultiple after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "columnSortMultiple" );
+var value = $( ".selector" ).grid( "option", "columnSortMultiple" );
 
 // set
 
@@ -972,7 +877,7 @@ $( ".selector" ).grid( "option", "columnSortMultiple", false );
 
 Defines the columns in the grid. These columns are also fields in the model. The value is an array of exactly one object that maps the column name to a column definition object. The properties are the column names. The property value is a column definition. Wrapping the object in an array simply keeps the widget from making a copy of the columns so that the same definition can be shared.
 
-The same structure can be shared with the data [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) and a [recordView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html) widget. This option is required.
+The same structure can be shared with the data [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) and a [recordView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html) widget. This option is required.
 
 ##### Type:
 
@@ -997,7 +902,7 @@ The same structure can be shared with the data [model](https://docs.oracle.com/e
 <tr>
 <th class="name" scope="row"><code>*</code></th>
 <td class="type">object</td>
-<td class="description last">The property is the column name. By convention, it is the uppercase database column name. The value is an object that defines the column. All properties are optional unless specified otherwise.
+<td class="description last">The property is the column name. By convention it is the uppercase database column name. The value is an object that defines the column. All properties are optional unless specified otherwise.
 <h6 id="properties-6">Properties</h6>
 <table class="props" aria-label="Properties">
 <thead>
@@ -1056,7 +961,7 @@ The same structure can be shared with the data [model](https://docs.oracle.com/e
 <tr>
 <th class="name" scope="row"><code>copyValueToClipboard</code></th>
 <td class="type">function | boolean</td>
-<td class="description last">Controls what is copied to the clipboard. When null or undefined, copying cells to the clipboard copies the text displayed in the cell. In some cases such as when the cell contains buttons you may want just the display value from the model. Set to true to copy the model display value. Set to false to copy the model LOV return value. This can also be a function that returns the cell content to copy to the clipboard (<code class="prettyprint">copyValueToClipboard(column, value, text) -&gt; string</code>). The function takes 3 arguments, The column definition, the model value, and the cell text and returns the string content to add to the clipboard for the cell.</td>
+<td class="description last">Controls what is copied to the clipboard. When copying cells to the clipboard normally the text displayed in the cell is copied. In some cases such as when the cell contains buttons you may want just the display value from the model. Set to true to copy the model display value. This can also be a function that returns the cell content to copy to the clipboard (<code class="prettyprint">copyValueToClipboard(column, value, text) -&gt; string</code>). The function takes 3 arguments, The column definition, the model value, and the cell text and returns the string content to add to the clipboard for the cell.</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>escape</code></th>
@@ -1111,7 +1016,7 @@ The same structure can be shared with the data [model](https://docs.oracle.com/e
 <tr>
 <th class="name" scope="row"><code>linkText</code></th>
 <td class="type">string</td>
-<td class="description last">Only for columns that contain a link. This is the anchor content. Allows markup. Allows substitutions just like the <code class="prettyprint">cellTemplate</code> property. If not given the rendered display value of this column is used as the link content. If the display value of the cell is empty then the link URL is used. To display a link, at least one of <code class="prettyprint">linkTargetColumn</code> or the model field metadata <code class="prettyprint">url</code> property must be given. Note: If the cell is editable it is always the data value of the field that is edited. So if you want to edit the link text it is best to omit linkText and use <code class="prettyprint">linkTargetColumn</code>.</td>
+<td class="description last">Only for columns that contain a link. This is the anchor content. Allows markup. Allows substitutions just like the <code class="prettyprint">cellTemplate</code> property. If not given the rendered display value of this column is used as the link content. If the display value of the cell is empty then the link URL is used. To display a link, at least one of <code class="prettyprint">linkTargetColumn</code> or the model field metadata <code class="prettyprint">url</code> property must must be given. Note: If the cell is editable it is always the data value of the field that is edited. So if you want to edit the link text it is best to omit linkText and use <code class="prettyprint">linkTargetColumn</code>.</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>linkAttributes</code></th>
@@ -1262,7 +1167,7 @@ Get or set option constrainNavigation after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "constrainNavigation" );
+var value = $( ".selector" ).grid( "option", "constrainNavigation" );
 
 // set
 
@@ -1271,7 +1176,7 @@ $( ".selector" ).grid( "option", "constrainNavigation", false );
 
 #### contextMenu :object
 
-A [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget options object use to create the context menu.
+A [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget options object use to create the context menu.
 
 Only specify one of `contextMenu` or `contextMenuId` and `contextMenuAction`. If none of `contextMenu`, `contextMenuId` or `contextMenuAction` are specified there is no context menu.
 
@@ -1330,9 +1235,9 @@ $( ".selector" ).grid( {
 
 #### (nullable) contextMenuId :string
 
-If option `contextMenu` is given then this is the element id to give the context [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) created. This allows other code to interact with the created context [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget.
+If option `contextMenu` is given then this is the element id to give the context [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) created. This allows other code to interact with the created context [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget.
 
-If option `contextMenu` is not given then this is the element id of an existing [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget.
+If option `contextMenu` is not given then this is the element id of an existing [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget.
 
 This option cannot be set or changed after the widget is initialized.
 
@@ -1357,14 +1262,14 @@ $( ".selector" ).grid( {
 
 #### editable :boolean
 
-Determine if the view allows editing. If true the [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) must also allow editing but if false the model could still allow editing. If true the view data can be edited according to what the model allows. Only applies if the view supports editing.
+Determine if the view allows editing. If true the [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) must also allow editing but if false the model could still allow editing. If true the view data can be edited according to what the model allows. Only applies if the view supports editing.
 
 ##### Type:
 
 - boolean
 
 Inherited From:
-- [tableModelViewBase#editable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#editable)
+- [tableModelViewBase#editable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#editable)
 
 Default Value:
 - false
@@ -1386,7 +1291,7 @@ Get or set option editable after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "editable" );
+var value = $( ".selector" ).grid( "option", "editable" );
 
 // set
 
@@ -1402,7 +1307,7 @@ This is the name of the singular form of the entity that is the subject of the r
 - string
 
 Inherited From:
-- [tableModelViewBase#entityTitlePlural](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#entityTitlePlural)
+- [tableModelViewBase#entityTitlePlural](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#entityTitlePlural)
 
 Default Value:
 - null
@@ -1424,7 +1329,7 @@ Get or set option entityTitlePlural after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "entityTitlePlural" );
+var value = $( ".selector" ).grid( "option", "entityTitlePlural" );
 
 // set
 
@@ -1440,7 +1345,7 @@ This is the singular form of the entity that is the subject of the report. This 
 - string
 
 Inherited From:
-- [tableModelViewBase#entityTitleSingular](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#entityTitleSingular)
+- [tableModelViewBase#entityTitleSingular](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#entityTitleSingular)
 
 Default Value:
 - null
@@ -1462,7 +1367,7 @@ Get or set option entityTitleSingular after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "entityTitleSingular" );
+var value = $( ".selector" ).grid( "option", "entityTitleSingular" );
 
 // set
 
@@ -1478,7 +1383,7 @@ Specify if all the rows will have the same height or variable heights.
 - boolean
 
 Inherited From:
-- [tableModelViewBase#fixedRowHeight](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#fixedRowHeight)
+- [tableModelViewBase#fixedRowHeight](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#fixedRowHeight)
 
 Default Value:
 - true
@@ -1500,7 +1405,7 @@ Get or set option fixedRowHeight after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "fixedRowHeight" );
+var value = $( ".selector" ).grid( "option", "fixedRowHeight" );
 
 // set
 
@@ -1516,7 +1421,7 @@ Determine if the view will include a footer to show status and pagination contro
 - boolean
 
 Inherited From:
-- [tableModelViewBase#footer](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#footer)
+- [tableModelViewBase#footer](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#footer)
 
 Default Value:
 - true
@@ -1538,7 +1443,7 @@ Get or set option footer after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "footer" );
+var value = $( ".selector" ).grid( "option", "footer" );
 
 // set
 
@@ -1560,7 +1465,7 @@ The container width must always be defined.
 - boolean
 
 Inherited From:
-- [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#hasSize)
+- [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#hasSize)
 
 Default Value:
 - false
@@ -1579,14 +1484,14 @@ $( ".selector" ).grid( {
 
 #### hideDeletedRows :boolean
 
-Determine if deleted rows (records) are removed from the view right away or shown with a visual effect to indicate they are going to be deleted. If true (and the view is editable) deleted records will not be visible, otherwise they are visible but have a visual indication that they are deleted. The actual records are not deleted on the server until the model is saved. The visual effect is determined by CSS rules and is typically strike through. See also [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) `onlyMarkForDelete` option.
+Determine if deleted rows (records) are removed from the view right away or shown with a visual effect to indicate they are going to be deleted. If true (and the view is editable) deleted records will not be visible, otherwise they are visible but have a visual indication that they are deleted. The actual records are not deleted on the server until the model is saved. The visual effect is determined by CSS rules and is typically strike through. See also [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) `onlyMarkForDelete` option.
 
 ##### Type:
 
 - boolean
 
 Inherited From:
-- [tableModelViewBase#hideDeletedRows](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#hideDeletedRows)
+- [tableModelViewBase#hideDeletedRows](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#hideDeletedRows)
 
 Default Value:
 - false
@@ -1608,7 +1513,7 @@ Get or set option hideDeletedRows after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "hideDeletedRows" );
+var value = $( ".selector" ).grid( "option", "hideDeletedRows" );
 
 // set
 
@@ -1624,7 +1529,7 @@ Hide the footer if there is no data. This only applies if `footer` is true.
 - boolean
 
 Inherited From:
-- [tableModelViewBase#hideEmptyFooter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#hideEmptyFooter)
+- [tableModelViewBase#hideEmptyFooter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#hideEmptyFooter)
 
 Default Value:
 - false
@@ -1646,7 +1551,7 @@ Get or set option hideEmptyFooter after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "hideEmptyFooter" );
+var value = $( ".selector" ).grid( "option", "hideEmptyFooter" );
 
 // set
 
@@ -1740,7 +1645,7 @@ The object is a mapping of highlight id to color definition.
 </table>
 
 Inherited From:
-- [tableModelViewBase#highlights](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#highlights)
+- [tableModelViewBase#highlights](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#highlights)
 
 ##### Examples
 
@@ -1766,29 +1671,29 @@ Get or set option highlights after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "highlights" );
+var value = $( ".selector" ).grid( "option", "highlights" );
 
 // set
 
 $( ".selector" ).grid( "option", "highlights", {...} );
 ```
 
-#### loadIncompleteSelection :string
+#### loadIncompleteSelection :boolean
 
 Controls what happens when the selection is incomplete. When selection state is saved in the model, and because the model can fetch data on demand, it is possible to select records that are not yet loaded into the model resulting in an incomplete selection. This can happen when selecting all rows/items or when range selecting a large enough range.
 
-Only applies if [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#persistSelection) is true and with virtual pagination. The value is one of: "always", "never", or "on-demand". The default is "on-demand". When the selection is incomplete:
+Only applies if [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#persistSelection) is true and with virtual pagination. The value is one of: "always", "never", or "on-demand". The default is "on-demand". When the selection is incomplete:
 
 - "always": start fetching all the model data as soon as there is an incomplete selection
 - "never": do nothing
-- "on-demand": display a link for the user to click to cause all the model data to be fetched. The footer must be displayed for the user to access the link. If the footer is turned off and showing the selection count externally the developer is responsible for providing a button (or link) to load the model data on demand by calling [tableModelViewBase#fetchAllData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#fetchAllData). See also [tableModelViewBase#updateStatus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#updateStatus).
+- "on-demand": display a link for the user to click to cause all the model data to be fetched. The footer must be displayed for the user to access the link. If the footer is turned off and showing the selection count externally the developer is responsible for providing a button (or link) to load the model data on demand by calling [tableModelViewBase#fetchAllData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#fetchAllData). See also [tableModelViewBase#updateStatus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#updateStatus).
 
 ##### Type:
 
-- string
+- boolean
 
 Inherited From:
-- [tableModelViewBase#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#loadIncompleteSelection)
+- [tableModelViewBase#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#loadIncompleteSelection)
 
 Default Value:
 - "on-demand"
@@ -1838,23 +1743,23 @@ Get or set option loadIncompleteSelection after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "loadIncompleteSelection" );
+var value = $( ".selector" ).grid( "option", "loadIncompleteSelection" );
 
 // set
 
 $( ".selector" ).grid( "option", "loadIncompleteSelection", "always" );
 ```
 
-#### modelName :[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+#### modelName :[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
-Identifier of model that this view widget will display data from. Can include an instance as well. The model must already exist. This option is required. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) `modelId` argument.
+Identifier of model that this view widget will display data from. Can include an instance as well. The model must already exist. This option is required. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) `modelId` argument.
 
 ##### Type:
 
-- [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+- [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
 Inherited From:
-- [tableModelViewBase#modelName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#modelName)
+- [tableModelViewBase#modelName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#modelName)
 
 ##### Examples
 
@@ -1873,7 +1778,7 @@ Get or set option modelName after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "modelName" );
+var value = $( ".selector" ).grid( "option", "modelName" );
 
 // set
 
@@ -1884,7 +1789,7 @@ $( ".selector" ).grid( "option", "modelName", "myModel" );
 
 If true multiple rows can be selected otherwise only a single row can be selected.
 
-See also [grid#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectAll1) and [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#persistSelection).
+See also grid#selectAll and [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#persistSelection).
 
 ##### Type:
 
@@ -1910,7 +1815,7 @@ Get or set option multiple after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "multiple" );
+var value = $( ".selector" ).grid( "option", "multiple" );
 
 // set
 
@@ -1919,7 +1824,7 @@ $( ".selector" ).grid( "option", "multiple", true );
 
 #### multipleCells :boolean
 
-Only applies while [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) is true. If true then a range of cells can be selected otherwise only a single cell is selected. The default is to allow a range of cells to be selected.
+Only applies while [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectCells) is true. If true then a range of cells can be selected otherwise only a single cell is selected. The default is to allow a range of cells to be selected.
 
 ##### Type:
 
@@ -1945,49 +1850,11 @@ Get or set option multipleCells after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "multipleCells" );
+var value = $( ".selector" ).grid( "option", "multipleCells" );
 
 // set
 
 $( ".selector" ).grid( "option", "multipleCells", false );
-```
-
-#### multipleRanges :boolean
-
-If true, then multiple ranges can be selected. Otherwise, at most one range can be selected. Only applies while [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) and [grid#multipleCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleCells) are true.
-
-##### Type:
-
-- boolean
-
-Since:
-- 26.1
-
-Default Value:
-- false
-
-##### Examples
-
-Initialize the grid with the multipleRanges option specified.
-
-```
-$( ".selector" ).grid( {
-
-    multipleRanges: true
-
-} );
-```
-
-Get or set option multipleRanges after initialization.
-
-```
-// get
-
-let value = $( ".selector" ).grid( "option", "multipleRanges" );
-
-// set
-
-$( ".selector" ).grid( "option", "multipleRanges", true );
 ```
 
 #### noDataIcon :string
@@ -1999,7 +1866,7 @@ Icon to display when there is no data. The icon is displayed above the `noDataMe
 - string
 
 Inherited From:
-- [tableModelViewBase#noDataIcon](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#noDataIcon)
+- [tableModelViewBase#noDataIcon](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#noDataIcon)
 
 Default Value:
 - "icon-irr-no-results"
@@ -2021,7 +1888,7 @@ Get or set option noDataIcon after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "noDataIcon" );
+var value = $( ".selector" ).grid( "option", "noDataIcon" );
 
 // set
 
@@ -2037,7 +1904,7 @@ Text to display when there is no data.
 - string
 
 Inherited From:
-- [tableModelViewBase#noDataMessage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#noDataMessage)
+- [tableModelViewBase#noDataMessage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#noDataMessage)
 
 Default Value:
 - ""
@@ -2059,7 +1926,7 @@ Get or set option noDataMessage after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "noDataMessage" );
+var value = $( ".selector" ).grid( "option", "noDataMessage" );
 
 // set
 
@@ -2079,7 +1946,7 @@ Pagination settings.
 | Name | Type | Description |
 |----|----|----|
 | `scroll` | boolean | If true the scroll bar is used to page through the results a.k.a. infinite scrolling or virtual paging. If false then next and previous buttons are shown. This is 'page at a time' or traditional pagination. Default is false. |
-| `virtual` | boolean | Only applies if `scroll` is true. If false new records are rendered and added to the DOM as the user scrolls to the bottom of the view. Records are never removed from the DOM. This is 'add more' (aka high-water-mark) scroll pagination. If true records can be removed from the DOM as the user scrolls and the records are no longer visible. If true and in addition `loadMore` is false and the model knows the total number of records (model option `hasTotalRecords` is true) then the view looks as if it contains all the records but only the records that are currently visible are rendered. This allows virtual scroll paging in both directions. This is 'virtual' scroll pagination (aka true virtual scrolling). In this case, if the view supports selection the [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#persistSelection) option should be true so that selection state isn't lost when records are removed from the DOM. Default is false. |
+| `virtual` | boolean | Only applies if `scroll` is true. If false new records are rendered and added to the DOM as the user scrolls to the bottom of the view. Records are never removed from the DOM. This is 'add more' (aka high-water-mark) scroll pagination. If true records can be removed from the DOM as the user scrolls and the records are no longer visible. If true and in addition `loadMore` is false and the model knows the total number of records (model option `hasTotalRecords` is true) then the view looks as if it contains all the records but only the records that are currently visible are rendered. This allows virtual scroll paging in both directions. This is 'virtual' scroll pagination (aka true virtual scrolling). In this case, if the view supports selection the [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#persistSelection) option should be true so that selection state isn't lost when records are removed from the DOM. Default is false. |
 | `loadMore` | boolean | If true show a load more button rather than auto paging. Only applies if `scroll` is true. Default is false. |
 | `showPageLinks` | boolean | If true show page links between buttons. Only applies if `scroll` is false The model must know the total number of rows for this to be true. Default is false. |
 | `maxLinks` | number | The maximum number of links to show when `showPageLinks` is true. Default is 5. |
@@ -2089,7 +1956,7 @@ Pagination settings.
 | `hideSinglePage` | boolean | Hide the pagination controls when there is only one page of results. When true and there is just one page of results the pagination controls are hidden. When false the pagination controls are disabled when there is just one page. Pagination controls include the "first", "next", "previous", and "last" buttons when `scroll` is false and "load more" button when `scroll` and `loadMore` are true. In addition, when true, if the page range typically shows X - Y of Z it will just show the total records when there is just one page. The default is false. |
 
 Inherited From:
-- [tableModelViewBase#pagination](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#pagination)
+- [tableModelViewBase#pagination](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#pagination)
 
 ##### Examples
 
@@ -2113,7 +1980,7 @@ Get or set option pagination after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "pagination" );
+var value = $( ".selector" ).grid( "option", "pagination" );
 
 // set
 
@@ -2129,7 +1996,7 @@ If true and the view supports selection, the selection state for each row or ite
 - boolean
 
 Inherited From:
-- [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#persistSelection)
+- [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#persistSelection)
 
 Default Value:
 - false
@@ -2179,7 +2046,7 @@ Get or set option persistSelection after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "persistSelection" );
+var value = $( ".selector" ).grid( "option", "persistSelection" );
 
 // set
 
@@ -2188,14 +2055,14 @@ $( ".selector" ).grid( "option", "persistSelection", true );
 
 #### progressOptions :object
 
-Options object to pass to [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.showSpinner). The default depends on the `hasSize` option.
+Options object to pass to [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.showSpinner). The default depends on the `hasSize` option.
 
 ##### Type:
 
 - object
 
 Inherited From:
-- [tableModelViewBase#progressOptions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#progressOptions)
+- [tableModelViewBase#progressOptions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#progressOptions)
 
 Default Value:
 - { fixed: !options.hasSize }
@@ -2217,7 +2084,7 @@ Get or set option progressOptions after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "progressOptions" );
+var value = $( ".selector" ).grid( "option", "progressOptions" );
 
 // set
 
@@ -2268,7 +2135,7 @@ Get or set option reorderColumns after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "reorderColumns" );
+var value = $( ".selector" ).grid( "option", "reorderColumns" );
 
 // set
 
@@ -2319,7 +2186,7 @@ Get or set option resizeColumns after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "resizeColumns" );
+var value = $( ".selector" ).grid( "option", "resizeColumns" );
 
 // set
 
@@ -2361,7 +2228,7 @@ Get or set option rowHeader after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "rowHeader" );
+var value = $( ".selector" ).grid( "option", "rowHeader" );
 
 // set
 
@@ -2396,7 +2263,7 @@ Get or set option rowHeaderCheckbox after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "rowHeaderCheckbox" );
+var value = $( ".selector" ).grid( "option", "rowHeaderCheckbox" );
 
 // set
 
@@ -2431,7 +2298,7 @@ Get or set option rowHeaderLabelColumn after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "rowHeaderLabelColumn" );
+var value = $( ".selector" ).grid( "option", "rowHeaderLabelColumn" );
 
 // set
 
@@ -2475,7 +2342,7 @@ Get or set option rowHeaderWidth after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "rowHeaderWidth" );
+var value = $( ".selector" ).grid( "option", "rowHeaderWidth" );
 
 // set
 
@@ -2495,7 +2362,7 @@ For traditional pagination this is the number of records to show in a report pag
 - number
 
 Inherited From:
-- [tableModelViewBase#rowsPerPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#rowsPerPage)
+- [tableModelViewBase#rowsPerPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#rowsPerPage)
 
 Default Value:
 - null
@@ -2517,7 +2384,7 @@ Get or set option rowsPerPage after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "rowsPerPage" );
+var value = $( ".selector" ).grid( "option", "rowsPerPage" );
 
 // set
 
@@ -2526,17 +2393,13 @@ $( ".selector" ).grid( "option", "rowsPerPage", 50 );
 
 #### selectAll :boolean
 
-If true, and when [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) is false, then all the rows in the current page or all rendered rows or all rows in the model, depending on pagination settings, can be selected with the keyboard (Ctrl+A key, or on macOS the Command+A key) or the select all checkbox (if [grid#rowHeaderCheckbox](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#rowHeaderCheckbox) is true) or using the [grid#selectAll(2)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectAll2) method. When [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) is true, then a single range of all cells will be selected. The same keyboard shortcuts are used or the selectAll method. In cell range selection mode there is no "select all" checkbox but the first column header serves the same purpose as long as [grid#rowHeader](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#rowHeader) is not "none".
+If true then all the rows in the current page or all rendered rows or all rows in the model, depending on pagination settings, can be selected with Ctrl+A or the select all checkbox (if [grid#rowHeaderCheckbox](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#rowHeaderCheckbox) is true) or using the [grid#selectAll(2)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectAll2) method.
 
-Only applies when [grid#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multiple) or [grid#multipleCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleCells) is true.
+Only applies when [grid#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#multiple) is true.
 
-When [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#persistSelection) is false only rows that are rendered to the DOM can be selected with Select All. For traditional paging this means that all the rows in the current page can be selected. For any kind of scroll pagination, only the rows that have already been and are currently rendered to the DOM can be selected.
+When [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#persistSelection) is false only rows that are rendered to the DOM can be selected with Select All. For traditional paging this means that all the rows in the current page can be selected. For any kind of scroll pagination, only the rows that have already been and are currently rendered to the DOM can be selected.
 
-When [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#persistSelection) is true the selection state is kept in the model and only records currently loaded in the model can be selected.
-
-When [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) is true the persistSelection setting is ignored. The selected range information is kept in the grid but independent of the DOM. One or more ranges may be incomplete if they span records that are not yet loaded in the model.
-
-The [grid#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#loadIncompleteSelection) option controls if and how additional records are loaded in the model so that the selection is complete. This setting applies for both row and cell range selection modes.
+When [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#persistSelection) is true the selection state is kept in the model and only records currently loaded in the model can be selected. The [grid#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#loadIncompleteSelection) option controls if and how additional records are loaded in the model so that the selection is complete.
 
 ##### Type:
 
@@ -2562,7 +2425,7 @@ Get or set option selectAll after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "selectAll" );
+var value = $( ".selector" ).grid( "option", "selectAll" );
 
 // set
 
@@ -2597,89 +2460,11 @@ Get or set option selectCells after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "selectCells" );
+var value = $( ".selector" ).grid( "option", "selectCells" );
 
 // set
 
 $( ".selector" ).grid( "option", "selectCells", true );
-```
-
-#### selectCellsColumn :boolean
-
-If true, when selecting cells, allows selecting all the cells in a column by clicking on a column header or pressing the space key with focus in a column header. Only applies while [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) and [grid#multipleCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleCells) are true.
-
-If true then the grid [grid#event:activatecolumnheader](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#event:activatecolumnheader) event will not be triggered and the `activateColumnHeader` call back option will not be called.
-
-##### Type:
-
-- boolean
-
-Since:
-- 26.1
-
-Default Value:
-- false
-
-##### Examples
-
-Initialize the grid with the selectCellsColumn option specified.
-
-```
-$( ".selector" ).grid( {
-
-    selectCellsColumn: true
-
-} );
-```
-
-Get or set option selectCellsColumn after initialization.
-
-```
-// get
-
-let value = $( ".selector" ).grid( "option", "selectCellsColumn" );
-
-// set
-
-$( ".selector" ).grid( "option", "selectCellsColumn", true );
-```
-
-#### selectCellsRow :boolean
-
-If true, when selecting cells, allows selecting all the cells in a row by clicking on a row header or pressing the space key with focus in a row header. Only applies while [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) and [grid#multipleCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleCells) are true.
-
-##### Type:
-
-- boolean
-
-Since:
-- 26.1
-
-Default Value:
-- false
-
-##### Examples
-
-Initialize the grid with the selectCellsRow option specified.
-
-```
-$( ".selector" ).grid( {
-
-    selectCellsRow: true
-
-} );
-```
-
-Get or set option selectCellsRow after initialization.
-
-```
-// get
-
-let value = $( ".selector" ).grid( "option", "selectCellsRow" );
-
-// set
-
-$( ".selector" ).grid( "option", "selectCellsRow", true );
 ```
 
 #### (nullable) selectionStateItem :string
@@ -2709,14 +2494,14 @@ $( ".selector" ).grid( {
 
 #### selectionStatusMessageKey :string
 
-The text message key to use for showing the number of selected rows/records in the footer. The message key must have exactly one parameter %0 which is replaced with the number of rows/records selected. It is often better to use [grid#entityTitleSingular](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#entityTitleSingular) and [grid#entityTitlePlural](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#entityTitlePlural) rather than this option.
+The text message key to use for showing the number of selected rows/records in the footer. The message key must have exactly one parameter %0 which is replaced with the number of rows/records selected. It is often better to use [grid#entityTitleSingular](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#entityTitleSingular) and [grid#entityTitlePlural](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#entityTitlePlural) rather than this option.
 
 ##### Type:
 
 - string
 
 Overrides:
-- [tableModelViewBase#selectionStatusMessageKey](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#selectionStatusMessageKey)
+- [tableModelViewBase#selectionStatusMessageKey](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#selectionStatusMessageKey)
 
 Default Value:
 - "APEX.GV.SELECTION_COUNT"
@@ -2738,7 +2523,7 @@ Get or set option selectionStatusMessageKey after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "selectionStatusMessageKey" );
+var value = $( ".selector" ).grid( "option", "selectionStatusMessageKey" );
 
 // set
 
@@ -2754,7 +2539,7 @@ Text to display when a field/column value is null or empty string.
 - string
 
 Inherited From:
-- [tableModelViewBase#showNullAs](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#showNullAs)
+- [tableModelViewBase#showNullAs](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#showNullAs)
 
 Default Value:
 - "-"
@@ -2776,7 +2561,7 @@ Get or set option showNullAs after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "showNullAs" );
+var value = $( ".selector" ).grid( "option", "showNullAs" );
 
 // set
 
@@ -2811,7 +2596,7 @@ Get or set option skipReadonlyCells after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "skipReadonlyCells" );
+var value = $( ".selector" ).grid( "option", "skipReadonlyCells" );
 
 // set
 
@@ -2827,7 +2612,7 @@ Determine if the footer will stick to the bottom of the page. Only applies if `h
 - boolean
 
 Inherited From:
-- [tableModelViewBase#stickyFooter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#stickyFooter)
+- [tableModelViewBase#stickyFooter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#stickyFooter)
 
 Default Value:
 - false
@@ -2849,7 +2634,7 @@ Get or set option stickyFooter after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "stickyFooter" );
+var value = $( ".selector" ).grid( "option", "stickyFooter" );
 
 // set
 
@@ -2860,14 +2645,14 @@ $( ".selector" ).grid( "option", "stickyFooter", true );
 
 Determine if the header will stick to the top of the page as it scrolls.
 
-Only applies if [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#hasSize) is false. If false the header will not stick to the page. If true or a function the header will stick to the top of the page using the undocumented `stickyWidget` widget. If the value is a function then it is passed to the `stickyWidget` as the top option.
+Only applies if [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#hasSize) is false. If false the header will not stick to the page. If true or a function the header will stick to the top of the page using the undocumented `stickyWidget` widget. If the value is a function then it is passed to the `stickyWidget` as the top option.
 
 ##### Type:
 
 - boolean \| function
 
 Inherited From:
-- [tableModelViewBase#stickyTop](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#stickyTop)
+- [tableModelViewBase#stickyTop](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#stickyTop)
 
 Default Value:
 - false
@@ -2889,7 +2674,7 @@ Get or set option stickyTop after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "stickyTop" );
+var value = $( ".selector" ).grid( "option", "stickyTop" );
 
 // set
 
@@ -2958,7 +2743,7 @@ Get or set option tooltip after initialization.
 ```
 // get
 
-let value = $( ".selector" ).grid( "option", "tooltip" );
+var value = $( ".selector" ).grid( "option", "tooltip" );
 
 // set
 
@@ -2978,17 +2763,16 @@ A callback function that will handle display of report status information such a
 - deletedCount: The number of deleted records if option `hideDeletedRows` is true and null otherwise.
 - selectedCount: The number of selected records
 - total: The total number of records if model option `hasTotalRecords` is true and null otherwise.
-- incomplete: True if the selection is incomplete and false otherwise. The selection is incomplete if the view has selected more records than the model currently has loaded. See option [tableModelViewBase#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#loadIncompleteSelection).
-- altMessage: Message text to display until the next call to `updateStatus`. Currently used for paste operation messages.
+- incomplete: True if the selection is incomplete and false otherwise. The selection is incomplete if the view has selected more records than the model currently has loaded. See option [tableModelViewBase#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#loadIncompleteSelection).
 
-Use this callback to display the selected record count in a custom location in the page. This is most useful when the report footer is not shown [tableModelViewBase#footer](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#footer) is false.
+Use this callback to display the selected record count in a custom location in the page. This is most useful when the report footer is not shown [tableModelViewBase#footer](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#footer) is false.
 
 ##### Type:
 
 - function
 
 Inherited From:
-- [tableModelViewBase#updateStatus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#updateStatus)
+- [tableModelViewBase#updateStatus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#updateStatus)
 
 Default Value:
 - null
@@ -3078,9 +2862,9 @@ Since:
 Initialize the grid with the `activateCell` callback specified:
 
 ```
-$( ".selector" ).grid( {
+$( ".selector" ).grid({
     activateCell: function( event, data ) {}
-} );
+});
 ```
 
 Bind an event listener to the `gridactivatecell` event:
@@ -3175,9 +2959,9 @@ Triggered when whatever popup is opened in response to activateColumnHeader even
 Initialize the grid with the `cancelColumnHeader` callback specified:
 
 ```
-$( ".selector" ).grid( {
+$( ".selector" ).grid({
     cancelColumnHeader: function( event ) {}
-} );
+});
 ```
 
 Bind an event listener to the `gridcancelcolumnheader` event:
@@ -3345,7 +3129,7 @@ $( ".selector" ).on( "gridcolumnresize", function( event, data ) {} );
 
 #### currentcellchange
 
-Triggered when the current cell changes. It has no additional data. See also [grid#getCurrentCell](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getCurrentCell).
+Triggered when the current cell changes. It has no additional data. See also [grid#getCurrentCell](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getCurrentCell).
 
 ##### Properties:
 
@@ -3359,7 +3143,7 @@ Initialize the grid with the `currentCellChange` callback specified:
 
 ```
 $( ".selector" ).grid({
-    currentCellChange: function( event ) {}
+    currentItemChange: function( event ) {}
 });
 ```
 
@@ -3369,7 +3153,7 @@ Bind an event listener to the `gridcurrentcellchange` event:
 $( ".selector" ).on( "gridcurrentcellchange", function( event ) {} );
 ```
 
-See example for [grid#getCurrentCell](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getCurrentCell).
+See example for [grid#getCurrentCell](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getCurrentCell).
 
 #### modechange
 
@@ -3510,7 +3294,7 @@ $( ".selector" ).on( "gridpagechange", function( event, data ) {} );
 
 #### selectionchange
 
-Triggered when the selection state changes. It has no additional data. See also [grid#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelectedRecords).
+Triggered when the selection state changes. It has no additional data. See also [grid#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getSelectedRecords).
 
 ##### Properties:
 
@@ -3536,7 +3320,7 @@ $( ".selector" ).on( "gridselectionchange", function( event ) {} );
 
 #### sortchange
 
-Triggered when the sort direction changes. This does not actually sort the data or ask the model to sort or fetch new data. It is expected that a handler will call [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#refreshColumns) and then take action that causes the data to be sorted.
+Triggered when the sort direction changes. This does not actually sort the data or ask the model to sort or fetch new data. It is expected that a handler will call [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#refreshColumns) and then take action that causes the data to be sorted.
 
 ##### Properties:
 
@@ -3604,9 +3388,9 @@ Triggered when the sort direction changes. This does not actually sort the data 
 Initialize the grid with the `sortChange` callback specified:
 
 ```
-$( ".selector" ).grid( {
+$( ".selector" ).grid({
     sortChange: function( event, data ) {}
-} );
+});
 ```
 
 Bind an event listener to the `gridsortchange` event:
@@ -3615,50 +3399,9 @@ Bind an event listener to the `gridsortchange` event:
 $( ".selector" ).on( "gridsortchange", function( event, data ) {} );
 ```
 
-This examples shows the recommended logic for updating the column properties `sortDirection` and `sortIndex` to handle [grid#columnSortMultiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#columnSortMultiple).
-
-```
-$( ".selector" ).on( "gridsortchange", function( event, data ) {
-    const columns = grid$.grid("getColumns"),
-        originalIndex = data.column.sortIndex;
-    let index = 1;
-
-    for ( let i = 0; i < columns.length; i++ ) {
-        let column = columns[i];
-
-        if ( column.sortIndex ) {
-            if ( data.action === "change" ) {
-                if ( column === data.column ) {
-                    index = column.sortIndex;
-                }
-            } else if ( data.action === "add" ) {
-                if ( column.sortIndex >= index ) {
-                    index = column.sortIndex + 1;
-                }
-            } else if ( data.action === "remove" ) {
-                if ( column === data.column ) {
-                    delete column.sortIndex;
-                    delete column.sortDirection;
-                } else if ( column.sortIndex > originalIndex ) {
-                    column.sortIndex -= 1;
-                }
-            } else if ( data.action === "clear" || data.action === "set" ) {
-                delete column.sortIndex;
-                delete column.sortDirection;
-            }
-        }
-    }
-    if ( data.action !== "clear" && data.action !== "remove" ) {
-        data.column.sortIndex = index;
-        data.column.sortDirection = data.direction;
-    }
-    // do something to get new data from the server via the model using the above new sort settings
-} );
-```
-
 ### Methods
 
-#### copyDownSelection(pColumnsopt, pCallbackopt) → {boolean}
+#### copyDownSelection(pColumnsopt, pCallbackopt)
 
 Copies cell values from columns in the first selected row to all the other selected rows within the same columns. If `pColumns` is given only cells in the specified columns are copied down. Only cells that can be written will be copied to. If the selection mode is row selection, only visible columns that don't have `noCopy` column property equal true are copied.
 
@@ -3692,17 +3435,10 @@ Copies cell values from columns in the first selected row to all the other selec
 <td class="type">function</td>
 <td class="attributes">&lt;optional&gt;<br />
 </td>
-<td class="description last">A no argument function that is called when the copy down operation is complete. The callback is called only if this method returns true.</td>
+<td class="description last">A no argument function that is called when the copy down operation is complete.</td>
 </tr>
 </tbody>
 </table>
-
-##### Returns:
-
-Returns true if the copy down operations starts and false otherwise. This can return false if for example the grid does not allow editing or if a copy down, fill, or clipboard paste operation is already in progress.
-
-Type
-boolean
 
 #### debugCellEdit(pValue)
 
@@ -3719,7 +3455,7 @@ This method is for **developer debugging only**. When developing an item plug-in
 This example shows how to debug a column item plug-in. From the browser JavaScript console:
 
 ```
-let view$ = ... // this is the grid widget jQuery object.
+var view$ = ... // this is the grid widget jQuery object.
 view$.grid("debugCellEdit", true)
 // do your debugging
 view$.grid("debugCellEdit", false)
@@ -3727,7 +3463,7 @@ view$.grid("debugCellEdit", false)
 
 #### fetchAllData(pShowProgressopt)
 
-Fetch all report data into the view's model. This is mostly a simple wrapper around the [model#fetchAll](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetchAll) method that doesn't provide access to the callback function and therefore there is no way to be notified when all the data is fetched. This method keeps the selection state up to date.
+Fetch all report data into the view's model. This is mostly a simple wrapper around the [model#fetchAll](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetchAll) method that doesn't provide access to the callback function and therefore there is no way to be notified when all the data is fetched. This method keeps the selection state up to date.
 
 If you need notification use the model `fetchAll` method.
 
@@ -3760,9 +3496,9 @@ If you need notification use the model `fetchAll` method.
 </table>
 
 Inherited From:
-- [tableModelViewBase#fetchAllData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#fetchAllData)
+- [tableModelViewBase#fetchAllData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#fetchAllData)
 
-#### fillSelection(pFillValue, pColumnsopt, pCallbackopt) → {boolean}
+#### fillSelection(pFillValue, pColumnsopt, pCallbackopt)
 
 Fills all cells in the current selection with the value `pFillValue`. If `pColumns` is given only cells in the specified columns are filled. Only cells that can be written will be filled. If the selection mode is row selection, only visible columns that don't have `noCopy` column property equal true are filled.
 
@@ -3802,17 +3538,10 @@ Fills all cells in the current selection with the value `pFillValue`. If `pColum
 <td class="type">function</td>
 <td class="attributes">&lt;optional&gt;<br />
 </td>
-<td class="description last">A no argument function that is called when the fill operation is complete. The callback is called only if this method returns true.</td>
+<td class="description last">A no argument function that is called when the fill operation is complete.</td>
 </tr>
 </tbody>
 </table>
-
-##### Returns:
-
-Returns true if the fill operations starts and false otherwise. This can return false if for example the grid does not allow editing or if a copy down, fill, or clipboard paste operation is already in progress.
-
-Type
-boolean
 
 #### finishEditing() → {Promise}
 
@@ -3823,7 +3552,7 @@ Any code that wants to interact with the model should call this method to make s
 Note: This does not affect any edit mode.
 
 Inherited From:
-- [tableModelViewBase#finishEditing](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#finishEditing)
+- [tableModelViewBase#finishEditing](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#finishEditing)
 
 ##### Returns:
 
@@ -3834,11 +3563,11 @@ Promise
 
 ##### Example
 
-The following function saves the grid view model for the Interactive Grid region given by HTML DOM id `igRegion`. This shows how `finishEditing` is used but it is generally much better to use the built-in Interactive Grid "save" action.
+The following function saves the grid view model for the Interactive Grid region given by static id `igRegion`. This shows how `finishEditing` is used but it is generally much better to use the built-in Interactive Grid "save" action.
 
 ```
 function doSave( igRegion ) {
-    let p, finished,
+    var p, finished,
         grid = apex.region( igRegion ).call( "getViews" ).grid;
 
     finished = grid.view$.grid( "finishEditing" );
@@ -3857,7 +3586,7 @@ function doSave( igRegion ) {
 Display the first page of records. If option `pagination.scroll` is true simply scrolls to the top of the viewport and a new page of records is added if needed. If `pagination.scroll` is false and not already on the first page the view is refreshed and shows the first page.
 
 Inherited From:
-- [tableModelViewBase#firstPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#firstPage)
+- [tableModelViewBase#firstPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#firstPage)
 
 ##### Returns:
 
@@ -3888,7 +3617,7 @@ $( ".selector" ).grid( "focus" );
 
 #### freezeColumn(pColumn)
 
-Freeze the given column. Also calls [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#refreshColumns) and will render the whole grid. See also [grid#unfreezeColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#unfreezeColumn).
+Freeze the given column. Also calls [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#refreshColumns) and will render the whole grid. See also [grid#unfreezeColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#unfreezeColumn).
 
 ##### Parameters:
 
@@ -3907,7 +3636,7 @@ $( ".selector" ).grid( "freezeColumn", "NAME" );
 This example freezes the third column. It passes in a column definition object.
 
 ```
-let columns = $( ".selector" ).grid( "getColumns" );
+var columns = $( ".selector" ).grid( "getColumns" );
 $( ".selector" ).grid( "freezeColumn", columns[3] );
 ```
 
@@ -3928,26 +3657,26 @@ Cell corresponding to `pItem` or null if there is no active row cell for `pItem`
 Type
 jQuery \| null
 
-#### getActiveRecord() → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)}
+#### getActiveRecord() → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)}
 
 Returns the active record or null if there is no active record. The active record is the one currently being edited.
 
 Inherited From:
-- [tableModelViewBase#getActiveRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getActiveRecord)
+- [tableModelViewBase#getActiveRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getActiveRecord)
 
 ##### Returns:
 
 Active record.
 
 Type
-[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)
+[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)
 
 #### getActiveRecordId() → {string}
 
 Returns the identity of the active record or null if there is no active record. The active record is the one currently being edited.
 
 Inherited From:
-- [tableModelViewBase#getActiveRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getActiveRecordId)
+- [tableModelViewBase#getActiveRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getActiveRecordId)
 
 ##### Returns:
 
@@ -3958,7 +3687,7 @@ string
 
 #### getColumnForCell(pCell\$) → (nullable) {object}
 
-Returns the column definition for the given cell. The column definition properties are described in the [grid#columns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#columns) option.
+Returns the column definition for the given cell. The column definition properties are described in the [grid#columns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#columns) option.
 
 ##### Parameters:
 
@@ -3975,11 +3704,11 @@ object
 
 ##### Example
 
-See example for [grid#getCurrentCell](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getCurrentCell).
+See example for [grid#getCurrentCell](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getCurrentCell).
 
 #### getColumns() → {Array}
 
-Get the column definitions in order. The column definition properties are described in the [grid#columns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#columns) option.
+Get the column definitions in order. The column definition properties are described in the [grid#columns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#columns) option.
 
 ##### Returns:
 
@@ -3990,13 +3719,13 @@ Array
 
 ##### Example
 
-See [grid#unfreezeColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#unfreezeColumn) and [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#refreshColumns) for examples.
+See [grid#unfreezeColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#unfreezeColumn) and [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#refreshColumns) for examples.
 
 #### getCurrentCell() → {jQuery}
 
 Returns the current cell as a jQuery object. The current cell is the one that has or last had focus.
 
-See also [grid#setCurrentCell](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setCurrentCell) and [grid#getColumnForCell](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getColumnForCell).
+See also [grid#setCurrentCell](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setCurrentCell) and [grid#getColumnForCell](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getColumnForCell).
 
 ##### Returns:
 
@@ -4010,7 +3739,7 @@ jQuery
 This example logs to the console the content and the heading of a cell each time the current cell changes.
 
 ```
-$( "#gridDomId" ).on( "gridcurrentcellchange", function( event ) {
+$( "#gridStaticId" ).on( "gridcurrentcellchange", function( event ) {
     let thisGrid$ = $(this),
         cell$ = thisGrid$.grid( "getCurrentCell" ),
         column = thisGrid$.grid( "getColumnForCell", cell$ ),
@@ -4019,35 +3748,35 @@ $( "#gridDomId" ).on( "gridcurrentcellchange", function( event ) {
 } );
 ```
 
-#### getModel() → {[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)}
+#### getModel() → {[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)}
 
-Return the model currently being used by this view. The model can change over time so the returned model should not be saved and used later. If you need to store a reference to the model use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.get) and release it with [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.release).
+Return the model currently being used by this view. The model can change over time so the returned model should not be saved and used later. If you need to store a reference to the model use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.get) and release it with [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.release).
 
 Inherited From:
-- [tableModelViewBase#getModel](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getModel)
+- [tableModelViewBase#getModel](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getModel)
 
 ##### Returns:
 
-The current [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html).
+The current [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html).
 
 Type
-[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)
+[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)
 
-#### getPageInfo() → (nullable) {[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#.pageInfo)}
+#### getPageInfo() → (nullable) {[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#.pageInfo)}
 
 Return information about the current pagination state of the view. Returns null if there is no data in the report.
 
 Inherited From:
-- [tableModelViewBase#getPageInfo](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getPageInfo)
+- [tableModelViewBase#getPageInfo](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getPageInfo)
 
 ##### Returns:
 
 Type
-[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#.pageInfo)
+[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#.pageInfo)
 
 #### getRecords(pRows) → {Array}
 
-Given an array of jQuery row objects return the underlying data model records. The return value from [grid#getSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelection) is an appropriate value for `pRows`.
+Given an array of jQuery row objects return the underlying data model records. The return value from [grid#getSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getSelection) is an appropriate value for `pRows`.
 
 ##### Parameters:
 
@@ -4064,7 +3793,7 @@ Array
 
 #### getSelectedRange() → {Object}
 
-Returns the selected cell range or null if there are no cells selected. For this method to work the option [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) must be true. The object returned has these properties:
+Returns the selected cell range or null if there are no cells selected. For this method to work the option [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectCells) must be true. The object returned has these properties:
 
 ##### Properties:
 
@@ -4073,9 +3802,6 @@ Returns the selected cell range or null if there are no cells selected. For this
 | `columns` | Array | An array of column names one for each selected column. The column name is null for the row header pseudo column. |
 | `recordIds` | Array | An array of record ids one for each selected row. |
 | `values` | Array.\<Array\> | An array of rows. Each row is an array of column values. |
-
-Deprecated:
-- Use [grid#getSelectedRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelectedRanges)
 
 ##### Returns:
 
@@ -4105,59 +3831,11 @@ for ( i = 0; i < range.values.length; i++ ) {
 }
 ```
 
-#### getSelectedRanges() → (nullable) {Array.\<[grid.Range](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#.Range)\>}
-
-Returns an array of selected ranges ([grid.Range](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#.Range)) when in range selection mode. If [grid#multipleRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleRanges) is false there will be at most one range. If there are no ranges an empty array is returned. Ranges can overlap. See also [grid#setSelectedRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setSelectedRanges).
-
-Since:
-- 26.1
-
-##### Returns:
-
-An array of ranges or null if [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) is false.
-
-Type
-Array.\<[grid.Range](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#.Range)\>
-
-##### Example
-
-The following example shows how to process the selected ranges. It gets the column value from each selected cell. It assumes the model has all data loaded.
-
-```
-const grid$ = $( ".selector" ),
-    ranges = grid$.grid( "getSelectedRanges" ),
-    model = grid$.grid( "getModel" ),
-    // the start/endColIndex properties index into the ordered visible columns
-    visibleColumns = grid$.grid( "getColumns" ).filter( c => !c.hidden ).map( c => c.property );
-for ( const range of ranges ) {
-    let endRow = range.endRowIndex,
-        endCol = range.endColIndex;
-
-    // process range
-    console.log( "Processing range", range );
-    // handle unbounded ranges
-    if ( endRow === -1 ) {
-        endRow = model.getTotalRecords( true ) - 1;
-    }
-    if ( endCol === -1 ) {
-        endCol = visibleColumns.length - 1;
-    }
-    for ( let i = range.startRowIndex; i <= endRow; i++ ) {
-        let record = model.recordAt( i );
-
-        console.log("  process record", model.getRecordId( record ) );
-        for ( let j = range.startColIndex; j <= endCol; j++ ) {
-            console.log("    process column", visibleColumns[j], model.getValue( record, visibleColumns[j] );
-        }
-    }
-}
-```
-
 #### getSelectedRecords() → {Array}
 
-Return the underlying data model records corresponding to the current selection. If option [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) is true this returns an empty array.
+Return the underlying data model records corresponding to the current selection. If option [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectCells) is true this returns an empty array.
 
-Note: If option [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#persistSelection) is true then the selected records could span multiple pages and getSelectedRecords returns a different selection from [grid#getSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelection) which can only return elements from the current page. To get just the records that correspond to `getSelection` when this option is true use:
+Note: If option [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#persistSelection) is true then the selected records could span multiple pages and getSelectedRecords returns a different selection from [grid#getSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getSelection) which can only return elements from the current page. To get just the records that correspond to `getSelection` when this option is true use:
 `$( ".selector" ).grid( "getRecords", $( ".selector" ).grid("getSelection") );`
 
 ##### Returns:
@@ -4172,18 +3850,18 @@ Array
 This example gets the selected records.
 
 ```
-let records = $( ".selector" ).grid( "getSelectedRecords" );
+var records = $( ".selector" ).grid( "getSelectedRecords" );
 ```
 
 #### getSelection() → {Array}
 
-Return the current selection. The return value depends on the [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) option.
+Return the current selection. The return value depends on the [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectCells) option.
 
-If `selectCells` is true, return the current selected range as an array of rows. Each row is a jQuery object containing the selected column cells. If multiple ranges are selected each row could have a different number of cells in which case using [grid#getSelectedRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelectedRanges) may be more appropriate.
+If `selectCells` is true, return the current selected range as an array of rows. Each row is a jQuery object containing the selected column cells.
 
 If `selectCells` is false, return the currently selected rows as an array of jQuery objects each item in the array is a row.
 
-Because this returns jQuery objects it can only return selected rows (or cells) that are currently in the DOM. When using virtual scroll pagination and [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#persistSelection) is true it is better to use [grid#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelectedRecords) or for cell range selection [grid#getSelectedRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelectedRanges).
+Because this returns jQuery objects it can only return selected rows (or cells) that are currently in the DOM. When using virtual scroll pagination and [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#persistSelection) is true it is better to use [grid#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getSelectedRecords)
 
 ##### Returns:
 
@@ -4197,8 +3875,8 @@ Array
 The following example processes a row selection (if `selectCells` is false).
 
 ```
-let rows = $( "#mygrid" ).grid( "getSelection" );
-for ( let i = 0; i < rows.length; i++ ) {
+var i, rows = $( "#mygrid" ).grid( "getSelection" );
+for ( i = 0; i < rows.length; i++ ) {
     rows[i].addClass("foo"); // this adds a class to the TR element
     rows[i].children().each(function() {
         // do something with each column
@@ -4209,8 +3887,8 @@ for ( let i = 0; i < rows.length; i++ ) {
 The following example processes a cell range selection (if `selectCells` is true).
 
 ```
-let rows = $( "#mygrid" ).grid( "getSelection" );
-for ( let i = 0; i < rows.length; i++ ) {
+var i, rows = $( "#mygrid" ).grid( "getSelection" );
+for ( i = 0; i < rows.length; i++ ) {
     // note rows[i].length is the number of columns in the range selection.
     rows[i].addClass("foo"); // this adds a class to all cells in the selected columns of this row
     rows[i].each(function() {
@@ -4268,7 +3946,7 @@ Go to the specified page number. This should only be used when `pagination.scrol
 | `pPageNumber` | number | zero based page number |
 
 Inherited From:
-- [tableModelViewBase#gotoPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#gotoPage)
+- [tableModelViewBase#gotoPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#gotoPage)
 
 ##### Returns:
 
@@ -4279,7 +3957,7 @@ boolean
 
 #### hideColumn(pColumn)
 
-Hide the given column. Also calls [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#refreshColumns) and will render the whole grid. See also [grid#showColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#showColumn).
+Hide the given column. Also calls [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#refreshColumns) and will render the whole grid. See also [grid#showColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#showColumn).
 
 ##### Parameters:
 
@@ -4297,7 +3975,7 @@ $( ".selector" ).grid( "hideColumn", "NAME" );
 
 #### inEditMode() → {boolean}
 
-Determine if grid is in edit mode rather than navigation mode. See also [grid#setEditMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setEditMode).
+Determine if grid is in edit mode rather than navigation mode. See also [grid#setEditMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setEditMode).
 
 ##### Returns:
 
@@ -4321,7 +3999,7 @@ if ( $( ".selector" ).grid( "inEditMode" ) ) {
 Display the last page of records. If `pagination.scroll` is true simply scrolls to the bottom of the viewport and a new page of records is added if needed. If `pagination.scroll` is false and not already on the last page the view is refreshed and shows the last page. This method only works correctly if the model knows the total number of rows.
 
 Inherited From:
-- [tableModelViewBase#lastPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#lastPage)
+- [tableModelViewBase#lastPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#lastPage)
 
 ##### Returns:
 
@@ -4343,7 +4021,7 @@ $( ".selector" ).grid( "lastPage" );
 Load more records into the view. If option `pagination.scroll` is true this adds a new page of records to the end. If `pagination.scroll` is false this is the same as `nextPage`. This is intended to be used when `pagination.loadMore` is true.
 
 Inherited From:
-- [tableModelViewBase#loadMore](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#loadMore)
+- [tableModelViewBase#loadMore](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#loadMore)
 
 ##### Returns:
 
@@ -4358,27 +4036,27 @@ Call to lock the active row while async processing is in progress.
 
 The view edits one row/record at a time. This is known as the active row. In edit mode as the user changes the focused cell with the mouse, tab or enter keys if the new cell is on a different row the previous row is deactivated and the new row is activated. Any dynamic actions or other code that manipulates Column items are acting on the active row. If any actions are asynchronous such as using Ajax to set a column item value then the row must not be deactivated while the async action is in progress otherwise the result would be applied to the wrong row!
 
-So this method must be called before starting an async operation. It can be called multiple times if there are multiple async operations. For each call to `lockActive` there must be exactly one call to `unlockActive`. See also See [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#unlockActive)
+So this method must be called before starting an async operation. It can be called multiple times if there are multiple async operations. For each call to `lockActive` there must be exactly one call to `unlockActive`. See also See [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#unlockActive)
 
-If the view is part of an APEX region plugin, that region should implement the `beforeAsync` and `afterAsync` functions on the object returned from region#getSessionState by calling `lockActive` and `unlockActive` respectively. Then if an appropriate target option is passed to [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin) then the locking will be done automatically. Dynamic Actions that act on column items pass the correct target option. The bottom line is that for Dynamic Actions on columns of an Interactive Grid these lock/unlock methods are called automatically.
+If the view is part of an APEX region plugin, that region should implement the `beforeAsync` and `afterAsync` functions on the object returned from region#getSessionState by calling `lockActive` and `unlockActive` respectively. Then if an appropriate target option is passed to [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin) then the locking will be done automatically. Dynamic Actions that act on column items pass the correct target option. The bottom line is that for Dynamic Actions on columns of an Interactive Grid these lock/unlock methods are called automatically.
 
 Inherited From:
-- [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#lockActive)
+- [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#lockActive)
 
 ##### Example
 
-See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setActiveRecordValue) for an example.
+See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setActiveRecordValue) for an example.
 
 #### moveColumn(pColumn, pNewPosition)
 
-Move the given column to the new position. Column positions are zero based. Also calls [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#refreshColumns) and will render the whole grid. Triggers [grid#event:columnreorder](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#event:columnreorder) event.
+Move the given column to the new position. Column positions are zero based. Also calls [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#refreshColumns) and will render the whole grid. Triggers [grid#event:columnreorder](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#event:columnreorder) event.
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
 | `pColumn` | string \| Object | The column name or column definition object to move. |
-| `pNewPosition` | number | index into the array returned by [grid#getColumns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getColumns) where the column will be moved to. |
+| `pNewPosition` | number | index into the array returned by [grid#getColumns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getColumns) where the column will be moved to. |
 
 ##### Example
 
@@ -4390,7 +4068,7 @@ $( ".selector" ).grid( "moveColumn", "NAME", 2 );
 
 #### moveColumnGroup(pLevel, pOriginalPosition, pNewPosition)
 
-Move a column group from one position to another. This moves all the columns associated with the group to the new position. Triggers [grid#event:columnreorder](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#event:columnreorder) event for each column moved.
+Move a column group from one position to another. This moves all the columns associated with the group to the new position. Triggers [grid#event:columnreorder](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#event:columnreorder) event for each column moved.
 
 ##### Parameters:
 
@@ -4405,7 +4083,7 @@ Move a column group from one position to another. This moves all the columns ass
 Display the next page of records. If `pagination.scroll` is true the viewport scrolls down one page and records are added if needed. If `pagination.scroll` is false and not on the last page refresh the view to show the next page.
 
 Inherited From:
-- [tableModelViewBase#nextPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#nextPage)
+- [tableModelViewBase#nextPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#nextPage)
 
 ##### Returns:
 
@@ -4427,7 +4105,7 @@ $( ".selector" ).grid( "nextPage" );
 Display the previous page of records. If `pagination.scroll` is true the viewport scrolls up one page and records are added if needed. If `pagination.scroll` is false and not on the first page refresh the view to show the previous page.
 
 Inherited From:
-- [tableModelViewBase#previousPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#previousPage)
+- [tableModelViewBase#previousPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#previousPage)
 
 ##### Returns:
 
@@ -4496,9 +4174,9 @@ Call this method anytime the container that the grid is in changes its size. For
 
 #### selectAll(pFocusopt, nullable, pNoNotifyopt)
 
-Select all rows. This has no effect if the [grid#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectAll1) and [grid#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multiple) or [grid#multipleCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleCells) options are not true depending on setting of [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells).
+Select all rows. This has no effect if the [grid#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#multiple) or [grid#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectAll1) options are not true. It also has no effect while selecting a range of cells (option [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectCells) is true).
 
-This only applies to the current page or what has been rendered so far unless the selection state is persisted in the model. See [grid#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectAll1) for details about how pagination settings and [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#persistSelection) and [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) affect the meaning of "all rows".
+This only applies to the current page or what has been rendered so far unless the selection state is persisted in the model. See [grid#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectAll1) for details about how pagination settings and [grid#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#persistSelection) affect the meaning of "all rows".
 
 ##### Parameters:
 
@@ -4540,7 +4218,7 @@ This only applies to the current page or what has been rendered so far unless th
 
 Use after a column item value is set without triggering a change event to update the model and grid view. Has no effect if there is no active record.
 
-When a dynamic action or other event handler on a change event updates the value of the same item that triggered the change event, the change event from setting the value should be suppressed to avoid an infinite loop. However, the model is only updated from a change event. This method offers a solution to the model not being updated if the value is set asynchronously. Call this method anytime a column item is updated and the change event is suppressed.
+When a dynamic action or other event handler on a change event updates the value of the same item that triggered the change event, the change event from setting the value should be suppressed to avoid an infinite loop. However the model is only updated from a change event. This method offers a solution to the model not being updated if the value is set asynchronously. Call this method anytime a column item is updated and the change event is suppressed.
 
 ##### Parameters:
 
@@ -4549,17 +4227,17 @@ When a dynamic action or other event handler on a change event updates the value
 | `pColumn` | string | The name of the column. |
 
 Inherited From:
-- [tableModelViewBase#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#setActiveRecordValue)
+- [tableModelViewBase#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#setActiveRecordValue)
 
 ##### Example
 
-This example updates the "SALARY" column, which has HTML DOM id "C_SALARY", in interactive grid with HTML DOM id "MyGrid", to add 10 to whatever the user enters. `setTimeout` is used to simulate an async value update. The active row must be locked around the async update.
+This example updates the "SALARY" column, which has static id "C_SALARY", in interactive grid with static id "MyGrid", to add 10 to whatever the user enters. `setTimeout` is used to simulate an async value update. The active row must be locked around the async update.
 
 ```
-let salary = apex.item( "C_SALARY" );
-$( salary.node ).on( "change", function( event ) {
+var salary = apex.item( "C_SALARY" );
+$( salary.node ).change( function( event ) {
     // assume the current view is grid and not single row view.
-    const grid$ = apex.region( "MyGrid" ).call( "getCurrentView" ).view$;
+    var grid$ = apex.region( "MyGrid" ).call( "getCurrentView" ).view$;
     grid$.grid("lockActive");
     setTimeout( function() {
         // suppress this change otherwise this handler will be triggered again
@@ -4573,7 +4251,7 @@ $( salary.node ).on( "change", function( event ) {
 
 #### setColumnWidth(pColumn, pWidth)
 
-Sets the width of the given column. Triggers [grid#event:columnresize](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#event:columnresize) event.
+Sets the width of the given column. Triggers [grid#event:columnresize](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#event:columnresize) event.
 
 ##### Parameters:
 
@@ -4586,7 +4264,7 @@ Sets the width of the given column. Triggers [grid#event:columnresize](https://d
 
 Sets the last focused cell to the given cell. If `pCell$` is not a cell or not in the grid container the current cell is not changed.
 
-See also [grid#getCurrentCell](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getCurrentCell).
+See also [grid#getCurrentCell](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#getCurrentCell).
 
 ##### Parameters:
 
@@ -4627,13 +4305,13 @@ See also [grid#getCurrentCell](https://docs.oracle.com/en/database/oracle/apex/2
 The following example sets the current cell to be the first one containing an element with class "my-special-cell". In this case the column uses the column `cellTemplate` property or declarative attribute HTML Expression to conditionally add a span with the "my-special-cell" class.
 
 ```
-$( "#gridDomId" ).grid( "setCurrentCell",
-    $( "#gridDomId" ).find( ".my-special-cell" ).first().closest( ".a-GV-cell" ) );
+$( "#gridStaticId" ).grid( "setCurrentCell",
+    $( "#gridStaticId" ).find( ".my-special-cell" ).first().closest( ".a-GV-cell" ) );
 ```
 
 #### setEditMode(pEditMode, pSelectopt)
 
-Set the current edit mode. Should only be used if the grid is editable. Triggers [grid#event:modechange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#event:modechange) event.
+Set the current edit mode. Should only be used if the grid is editable. Triggers [grid#event:modechange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#event:modechange) event.
 
 ##### Parameters:
 
@@ -4677,90 +4355,9 @@ This example enters edit mode.
 $( ".selector" ).grid( "setEditMode", true );
 ```
 
-#### setSelectedRanges(pRanges, pFocusopt, nullable, pNoNotifyopt)
-
-Selects one or more ranges of cells. If [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) is false then nothing happens. If [grid#multipleRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#multipleRanges) is false at most one range can be selected and any additional ranges in `pRanges` are ignored. Triggers the [grid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true. See also [grid#getSelectedRanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#getSelectedRanges).
-
-##### Parameters:
-
-<table class="params" aria-label="Parameters for setSelectedRanges">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th scope="col">Attributes</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>pRanges</code></th>
-<td class="type">Array.&lt;<a href="grid.html#.Range">grid.Range</a>&gt;</td>
-<td class="attributes"></td>
-<td class="description last">An array of <a href="grid.html#.Range">grid.Range</a> objects identifying a range of cells to select. If either the *key or *index properties are missing they are filled in based on the opposite property. Invalid ranges are skipped. However, the ranges are not fully validated so ensure that the *key properties correspond with the associated *index properties. The <code class="prettyprint">incomplete</code> property is ignored. An empty array will clear the range selection.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>pFocus</code></th>
-<td class="type">boolean</td>
-<td class="attributes">&lt;optional&gt;<br />
-&lt;nullable&gt;<br />
-</td>
-<td class="description last">If true the first cell of the first range is given focus. If false the first cell of the first range is made the current cell. If null the current cell is not changed and focus is not set. The default is null.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>pNoNotify</code></th>
-<td class="type">boolean</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">If true the selection change event will be suppressed. The default is false.</td>
-</tr>
-</tbody>
-</table>
-
-Since:
-- 26.1
-
-##### Examples
-
-The following example creates a 3x3 range starting in the first row and column and focuses the first cell.
-
-```
-let range = {
-        startRowIndex: 0,
-        startColIndex: 0,
-        endRowIndex: 2,
-        endColIndex: 2
-    };
-( ".selector" ).grid( "setSelectedRanges", [range], true );
-```
-
-The following example selects 2 ranges the first one is all the cells in column "NAME" and the second one is all the cells in column "PHONE".
-
-```
-let range1 = {
-        startRowIndex: 0,
-        startColKey: "NAME",
-        endRowIndex: -1,
-        endColKey: "NAME"
-    },
-    range2 = {
-        startRowIndex: 0,
-        startColKey: "PHONE",
-        endRowIndex: -1,
-        endColKey: "PHONE"
-    };
-( ".selector" ).grid( "setSelectedRanges", [range1, range2] );
-```
-
 #### setSelectedRecords(pRecords, pFocusopt, pNoNotifyopt) → {number}
 
-Select the grid rows that correspond to the given data model records. Depending on pagination the records may not actually be in view or rendered at this time even if they exist in the underlying data model or on the server. Triggers the [grid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
+Select the grid rows that correspond to the given data model records. Depending on pagination the records may not actually be in view or rendered at this time even if they exist in the underlying data model or on the server. Triggers the [grid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
 
 ##### Parameters:
 
@@ -4805,14 +4402,14 @@ Select the grid rows that correspond to the given data model records. Depending 
 
 ##### Returns:
 
-Count of the rows actually selected or -1 if called before the grid data is initialized or if [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#selectCells) option is true.
+Count of the rows actually selected or -1 if called before the grid data is initialized or if [grid#selectCells](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#selectCells) option is true.
 
 Type
 number
 
 #### setSelection(pRows, pFocusopt, pNoNotifyopt)
 
-Set the selected rows of the grid. Triggers the [grid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
+Set the selected rows of the grid. Triggers the [grid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
 
 ##### Parameters:
 
@@ -4836,7 +4433,7 @@ Set the selected rows of the grid. Triggers the [grid#event:selectionchange](htt
 <th class="name" scope="row"><code>pRows</code></th>
 <td class="type">Array</td>
 <td class="attributes"></td>
-<td class="description last">An array of jQuery row objects such as the return value of <a href="grid.html#getSelection">grid#getSelection</a> or a jQuery object containing one or more rows (<code class="prettyprint">.a-GV-row</code> elements) or cells (<code class="prettyprint">.a-GV-cell</code> elements) from this grid. If <a href="grid.html#selectCells">grid#selectCells</a> is true then pRows should contain two grid cells that establish the opposite corners of a range. It is better to use the <a href="grid.html#setSelectedRanges">grid#setSelectedRanges</a> method for range selection.</td>
+<td class="description last">An array of jQuery row objects such as the return value of <a href="grid.html#getSelection">grid#getSelection</a> or a jQuery object containing one or more rows (<code class="prettyprint">tr</code> elements) or columns (<code class="prettyprint">td</code> elements) from this grid.</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>pFocus</code></th>
@@ -4860,13 +4457,12 @@ Set the selected rows of the grid. Triggers the [grid#event:selectionchange](htt
 This example selects the third row of the first grid widget on the page.
 
 ```
-$( ".a-GV" ).first()
-    .grid( "setSelection", [$( ".a-GV" ).first().find( ".a-GV-w-scroll .a-GV-row" ).eq( 3 )] );
+$(".a-GV").first().grid( "setSelection", [$(".a-GV").first().find( ".a-GV-w-scroll .a-GV-row" ).eq(3)] );
 ```
 
 #### showColumn(pColumn)
 
-Show the given column. Also calls [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#refreshColumns) and will render the whole grid. See also [grid#hideColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#hideColumn).
+Show the given column. Also calls [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#refreshColumns) and will render the whole grid. See also [grid#hideColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#hideColumn).
 
 ##### Parameters:
 
@@ -4884,7 +4480,7 @@ $( ".selector" ).grid( "showColumn", "NAME" );
 
 #### unfreezeColumn(pColumn)
 
-Unfreeze the given column. Also calls [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#refreshColumns) and will render the whole grid. See also [grid#freezeColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#freezeColumn).
+Unfreeze the given column. Also calls [grid#refreshColumns](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#refreshColumns) and will render the whole grid. See also [grid#freezeColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#freezeColumn).
 
 ##### Parameters:
 
@@ -4904,99 +4500,11 @@ $( ".selector" ).grid( "unfreezeColumn", "NAME" );
 
 Call to unlock the active row after async processing is complete.
 
-Call after the async operation completes. See [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#lockActive) for more information.
+Call after the async operation completes. See [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#lockActive) for more information.
 
 Inherited From:
-- [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#unlockActive)
+- [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#unlockActive)
 
 ##### Example
 
-See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setActiveRecordValue) for an example.
-
-### Type Definitions
-
-#### Range
-
-An object that defines a range of grid cells. The range is defined by the start corner and end corner coordinates. The start corner is the one closest to the grid origin, meaning the upper start (left for ltr direction and right for rtl direction) cell. The end corner is the one furthest from the origin, meaning the lower end (right for ltr direction and left for rtl direction) cell. The row and column coordinates are given by both a zero based index among all the rows or columns and by a key. For columns the key is the column name. For rows the key is the model record identity. If the model does not have an identity field the key is a string representation of the index.
-
-A range that contains a single cell has the same start and end coordinates. A range never includes row or column headers or control break rows. When a range is unbounded or the end is unknown the end index will be -1 and the key will be null.
-
-##### Type:
-
-- object
-
-##### Properties:
-
-<table class="props" aria-label="Properties">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th scope="col">Attributes</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>startRowIndex</code></th>
-<td class="type">number</td>
-<td class="attributes"></td>
-<td class="description last">zero based index of the start or upper data row</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>startColIndex</code></th>
-<td class="type">number</td>
-<td class="attributes"></td>
-<td class="description last">zero based index of the start or first data column</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>startRowKey</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">model identity for the start or upper data row</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>startColKey</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">column name of the start or first data column</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>endRowIndex</code></th>
-<td class="type">number</td>
-<td class="attributes"></td>
-<td class="description last">zero based index of the end or lower data row</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>endColIndex</code></th>
-<td class="type">number</td>
-<td class="attributes"></td>
-<td class="description last">zero based index of the end or last data column</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>endRowKey</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">model identity for the end or lower data row</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>endColKey</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">column name of the end or last data column</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>incomplete</code></th>
-<td class="type">boolean</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">true if the model does not contain all data specified by this range</td>
-</tr>
-</tbody>
-</table>
+See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setActiveRecordValue) for an example.

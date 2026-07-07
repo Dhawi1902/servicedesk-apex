@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html -->
 <!-- Namespaces: apex.server -->
 
 # Namespace: server
@@ -14,7 +14,7 @@
 - [process](#.process)
 - [url](#.url)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).server
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).server
 
 The apex.server namespace contains all Ajax functions to communicate with the Oracle APEX server.
 
@@ -371,7 +371,7 @@ The plug-in PL/SQL Ajax function is identified using the value returned by the P
 
 ##### Returns:
 
-A promise object. The promise `done` method is called if the Ajax request completes successfully. This is called in the same cases and with the same arguments as the `success` callback function in `pOptions`. The promise `fail` method is called if the Ajax request completes with an error including internally detected Oracle APEX errors. This is called in the same cases and with the same arguments as the `error` callback function in `pOptions`. The promise also has an `always` method that is called after `done` and `error`. The promise is returned even when queue options are used. The promise is not a `jqXHR` object but does have an `abort` method. The `abort` method does not work for requests that use any queue options. In addition the promise `fail` method can be be called with `textStatus` of "superseded" or "abort" depending on queuing options. If the [apex.event:apexbeforerefresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexbeforerefresh) event cancels the request the `textStatus` is "cancel". For an error response from the APEX server the `textStatus` is "APEX" and there may be more info in the `errorThrown` argument.
+A promise object. The promise `done` method is called if the Ajax request completes successfully. This is called in the same cases and with the same arguments as the `success` callback function in `pOptions`. The promise `fail` method is called if the Ajax request completes with an error including internally detected Oracle APEX errors. This is called in the same cases and with the same arguments as the `error` callback function in `pOptions`. The promise also has an `always` method that is called after `done` and `error`. The promise is returned even when queue options are used. The promise is not a `jqXHR` object but does have an `abort` method. The `abort` method does not work for requests that use any queue options. In addition the promise `fail` method can be be called with `textStatus` of "superseded" or "abort" depending on queuing options. If the [apex.event:apexbeforerefresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexbeforerefresh) event cancels the request the `textStatus` is "cancel". For an error response from the APEX server the `textStatus` is "APEX" and there may be more info in the `errorThrown` argument.
 
 Type
 Promise
@@ -393,7 +393,7 @@ apex.server.plugin ( lAjaxIdentifier, {
 } );
 ```
 
-See also the examples for [apex.server.process](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.process) because handling the response is the same for both the callback function and promise cases.
+See also the examples for [apex.server.process](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.process) because handling the response is the same for both the callback function and promise cases.
 
 #### (static) pluginUrl(pAjaxIdentifier, pDataopt) → {string}
 
@@ -639,7 +639,7 @@ This function calls a PL/SQL on-demand (Ajax Callback) process defined on page o
 
 ##### Returns:
 
-A promise object. The promise `done` method is called if the Ajax request completes successfully. This is called in the same cases and with the same arguments as the `success` callback function in `pOptions`. The promise `fail` method is called if the Ajax request completes with an error including internally detected Oracle APEX errors. This is called in the same cases and with the same arguments as the `error` callback function in `pOptions`. The promise also has an `always` method that is called after `done` and `error`. The promise is returned even when queue options are used. The promise is not a `jqXHR` object but does have an `abort` method. The `abort` method does not work for requests that use any queue options. In addition the promise `fail` method can be be called with `textStatus` of "superseded" or "abort" depending on queuing options. If the [apex.event:apexbeforerefresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexbeforerefresh) event cancels the request the `textStatus` is "cancel". For an error response from the APEX server the `textStatus` is "APEX" and there may be more info in the `errorThrown` argument.
+A promise object. The promise `done` method is called if the Ajax request completes successfully. This is called in the same cases and with the same arguments as the `success` callback function in `pOptions`. The promise `fail` method is called if the Ajax request completes with an error including internally detected Oracle APEX errors. This is called in the same cases and with the same arguments as the `error` callback function in `pOptions`. The promise also has an `always` method that is called after `done` and `error`. The promise is returned even when queue options are used. The promise is not a `jqXHR` object but does have an `abort` method. The `abort` method does not work for requests that use any queue options. In addition the promise `fail` method can be be called with `textStatus` of "superseded" or "abort" depending on queuing options. If the [apex.event:apexbeforerefresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexbeforerefresh) event cancels the request the `textStatus` is "cancel". For an error response from the APEX server the `textStatus` is "APEX" and there may be more info in the `errorThrown` argument.
 
 Type
 Promise

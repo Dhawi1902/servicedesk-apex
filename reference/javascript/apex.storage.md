@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.storage.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.storage.html -->
 <!-- Namespaces: apex.storage -->
 
 # Namespace: storage
@@ -18,9 +18,9 @@
 
 - [storageWrapper](#.storageWrapper)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).storage
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).storage
 
-The [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).storage namespace contains all functions related browser storage features such as cookies and session storage.
+The [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).storage namespace contains all functions related browser storage features such as cookies and session storage.
 
 ### About local and session storage
 
@@ -28,7 +28,7 @@ Local storage and session storage, collectively known as web storage, are a brow
 
 Both local storage and session storage use the same API to set, get, and remove name value pairs. The difference is that session storage goes away when the browser session ends and local storage is available even when the browser restarts. Keep in mind that the browser is free to limit or delete data stored in local storage at the user's request. Unlike data stored on the server local storage is not shared between browsers on different machines or even different browsers on the same machine.
 
-Because APEX supports multiple applications, multiple workspaces and even instances of the same application running in multiple workspaces there can arise conflicts with using web storage because all the apps from a single APEX instance (which is a single origin or website) share the same web storage space. The [apex.storage.getScopedLocalStorage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.storage.html#.getScopedLocalStorage) and [apex.storage.getScopedSessionStorage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.storage.html#.getScopedSessionStorage) solve this problem by partitioning the storage into a scope based on application id an optionally additional information such as page id and region id. The scope is crated by using a prefix on all the storage keys. This avoids conflicts when different apps or different instances of the same app use the same keys but it is not a secure partition. Consider this carefully before storing sensitive information in web storage.
+Because APEX supports multiple applications, multiple workspaces and even instances of the same application running in multiple workspaces there can arise conflicts with using web storage because all the apps from a single APEX instance (which is a single origin or website) share the same web storage space. The [apex.storage.getScopedLocalStorage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.storage.html#.getScopedLocalStorage) and [apex.storage.getScopedSessionStorage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.storage.html#.getScopedSessionStorage) solve this problem by partitioning the storage into a scope based on application id an optionally additional information such as page id and region id. The scope is crated by using a prefix on all the storage keys. This avoids conflicts when different apps or different instances of the same app use the same keys but it is not a secure partition. Consider this carefully before storing sensitive information in web storage.
 
 ### Functions
 
@@ -59,7 +59,7 @@ var value = apex.storage.getCookie( "TEST" );
 
 #### (static) getScopedLocalStorage(options) → {localStorage}
 
-Returns a thin wrapper around the `localStorage` object that scopes all keys to a prefix defined by the `options` parameter. If localStorage is not supported, the returned object can be used but has no effect, so it is not necessary to test for support using [apex.storage.hasLocalStorageSupport](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.storage.html#.hasLocalStorageSupport) before calling this function.
+Returns a thin wrapper around the `localStorage` object that scopes all keys to a prefix defined by the `options` parameter. If localStorage is not supported, the returned object can be used but has no effect, so it is not necessary to test for support using [apex.storage.hasLocalStorageSupport](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.storage.html#.hasLocalStorageSupport) before calling this function.
 
 ##### Parameters:
 
@@ -134,7 +134,7 @@ Returns a thin wrapper around the `localStorage` object that scopes all keys to 
 
 ##### Returns:
 
-A [localStorage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.storage.html#.storageWrapper) wrapper object.
+A [localStorage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.storage.html#.storageWrapper) wrapper object.
 
 Type
 localStorage
@@ -155,7 +155,7 @@ if ( apex.storage.hasLocalStorageSupport() ) {
 
 #### (static) getScopedSessionStorage(options) → {sessionStorage}
 
-Returns a thin wrapper around the `sessionStorage` object that scopes all keys to a prefix defined by the `options` parameter. If sessionStorage is not supported, the returned object can be used but has no effect, so it is not necessary to test for support using [apex.storage.hasSessionStorageSupport](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.storage.html#.hasSessionStorageSupport) before calling this function.
+Returns a thin wrapper around the `sessionStorage` object that scopes all keys to a prefix defined by the `options` parameter. If sessionStorage is not supported, the returned object can be used but has no effect, so it is not necessary to test for support using [apex.storage.hasSessionStorageSupport](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.storage.html#.hasSessionStorageSupport) before calling this function.
 
 ##### Parameters:
 
@@ -230,7 +230,7 @@ Returns a thin wrapper around the `sessionStorage` object that scopes all keys t
 
 ##### Returns:
 
-A [sessionStorage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.storage.html#.storageWrapper) wrapper object.
+A [sessionStorage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.storage.html#.storageWrapper) wrapper object.
 
 Type
 sessionStorage

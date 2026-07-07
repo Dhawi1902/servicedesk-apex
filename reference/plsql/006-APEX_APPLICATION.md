@@ -1,14 +1,14 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 6  APEX_APPLICATION
 
 The `APEX_APPLICATION` package is a PL/SQL package that implements the Oracle APEX rendering engine. You can use this package to take advantage of many global variables.
 
-- [Working with G_Fnn Arrays (Legacy)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/working-with-g_fnn-arrays.html#GUID-9418A964-B125-4C9A-9CB3-DBBA0CB6E20A)
-- [Global Variables](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION-Global-Variables.html#GUID-5164592B-6864-4E2B-8DE3-64B463687A41)
-- [HELP Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HELP-Procedure.html#GUID-C82E7C47-AED1-4374-AA88-8189990D4E55)
-- [STOP_APEX_ENGINE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STOP_APEX_ENGINE-Procedure.html#GUID-88F4A028-4759-433D-94F9-B7F38BFD4203)
+- [Working with G_Fnn Arrays (Legacy)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/working-with-g_fnn-arrays.html#GUID-9418A964-B125-4C9A-9CB3-DBBA0CB6E20A)
+- [Global Variables](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION-Global-Variables.html#GUID-5164592B-6864-4E2B-8DE3-64B463687A41)
+- [HELP Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/HELP-Procedure.html#GUID-C82E7C47-AED1-4374-AA88-8189990D4E55)
+- [STOP_APEX_ENGINE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/STOP_APEX_ENGINE-Procedure.html#GUID-88F4A028-4759-433D-94F9-B7F38BFD4203)
 
 ------------------------------------------------------------------------
 
@@ -69,13 +69,13 @@ Note that check boxes displayed using `APEX_ITEM.CHECKBOX` only contain values i
 
 See Also:
 
-- [APEX_IG](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_IG.html#GUID-9A4189AF-FEAE-4CC0-A602-A10A5E4868C2)
-- [APEX_ITEM (Legacy)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_ITEM.html#GUID-A111B577-2503-4F4E-962E-192C7D5B5338)
-- [APEX_STRING](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_STRING.html#GUID-CAFD987C-7382-4F0F-8CB9-1D3BD05F054A)
-- [STRING_TO_TABLE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/STRING_TO_TABLE-1-Function.html#GUID-8EE18F03-968D-4141-B5B9-149B12F4F6CF)
-- [TABLE_TO_STRING Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/TABLE_TO_STRING-1-Function.html#GUID-93B4AD2A-704C-4D9C-B48C-5E8F21CB6616)
+- [APEX_IG](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_IG.html#GUID-9A4189AF-FEAE-4CC0-A602-A10A5E4868C2)
+- [APEX_ITEM (Legacy)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_ITEM.html#GUID-A111B577-2503-4F4E-962E-192C7D5B5338)
+- [APEX_STRING](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_STRING.html#GUID-CAFD987C-7382-4F0F-8CB9-1D3BD05F054A)
+- [STRING_TO_TABLE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/STRING_TO_TABLE-1-Function.html#GUID-8EE18F03-968D-4141-B5B9-149B12F4F6CF)
+- [TABLE_TO_STRING Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/TABLE_TO_STRING-1-Function.html#GUID-93B4AD2A-704C-4D9C-B48C-5E8F21CB6616)
 
-**Parent topic:** [APEX_APPLICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION.html#GUID-46D9B879-3180-480D-B5D6-54AABDD146F6)
+**Parent topic:** [APEX_APPLICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION.html#GUID-46D9B879-3180-480D-B5D6-54AABDD146F6)
 
 ------------------------------------------------------------------------
 
@@ -88,86 +88,86 @@ See Also:
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d24471e74" style="text-align: left;" data-valign="bottom" width="25%">Global Variable</th>
-<th id="d24471e76" style="text-align: left;" data-valign="bottom" width="75%">Description</th>
+<th id="d20274e72" style="text-align: left;" data-valign="bottom" width="25%">Global Variable</th>
+<th id="d20274e74" style="text-align: left;" data-valign="bottom" width="75%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d24471e80" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_USER</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e80 d24471e76 ">Specifies the currently logged in user.</td>
+<td id="d20274e78" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_USER</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e78 d20274e74 ">Specifies the currently logged in user.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e86" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_FLOW_ID</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e86 d24471e76 ">Specifies the ID of the currently running application.</td>
+<td id="d20274e84" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_FLOW_ID</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e84 d20274e74 ">Specifies the ID of the currently running application.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e92" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_FLOW_STEP_ID</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e92 d24471e76 ">Specifies the ID of the currently running page.</td>
+<td id="d20274e90" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_FLOW_STEP_ID</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e90 d20274e74 ">Specifies the ID of the currently running page.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e98" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_FLOW_OWNER</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e98 d24471e76 "><p>Defaults to the application's parsing schema. Use <code class="codeph">#OWNER#</code> to reference this value in SQL queries and PL/SQL.</p>
+<td id="d20274e96" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_FLOW_OWNER</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e96 d20274e74 "><p>Defaults to the application's parsing schema. Use <code class="codeph">#OWNER#</code> to reference this value in SQL queries and PL/SQL.</p>
 <p>Note:</p>
 <p>Changing <code class="codeph">G_FLOW_OWNER</code> at runtime does not change the parsing schema.</p>
 </div></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e114" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_REQUEST</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e114 d24471e76 ">Specifies the value of the request variable most recently passed to or set within the show or accept modules.</td>
+<td id="d20274e112" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_REQUEST</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e112 d20274e74 ">Specifies the value of the request variable most recently passed to or set within the show or accept modules.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e120" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_BROWSER_LANGUAGE</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e120 d24471e76 ">Refers to the web browser's current language preference.</td>
+<td id="d20274e118" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_BROWSER_LANGUAGE</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e118 d20274e74 ">Refers to the web browser's current language preference.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e126" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_DEBUG</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e126 d24471e76 ">Refers to whether debugging is switched on or off. Valid values for the DEBUG flag are <code class="codeph">Yes</code> or <code class="codeph">No</code>. Enabling debug shows details about application processing.</td>
+<td id="d20274e124" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_DEBUG</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e124 d20274e74 ">Refers to whether debugging is switched on or off. Valid values for the DEBUG flag are <code class="codeph">Yes</code> or <code class="codeph">No</code>. Enabling debug shows details about application processing.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e138" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_HOME_LINK</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e138 d24471e76 ">Refers to the home page of an application. If no page is given and if no alternative page is dictated by the authentication scheme's logic, the Oracle APEX engine redirects to this location.</td>
+<td id="d20274e136" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_HOME_LINK</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e136 d20274e74 ">Refers to the home page of an application. If no page is given and if no alternative page is dictated by the authentication scheme's logic, the Oracle APEX engine redirects to this location.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e147" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_LOGIN_URL</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e147 d24471e76 ">Used to display a link to a login page for users that are not currently logged in.</td>
+<td id="d20274e145" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_LOGIN_URL</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e145 d20274e74 ">Used to display a link to a login page for users that are not currently logged in.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e153" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_IMAGE_PREFIX</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e153 d24471e76 ">Refers to the virtual path the web server uses to point to the images directory distributed with APEX.</td>
+<td id="d20274e151" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_IMAGE_PREFIX</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e151 d20274e74 ">Refers to the virtual path the web server uses to point to the images directory distributed with APEX.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e162" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_FLOW_SCHEMA_OWNER</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e162 d24471e76 ">Refers to the owner of the APEX schema.</td>
+<td id="d20274e160" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_FLOW_SCHEMA_OWNER</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e160 d20274e74 ">Refers to the owner of the APEX schema.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e172" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_PRINTER_FRIENDLY</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e172 d24471e76 ">Refers to whether the APEX engine is running in print view mode. This setting can be referenced in conditions to eliminate elements not desired in a printed document from a page.</td>
+<td id="d20274e170" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_PRINTER_FRIENDLY</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e170 d20274e74 ">Refers to whether the APEX engine is running in print view mode. This setting can be referenced in conditions to eliminate elements not desired in a printed document from a page.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e181" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_PROXY_SERVER</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e181 d24471e76 ">Refers to the application attribute Proxy Server.</td>
+<td id="d20274e179" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_PROXY_SERVER</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e179 d20274e74 ">Refers to the application attribute Proxy Server.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e187" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_SYSDATE</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e187 d24471e76 ">Refers to the current date on the database server. <code class="codeph">G_SYSDATE</code> uses the DATE datatype.</td>
+<td id="d20274e185" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_SYSDATE</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e185 d20274e74 ">Refers to the current date on the database server. <code class="codeph">G_SYSDATE</code> uses the DATE datatype.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e196" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_PUBLIC_USER</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e196 d24471e76 ">Refers to the Oracle schema used to connect to the database through the database access descriptor (DAD).</td>
+<td id="d20274e194" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_PUBLIC_USER</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e194 d20274e74 ">Refers to the Oracle schema used to connect to the database through the database access descriptor (DAD).</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e205" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_GLOBAL_NOTIFICATION</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e205 d24471e76 ">Specifies the application's global notification attribute.</td>
+<td id="d20274e203" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_GLOBAL_NOTIFICATION</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e203 d20274e74 ">Specifies the application's global notification attribute.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d24471e211" style="text-align: left;" data-valign="top" width="25%" headers="d24471e74 "><code class="codeph">G_X01, ... G_X10</code></td>
-<td style="text-align: left;" data-valign="top" width="75%" headers="d24471e211 d24471e76 ">Specifies the values of the <code class="codeph">X01, ... X10</code> variables most recently passed to or set within the show or accept modules. You typically use these variables in On-Demand AJAX processes.</td>
+<td id="d20274e209" style="text-align: left;" data-valign="top" width="25%" headers="d20274e72 "><code class="codeph">G_X01, ... G_X10</code></td>
+<td style="text-align: left;" data-valign="top" width="75%" headers="d20274e209 d20274e74 ">Specifies the values of the <code class="codeph">X01, ... X10</code> variables most recently passed to or set within the show or accept modules. You typically use these variables in On-Demand AJAX processes.</td>
 </tr>
 </tbody>
 </table>
 
-**Parent topic:** [APEX_APPLICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION.html#GUID-46D9B879-3180-480D-B5D6-54AABDD146F6)
+**Parent topic:** [APEX_APPLICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION.html#GUID-46D9B879-3180-480D-B5D6-54AABDD146F6)
 
 ------------------------------------------------------------------------
 
@@ -234,7 +234,7 @@ To implement this type of call in your application, you can do the following:
 2.  Create a region of type "PL/SQL Dynamic Content" and add the `APEX_APPLICATION.HELP` call as PL/SQL Source.
 3.  Add a "Navigation Bar" link to this page, ensuring that the REQUEST value set in the link is `&APP_PAGE_ID`.
 
-**Parent topic:** [APEX_APPLICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION.html#GUID-46D9B879-3180-480D-B5D6-54AABDD146F6)
+**Parent topic:** [APEX_APPLICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION.html#GUID-46D9B879-3180-480D-B5D6-54AABDD146F6)
 
 ------------------------------------------------------------------------
 
@@ -282,4 +282,4 @@ EXCEPTION
 END;
 ```
 
-**Parent topic:** [APEX_APPLICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION.html#GUID-46D9B879-3180-480D-B5D6-54AABDD146F6)
+**Parent topic:** [APEX_APPLICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION.html#GUID-46D9B879-3180-480D-B5D6-54AABDD146F6)

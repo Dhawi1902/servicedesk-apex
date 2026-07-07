@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Download + convert the Oracle APEX 26.1 JavaScript API Reference (JSDoc,
-multi-page) and the APEXlang API Reference (single page) into markdown.
+"""Download + convert the Oracle APEX 24.2 JavaScript API Reference (JSDoc,
+multi-page) and the APEXlang API Reference (single page, 26.1 — not shipped in
+24.2) into markdown.
 
 JS:      one .md per namespace/interface/widget, listed from index.html nav.
 APEXlang: one .md (the whole single-page component-model reference).
@@ -14,7 +15,8 @@ import urllib.request
 import urllib.error
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-JS_BASE = "https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/"
+JS_BASE = "https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/"
+# APEXlang has no 24.2 API reference (introduced later); pinned at 26.1.
 APXLN_BASE = "https://docs.oracle.com/en/database/oracle/apex/26.1/apxln/"
 
 def fetch(url, tries=4):
@@ -100,7 +102,7 @@ def build_js():
     with cf.ThreadPoolExecutor(max_workers=12) as ex:
         list(ex.map(dl, pages))
 
-    index = ["# Oracle APEX 26.1 — JavaScript API Reference (offline markdown)", "",
+    index = ["# Oracle APEX 24.2 — JavaScript API Reference (offline markdown)", "",
              f"Source: <{JS_BASE}index.html>", "",
              "| Category | API | File |", "|---|---|---|"]
     # intro page first

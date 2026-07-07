@@ -104,7 +104,7 @@ Each column is a node under the grid `[Left Pane ▸ Rendering]`; select one and
 | — | `DEPARTMENT_ID` | Hidden LOV | all | Cascades from `COMPANY_ID` |
 | — | *Actions* | Link/Button col | — | **✎ Edit** + **🔑 Reset** (Step 7) |
 
-**Last Login note:** the locked `APP_USERS` schema has **no** `LAST_LOGIN` column, and 26.1 exposes no queryable
+**Last Login note:** the locked `APP_USERS` schema has **no** `LAST_LOGIN` column, and 24.2 exposes no queryable
 last-login view in the reference. Show **Last Login** as a display-only column for parity with the mockup, populated
 from your own audit (e.g. a `LAST_LOGIN` timestamp you stamp in the post-auth process), or leave it blank/"Never" for
 the demo. Do **not** invent an APEX view for it.

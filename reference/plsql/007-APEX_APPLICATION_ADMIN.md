@@ -1,43 +1,42 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 7 APEX_APPLICATION_ADMIN
 
 The APEX_APPLICATION_ADMIN package provides APIs to modify application attributes of installed Oracle APEX applications.
 
-- [Constants and Data Types](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.Constants-and-Data-Types.html#GUID-D74F07EC-5A3D-4BD7-A1F1-A3EEBCA7F126)
-- [GET_APPLICATION_ALIAS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_ALIAS-Function.html#GUID-FA8FBB9C-C2D6-43FA-AA4C-9A7C66371086)
-- [GET_APPLICATION_NAME Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_NAME-Function.html#GUID-37EB9D81-F058-426C-9F77-B41945009DA6)
-- [GET_APPLICATION_STATUS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_STATUS-Function.html#GUID-900216A7-96DE-4BA5-8DDB-C010CFD77159)
-- [GET_APPLICATION_VERSION Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_VERSION-Function.html#GUID-1B6AB3B4-C791-4E2C-BE18-C17BC566D171)
-- [GET_AUTHENTICATION_SCHEME Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_AUTHENTICATION_SCHEME-Function.html#GUID-0D4E029C-6248-4AF8-A1EC-019A5A849BAC)
-- [GET_BUILD_OPTION_STATUS Function Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-1.html#GUID-C4F1D753-5706-40B0-B7DB-FE3AA3061E96)
-- [GET_BUILD_OPTION_STATUS Function Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-2.html#GUID-83E577E8-CD91-435D-88E5-993937EF3AB7)
-- [GET_BUILD_STATUS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_STATUS-Function.html#GUID-A30D953D-CA68-4DA9-90BC-7343AE6D9C0D)
-- [GET_GLOBAL_NOTIFICATION Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_GLOBAL_NOTIFICATION-Function.html#GUID-CACCA96E-926E-4E42-9863-9EB477CFE678)
-- [GET_FILE_STORAGE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_FILE_STORAGE-Function.html#GUID-7DD9652C-F0A4-45E5-AA32-EEFA9F775417)
-- [GET_IMAGE_PREFIX Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_IMAGE_PREFIX-Function.html#GUID-0EBBB67C-13D9-438C-AC72-8CAEC7620F03)
-- [GET_MAX_SCHEDULER_JOBS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_MAX_SCHEDULER_JOBS-Function.html#GUID-3BABB9EE-A621-4992-A2AC-84D211FAF2A8)
-- [GET_NO_PROXY_DOMAINS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_NO_PROXY_DOMAINS-Function.html#GUID-DDB4F804-00FF-4273-9D81-356179506181)
-- [GET_PARSING_SCHEMA Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_PARSING_SCHEMA-Function.html#GUID-8E351461-2457-473F-9074-5FC60C27676C)
-- [GET_PASS_ECID Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_PASS_ECID-Function.html#GUID-D08BB889-19B3-4923-9FD0-01D4683CA53C)
-- [GET_PROXY_SERVER Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_PROXY_SERVER-Function.html#GUID-7535FD46-30F4-413B-B0DB-A9D012B3CE10)
-- [SET_APPLICATION_ALIAS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_ALIAS-Procedure.html#GUID-E934C513-8996-4F84-AE4C-933207F0B980)
-- [SET_APPLICATION_NAME Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_NAME-Procedure.html#GUID-A61D4C27-432E-4476-B77E-B1BBD6A70561)
-- [SET_APPLICATION_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_STATUS-Procedure.html#GUID-F6BA64DC-63D6-4BCD-8307-E10CA94E9CC0)
-- [SET_APPLICATION_VERSION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_VERSION-Procedure.html#GUID-44612130-8DB8-46A2-901D-08FBAC35A385)
-- [SET_AUTHENTICATION_SCHEME Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_AUTHENTICATION_SCHEME-Procedure.html#GUID-2A6F4D02-1784-4C03-9390-655DF77CFBB6)
-- [SET_BUILD_OPTION_STATUS Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure-Signature-1.html#GUID-EA4B6939-510C-43D7-A6AB-3EBA2D72598E)
-- [SET_BUILD_OPTION_STATUS Procedure Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure-Signature-2.html#GUID-5508276E-32F4-45C3-9ECB-EBB4DA9FC2E2)
-- [SET_BUILD_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_STATUS-Procedure.html#GUID-C5B6C4BB-12EF-4F45-9284-B6BD71C098F4)
-- [SET_FILE_STORAGE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_FILE_STORAGE-Procedure.html#GUID-FB536D09-EE54-487F-9ACC-FFBEFA75A126)
-- [SET_GLOBAL_NOTIFICATION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_GLOBAL_NOTIFICATION-Procedure.html#GUID-71C6F727-A74C-4853-8172-2F3AF402E55E)
-- [SET_IMAGE_PREFIX Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_IMAGE_PREFIX-Procedure.html#GUID-2538791C-D9AF-46F8-946E-C373EDB50DCA)
-- [SET_MAX_SCHEDULER_JOBS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_MAX_SCHEDULER_JOBS-Procedure.html#GUID-21447A6C-C1DE-4AB4-BCC0-E554524854C0)
-- [SET_PARSING_SCHEMA Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_PARSING_SCHEMA-Procedure.html#GUID-E7774F5A-43CF-4DCD-825F-8AB78E8B8347)
-- [SET_PASS_ECID Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_PASS_ECID-Procedure.html#GUID-BD6B8557-D02A-4216-9017-98BB48A4F956)
-- [SET_PROXY_SERVER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_PROXY_SERVER-Procedure.html#GUID-9DEC0F1F-E727-4A49-8E71-BDB787CD2F7D)
-- [SET_REMOTE_SERVER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_REMOTE_SERVER-Procedure.html#GUID-6D3B66D3-824A-4E01-900C-BE91C7F2BCF2)
+- [Constants and Data Types](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.Constants-and-Data-Types.html#GUID-D74F07EC-5A3D-4BD7-A1F1-A3EEBCA7F126)
+- [GET_APPLICATION_ALIAS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_ALIAS-Function.html#GUID-FA8FBB9C-C2D6-43FA-AA4C-9A7C66371086)
+- [GET_APPLICATION_NAME Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_NAME-Function.html#GUID-37EB9D81-F058-426C-9F77-B41945009DA6)
+- [GET_APPLICATION_STATUS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_STATUS-Function.html#GUID-900216A7-96DE-4BA5-8DDB-C010CFD77159)
+- [GET_APPLICATION_VERSION Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_VERSION-Function.html#GUID-1B6AB3B4-C791-4E2C-BE18-C17BC566D171)
+- [GET_AUTHENTICATION_SCHEME Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_AUTHENTICATION_SCHEME-Function.html#GUID-0D4E029C-6248-4AF8-A1EC-019A5A849BAC)
+- [GET_BUILD_OPTION_STATUS Function Signature 1](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-1.html#GUID-C4F1D753-5706-40B0-B7DB-FE3AA3061E96)
+- [GET_BUILD_OPTION_STATUS Function Signature 2](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-2.html#GUID-83E577E8-CD91-435D-88E5-993937EF3AB7)
+- [GET_BUILD_STATUS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_STATUS-Function.html#GUID-A30D953D-CA68-4DA9-90BC-7343AE6D9C0D)
+- [GET_GLOBAL_NOTIFICATION Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_GLOBAL_NOTIFICATION-Function.html#GUID-CACCA96E-926E-4E42-9863-9EB477CFE678)
+- [GET_FILE_STORAGE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_FILE_STORAGE-Function.html#GUID-7DD9652C-F0A4-45E5-AA32-EEFA9F775417)
+- [GET_IMAGE_PREFIX Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_IMAGE_PREFIX-Function.html#GUID-0EBBB67C-13D9-438C-AC72-8CAEC7620F03)
+- [GET_MAX_SCHEDULER_JOBS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_MAX_SCHEDULER_JOBS-Function.html#GUID-3BABB9EE-A621-4992-A2AC-84D211FAF2A8)
+- [GET_NO_PROXY_DOMAINS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_NO_PROXY_DOMAINS-Function.html#GUID-DDB4F804-00FF-4273-9D81-356179506181)
+- [GET_PARSING_SCHEMA Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_PARSING_SCHEMA-Function.html#GUID-8E351461-2457-473F-9074-5FC60C27676C)
+- [GET_PASS_ECID Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_PASS_ECID-Function.html#GUID-D08BB889-19B3-4923-9FD0-01D4683CA53C)
+- [GET_PROXY_SERVER Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_PROXY_SERVER-Function.html#GUID-7535FD46-30F4-413B-B0DB-A9D012B3CE10)
+- [SET_APPLICATION_ALIAS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_ALIAS-Procedure.html#GUID-E934C513-8996-4F84-AE4C-933207F0B980)
+- [SET_APPLICATION_NAME Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_NAME-Procedure.html#GUID-A61D4C27-432E-4476-B77E-B1BBD6A70561)
+- [SET_APPLICATION_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_STATUS-Procedure.html#GUID-F6BA64DC-63D6-4BCD-8307-E10CA94E9CC0)
+- [SET_APPLICATION_VERSION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_VERSION-Procedure.html#GUID-44612130-8DB8-46A2-901D-08FBAC35A385)
+- [SET_AUTHENTICATION_SCHEME Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_AUTHENTICATION_SCHEME-Procedure.html#GUID-2A6F4D02-1784-4C03-9390-655DF77CFBB6)
+- [SET_BUILD_OPTION_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure.html#GUID-EA4B6939-510C-43D7-A6AB-3EBA2D72598E)
+- [SET_BUILD_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_STATUS-Procedure.html#GUID-C5B6C4BB-12EF-4F45-9284-B6BD71C098F4)
+- [SET_FILE_STORAGE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_FILE_STORAGE-Procedure.html#GUID-FB536D09-EE54-487F-9ACC-FFBEFA75A126)
+- [SET_GLOBAL_NOTIFICATION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_GLOBAL_NOTIFICATION-Procedure.html#GUID-71C6F727-A74C-4853-8172-2F3AF402E55E)
+- [SET_IMAGE_PREFIX Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_IMAGE_PREFIX-Procedure.html#GUID-2538791C-D9AF-46F8-946E-C373EDB50DCA)
+- [SET_MAX_SCHEDULER_JOBS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_MAX_SCHEDULER_JOBS-Procedure.html#GUID-21447A6C-C1DE-4AB4-BCC0-E554524854C0)
+- [SET_PARSING_SCHEMA Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_PARSING_SCHEMA-Procedure.html#GUID-E7774F5A-43CF-4DCD-825F-8AB78E8B8347)
+- [SET_PASS_ECID Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_PASS_ECID-Procedure.html#GUID-BD6B8557-D02A-4216-9017-98BB48A4F956)
+- [SET_PROXY_SERVER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_PROXY_SERVER-Procedure.html#GUID-9DEC0F1F-E727-4A49-8E71-BDB787CD2F7D)
+- [SET_REMOTE_SERVER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_REMOTE_SERVER-Procedure.html#GUID-6D3B66D3-824A-4E01-900C-BE91C7F2BCF2)
 
 ------------------------------------------------------------------------
 
@@ -82,7 +81,7 @@ c_file_storage_oci     constant t_storage_type := 'OBJECT_STORE';
 c_file_storage_db      constant t_storage_type := 'DB';
 ```
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -119,9 +118,9 @@ END;
 
 See Also:
 
-[SET_APPLICATION_ALIAS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_ALIAS-Procedure.html#GUID-E934C513-8996-4F84-AE4C-933207F0B980)
+[SET_APPLICATION_ALIAS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_ALIAS-Procedure.html#GUID-E934C513-8996-4F84-AE4C-933207F0B980)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -158,9 +157,9 @@ END;
 
 See Also:
 
-[SET_APPLICATION_NAME Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_NAME-Procedure.html#GUID-A61D4C27-432E-4476-B77E-B1BBD6A70561)
+[SET_APPLICATION_NAME Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_NAME-Procedure.html#GUID-A61D4C27-432E-4476-B77E-B1BBD6A70561)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -202,9 +201,9 @@ END;
 
 See Also:
 
-[SET_APPLICATION_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_STATUS-Procedure.html#GUID-F6BA64DC-63D6-4BCD-8307-E10CA94E9CC0)
+[SET_APPLICATION_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_STATUS-Procedure.html#GUID-F6BA64DC-63D6-4BCD-8307-E10CA94E9CC0)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -236,9 +235,9 @@ select apex_application_admin.get_application_version(100) from sys.dual
 
 See Also:
 
-[SET_APPLICATION_VERSION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_VERSION-Procedure.html#GUID-44612130-8DB8-46A2-901D-08FBAC35A385)
+[SET_APPLICATION_VERSION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_APPLICATION_VERSION-Procedure.html#GUID-44612130-8DB8-46A2-901D-08FBAC35A385)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -270,9 +269,9 @@ select apex_application_admin.get_authentication_scheme(100) from sys.dual
 
 See Also:
 
-[SET_AUTHENTICATION_SCHEME Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_AUTHENTICATION_SCHEME-Procedure.html#GUID-2A6F4D02-1784-4C03-9390-655DF77CFBB6)
+[SET_AUTHENTICATION_SCHEME Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_AUTHENTICATION_SCHEME-Procedure.html#GUID-2A6F4D02-1784-4C03-9390-655DF77CFBB6)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -298,19 +297,15 @@ Parameters
 
 See Also:
 
-[SET_BUILD_OPTION_STATUS Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure-Signature-1.html#GUID-EA4B6939-510C-43D7-A6AB-3EBA2D72598E)
+[SET_BUILD_OPTION_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure.html#GUID-EA4B6939-510C-43D7-A6AB-3EBA2D72598E)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
 ## 7.8 GET_BUILD_OPTION_STATUS Function Signature 2
 
-This function retrieves the status of a build option by Static ID.
-
-Note:
-
-If APEX cannot find a matching build option by Static ID, it checks for a matching build option by name. This is done for backward compatibility.
+This function retrieves the status of a build option by name.
 
 Syntax
 
@@ -323,31 +318,22 @@ RETURN t_build_option_status;
 
 Parameters
 
-| Parameter             | Description                 |
-|:----------------------|:----------------------------|
-| `p_application_id`    | The application ID.         |
-| `p_build_option_name` | The build option Static ID. |
+| Parameter             | Description            |
+|:----------------------|:-----------------------|
+| `p_application_id`    | The application ID.    |
+| `p_build_option_name` | The build option name. |
 
-Example
+Returns
 
-The following example gets the build option status identified by static_id `test_apps` for app 100.
+`INCLUDE` - The build option is "Include" (associated components are enabled and part of the application).
 
-```
-declare
-    l_build_option_status varchar(10);
-begin
-    l_build_option_status := apex_application_admin.get_build_option_status (
-                                 p_application_id    => 100,
-                                 p_build_option_name => 'test_apps' );
-    htp.p (l_build_option_status);
-end;
-```
+`EXCLUDE` - The build option is "Exclude" (associated components are disabled and not part of the application).
 
 See Also:
 
-[SET_BUILD_OPTION_STATUS Procedure Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure-Signature-1.html#GUID-EA4B6939-510C-43D7-A6AB-3EBA2D72598E)
+[SET_BUILD_OPTION_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS-Procedure.html#GUID-EA4B6939-510C-43D7-A6AB-3EBA2D72598E)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -384,9 +370,9 @@ END;
 
 See Also:
 
-[SET_BUILD_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_STATUS-Procedure.html#GUID-C5B6C4BB-12EF-4F45-9284-B6BD71C098F4)
+[SET_BUILD_STATUS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_BUILD_STATUS-Procedure.html#GUID-C5B6C4BB-12EF-4F45-9284-B6BD71C098F4)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -410,9 +396,9 @@ Parameters
 
 See Also:
 
-[SET_GLOBAL_NOTIFICATION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_GLOBAL_NOTIFICATION-Procedure.html#GUID-71C6F727-A74C-4853-8172-2F3AF402E55E)
+[SET_GLOBAL_NOTIFICATION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_GLOBAL_NOTIFICATION-Procedure.html#GUID-71C6F727-A74C-4853-8172-2F3AF402E55E)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -450,9 +436,9 @@ The following example prints the static ID of application file storage remote se
 
 See Also:
 
-- [SET_FILE_STORAGE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_FILE_STORAGE-Procedure.html#GUID-FB536D09-EE54-487F-9ACC-FFBEFA75A126)
+- [SET_FILE_STORAGE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_FILE_STORAGE-Procedure.html#GUID-FB536D09-EE54-487F-9ACC-FFBEFA75A126)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -489,9 +475,9 @@ END;
 
 See Also:
 
-[SET_IMAGE_PREFIX Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_IMAGE_PREFIX-Procedure.html#GUID-2538791C-D9AF-46F8-946E-C373EDB50DCA)
+[SET_IMAGE_PREFIX Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_IMAGE_PREFIX-Procedure.html#GUID-2538791C-D9AF-46F8-946E-C373EDB50DCA)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -517,9 +503,9 @@ Parameters
 
 See Also:
 
-- [SET_MAX_SCHEDULER_JOBS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_MAX_SCHEDULER_JOBS-Procedure.html#GUID-21447A6C-C1DE-4AB4-BCC0-E554524854C0)
+- [SET_MAX_SCHEDULER_JOBS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_MAX_SCHEDULER_JOBS-Procedure.html#GUID-21447A6C-C1DE-4AB4-BCC0-E554524854C0)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -547,10 +533,10 @@ This function returns a comma-delimited list of domains for which the proxy serv
 
 See Also:
 
-- [GET_PROXY_SERVER Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_PROXY_SERVER-Function.html#GUID-7535FD46-30F4-413B-B0DB-A9D012B3CE10)
-- [SET_PROXY_SERVER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_PROXY_SERVER-Procedure.html#GUID-9DEC0F1F-E727-4A49-8E71-BDB787CD2F7D)
+- [GET_PROXY_SERVER Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_PROXY_SERVER-Function.html#GUID-7535FD46-30F4-413B-B0DB-A9D012B3CE10)
+- [SET_PROXY_SERVER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_PROXY_SERVER-Procedure.html#GUID-9DEC0F1F-E727-4A49-8E71-BDB787CD2F7D)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -587,9 +573,9 @@ END;
 
 See Also:
 
-[SET_PARSING_SCHEMA Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_PARSING_SCHEMA-Procedure.html#GUID-E7774F5A-43CF-4DCD-825F-8AB78E8B8347)
+[SET_PARSING_SCHEMA Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_PARSING_SCHEMA-Procedure.html#GUID-E7774F5A-43CF-4DCD-825F-8AB78E8B8347)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -613,9 +599,9 @@ Parameters
 
 See Also:
 
-[SET_PASS_ECID Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_PASS_ECID-Procedure.html#GUID-BD6B8557-D02A-4216-9017-98BB48A4F956)
+[SET_PASS_ECID Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_PASS_ECID-Procedure.html#GUID-BD6B8557-D02A-4216-9017-98BB48A4F956)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -652,10 +638,10 @@ END;
 
 See Also:
 
-- [GET_NO_PROXY_DOMAINS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_NO_PROXY_DOMAINS-Function.html#GUID-DDB4F804-00FF-4273-9D81-356179506181)
-- [SET_PROXY_SERVER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.SET_PROXY_SERVER-Procedure.html#GUID-9DEC0F1F-E727-4A49-8E71-BDB787CD2F7D)
+- [GET_NO_PROXY_DOMAINS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_NO_PROXY_DOMAINS-Function.html#GUID-DDB4F804-00FF-4273-9D81-356179506181)
+- [SET_PROXY_SERVER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.SET_PROXY_SERVER-Procedure.html#GUID-9DEC0F1F-E727-4A49-8E71-BDB787CD2F7D)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -695,9 +681,9 @@ END;
 
 See Also:
 
-[GET_APPLICATION_ALIAS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_ALIAS-Function.html#GUID-FA8FBB9C-C2D6-43FA-AA4C-9A7C66371086)
+[GET_APPLICATION_ALIAS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_ALIAS-Function.html#GUID-FA8FBB9C-C2D6-43FA-AA4C-9A7C66371086)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -737,9 +723,9 @@ END;
 
 See Also:
 
-[GET_APPLICATION_NAME Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_NAME-Function.html#GUID-37EB9D81-F058-426C-9F77-B41945009DA6)
+[GET_APPLICATION_NAME Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_NAME-Function.html#GUID-37EB9D81-F058-426C-9F77-B41945009DA6)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -770,18 +756,18 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d29200e72" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d29200e74" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
+<th id="d25001e70" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
+<th id="d25001e72" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d29200e78" style="text-align: left;" data-valign="top" width="42%" headers="d29200e72 "><code class="codeph">p_application_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29200e78 d29200e74 ">The application ID.</td>
+<td id="d25001e76" style="text-align: left;" data-valign="top" width="42%" headers="d25001e70 "><code class="codeph">p_application_id</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25001e76 d25001e72 ">The application ID.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d29200e84" style="text-align: left;" data-valign="top" width="42%" headers="d29200e72 "><code class="codeph">p_application_status</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29200e84 d29200e74 ">New status to set application to. Values include:
+<td id="d25001e82" style="text-align: left;" data-valign="top" width="42%" headers="d25001e70 "><code class="codeph">p_application_status</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25001e82 d25001e72 ">New status to set application to. Values include:
 <ul>
 <li>apex_application_admin.c_app_available - Application is available with no restrictions.</li>
 <li>apex_application_admin.c_app_available_with_edit_link - Application is available with no restrictions. Developer Toolbar displays for developers.</li>
@@ -793,20 +779,20 @@ Parameters
 </ul></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d29200e118" style="text-align: left;" data-valign="top" width="42%" headers="d29200e72 "><code class="codeph">p_allowed_users_list</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29200e118 d29200e74 ">An <code class="codeph">apex_t_varchar2</code> list of users which are allowed to access the application when <code class="codeph">p_application_status = c_app_restricted_access</code>.</td>
+<td id="d25001e116" style="text-align: left;" data-valign="top" width="42%" headers="d25001e70 "><code class="codeph">p_allowed_users_list</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25001e116 d25001e72 ">An <code class="codeph">apex_t_varchar2</code> list of users which are allowed to access the application when <code class="codeph">p_application_status = c_app_restricted_access</code>.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d29200e130" style="text-align: left;" data-valign="top" width="42%" headers="d29200e72 "><code class="codeph">p_message</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29200e130 d29200e74 ">Message shown to users when <code class="codeph">p_application_status = c_app_unavailable</code>.</td>
+<td id="d25001e128" style="text-align: left;" data-valign="top" width="42%" headers="d25001e70 "><code class="codeph">p_message</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25001e128 d25001e72 ">Message shown to users when <code class="codeph">p_application_status = c_app_unavailable</code>.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d29200e139" style="text-align: left;" data-valign="top" width="42%" headers="d29200e72 "><code class="codeph">p_plsql_code</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29200e139 d29200e74 ">Message shown to users when <code class="codeph">p_application_status = c_app_unavailable_show_plsql</code>.</td>
+<td id="d25001e137" style="text-align: left;" data-valign="top" width="42%" headers="d25001e70 "><code class="codeph">p_plsql_code</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25001e137 d25001e72 ">Message shown to users when <code class="codeph">p_application_status = c_app_unavailable_show_plsql</code>.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d29200e148" style="text-align: left;" data-valign="top" width="42%" headers="d29200e72 "><code class="codeph">p_redirect_url</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29200e148 d29200e74 ">URL to redirect to when <code class="codeph">p_application_status = c_app_unavailable_redirect</code>.</td>
+<td id="d25001e146" style="text-align: left;" data-valign="top" width="42%" headers="d25001e70 "><code class="codeph">p_redirect_url</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25001e146 d25001e72 ">URL to redirect to when <code class="codeph">p_application_status = c_app_unavailable_redirect</code>.</td>
 </tr>
 </tbody>
 </table>
@@ -828,9 +814,9 @@ END;
 
 See Also:
 
-[GET_APPLICATION_STATUS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_STATUS-Function.html#GUID-900216A7-96DE-4BA5-8DDB-C010CFD77159)
+[GET_APPLICATION_STATUS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_STATUS-Function.html#GUID-900216A7-96DE-4BA5-8DDB-C010CFD77159)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
@@ -867,26 +853,22 @@ END;
 
 See Also:
 
-[GET_APPLICATION_VERSION Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_VERSION-Function.html#GUID-1B6AB3B4-C791-4E2C-BE18-C17BC566D171)
+[GET_APPLICATION_VERSION Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_APPLICATION_VERSION-Function.html#GUID-1B6AB3B4-C791-4E2C-BE18-C17BC566D171)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
 ## 7.22 SET_AUTHENTICATION_SCHEME Procedure
 
-This procedure sets the authentication scheme of an application. Specify the Static ID of the authentication scheme.
-
-Note:
-
-If APEX cannot find a matching authentication scheme by Static ID, it checks for matching authentication scheme by name. This is done for backward compatibility.
+This procedure sets the authentication scheme of an application.
 
 Syntax
 
 ```
 APEX_APPLICATION_ADMIN.SET_AUTHENTICATION_SCHEME (
     p_application_id IN NUMBER,
-    p_name           IN VARCHAR2 );
+    p_name           IN VARCHAR2 )
 ```
 
 Parameters
@@ -898,26 +880,26 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d29778e77" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d29778e79" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
+<th id="d25579e70" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
+<th id="d25579e72" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d29778e83" style="text-align: left;" data-valign="top" width="42%" headers="d29778e77 "><code class="codeph">p_application_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29778e83 d29778e79 ">The application ID.</td>
+<td id="d25579e76" style="text-align: left;" data-valign="top" width="42%" headers="d25579e70 "><code class="codeph">p_application_id</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25579e76 d25579e72 ">The application ID.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d29778e89" style="text-align: left;" data-valign="top" width="42%" headers="d29778e77 "><code class="codeph">p_name</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29778e89 d29778e79 "><p>The name of the authentication scheme to be activated.</p>
-<p>The authentication scheme must exist in the application. If <code class="codeph">p_name</code>is null, the active authentication scheme remains unchanged.</p></td>
+<td id="d25579e82" style="text-align: left;" data-valign="top" width="42%" headers="d25579e70 "><code class="codeph">p_name</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25579e82 d25579e72 "><p>The name of the authentication scheme to be activated.</p>
+<p>This new authentication scheme must exist in the application. If null, the active authentication scheme remains unchanged.</p></td>
 </tr>
 </tbody>
 </table>
 
 Example
 
-This example activates authentication scheme "SSO-Production" for application 100.
+The following example activates authentication scheme "SSO-Production" for application 100.
 
 ```
 BEGIN
@@ -929,15 +911,15 @@ END;
 
 See Also:
 
-[GET_AUTHENTICATION_SCHEME Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_AUTHENTICATION_SCHEME-Function.html#GUID-0D4E029C-6248-4AF8-A1EC-019A5A849BAC)
+[GET_AUTHENTICATION_SCHEME Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_AUTHENTICATION_SCHEME-Function.html#GUID-0D4E029C-6248-4AF8-A1EC-019A5A849BAC)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
-## 7.23 SET_BUILD_OPTION_STATUS Procedure Signature 1
+## 7.23 SET_BUILD_OPTION_STATUS Procedure
 
-This procedure sets the status of a build option by ID.
+This procedure sets the status of a build option.
 
 Syntax
 
@@ -945,7 +927,7 @@ Syntax
 APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS (
     p_application_id   IN NUMBER,
     p_id               IN NUMBER,
-    p_build_status     IN t_build_option_status );
+    p_build_status     IN t_build_option_status )
 ```
 
 Parameters
@@ -957,25 +939,25 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d29986e72" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d29986e74" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
+<th id="d25775e70" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
+<th id="d25775e72" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d29986e78" style="text-align: left;" data-valign="top" width="42%" headers="d29986e72 "><code class="codeph">p_application_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29986e78 d29986e74 ">The application ID.</td>
+<td id="d25775e76" style="text-align: left;" data-valign="top" width="42%" headers="d25775e70 "><code class="codeph">p_app</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25775e76 d25775e72 ">The application ID.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d29986e84" style="text-align: left;" data-valign="top" width="42%" headers="d29986e72 "><code class="codeph">p_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29986e84 d29986e74 ">The build option ID.</td>
+<td id="d25775e82" style="text-align: left;" data-valign="top" width="42%" headers="d25775e70 "><code class="codeph">p_id</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25775e82 d25775e72 ">The build option ID.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d29986e90" style="text-align: left;" data-valign="top" width="42%" headers="d29986e72 "><code class="codeph">p_build_status</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d29986e90 d29986e74 ">Status with possible values:
+<td id="d25775e88" style="text-align: left;" data-valign="top" width="42%" headers="d25775e70 "><code class="codeph">p_build_status</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d25775e88 d25775e72 ">Status with possible values:
 <ul>
-<li><code class="codeph">apex_application_admin.c_build_option_status_include</code></li>
-<li><code class="codeph">apex_application_admin.c_build_option_status_exclude</code></li>
+<li>apex_application_admin.c_build_option_status_include</li>
+<li>apex_application_admin.c_build_option_status_exclude</li>
 </ul></td>
 </tr>
 </tbody>
@@ -983,82 +965,14 @@ Parameters
 
 See Also:
 
-- [GET_BUILD_OPTION_STATUS Function Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-1.html#GUID-C4F1D753-5706-40B0-B7DB-FE3AA3061E96)
-- [GET_BUILD_OPTION_STATUS Function Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-2.html#GUID-83E577E8-CD91-435D-88E5-993937EF3AB7)
+- [GET_BUILD_OPTION_STATUS Function Signature 1](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-1.html#GUID-C4F1D753-5706-40B0-B7DB-FE3AA3061E96)
+- [GET_BUILD_OPTION_STATUS Function Signature 2](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-2.html#GUID-83E577E8-CD91-435D-88E5-993937EF3AB7)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
-
-------------------------------------------------------------------------
-
-## 7.24 SET_BUILD_OPTION_STATUS Procedure Signature 2
-
-This procedure sets the status of a build option by Static ID.
-
-Syntax
-
-```
-APEX_APPLICATION_ADMIN.SET_BUILD_OPTION_STATUS (
-    p_application_id     IN   NUMBER,
-    p_static_id          IN   VARCHAR2,
-    p_build_status       IN   t_build_option_status );
-```
-
-Parameters
-
-<table class="Formal" data-cellpadding="4" data-cellspacing="0" title="" data-summary="Parameters for procedure." width="100%" data-frame="hsides" data-border="1" data-rules="rows">
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr data-align="left" data-valign="top">
-<th id="d30229e72" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d30229e74" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr data-align="left" data-valign="top">
-<td id="d30229e78" style="text-align: left;" data-valign="top" width="42%" headers="d30229e72 "><code class="codeph">p_application_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d30229e78 d30229e74 ">The application ID.</td>
-</tr>
-<tr data-align="left" data-valign="top">
-<td id="d30229e84" style="text-align: left;" data-valign="top" width="42%" headers="d30229e72 "><code class="codeph">p_static_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d30229e84 d30229e74 ">The build option Static ID.</td>
-</tr>
-<tr data-align="left" data-valign="top">
-<td id="d30229e90" style="text-align: left;" data-valign="top" width="42%" headers="d30229e72 "><code class="codeph">p_build_status</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d30229e90 d30229e74 ">Status with possible values:
-<ul>
-<li><code class="codeph">apex_application_admin.c_build_option_status_include</code></li>
-<li><code class="codeph">apex_application_admin.c_build_option_status_exclude</code></li>
-</ul></td>
-</tr>
-</tbody>
-</table>
-
-Example
-
-This example sets the build option identified by static ID `test_apps` for app 100 to `INCLUDE`.
-
-```
-begin
-    apex_application_admin.set_build_option_status (
-        p_application_id => 100,
-        p_static_id      => 'test_apps'
-        p_build_status   => apex_application_admin.c_build_option_status_include );
-end;
-```
-
-See Also:
-
-- [GET_BUILD_OPTION_STATUS Function Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-1.html#GUID-C4F1D753-5706-40B0-B7DB-FE3AA3061E96)
-- [GET_BUILD_OPTION_STATUS Function Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_OPTION_STATUS-Function-Signature-2.html#GUID-83E577E8-CD91-435D-88E5-993937EF3AB7)
-
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
-## 7.25 SET_BUILD_STATUS Procedure
+## 7.24 SET_BUILD_STATUS Procedure
 
 This procedure sets the application build status.
 
@@ -1079,18 +993,18 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d30487e72" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d30487e74" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
+<th id="d26012e70" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
+<th id="d26012e72" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d30487e78" style="text-align: left;" data-valign="top" width="42%" headers="d30487e72 "><code class="codeph">p_application_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d30487e78 d30487e74 ">The application ID.</td>
+<td id="d26012e76" style="text-align: left;" data-valign="top" width="42%" headers="d26012e70 "><code class="codeph">p_application_id</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d26012e76 d26012e72 ">The application ID.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d30487e84" style="text-align: left;" data-valign="top" width="42%" headers="d30487e72 "><code class="codeph">p_build_status</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d30487e84 d30487e74 "><div class="p">
+<td id="d26012e82" style="text-align: left;" data-valign="top" width="42%" headers="d26012e70 "><code class="codeph">p_build_status</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d26012e82 d26012e72 "><div class="p">
 New build status to set application to. Values include:
 <ul>
 <li>RUN_AND_BUILD - Developers and users can both run and develop the application.</li>
@@ -1116,13 +1030,13 @@ END;
 
 See Also:
 
-[GET_BUILD_STATUS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_STATUS-Function.html#GUID-A30D953D-CA68-4DA9-90BC-7343AE6D9C0D)
+[GET_BUILD_STATUS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_BUILD_STATUS-Function.html#GUID-A30D953D-CA68-4DA9-90BC-7343AE6D9C0D)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
-## 7.26 SET_FILE_STORAGE Procedure
+## 7.25 SET_FILE_STORAGE Procedure
 
 This procedure sets the file storage type to use either the local database or OCI Object store. If Object store is chosen, you must pass the static ID of the remote server pointing to the object store bucket.
 
@@ -1161,13 +1075,13 @@ END;
 
 See Also:
 
-- [GET_FILE_STORAGE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_FILE_STORAGE-Function.html#GUID-7DD9652C-F0A4-45E5-AA32-EEFA9F775417)
+- [GET_FILE_STORAGE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_FILE_STORAGE-Function.html#GUID-7DD9652C-F0A4-45E5-AA32-EEFA9F775417)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
-## 7.27 SET_GLOBAL_NOTIFICATION Procedure
+## 7.26 SET_GLOBAL_NOTIFICATION Procedure
 
 This procedure sets the global notification message. This is the message displayed in page `#GLOBALNOTIFICATION#` substitution string.
 
@@ -1188,13 +1102,13 @@ Parameters
 
 See Also:
 
-[GET_GLOBAL_NOTIFICATION Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_GLOBAL_NOTIFICATION-Function.html#GUID-CACCA96E-926E-4E42-9863-9EB477CFE678)
+[GET_GLOBAL_NOTIFICATION Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_GLOBAL_NOTIFICATION-Function.html#GUID-CACCA96E-926E-4E42-9863-9EB477CFE678)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
-## 7.28 SET_IMAGE_PREFIX Procedure
+## 7.27 SET_IMAGE_PREFIX Procedure
 
 This procedure sets the application image prefix.
 
@@ -1230,13 +1144,13 @@ END;
 
 See Also:
 
-[GET_IMAGE_PREFIX Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_IMAGE_PREFIX-Function.html#GUID-0EBBB67C-13D9-438C-AC72-8CAEC7620F03)
+[GET_IMAGE_PREFIX Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_IMAGE_PREFIX-Function.html#GUID-0EBBB67C-13D9-438C-AC72-8CAEC7620F03)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
-## 7.29 SET_MAX_SCHEDULER_JOBS Procedure
+## 7.28 SET_MAX_SCHEDULER_JOBS Procedure
 
 This procedure sets the application attribute "Maximum Scheduler Jobs."
 
@@ -1269,13 +1183,13 @@ END;
 
 See Also:
 
-- [GET_MAX_SCHEDULER_JOBS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_MAX_SCHEDULER_JOBS-Function.html#GUID-3BABB9EE-A621-4992-A2AC-84D211FAF2A8)
+- [GET_MAX_SCHEDULER_JOBS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_MAX_SCHEDULER_JOBS-Function.html#GUID-3BABB9EE-A621-4992-A2AC-84D211FAF2A8)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
-## 7.30 SET_PARSING_SCHEMA Procedure
+## 7.29 SET_PARSING_SCHEMA Procedure
 
 This procedure sets the parsing schema ("owner") of an application.
 
@@ -1310,13 +1224,13 @@ END;
 
 See Also:
 
-[GET_PARSING_SCHEMA Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_PARSING_SCHEMA-Function.html#GUID-8E351461-2457-473F-9074-5FC60C27676C)
+[GET_PARSING_SCHEMA Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_PARSING_SCHEMA-Function.html#GUID-8E351461-2457-473F-9074-5FC60C27676C)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
-## 7.31 SET_PASS_ECID Procedure
+## 7.30 SET_PASS_ECID Procedure
 
 This procedure sets the application Security attribute "Pass ECID" (Execution Context ID). Indicates whether to pass the ECID to the external web services for end-to-end tracing.
 
@@ -1345,13 +1259,13 @@ END;
 
 See Also:
 
-[GET_PASS_ECID Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_PASS_ECID-Function.html#GUID-D08BB889-19B3-4923-9FD0-01D4683CA53C)
+[GET_PASS_ECID Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_PASS_ECID-Function.html#GUID-D08BB889-19B3-4923-9FD0-01D4683CA53C)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
-## 7.32 SET_PROXY_SERVER Procedure
+## 7.31 SET_PROXY_SERVER Procedure
 
 This procedure sets the proxy server attributes of an application.
 
@@ -1373,23 +1287,23 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d31921e72" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d31921e74" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
+<th id="d27446e70" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
+<th id="d27446e72" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d31921e78" style="text-align: left;" data-valign="top" width="42%" headers="d31921e72 "><code class="codeph">p_application_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d31921e78 d31921e74 ">The application ID.</td>
+<td id="d27446e76" style="text-align: left;" data-valign="top" width="42%" headers="d27446e70 "><code class="codeph">p_application_id</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d27446e76 d27446e72 ">The application ID.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d31921e84" style="text-align: left;" data-valign="top" width="42%" headers="d31921e72 "><code class="codeph">p_proxy_server</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d31921e84 d31921e74 "><p>The proxy server. There is no default value.</p>
+<td id="d27446e82" style="text-align: left;" data-valign="top" width="42%" headers="d27446e70 "><code class="codeph">p_proxy_server</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d27446e82 d27446e72 "><p>The proxy server. There is no default value.</p>
 <p>The proxy server must be fewer than 255 characters and must exclude any protocol prefix such as <code class="codeph">http://</code>. The following example is valid: <code class="codeph">www-proxy.example.com</code></p></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d31921e98" style="text-align: left;" data-valign="top" width="42%" headers="d31921e72 "><code class="codeph">p_no_proxy_domains</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d31921e98 d31921e74 ">Comma-delimited list of domains for which the proxy server is invalid. Default value is null. Cannot be more than 500 characters.</td>
+<td id="d27446e96" style="text-align: left;" data-valign="top" width="42%" headers="d27446e70 "><code class="codeph">p_no_proxy_domains</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d27446e96 d27446e72 ">Comma-delimited list of domains for which the proxy server is invalid. Default value is null. Cannot be more than 500 characters.</td>
 </tr>
 </tbody>
 </table>
@@ -1407,14 +1321,14 @@ END;
 
 See Also:
 
-- [GET_NO_PROXY_DOMAINS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_NO_PROXY_DOMAINS-Function.html#GUID-DDB4F804-00FF-4273-9D81-356179506181)
-- [GET_PROXY_SERVER Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.GET_PROXY_SERVER-Function.html#GUID-7535FD46-30F4-413B-B0DB-A9D012B3CE10)
+- [GET_NO_PROXY_DOMAINS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_NO_PROXY_DOMAINS-Function.html#GUID-DDB4F804-00FF-4273-9D81-356179506181)
+- [GET_PROXY_SERVER Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.GET_PROXY_SERVER-Function.html#GUID-7535FD46-30F4-413B-B0DB-A9D012B3CE10)
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
 
 ------------------------------------------------------------------------
 
-## 7.33 SET_REMOTE_SERVER Procedure
+## 7.32 SET_REMOTE_SERVER Procedure
 
 This procedure sets the base URL, HTTPS host, and other attributes for remote servers. Remote servers are identified by their Static ID.
 
@@ -1433,8 +1347,7 @@ APEX_APPLICATION_ADMIN.SET_REMOTE_SERVER (
     --
     p_ai_model_name    IN VARCHAR2 DEFAULT NULL,
     p_ai_http_headers  IN CLOB     DEFAULT NULL,
-    p_ai_attributes    IN CLOB     DEFAULT NULL,
-    p_ai_max_tokens    IN NUMBER   DEFAULT NULL );
+    p_ai_attributes    IN CLOB     DEFAULT NULL )
 ```
 
 Parameters
@@ -1450,7 +1363,6 @@ Parameters
 | `p_ai_model_name` | The AI model to use when requesting a response from a generative AI service. |
 | `p_ai_http_headers` | HTTP headers to use when making a request to a generative AI service. |
 | `p_ai_attributes` | Attributes in JSON format to use when making a request to a generative AI service. |
-| `p_ai_max_tokens` | Maximum number of tokens in a rolling 24-hour window APEX is allowed to make to this Generative AI Service. |
 
 Example
 
@@ -1462,4 +1374,4 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)
+**Parent topic:** [APEX_APPLICATION_ADMIN](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPLICATION_ADMIN.html#GUID-695A78E4-4F00-49B5-B94A-9E526AE9718A)

@@ -1,5 +1,5 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_OBJECT_DEPENDENCY.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_OBJECT_DEPENDENCY.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 4 APEX_APP_OBJECT_DEPENDENCY
 
@@ -15,9 +15,9 @@ The result of the scan may be viewed by querying the following views:
 
 In the event that a fragment of SQL or PL/SQL is invalid (such as a required object is missing), some dependencies may not be detected. The compilation error message may be queried in the APEX_USED_DB_OBJECT_COMP_PROPS view.
 
-- [Constants](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_OBJECT_DEPENDENCY.Constants.html#GUID-B2C2F938-BDC5-418A-B92C-71C47C9317D4)
-- [CLEAR_CACHE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_OBJECT_DEPENDENCY.CLEAR_CACHE-Procedure.html#GUID-C721C557-7168-4415-9CA3-4C4556EBBBEB)
-- [SCAN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_OBJECT_DEPENDENCY.SCAN-Procedure.html#GUID-1E2AE34E-EB71-4581-9B7E-3C26DCD2430C)
+- [Constants](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_OBJECT_DEPENDENCY.Constants.html#GUID-B2C2F938-BDC5-418A-B92C-71C47C9317D4)
+- [CLEAR_CACHE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_OBJECT_DEPENDENCY.CLEAR_CACHE-Procedure.html#GUID-C721C557-7168-4415-9CA3-4C4556EBBBEB)
+- [SCAN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_OBJECT_DEPENDENCY.SCAN-Procedure.html#GUID-1E2AE34E-EB71-4581-9B7E-3C26DCD2430C)
 
 ------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ c_option_identifiers  constant varchar2(30) := 'IDENTIFIERS';
 c_option_errors       constant varchar2(30) := 'ERRORS';
 ```
 
-**Parent topic:** [APEX_APP_OBJECT_DEPENDENCY](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_OBJECT_DEPENDENCY.html#GUID-9E5E8896-492E-4CB0-B153-C0F7A81BA54F)
+**Parent topic:** [APEX_APP_OBJECT_DEPENDENCY](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_OBJECT_DEPENDENCY.html#GUID-9E5E8896-492E-4CB0-B153-C0F7A81BA54F)
 
 ------------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APP_OBJECT_DEPENDENCY](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_OBJECT_DEPENDENCY.html#GUID-9E5E8896-492E-4CB0-B153-C0F7A81BA54F)
+**Parent topic:** [APEX_APP_OBJECT_DEPENDENCY](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_OBJECT_DEPENDENCY.html#GUID-9E5E8896-492E-4CB0-B153-C0F7A81BA54F)
 
 ------------------------------------------------------------------------
 
@@ -128,22 +128,22 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d23287e142" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d23287e144" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
+<th id="d19090e140" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
+<th id="d19090e142" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d23287e148" style="text-align: left;" data-valign="top" width="42%" headers="d23287e142 "><code class="codeph">p_application_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d23287e148 d23287e144 ">ID of the application to be analyzed.</td>
+<td id="d19090e146" style="text-align: left;" data-valign="top" width="42%" headers="d19090e140 "><code class="codeph">p_application_id</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d19090e146 d19090e142 ">ID of the application to be analyzed.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d23287e154" style="text-align: left;" data-valign="top" width="42%" headers="d23287e142 "><code class="codeph">p_page_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d23287e154 d23287e144 ">Set this parameter to analyze a single page of an application.</td>
+<td id="d19090e152" style="text-align: left;" data-valign="top" width="42%" headers="d19090e140 "><code class="codeph">p_page_id</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d19090e152 d19090e142 ">Set this parameter to analyze a single page of an application.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d23287e160" style="text-align: left;" data-valign="top" width="42%" headers="d23287e142 "><code class="codeph">p_options</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d23287e160 d23287e144 "><p>Options include:</p>
+<td id="d19090e158" style="text-align: left;" data-valign="top" width="42%" headers="d19090e140 "><code class="codeph">p_options</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d19090e158 d19090e142 "><p>Options include:</p>
 <ul>
 <li><code class="codeph">c_option_all</code> - (Default) Scan all sources.</li>
 <li><code class="codeph">c_option_dependencies</code> - Only scan for top-level dependencies with <code class="codeph">dba_dependencies</code>.</li>
@@ -162,4 +162,4 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APP_OBJECT_DEPENDENCY](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APP_OBJECT_DEPENDENCY.html#GUID-9E5E8896-492E-4CB0-B153-C0F7A81BA54F)
+**Parent topic:** [APEX_APP_OBJECT_DEPENDENCY](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APP_OBJECT_DEPENDENCY.html#GUID-9E5E8896-492E-4CB0-B153-C0F7A81BA54F)

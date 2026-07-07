@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html -->
 <!-- Namespaces: apex.page -->
 
 # Namespace: page
@@ -14,7 +14,7 @@
 - [validate](#.validate)
 - [warnOnUnsavedChanges](#.warnOnUnsavedChanges)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).page
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).page
 
 This namespace is used for all client-side page related functions of Oracle APEX.
 
@@ -29,7 +29,7 @@ Call to remove the handler that checks for unsaved changes. This is useful to do
 The following sets up a handler on a custom cancel button, to leave the page without checking for changes.
 
 ```
-apex.jQuery( "#custom-cancel-button" ).on( "click", function() {
+apex.jQuery( "#custom-cancel-button" ).click( function() {
     apex.page.cancelWarnOnUnsavedChanges();
     apex.navigation.redirect( someUrl );
 } );
@@ -39,7 +39,7 @@ apex.jQuery( "#custom-cancel-button" ).on( "click", function() {
 
 Displays a confirmation dialog showing a message, pMessage, and depending on the user's choice, submits the page or cancels submitting. Depending on the value of the page's Reload on Submit attribute, the page is submitted using Ajax or with a normal form submission post request.
 
-Once the user chooses to submit the page, the behavior is the same as for the [apex.page.submit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html#.submit) function. The shorter alias for this function [apex.confirm](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.confirm) with the same parameters can also be used.
+Once the user chooses to submit the page, the behavior is the same as for the [apex.page.submit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html#.submit) function. The shorter alias for this function [apex.confirm](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.confirm) with the same parameters can also be used.
 
 ##### Parameters:
 
@@ -185,11 +185,11 @@ apex.confirm( "Save Department?", {
 
 #### (static) isChanged() → {boolean}
 
-Return true if any page items or APEX models on this page have changed since last being sent to the server. Items that are disabled or are configured to ignore changes are not included in the check. This will call the `pExtraIsChanged` function set in [apex.page.warnOnUnsavedChanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html#.warnOnUnsavedChanges) if one was supplied and only if no other changes are found first.
+Return true if any page items or APEX models on this page have changed since last being sent to the server. Items that are disabled or are configured to ignore changes are not included in the check. This will call the `pExtraIsChanged` function set in [apex.page.warnOnUnsavedChanges](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html#.warnOnUnsavedChanges) if one was supplied and only if no other changes are found first.
 
 Tip: Put the page in debug mode to see debug info messages in the browser console reporting any changed models or the first changed page item found.
 
-See also [item#isChanged](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html#isChanged), [apex.model.anyChanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.anyChanges).
+See also [item#isChanged](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html#isChanged), [apex.model.anyChanges](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.anyChanges).
 
 ##### Returns:
 
@@ -210,9 +210,9 @@ if ( apex.page.isChanged() ) {
 
 #### (static) submit(pOptionsopt) → {boolean\|undefined}
 
-This function submits the page. The shorter alias for this function [apex.submit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.submit) with the same parameters can also be used. Depending on the value of the page's Reload on Submit attribute, the page is submitted using Ajax or with a normal form submission post request.
+This function submits the page. The shorter alias for this function [apex.submit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.submit) with the same parameters can also be used. Depending on the value of the page's Reload on Submit attribute, the page is submitted using Ajax or with a normal form submission post request.
 
-This function triggers a [apex.event:apexbeforepagesubmit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexbeforepagesubmit) event on the [apex.gPageContext\$](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.gPageContext$) which can be canceled by an event handler. If canceled, the page is not submitted. Just before the page is submitted, this function triggers a [apex.event:apexpagesubmit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexpagesubmit) event on the [apex.gPageContext\$](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.gPageContext$), which cannot be canceled.
+This function triggers a [apex.event:apexbeforepagesubmit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexbeforepagesubmit) event on the [apex.gPageContext\$](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.gPageContext$) which can be canceled by an event handler. If canceled, the page is not submitted. Just before the page is submitted, this function triggers a [apex.event:apexpagesubmit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexpagesubmit) event on the [apex.gPageContext\$](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.gPageContext$), which cannot be canceled.
 
 ##### Parameters:
 
@@ -369,7 +369,7 @@ apex.jQuery("#P1_TEXT").on( "keydown", function( event ) {
 
 #### (static) validate(pLocationopt) → {boolean}
 
-Check if any page items or submittable APEX models on the page are invalid. Any errors are shown using the [apex.message.showErrors](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.message.html#.showErrors) function.
+Check if any page items or submittable APEX models on the page are invalid. Any errors are shown using the [apex.message.showErrors](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.message.html#.showErrors) function.
 
 Note: This function does not actually perform any validation. Use HTML 5 validation attributes or API to validate items.
 
@@ -413,7 +413,7 @@ boolean
 The following example checks if the page is valid when a button with id checkButton is pressed.
 
 ```
-apex.jQuery( "#checkButton" ).on( "click", function() {
+apex.jQuery( "#checkButton" ).click( function() {
     if ( !apex.page.validate() ) {
         alert("Please correct errors");
     }
@@ -424,7 +424,7 @@ apex.jQuery( "#checkButton" ).on( "click", function() {
 
 Initialize a handler that checks for unsaved changes anytime the page is about to unload. This is safe to call multiple times. The pMessage and pExtraIsChanged parameters override any previous values. This function is called automatically when the page attribute Warn on Unsaved Changes is set to yes. The main reason to call this manually is to customize the parameters.
 
-The actual checking for changes is done by [apex.page.isChanged](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html#.isChanged).
+The actual checking for changes is done by [apex.page.isChanged](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html#.isChanged).
 
 ##### Parameters:
 

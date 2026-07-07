@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html -->
 <!-- Interfaces: actions -->
 
 # Interface: actions
@@ -46,15 +46,15 @@
 
 ## actions
 
-The actions interface manages a collection of [actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action) objects. An action encapsulates the identity, state and behavior of a named operation or procedure that the user initiates via a user interface element. Actions are most useful when an operation can be initiated in multiple ways such as with a button or toolbar button, menu, or keyboard shortcut. The operation should be labeled consistently and if it can be enabled and disabled that state must be kept consistent. By using an action and then associating a button and/or menu item with that action all aspects of the action are centralized and kept in sync. This avoids duplicating labels, icons etc.
+The actions interface manages a collection of [actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action) objects. An action encapsulates the identity, state and behavior of a named operation or procedure that the user initiates via a user interface element. Actions are most useful when an operation can be initiated in multiple ways such as with a button or toolbar button, menu, or keyboard shortcut. The operation should be labeled consistently and if it can be enabled and disabled that state must be kept consistent. By using an action and then associating a button and/or menu item with that action all aspects of the action are centralized and kept in sync. This avoids duplicating labels, icons etc.
 
 ### Actions Contexts
 
-The apex.actions singleton (which is also the [apex.actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html) namespace) manages all the global (page level) actions. For components that can have multiple instances on a page the global actions will not work because it is not clear which instance of the component the action applies to. To support components the [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext) function is used to create an actions interface that is scoped to a specific component instance (the context). Typically the component (e.g. widget) would call [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext) when it is created and [apex.actions.removeContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.removeContext) when it is destroyed.
+The apex.actions singleton (which is also the [apex.actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html) namespace) manages all the global (page level) actions. For components that can have multiple instances on a page the global actions will not work because it is not clear which instance of the component the action applies to. To support components the [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext) function is used to create an actions interface that is scoped to a specific component instance (the context). Typically the component (e.g. widget) would call [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext) when it is created and [apex.actions.removeContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.removeContext) when it is destroyed.
 
-For global actions and any other created actions contexts the methods on the actions object are used to add, remove, lookup, and invoke actions. There are also methods to manage keyboard shortcuts. Additional state can be stored in the action if desired. If any of the action properties change then [actions#update](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#update) must be called.
+For global actions and any other created actions contexts the methods on the actions object are used to add, remove, lookup, and invoke actions. There are also methods to manage keyboard shortcuts. Additional state can be stored in the action if desired. If any of the action properties change then [actions#update](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#update) must be called.
 
-Actions are associated with UI controls that invoke the action. It is also possible to invoke the action explicitly with the [actions#invoke](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#invoke) method. To toggle actions the [actions#toggle](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#toggle) method is used and for radio group actions the [actions#set](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#set) method is used to change the value. The following sections describes how to associate actions with various controls.
+Actions are associated with UI controls that invoke the action. It is also possible to invoke the action explicitly with the [actions#invoke](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#invoke) method. To toggle actions the [actions#toggle](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#toggle) method is used and for radio group actions the [actions#set](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#set) method is used to change the value. The following sections describes how to associate actions with various controls.
 
 Binding a UI element to an action uses the custom attribute `data-action` or for links (\<a\> elements) the `href` attribute. The value of this attribute specifies the binding. In the simple case it is just the name of an action. The full syntax of the binding value is:
 
@@ -62,13 +62,13 @@ Binding a UI element to an action uses the custom attribute `data-action` or for
 [context-id]action-name?arguments
 ```
 
-- *context-id* is the HTML DOM id of a region that has defined an actions context or the element id of the element specified in a call to [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext). To explicitly reference the global context use `[global]`. This part of the binding including the square brackets is optional. The square brackets must be included in the syntax when there is a context-id.
+- *context-id* is the static id of a region that has defined an actions context or the element id of the element specified in a call to [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext). To explicitly reference the global context use `[global]`. This part of the binding including the square brackets is optional. The square brackets must be included in the syntax when there is a context-id.
 - *action-name* is the name of an action in the global context or if *context-id* is given, in that context.
 - *arguments* is a list of *arg-name*=*arg-value* pairs separated by &. This part of the binding including the leading ? is optional.
 
 #### Handling Multiple Instances
 
-A single action can handle multiple instances by passing an argument to the action that identifies the specific instance. Consider a tabular report (or a list report) containing tasks. Each row could have a "Complete" button that when pressed marks the task as complete. The action binding might look like this: `complete-task?taskId=&TASK_ID!ATTR.` The argument `taskId` lets the action know which task it is operating on. In this example the argument value comes from an APEX symbol substitution. When an action handles multiple instances the functionality that keeps the action state in sync with UI elements is more complicated. The label, icon, and enabled states, for example, could be different for the button in each row. The [actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action) property `idArg` lets you specify the argument that uniquely identifies the instance. This argument can be passed to the [actions#enable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#enable), [actions#disable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#disable), [actions#show](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#show), [actions#hide](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#hide), and [actions#update](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#update) methods to update a specific UI element. Note that when this is done the action state is no longer in sync with all UI elements bound to the action. Only the hidden and disabled states can be updated for a specific instance when the action has the `idArg` property defined. In order for keyboard shortcuts to apply to the correct instance the [actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action) property `instanceSelector` must be set and the button (or other UI control) bound to the action must be within an element identified by the selector.
+A single action can handle multiple instances by passing an argument to the action that identifies the specific instance. Consider a tabular report (or a list report) containing tasks. Each row could have a "Complete" button that when pressed marks the task as complete. The action binding might look like this: `complete-task?taskId=&TASK_ID!ATTR.` The argument `taskId` lets the action know which task it is operating on. In this example the argument value comes from an APEX symbol substitution. When an action handles multiple instances the functionality that keeps the action state in sync with UI elements is more complicated. The label, icon, and enabled states, for example, could be different for the button in each row. The [actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action) property `idArg` lets you specify the argument that uniquely identifies the instance. This argument can be passed to the [actions#enable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#enable), [actions#disable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#disable), [actions#show](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#show), [actions#hide](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#hide), and [actions#update](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#update) methods to update a specific UI element. Note that when this is done the action state is no longer in sync with all UI elements bound to the action. Only the hidden and disabled states can be updated for a specific instance when the action has the `idArg` property defined. In order for keyboard shortcuts to apply to the correct instance the [actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action) property `instanceSelector` must be set and the button (or other UI control) bound to the action must be within an element identified by the selector.
 
 ### Buttons
 
@@ -145,7 +145,7 @@ Example:
 
 ### Menu Items
 
-For [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget menu items of type action, toggle, or radioGroup simply specify the action name as the value of the action property. Values for label, icon, iconType, disabled, hide, and accelerator are taken from the action (accelerator is taken from the action shortcut property). It is possible to override action values such as label and icon by specifying them in the menu item.
+For [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget menu items of type action, toggle, or radioGroup simply specify the action name as the value of the action property. Values for label, icon, iconType, disabled, hide, and accelerator are taken from the action (accelerator is taken from the action shortcut property). It is possible to override action values such as label and icon by specifying them in the menu item.
 
 Examples:
 
@@ -164,8 +164,8 @@ Shortcuts are not an actual widget or a DOM Element. The keyboard event handler 
 To integrate actions with other UI controls:
 
 - Devise a way to specify the action name. For example using a class such as js-actionRadioGroup and an attribute such as `data-action` attribute (recommended) on an appropriate element. For widgets the action name could be passed as an option to the initialization function.
-- Register an observer call back using [actions#observe](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#observe) to get notified when the action is added, removed, or updated. Use this callback to update the state of the UI control such as enabling or disabling it or changing the label or icon.
-- Call the [actions#invoke](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#invoke) method when it is time to invoke the action.
+- Register an observer call back using [actions#observe](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#observe) to get notified when the action is added, removed, or updated. Use this callback to update the state of the UI control such as enabling or disabling it or changing the label or icon.
+- Call the [actions#invoke](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#invoke) method when it is time to invoke the action.
 
 Since:
 - 5.0
@@ -174,7 +174,7 @@ Since:
 
 #### context :Element
 
-This is the Element context that actions are scoped within as given in the [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext) call.
+This is the Element context that actions are scoped within as given in the [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext) call.
 
 ##### Type:
 
@@ -182,7 +182,7 @@ This is the Element context that actions are scoped within as given in the [apex
 
 #### typeName :string
 
-This is type name of the actions context as given in the [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext) call. The typeName of the global context apex.actions is "global".
+This is type name of the actions context as given in the [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext) call. The typeName of the global context apex.actions is "global".
 
 ##### Type:
 
@@ -192,7 +192,7 @@ This is type name of the actions context as given in the [apex.actions.createCon
 
 #### add(pActions) → {boolean}
 
-Add an [actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action) object or an array of [actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action) objects to this actions context. The action name must be unique within the context and the shortcut if any must be unique within the context and valid. Debug warnings are logged if any of these conditions are not met. See also [actions#remove](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#remove).
+Add an [actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action) object or an array of [actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action) objects to this actions context. The action name must be unique within the context and the shortcut if any must be unique within the context and valid. Debug warnings are logged if any of these conditions are not met. See also [actions#remove](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#remove).
 
 Note: The global actions context (apex.actions) does not exist until after the DOM is ready. Actions should be added after the DOM is ready. For code in JavaScript files or in APEX page attribute "Function and Global Variable Declaration" you can wrap the call to `add` in the jQuery ready handler if needed. For example:
 
@@ -206,7 +206,7 @@ $( function() {
 
 | Name | Type | Description |
 |----|----|----|
-| `pActions` | [actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action) \| Array.\<[actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action)\> | The action or an array of actions to add. |
+| `pActions` | [actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action) \| Array.\<[actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action)\> | The action or an array of actions to add. |
 
 ##### Returns:
 
@@ -227,7 +227,7 @@ apex.actions.add({
 });
 ```
 
-This example adds an array of actions to the context `log1` returned by [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext).
+This example adds an array of actions to the context `log1` returned by [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext).
 
 ```
 log1.add([{
@@ -247,9 +247,9 @@ log1.add([{
 
 #### addFromMarkup(pList\$)
 
-Add one or more [actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action) objects from simple list markup. This is useful in cases where it is easier to render list markup than an array of action objects. This does not support adding actions with functions but action functions can be added either before or after.
+Add one or more [actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action) objects from simple list markup. This is useful in cases where it is easier to render list markup than an array of action objects. This does not support adding actions with functions but action functions can be added either before or after.
 
-The markup expected by this method overlaps with what the [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget expects.
+The markup expected by this method overlaps with what the [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget expects.
 
 Expected markup:
 An element with a `<ul>` child. The `<ul>` has one or more `<li>` elements each one representing an action. The `<li>` element can contain either an `<a>` or `` element.
@@ -300,7 +300,7 @@ apex.actions.addFromMarkup($("#myActionList"));
 
 #### addShortcut(pShortcutName, pActionName, pChoiceValueopt) → {boolean}
 
-Add a keyboard shortcut synonym for an action. Debug warnings are logged if there are problems. See also [actions#removeShortcut](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#removeShortcut).
+Add a keyboard shortcut synonym for an action. Debug warnings are logged if there are problems. See also [actions#removeShortcut](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#removeShortcut).
 
 This allows an action to have more than one shortcut key to invoke it. The `shortcut` property of the action is not affected.
 
@@ -367,7 +367,7 @@ Return the keyboard shortcut name formatted for the aria-keyshortcuts attribute.
 
 | Name | Type | Description |
 |----|----|----|
-| `pShortcutName` | [actions.shortcutName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.shortcutName) | Keyboard shortcut to get the ARIA label for. |
+| `pShortcutName` | [actions.shortcutName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.shortcutName) | Keyboard shortcut to get the ARIA label for. |
 
 ##### Returns:
 
@@ -380,8 +380,6 @@ string \| null
 
 Remove all actions from this actions context.
 
-Note: If clear is called on the global context it will remove built-in APEX actions, which may result in a loss of functionality on your page.
-
 ##### Example
 
 This example removes all the actions from the global context.
@@ -392,7 +390,7 @@ apex.actions.clear();
 
 #### disable(pActionName, pArgsopt)
 
-Disable UI elements associated with the action by setting `disabled` property to true. This is a convenience method to disable without having to call [actions#lookup](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#lookup) and [actions#update](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#update).
+Disable UI elements associated with the action by setting `disabled` property to true. This is a convenience method to disable without having to call [actions#lookup](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#lookup) and [actions#update](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#update).
 
 ##### Parameters:
 
@@ -438,11 +436,11 @@ apex.actions.disable( "send-email" );
 
 #### disableShortcuts()
 
-This is used to disable all shortcuts temporarily. Call at the start of a user interaction that should have shortcuts disabled for example a custom popup. Call [actions#enableShortcuts](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#enableShortcuts) when finished. It is called automatically when APEX modal dialogs or menus open. Calls can be nested. For each call to disableShortcuts there should be a corresponding call to [actions#enableShortcuts](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#enableShortcuts).
+This is used to disable all shortcuts temporarily. Call at the start of a user interaction that should have shortcuts disabled for example a custom popup. Call [actions#enableShortcuts](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#enableShortcuts) when finished. It is called automatically when APEX modal dialogs or menus open. Calls can be nested. For each call to disableShortcuts there should be a corresponding call to [actions#enableShortcuts](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#enableShortcuts).
 
 #### enable(pActionName, pArgsopt)
 
-Enable UI elements associated with the action by setting `disabled` property to false. This is a convenience method to enable without having to call [actions#lookup](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#lookup) and [actions#update](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#update).
+Enable UI elements associated with the action by setting `disabled` property to false. This is a convenience method to enable without having to call [actions#lookup](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#lookup) and [actions#update](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#update).
 
 ##### Parameters:
 
@@ -488,7 +486,7 @@ apex.actions.enable( "send-email" );
 
 #### enableShortcuts()
 
-This is used to enable all shortcuts after they were disabled with [actions#disableShortcuts](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#disableShortcuts). It is called automatically when APEX modal dialogs or menus close. Calls can be nested. For each call to [actions#disableShortcuts](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#disableShortcuts) there should be a corresponding call to enableShortcuts.
+This is used to enable all shortcuts after they were disabled with [actions#disableShortcuts](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#disableShortcuts). It is called automatically when APEX modal dialogs or menus close. Calls can be nested. For each call to [actions#disableShortcuts](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#disableShortcuts) there should be a corresponding call to enableShortcuts.
 
 #### get(pActionName, pArgsopt) → (nullable) {string}
 
@@ -537,7 +535,7 @@ string
 
 ##### Example
 
-This example returns the current choice of radio group action "change-view" of the interactive grid region with HTML DOM id "emp". The Interactive Grid method getActions returns the actions context for the region.
+This example returns the current choice of radio group action "change-view" of the interactive grid region with static id "emp". The Interactive Grid method getActions returns the actions context for the region.
 
 ```
 apex.region( "emp" ).call( "getActions" ).get( "change-view" );
@@ -545,7 +543,7 @@ apex.region( "emp" ).call( "getActions" ).get( "change-view" );
 
 #### hide(pActionName, pArgsopt)
 
-Hide UI elements associated with the action by setting the `hide` property to true. This is a convenience method to hide without having to call [actions#lookup](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#lookup) and [actions#update](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#update).
+Hide UI elements associated with the action by setting the `hide` property to true. This is a convenience method to hide without having to call [actions#lookup](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#lookup) and [actions#update](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#update).
 
 ##### Parameters:
 
@@ -655,7 +653,7 @@ boolean \| undefined
 This example invokes the "send-email" action when something is clicked.
 
 ```
-$( "#something" ).on( "click", function( event ) {
+$( "#something" ).click( function( event ) {
     apex.actions.invoke( "send-email", event, event.target );
 } );
 ```
@@ -683,7 +681,7 @@ apex.actions.list().forEach(function(a) {
 });
 ```
 
-#### listShortcuts(pWithMarkup) → {Array.\<[actions.shortcutListItem](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.shortcutListItem)\>}
+#### listShortcuts(pWithMarkup) → {Array.\<[actions.shortcutListItem](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.shortcutListItem)\>}
 
 Return a list of all shortcuts in the context.
 
@@ -698,7 +696,7 @@ Return a list of all shortcuts in the context.
 An array of objects with information about the shortcut.
 
 Type
-Array.\<[actions.shortcutListItem](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.shortcutListItem)\>
+Array.\<[actions.shortcutListItem](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.shortcutListItem)\>
 
 ##### Example
 
@@ -712,9 +710,9 @@ for ( i = 0; i < shortcuts.length; i++ ) { // for each shortcut
 }
 ```
 
-#### lookup(pActionName) → {[actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action)}
+#### lookup(pActionName) → {[actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action)}
 
-Lookup and return an action by name. If you modify the properties of the action you may need to call [actions#update](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#update) to update any associated UI elements or shortcuts. If you modify the choices of the action then call [actions#updateChoices](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#updateChoices).
+Lookup and return an action by name. If you modify the properties of the action you may need to call [actions#update](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#update) to update any associated UI elements or shortcuts. If you modify the choices of the action then call [actions#updateChoices](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#updateChoices).
 
 ##### Parameters:
 
@@ -727,7 +725,7 @@ Lookup and return an action by name. If you modify the properties of the action 
 action or undefined if action doesn't exist.
 
 Type
-[actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action)
+[actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action)
 
 ##### Example
 
@@ -775,13 +773,13 @@ Register a callback function to be notified when an action changes. This is used
 
 #### remove(pActions)
 
-Remove one or more [actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action) objects from this actions context. See also [actions#add](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#add).
+Remove one or more [actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action) objects from this actions context. See also [actions#add](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#add).
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pActions` | [actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action) \| string \| Array.\<[actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action)\> \| Array.\<string\> | The action or action name or an array of actions or an array of action names to remove. |
+| `pActions` | [actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action) \| string \| Array.\<[actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action)\> \| Array.\<string\> | The action or action name or an array of actions or an array of action names to remove. |
 
 ##### Examples
 
@@ -791,7 +789,7 @@ This example removes one action from the global action context.
 apex.actions.remove( "send-email" );
 ```
 
-This example removes an array of actions from the context `log1` returned by [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext).
+This example removes an array of actions from the context `log1` returned by [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext).
 
 ```
 log1.remove( ["clear-log", "verbose"] );
@@ -799,17 +797,17 @@ log1.remove( ["clear-log", "verbose"] );
 
 #### removeShortcut(pShortcutName) → {boolean}
 
-Remove a keyboard shortcut synonym for an action. See also [actions#addShortcut](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#addShortcut)
+Remove a keyboard shortcut synonym for an action. See also [actions#addShortcut](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#addShortcut)
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pShortcutName` | [actions.shortcutName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.shortcutName) | The keyboard shortcut synonym to remove. |
+| `pShortcutName` | [actions.shortcutName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.shortcutName) | The keyboard shortcut synonym to remove. |
 
 ##### Returns:
 
-true if successful, false if the shortcut is the primary shortcut for an action.
+true if successful false if the shortcut is the primary shortcut for an action.
 
 Type
 boolean
@@ -819,7 +817,7 @@ boolean
 This example removes a shortcut synonym.
 
 ```
-apex.actions.removeShortcut( "Ctrl+Shift+E" );
+apex.actions.addShortcut( "Ctrl+Shift+E" );
 ```
 
 #### set(pActionName, pValue, pArgsopt)
@@ -870,7 +868,7 @@ This has no effect if the action is hidden or disabled.
 
 ##### Example
 
-This example sets the current choice of radio group action "change-view" of the interactive grid region with HTML DOM id "emp" to "detail". The Interactive Grid method getActions returns the actions context for the region.
+This example sets the current choice of radio group action "change-view" of the interactive grid region with static id "emp" to "detail". The Interactive Grid method getActions returns the actions context for the region.
 
 ```
 apex.region( "emp" ).call( "getActions" ).set( "change-view", "detail" );
@@ -909,21 +907,21 @@ Return the friendly display string for a keyboard shortcut name.
 <td class="type">boolean</td>
 <td class="attributes">&lt;optional&gt;<br />
 </td>
-<td class="description last">Optional, default is false. If true wrap the display name in HTML markup.</td>
+<td class="description last">Optional default is false. If true wrap the display name in HTML markup.</td>
 </tr>
 </tbody>
 </table>
 
 ##### Returns:
 
-A friendly version of the shortcut. The display string is sensitive to the operating system. See [apex.actions.setKeyCaps](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.setKeyCaps).
+A friendly version of the shortcut. The display string is sensitive to the operating system. See [apex.actions.setKeyCaps](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.setKeyCaps).
 
 Type
 string
 
 #### show(pActionName, pArgsopt)
 
-Show UI elements associated with the action by setting the `hide` property to false. This is a convenience method to show without having to call [actions#lookup](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#lookup) and [actions#update](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#update).
+Show UI elements associated with the action by setting the `hide` property to false. This is a convenience method to show without having to call [actions#lookup](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#lookup) and [actions#update](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#update).
 
 ##### Parameters:
 
@@ -1016,7 +1014,7 @@ boolean \| undefined
 
 ##### Example
 
-This example toggles the "verbose" action of the context `log1` returned by [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext).
+This example toggles the "verbose" action of the context `log1` returned by [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext).
 
 ```
 log1.toggle( "verbose" );
@@ -1030,7 +1028,7 @@ Remove callback.
 
 | Name | Type | Description |
 |----|----|----|
-| `pCallback` | function | The function that was added with [actions#observe](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#observe). |
+| `pCallback` | function | The function that was added with [actions#observe](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#observe). |
 
 #### update(pActionName, pArgsopt) → {boolean}
 
@@ -1079,7 +1077,7 @@ boolean
 
 ##### Example
 
-See example for [actions#lookup](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#lookup)
+See example for [actions#lookup](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#lookup)
 
 #### updateChoices(pActionName) → {boolean}
 
@@ -1121,7 +1119,7 @@ This is an object that defines the state and behavior of an action. There are 3 
 - toggle: This is typically associated with a checkbox input, button, or toggle menu item. The action must have get and set functions and not have a choices property. Toggle actions update an external Boolean state variable by means of the get and set functions. It is also possible to keep the state in the action by using 'this' in the get and set functions.
 - radio group: This is typically associated with radio inputs, select list, or a radioGroup menu item. The action must have get and set functions and a choices property. Radio group actions update an external state variable with the currently selected value of the group by means of the get and set functions. It is also possible to keep the state in the action by using 'this' in the get and set functions.
 
-Note: When an action is hidden or disabled the [actions#invoke](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#invoke), [actions#toggle](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#toggle), and [actions#set](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#set) methods have no effect.
+Note: When an action is hidden or disabled the [actions#invoke](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#invoke), [actions#toggle](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#toggle), and [actions#set](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#set) methods have no effect.
 
 Note: The disabled and hide properties cannot be functions. Menu widget can use actions and non-action based menu items allow hide and disabled to be functions. But when a menu uses an action that action still must not use functions for disabled and hide.
 
@@ -1330,13 +1328,6 @@ As an alternative to label (or onLabel, offLabel) you can specify labelKey (or o
 <td class="description last">Only for radio group actions. Classes to add to a span wrapper element. Or to change the span use one of these prefixes: p:, li:, div:, span:<br />
 For example "li:myRadio"</td>
 </tr>
-<tr>
-<th class="name" scope="row"><code>purpose</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Only for link actions. The purpose determines the value for the aria-roledescription attribute to add to the link element. One of "action" or "dialog". The default is "action". Changing this property after creation has no effect.</td>
-</tr>
 </tbody>
 </table>
 
@@ -1362,24 +1353,20 @@ Information about a shortcut.
 This is the string name of a keyboard shortcut. It represents the key(s) to be typed by the user and can be a single key combination or a sequence of keys. The shortcut name must be given in the following format:
 
 ```
-    [Ctrl+][Alt+][Meta+][Shift+]key
+  [Ctrl+][Alt+][Meta+][Shift+]key
 ```
 
 Where strings in square brackets (\[\]) are optional and represent a modifier key. The string `key` is the name of the key and may be one of: "0"-"9", "A"-"Z" or "Help", "Backspace", "Enter", "Escape", "Space", "Page Up", "Page Down", "End", "Home", "Left", "Up", "Right", "Down", "Insert", "Delete", "Keypad 0"-"Keypad 9", "Keypad \*", "Keypad +", "Keypad -", "Keypad .", "Keypad /", "Keypad =", "Keypad Clear", "F1"-"F15", "Comma", "Period", "Semicolon", "Minus", "Quote", "Backtick", "=", "/", "\[", "\\, "\]".
 
-Order and case is important. Key names and modifiers are not localized. The key names are based on the standard US keyboard layout and may not correspond with what is actually printed on the key caps or what character is printed (in the case of a printing key). Actions does not distinguish between left and right modifier keys.
-
-Modifier keys have different names depending on the Operating System. Ctrl is labeled as Control on macOS and Ctrl on Windows. Alt is labeled as Option on macOS and Alt on Windows. Meta is labeled as Command on macOS and Windows icon key on Windows. See [apex.actions.setKeyCaps](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.setKeyCaps) for how the shortcut key display can be customized.
-
-There is an Operating System sensitive special key, "CtrlOrMeta", that is replaced with Meta (Command) on macOS operating systems and Ctrl on other operating systems (such as Windows and Linux). This must be the first key listed and cannot be combined with Ctrl or Meta.
+Order and case is important. Key names and modifiers are not localized. The key names are based on the standard US keyboard layout and may not correspond with what is actually printed on the key caps or what character is printed (in the case of a printing key).
 
 The shortcut name can be a sequence of key combinations separated by commas. The user types the shortcut by typing the first key combination followed by the second and so on. It is possible to have a sequence of length one, which allows defining shortcuts as single letters without any modifier key. Letters can be in upper or lower case.
 
-The primary shortcut for an action is specified in the `shortcut` property of the [actions.action](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.action) object. This is so that it can be shown in associated menu items. Additional shortcuts can be added with [actions#addShortcut](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#addShortcut).
+The primary shortcut for an action is specified in the shortcut property of the [actions.action](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.action) object. This is so that it can be shown in associated menu items. Additional shortcuts can be added with [actions#addShortcut](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#addShortcut).
 
-One limitation of shortcuts in the browser environment is that it is difficult to find keyboard combinations that are not already used for something else and are consistent across all browsers, operating systems and with all keyboard layouts. Key combinations used by the operating system or browser may not be passed on to the actions keydown handler or even if they are, the browser or operating system function has also already happened. Many keyboard layouts use the Right side Alt key (known as AltGr) to enter additional characters. The AltGr key can be simulated by pressing Ctrl+Alt. This makes some Ctrl+Alt combinations unavailable. On macOS the Option/Alt key plus a letter or number is used to produce additional characters.
+One limitation of shortcuts in the browser environment is that it is difficult to find keyboard combinations that are not already used for something else and are consistent across all browsers, operating systems and with all keyboard layouts. Key combinations used by the operating system or browser may not be passed on to the actions keydown handler or even if they are the browser or operating system function has also already happened. Many keyboard layouts use the Right side Alt key (known as AltGr) to enter additional characters. The AltGr key can be simulated by pressing Ctrl+Alt. This makes some Ctrl+Alt combinations unavailable. On Mac OS the Option/Alt key plus a letter or number is used to produce additional characters.
 
-See [apex.actions.shortcutSupport](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.shortcutSupport) for information about what kinds of shortcuts if any the user can type. If shortcut support is "off" then no shortcuts are recognized. Shortcut sequences are only recognized if shortcut support is "sequence". Shortcuts can always be defined.
+See [apex.actions.shortcutSupport](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.shortcutSupport) for information about what kinds of shortcuts if any the user can type. If shortcut support is "off" then no shortcuts are recognized. Shortcut sequences are only recognized if shortcut support is "sequence". Shortcuts can always be defined.
 
 When focus is in a control that allows character input then shortcuts that would produce printable characters or are used for editing are ignored by actions. This includes controls such as text fields and text areas but also controls such as select lists that support type to select.
 
@@ -1395,12 +1382,6 @@ Example key combinations. Press the modifier keys in combination with the specif
   Ctrl+W
   Ctrl+Shift+F7
   Alt+Page Down
-```
-
-OS sensitive example key combinations. On Windows, you would press Ctrl+Y. On macOS, you would press Command+Y
-
-```
-  CtrlOrMeta+Y
 ```
 
 Example key sequence. Press the first key combination Ctrl+F2 and release then press the G key and then the H key. For the second example press the C key then the S key. In the third example press C then 6 (not Shift+6). In the last example simply press W. Although the letters must be in upper case in the shortcut name they can be typed with our without the Shift modifier. All but the first example will be ignored when focus is in a control that takes character input.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Crawl the Oracle APEX 26.1 PL/SQL API Reference by following the
+"""Crawl the Oracle APEX 24.2 PL/SQL API Reference by following the
 rel=next chain from the book's first page. Saves every page's raw HTML
 into raw_html/ and writes manifest.json recording page order + chapter info.
 
@@ -13,7 +13,7 @@ import time
 import urllib.request
 import urllib.error
 
-BASE = "https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/"
+BASE = "https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/"
 START = "index.html"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, "raw_html")

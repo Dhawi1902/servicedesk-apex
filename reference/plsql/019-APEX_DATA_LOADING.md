@@ -1,14 +1,14 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_LOADING.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_LOADING.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 19 APEX_DATA_LOADING
 
 The APEX_DATA_LOADING package provides the ability to load data by calling an application data loading definition. This can be used in place of native data loading.
 
-- [Data Types](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_LOADING-Data-Types.html#GUID-CFFCEC5F-7AD2-4350-9002-225772C1ACF2)
-- [GET_FILE_PROFILE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_LOADING.GET_FILE_PROFILE-Function.html#GUID-936F90C7-1705-430B-B775-68D7144D6D9D)
-- [LOAD_DATA Function Signature 1](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOAD_DATA-Function-Signature-1.html#GUID-54FF0F84-BD45-47F1-B218-F5ED8A2D7D05)
-- [LOAD_DATA Function Signature 2](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOAD_DATA-Function-Signature-2.html#GUID-E254169A-FA3D-4169-B77A-A573DB3962F4)
+- [Data Types](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_LOADING-Data-Types.html#GUID-CFFCEC5F-7AD2-4350-9002-225772C1ACF2)
+- [GET_FILE_PROFILE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_LOADING.GET_FILE_PROFILE-Function.html#GUID-936F90C7-1705-430B-B775-68D7144D6D9D)
+- [LOAD_DATA Function Signature 1](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LOAD_DATA-Function-Signature-1.html#GUID-54FF0F84-BD45-47F1-B218-F5ED8A2D7D05)
+- [LOAD_DATA Function Signature 2](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LOAD_DATA-Function-Signature-2.html#GUID-E254169A-FA3D-4169-B77A-A573DB3962F4)
 
 ------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ type t_data_load_result is record(
     error_rows        PLS_INTEGER );
 ```
 
-**Parent topic:** [APEX_DATA_LOADING](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_LOADING.html#GUID-D45764A0-5A56-422C-9D51-FC1FE26E52A7)
+**Parent topic:** [APEX_DATA_LOADING](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_LOADING.html#GUID-D45764A0-5A56-422C-9D51-FC1FE26E52A7)
 
 ------------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ select p.line_number,
  where f.name = :P1_FILE;
 ```
 
-**Parent topic:** [APEX_DATA_LOADING](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_LOADING.html#GUID-D45764A0-5A56-422C-9D51-FC1FE26E52A7)
+**Parent topic:** [APEX_DATA_LOADING](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_LOADING.html#GUID-D45764A0-5A56-422C-9D51-FC1FE26E52A7)
 
 ------------------------------------------------------------------------
 
@@ -121,7 +121,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_DATA_LOADING](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_LOADING.html#GUID-D45764A0-5A56-422C-9D51-FC1FE26E52A7)
+**Parent topic:** [APEX_DATA_LOADING](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_LOADING.html#GUID-D45764A0-5A56-422C-9D51-FC1FE26E52A7)
 
 ------------------------------------------------------------------------
 
@@ -166,4 +166,4 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_DATA_LOADING](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_LOADING.html#GUID-D45764A0-5A56-422C-9D51-FC1FE26E52A7)
+**Parent topic:** [APEX_DATA_LOADING](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_LOADING.html#GUID-D45764A0-5A56-422C-9D51-FC1FE26E52A7)

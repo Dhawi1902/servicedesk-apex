@@ -30,7 +30,7 @@
    |-------|--------|-------|
    | Primary Key Column 1 | `TICKET_ID (Number)` | Auto-detected PK of `TICKETS`. |
    | Primary Key Column 2 | *(leave `- Select -`)* | Single-column key. |
-   | Branch Here on Submit | `3` | Superseded by the **Close Dialog** branch in Step 5. |
+   | Branch Here on Submit | *(leave blank)* | A Modal Dialog closes via the wizard's **Close Dialog** process (Step 5), not a page branch. A stray page branch throws *"Page Number is required"* on Save. |
    | Cancel and Go To Page | `3` | Back to the Ticket Queue. |
 
 4. Delete the wizard's generated items and its automatic DML process once Steps 2 and 4 are in place (we use manual items and a manual PL/SQL process).
@@ -80,7 +80,28 @@
    - `[Right Pane ▸ Settings ▸ Allow Multiple Files]`: **On**
    - `[Right Pane ▸ Settings ▸ File Types]`: `image/*,application/pdf` *(client-side filter only)*
 
-5. For Select Lists, set defaults via `[Right Pane ▸ Default ▸ Type]` = Static. Set null display values via `[Right Pane ▸ List of Values ▸ Display Null Value]`.
+5. **Static-value Select Lists** (`P5_TICKET_TYPE`, `P5_SEVERITY`) — set `[Right Pane ▸ List of Values ▸ Type]` = **Static Values**, click into the editor, and fill the **Display Value** (what the user sees) / **Return Value** (what is stored) rows. The Return Value must match the DB exactly — Step 4 writes `:P5_TICKET_TYPE`/`:P5_SEVERITY` straight into the column, and the SLA lookup joins `SLA_TARGETS.SEVERITY = :P5_SEVERITY`.
+
+   **`P5_TICKET_TYPE`:**
+
+   | Display Value | Return Value |
+   |---------------|--------------|
+   | `Incident` | `INCIDENT` |
+   | `Service Request` | `SERVICE_REQUEST` |
+
+   **`P5_SEVERITY`:**
+
+   | Display Value | Return Value |
+   |---------------|--------------|
+   | `Critical` | `Critical` |
+   | `Major` | `Major` |
+   | `Minor` | `Minor` |
+   | `Low` | `Low` |
+
+6. For each static-value list, back in the item panel:
+   - `[Right Pane ▸ Default ▸ Type]` = **Static**, Default value = `INCIDENT` (ticket type) / `Minor` (severity).
+   - `[Right Pane ▸ List of Values ▸ Display Null Value]` = **Off** — these are required and defaulted, so no blank `- Select -` option.
+   - `[Right Pane ▸ List of Values ▸ Display Extra Values]` = **Off**.
 
 ---
 
@@ -119,10 +140,13 @@
      FROM AGENT_PROJECTS ap
      JOIN APP_USERS au ON au.USER_ID = ap.USER_ID
     WHERE ap.PROJECT_ID = :P5_PROJECT_ID
+      AND ap.PROJECT_ID IN (SELECT PROJECT_ID FROM V_MY_PROJECTS)
       AND au.STATUS = 'ACTIVE'
       AND ( :APP_ROLE = 'CLIENT_ADMIN' OR ap.TIER = 'L1' )
     ORDER BY au.FULL_NAME
    ```
+
+   > **Isolation (critical):** the `AND ap.PROJECT_ID IN (SELECT PROJECT_ID FROM V_MY_PROJECTS)` line is not optional. `P5_PROJECT_ID` is a submittable item, and this cascading LOV's AJAX callback runs server-side against whatever `project_id` is posted — the `V_MY_PROJECTS` scope on the *parent dropdown* does **not** carry into this query. Without the gate, a client can tamper the posted `project_id` and enumerate another tenant's agent roster (names + tiers). This matches the project rule: every LOV selects through `V_MY_*`, never bare base tables.
 
 ---
 
@@ -130,16 +154,18 @@
 
 > *The client-side `accept` filter is not a security boundary. We must check mime type and size on the server in a page Validation.*
 
-1. Under `[Left Pane ▸ Processing]`, right-click **Validations** → **Create Validation**.
-2. Set `[Right Pane ▸ Identification ▸ Type]` to **PL/SQL Function Body (returning Error Text)**.
-3. Paste the following into `[Right Pane ▸ Source ▸ PL/SQL Code]`:
+1. In `[Left Pane ▸ Processing]` (the third tab), expand the **Validating** group, right-click **Validations** → **Create Validation**. (Validations sit under **Validating**, not under the *Processing* group below it.)
+2. Set `[Right Pane ▸ Identification ▸ Name]` to `Attachments Are Allowed Types` (it defaults to `New`).
+3. Set `[Right Pane ▸ Validation ▸ Type]` to **Function Body (returning Error Text)** and leave **Language = PL/SQL**.
+4. Paste the following into `[Right Pane ▸ Validation ▸ PL/SQL Function Body Returning Error Text]`:
 
    ```sql
    DECLARE
      l_err VARCHAR2(4000);
    BEGIN
      FOR f IN (
-       SELECT filename, mime_type, doc_size
+       SELECT filename, mime_type,
+              DBMS_LOB.GETLENGTH(blob_content) AS file_size
          FROM apex_application_temp_files
         WHERE name IN (SELECT column_value
                          FROM TABLE(APEX_STRING.SPLIT(:P5_ATTACH, ':')))
@@ -150,7 +176,7 @@
          l_err := 'File "'||f.filename||'" is not an allowed type (images or PDF only).';
        END IF;
        -- Size cap: 10 MB per file.
-       IF f.doc_size > 10 * 1024 * 1024 THEN
+       IF f.file_size > 10 * 1024 * 1024 THEN
          l_err := 'File "'||f.filename||'" exceeds the 10 MB limit.';
        END IF;
      END LOOP;
@@ -158,7 +184,9 @@
    END;
    ```
 
-4. Turn `[Right Pane ▸ Execution ▸ Always Execute]` **Off** to skip this when no file is attached.
+   > `apex_application_temp_files` has **no `doc_size` column** (that raises `ORA-00904: "DOC_SIZE": invalid identifier`). File size comes from `DBMS_LOB.GETLENGTH(blob_content)`.
+
+5. Turn `[Right Pane ▸ Execution ▸ Always Execute]` **Off** to skip this when no file is attached.
 
 ---
 
@@ -166,8 +194,8 @@
 
 > *Derives company from the project, stamps creator + department from the session, validates category and agent, computes the SLA due date, inserts the ticket, then writes the history rows.*
 
-1. Under `[Left Pane ▸ Processing]`, create a **Process**.
-2. Set `[Right Pane ▸ Identification ▸ Type]` to **PL/SQL Code**.
+1. In `[Left Pane ▸ Processing]`, expand the **Processing** group, right-click **Processes** → **Create Process**.
+2. Set `[Right Pane ▸ Identification ▸ Name]` to `Create Ticket`, and `[Right Pane ▸ Identification ▸ Type]` to **Execute Code** (older APEX labelled this *PL/SQL Code*). Leave `[Right Pane ▸ Source ▸ Language]` = **PL/SQL**.
 3. Set `[Right Pane ▸ Execution ▸ Point]` to **Processing** (runs After Submit).
 4. Paste the block into `[Right Pane ▸ Source ▸ PL/SQL Code]`:
 
@@ -251,16 +279,32 @@
 
 ## Step 5: Close Dialog After Submit
 
-1. Under `[Left Pane ▸ Processing]`, right-click **Branches** → **Create Branch**.
-2. Set `[Right Pane ▸ Identification ▸ Type]` to **Close Dialog** to refresh the parent page.
+> *In this APEX version, **Close Dialog is a Process type, not a Branch type** — so there's nothing to create here. The Modal Dialog wizard already added a `Close Dialog` process for you.*
+
+1. Confirm the wizard's **Close Dialog** process exists under `[Left Pane ▸ Processing ▸ Processes]`. This is what closes the dialog and refreshes the parent Ticket Queue — leave it in place.
+2. Make sure it runs **after** your `Create Ticket` process: `Create Ticket` should have a lower `[Right Pane ▸ Execution ▸ Sequence]` than `Close Dialog` (e.g. 60 vs the wizard default). If needed, drag it above `Close Dialog` in the tree.
+3. **Delete any stray branch** you may have created following an earlier version of this step: `[Left Pane ▸ Processing ▸ Branches]` → right-click the extra branch (the one with the red ✕) → **Delete**. A branch with no Page Number blocks Save with *"Page Number is required"*.
+
+> If the `Close Dialog` process is somehow missing, create it: right-click **Processes** → **Create Process**, set `[Right Pane ▸ Identification ▸ Type]` to **Close Dialog**.
 
 ---
 
 ## Step 6: Authorization
 
-1. Ensure the `Can Raise Tickets` scheme exists under `[Shared Components ▸ Authorization Schemes]` (set to `:APP_ROLE IN ('CLIENT_USER','CLIENT_ADMIN','SYSTEM_ADMIN')`).
-2. Select the root **page** node in `[Left Pane ▸ Rendering]`.
-3. Set `[Right Pane ▸ Security ▸ Authorization Scheme]` to `Can Raise Tickets`.
+> *This scheme is also created in `01-login.md` Step 5. If you built that page first, it already exists — skip to step 4. Otherwise create it here (steps 1–3); it's idempotent, the two guides define it identically.*
+
+1. Go to **Shared Components → Authorization Schemes → Create** → **From Scratch**.
+2. Set:
+   - `[Identification ▸ Name]`: `Can Raise Tickets`
+   - `[Identification ▸ Scheme Type]`: **PL/SQL Function Body Returning Boolean**
+   - `[Settings ▸ PL/SQL Function Body]`:
+     ```sql
+     RETURN :APP_ROLE IN ('CLIENT_USER','CLIENT_ADMIN','SYSTEM_ADMIN');
+     ```
+   - `[Evaluation Point ▸ …]`: set to **Once per page view**. Decision-P role-switching changes `APP_ROLE` without a re-login, so a "Once per session" cached result can lag a switch (a user could keep/lose the Raise page across a toggle). Per-page-view keeps the scheme in step with the active role. (No tenant leak either way — raising is still gated by `V_MY_PROJECTS` at query time — but this avoids stale authorization.)
+3. Click **Create**.
+4. Back in Page Designer, select the root **page** node in `[Left Pane ▸ Rendering]`.
+5. Set `[Right Pane ▸ Security ▸ Authorization Scheme]` to `Can Raise Tickets`.
 
 ---
 

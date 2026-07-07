@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.da.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.da.html -->
 <!-- Namespaces: apex.da -->
 
 # Namespace: da
@@ -11,7 +11,7 @@
 - [handleAjaxErrors](#.handleAjaxErrors)
 - [resume](#.resume)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).da
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).da
 
 This namespace holds all Dynamic Action functions in Oracle APEX, useful for Dynamic Action plug-in developers.
 
@@ -39,7 +39,7 @@ setTimeout( function() {
 
 #### (static) handleAjaxErrors(pjqXHR, pTextStatus, pErrorThrown, pResumeCallback)
 
-For Dynamic Action plug-in developers that write plug-ins that perform Ajax calls, call this function when an Ajax error occurs. Doing so handles both displaying the error message appropriately, and also resuming execution of actions in a dynamic action. It is typically passed as a callback to the *error* option passed in the *pOptions* parameter of the [apex.server](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html) Ajax APIs.
+For Dynamic Action plug-in developers that write plug-ins that perform Ajax calls, call this function when an Ajax error occurs. Doing so handles both displaying the error message appropriately, and also resuming execution of actions in a dynamic action. It is typically passed as a callback to the *error* option passed in the *pOptions* parameter of the [apex.server](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html) Ajax APIs.
 
 ##### Parameters:
 
@@ -79,7 +79,7 @@ server.plugin ( lAction.ajaxIdentifier, {
 
 For Dynamic Action plug-in developers that write plug-ins that perform Ajax calls, call this function to resume execution of the actions in a dynamic action. Execution of a dynamic action can be paused, if the action's *Wait for Result* attribute is checked. *Wait for Result* is a dynamic action plug-in standard attribute designed for use with Ajax-based dynamic actions. If a plug-in exposes this attribute, it will also need to resume execution by calling this function in the relevant place in the plug-in JavaScript code (otherwise your action will break execution of dynamic actions).
 
-Note: You should call *resume* following successful execution of your plug-in logic. In the case where an error has occurred, you must instead call [apex.da.handleAjaxErrors](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.da.html#.handleAjaxErrors) which will handle resuming execution for you.
+Note: You should call *resume* following successful execution of your plug-in logic. In the case where an error has occurred, you must instead call [apex.da.handleAjaxErrors](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.da.html#.handleAjaxErrors) which will handle resuming execution for you.
 
 ##### Parameters:
 

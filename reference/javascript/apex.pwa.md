@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.pwa.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.pwa.html -->
 <!-- Namespaces: apex.pwa -->
 
 # Namespace: pwa
@@ -16,7 +16,7 @@
 - [subscribePushNotifications](#.subscribePushNotifications)
 - [unsubscribePushNotifications](#.unsubscribePushNotifications)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).pwa
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).pwa
 
 The apex.pwa namespace contains Oracle APEX functions related to Progressive Web App features.
 

@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html -->
 <!-- Interfaces: model -->
 
 # Interface: model
@@ -107,38 +107,38 @@
 
 A model holds data in memory for use by the UI layer. It corresponds to the view-model in the Model-View-ViewModel (MVVM) pattern. The UI can both read and write the data. A model can notify interested parties (subscribers) when the data changes. The data comes (is fetched) from the server and updates can be written back (saved) to the server.
 
-Models are created and managed with functions of the [apex.model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html) namespace. A model is uniquely identified by a [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId), which is a string name and optional string instance id.
+Models are created and managed with functions of the [apex.model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html) namespace. A model is uniquely identified by a [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId), which is a string name and optional string instance id.
 
 A model can hold data of different shapes. They are:
 
-- table: The data is an ordered collection of records. In database or UI terms the record might be called a row. See [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record).
-- tree: The data is a single root record and each record including the root can have an ordered collection of any number of child records. When dealing with trees it is common to call the records nodes. See [model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node).
+- table: The data is an ordered collection of records. In database or UI terms the record might be called a row. See [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record).
+- tree: The data is a single root record and each record including the root can have an ordered collection of any number of child records. When dealing with trees it is common to call the records nodes. See [model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node).
 - record: The data is a single record. In some cases this is treated as a collection of one.
 
-Each record can have any number of named fields. See [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record). All records in the collection must have the same set of fields although the value of some fields may be null. In database or UI terms the fields might be called columns. The actual storage of a record could be an object or an array. If records are objects then the fields of the record are the properties of the object. If the records are arrays the fields of the record are elements of the array and the [model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.FieldMeta) `index` property is used to map from the field name to the record array index.
+Each record can have any number of named fields. See [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record). All records in the collection must have the same set of fields although the value of some fields may be null. In database or UI terms the fields might be called columns. The actual storage of a record could be an object or an array. If records are objects then the fields of the record are the properties of the object. If the records are arrays the fields of the record are elements of the array and the [model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.FieldMeta) `index` property is used to map from the field name to the record array index.
 
 The model has very few restrictions on the values of fields. However typically when the model data is backing APEX items or HTML form controls the values will all be strings. The model optionally uses the following fields for specific purposes:
 
-- identity: A string value that uniquely identifies the record. There can be multiple identity fields. Required for editable models. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) option `identityField`.
-- meta: An object with additional metadata about the record. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) option `metaField`.
-- children: (tree shape only) An array of the child records (nodes). See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) option `childrenField`.
-- parent identity: (tree shape only) A string value that identifies the parent record (node) of this record (node). Required for editable tree shaped models. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) option `parentIdentityField`.
+- identity: A string value that uniquely identifies the record. There can be multiple identity fields. Required for editable models. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) option `identityField`.
+- meta: An object with additional metadata about the record. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) option `metaField`.
+- children: (tree shape only) An array of the child records (nodes). See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) option `childrenField`.
+- parent identity: (tree shape only) A string value that identifies the parent record (node) of this record (node). Required for editable tree shaped models. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) option `parentIdentityField`.
 
-Another special case is for field values that have a display value in addition to their intrinsic value. These composite values have the form: `{ d: "`*`display value`*`", v: `*`value`*` }` When comparing values during [model#setValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#setValue) only the value is considered not the display value. Also, when the changes are saved to the server just the value is included without being wrapped in an object. Other special fields such as identity or parent etc. cannot have this structure.
+Another special case is for field values that have a display value in addition to their intrinsic value. These composite values have the form: `{ d: "`*`display value`*`", v: `*`value`*` }` When comparing values during [model#setValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#setValue) only the value is considered not the display value. Also, when the changes are saved to the server just the value is included without being wrapped in an object. Other special fields such as identity or parent etc. cannot have this structure.
 
 ### Control Breaks:
 
-A table shape model can facilitate view layer presentation of control breaks by keeping track of the control break values and the boundary between the control breaks. The data must be pre-sorted by the control break field values according to [model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.FieldMeta) property `controlBreakIndex` and the last record in each control break must have the [model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata) property `endControlBreak` set to true.
+A table shape model can facilitate view layer presentation of control breaks by keeping track of the control break values and the boundary between the control breaks. The data must be pre-sorted by the control break field values according to [model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.FieldMeta) property `controlBreakIndex` and the last record in each control break must have the [model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata) property `endControlBreak` set to true.
 
 ### Aggregations:
 
-A table shape model can contain aggregate information. Aggregations are just records that the server includes in order among all the other records marked with metadata property `agg: "`*`AggregateFunctionName`*`"`. Aggregate records can also be created by the model when fields have [model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.FieldMeta) property `aggregates` defined. The aggregate record has most fields empty except for the aggregate fields that contain the aggregate value. The results of each different aggregate function is in a separate record.
+A table shape model can contain aggregate information. Aggregations are just records that the server includes in order among all the other records marked with metadata property `agg: "`*`AggregateFunctionName`*`"`. Aggregate records can also be created by the model when fields have [model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.FieldMeta) property `aggregates` defined. The aggregate record has most fields empty except for the aggregate fields that contain the aggregate value. The results of each different aggregate function is in a separate record.
 
 ### Ajax Messages:
 
 This section defines the JSON content of the Ajax requests the model sends to the server and the responses it expects back. This information is useful when creating a plug-in that uses the model.
 
-All the requests and responses use the regions array structure shown in [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin). The top level object contains a property called "regions" which is an array of region objects. Each region object, in both the request and response, contains the "id" (region id) and "ajaxIdentifier" associated with the region plug-in. The rest of the region object content depends on the type of request.
+All the requests and responses use the regions array structure shown in [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin). The top level object contains a property called "regions" which is an array of region objects. Each region object, in both the request and response, contains the "id" (region id) and "ajaxIdentifier" associated with the region plug-in. The rest of the region object content depends on the type of request.
 
 ```
 {
@@ -151,7 +151,7 @@ All the requests and responses use the regions array structure shown in [apex.se
 }
 ```
 
-#### Method [model#fetch](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetch) request:
+#### Method [model#fetch](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetch) request:
 
 Model shape table:
 
@@ -173,7 +173,7 @@ Model shape tree or record:
 }
 ```
 
-#### Method [model#fetch](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetch) response:
+#### Method [model#fetch](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetch) response:
 
 Model shape table:
 
@@ -205,7 +205,7 @@ Model shape record:
 }
 ```
 
-#### Method [model#fetchRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetchRecords) request:
+#### Method [model#fetchRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetchRecords) request:
 
 ```
 "fetchData": {
@@ -215,7 +215,7 @@ Model shape record:
 }
 ```
 
-#### Method [model#fetchRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetchRecords) response:
+#### Method [model#fetchRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetchRecords) response:
 
 ```
 "fetchedData": {
@@ -223,7 +223,7 @@ Model shape record:
 }
 ```
 
-#### Method [model#save](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#save) request:
+#### Method [model#save](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#save) request:
 
 ```
 "saveData": {
@@ -240,7 +240,7 @@ Model shape record:
 }
 ```
 
-#### Method [model#save](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#save) response:
+#### Method [model#save](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#save) response:
 
 ```
 "fetchedData": {
@@ -252,7 +252,7 @@ Model shape record:
 }
 ```
 
-#### Method [model#fetchChildNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetchChildNodes) request:
+#### Method [model#fetchChildNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetchChildNodes) request:
 
 ```
 "fetchData": {
@@ -262,7 +262,7 @@ Model shape record:
 }
 ```
 
-#### Method [model#fetchChildNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetchChildNodes) response:
+#### Method [model#fetchChildNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetchChildNodes) response:
 
 When parentId in the request is null the response contains the whole tree:
 
@@ -331,7 +331,7 @@ this.model.release( modelName );
 
 #### addData
 
-Sent when data has been added to the model from the server. Virtual scroll pagination or changing data on the server (for example other processes inserting or removing records) can result in reindexing some or all of the records in the model. If the view stores the `index` or `recSequence` for records then it must adjust them to account for the changed indexes. The optional firstIndex property indicates if reindexing was done.
+Sent when data has been added to the model from the server.
 
 ##### Properties:
 
@@ -359,17 +359,10 @@ Sent when data has been added to the model from the server. Virtual scroll pagin
 <td class="type">object</td>
 <td class="description last"><h6 id="properties-1">Properties</h6>
 <table class="props" aria-label="Properties">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
 <thead>
 <tr>
 <th scope="col">Name</th>
 <th scope="col">Type</th>
-<th scope="col">Attributes</th>
 <th class="last" scope="col">Description</th>
 </tr>
 </thead>
@@ -377,34 +370,22 @@ Sent when data has been added to the model from the server. Virtual scroll pagin
 <tr>
 <th class="name" scope="row"><code>parentNode</code></th>
 <td class="type"><a href="model.html#.Node">model.Node</a></td>
-<td class="attributes"></td>
 <td class="description last">Only for tree shape models. This is the parent node the data was added to or null if root.</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>offset</code></th>
 <td class="type">number</td>
-<td class="attributes"></td>
 <td class="description last">Index into the client model data. 0 for tree or record shape models</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>count</code></th>
 <td class="type">number</td>
-<td class="attributes"></td>
 <td class="description last">Number of records added to the model. For a tree shape model this is the number of nodes added to the parent or 1 if root. For table shape models the count could be less than the number of records returned by the server if some records were merged (replaced) existing record with same identity.</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>replacedIds</code></th>
 <td class="type">array</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
 <td class="description last">Only for table shape models. Array of record ids that were replaced. This happens when a record returned by the server is already in the model. In this case the existing record is replaced and the record id is added to this list.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>firstIndex</code></th>
-<td class="type">number</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">The zero based index of the first view item that may need to have the <code class="prettyprint">index</code> or <code class="prettyprint">recSequence</code> updated.</td>
 </tr>
 </tbody>
 </table></td>
@@ -414,7 +395,7 @@ Sent when data has been added to the model from the server. Virtual scroll pagin
 
 #### clearChanges
 
-Sent when the model has been saved (or [model#clearChanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#clearChanges) called) after all metadata related to changes has been cleared. If the view stores the `index` or `recSequence` for records then it must adjust them to account for the deleted records if any.
+Sent when the model has been saved (or [model#clearChanges](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#clearChanges) called) after all metadata related to changes has been cleared.
 
 ##### Properties:
 
@@ -468,7 +449,7 @@ Sent when the model has been saved (or [model#clearChanges](https://docs.oracle.
 
 #### copy
 
-Sent when one or more records are copied. If the view stores the `index` or `recSequence` for records then it must adjust them to account for the copied records.
+Sent when one or more records are copied.
 
 ##### Properties:
 
@@ -527,7 +508,7 @@ Sent when one or more records are copied. If the view stores the `index` or `rec
 
 #### delete
 
-Sent when one or more records are deleted. If the view stores the `index` or `recSequence` for records then it must adjust them to account for the deleted records.
+Sent when one or more records are deleted.
 
 ##### Properties:
 
@@ -592,7 +573,7 @@ Sent when the model is destroyed.
 
 #### insert
 
-Sent when a record is inserted into the model. If the view stores the `index` or `recSequence` for records then it must adjust them to account for the inserted record.
+Sent when a record is inserted into the model.
 
 ##### Properties:
 
@@ -705,7 +686,7 @@ Sent when the model instance changes. This happens when the id of the master rec
 
 #### metaChange
 
-Sent when metadata has changed. The record field values have not changed but the record or field metadata has changed. Typically, this is the result of validation errors. If external code changes the metadata it must call [model#metadataChanged](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#metadataChanged) (which sends this notification) to let other views know about the change.
+Sent when metadata has changed. The record field values have not changed but the record or field metadata has changed. Typically, this is the result of validation errors. If external code changes the metadata it must call [model#metadataChanged](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#metadataChanged) (which sends this notification) to let other views know about the change.
 
 ##### Properties:
 
@@ -764,7 +745,7 @@ Sent when metadata has changed. The record field values have not changed but the
 
 #### move
 
-Sent when one or more records are moved. If the view stores the `index` or `recSequence` for records then it must adjust them to account for the moved records.
+Sent when one or more records are moved.
 
 ##### Properties:
 
@@ -811,19 +792,9 @@ Sent when one or more records are moved. If the view stores the `index` or `recS
 <td class="description last">The ids of the records that were moved. The ith item in this array corresponds to the ith item in the records array.</td>
 </tr>
 <tr>
-<th class="name" scope="row"><code>insertAfterId</code></th>
+<th class="name" scope="row"><code>insertAfterId:</code></th>
 <td class="type">object</td>
 <td class="description last">The id of the record that these new records were inserted after or null if inserted at the beginning.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>firstIndex</code></th>
-<td class="type">number</td>
-<td class="description last">The zero based index of the first view item that may need to have the <code class="prettyprint">index</code> or <code class="prettyprint">recSequence</code> updated.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>lastIndex</code></th>
-<td class="type">number</td>
-<td class="description last">The zero based index of the last view item that may need to have the <code class="prettyprint">index</code> or <code class="prettyprint">recSequence</code> updated.</td>
 </tr>
 </tbody>
 </table></td>
@@ -833,7 +804,7 @@ Sent when one or more records are moved. If the view stores the `index` or `recS
 
 #### refresh
 
-Sent when the model has been given new data or there is a change in data on the server that the model should now go get. In either case the previous data in the model is gone/changed, unless the `clearDataPending` property is true, so any views showing the model data should re-render their views. If the `clearDataPending` property is true the data is waiting to be cleared by the next fetch but is still in the model. See [model#clearData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#clearData).
+Sent when the model has been given new data or there is a change in data on the server that the model should now go get. In either case the previous data in the model is gone/changed, unless the `clearDataPending` property is true, so any views showing the model data should re-render their views. If the `clearDataPending` property is true the data is waiting to be cleared by the next fetch but is still in the model. See [model#clearData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#clearData).
 
 ##### Properties:
 
@@ -882,7 +853,7 @@ Sent when the model has been given new data or there is a change in data on the 
 
 #### refreshRecords
 
-Sent when specific records in the model have changed. This happens when the model is saved if the server returns updated records or when [model#fetchRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetchRecords) is called. Both the record field values and metadata may have changed. The view layer should render the new record including taking into consideration any metadata and replace the existing view of the record.
+Sent when specific records in the model have changed. This happens when the model is saved if the server returns updated records or when [model#fetchRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetchRecords) is called. Both the record field values and metadata may have changed. The view layer should render the new record including taking into consideration any metadata and replace the existing view of the record.
 
 ##### Properties:
 
@@ -1071,7 +1042,7 @@ Sent when a field value of a record is changed.
 
 #### addChangesToSaveRequest(pRequestData)
 
-Rarely needed. Only useful if making your own call to the server. See [model#save](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#save), [apex.model.addChangesToSaveRequest](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.addChangesToSaveRequest), and [apex.model.save](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.save).
+Rarely needed. Only useful if making your own call to the server. See [model#save](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#save), [apex.model.addChangesToSaveRequest](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.addChangesToSaveRequest), and [apex.model.save](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.save).
 
 ##### Parameters:
 
@@ -1170,7 +1141,7 @@ For a record to be deletable:
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record) | The record to check if deleting is allowed. |
+| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record) | The record to check if deleting is allowed. |
 
 ##### Returns:
 
@@ -1205,7 +1176,7 @@ For a record to be draggable:
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record) | The record to check if it can be dragged. |
+| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record) | The record to check if it can be dragged. |
 
 ##### Returns:
 
@@ -1229,7 +1200,7 @@ For a record to be editable:
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record) | The record to check if editing is allowed. |
+| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record) | The record to check if editing is allowed. |
 
 ##### Returns:
 
@@ -1250,13 +1221,13 @@ if ( myModel.allowEdit( record ) ) {
 
 #### canRevertRecord(pRecord) → {boolean}
 
-Return true if the record exists in the model and has a change that can be reverted (is updated or is deleted). See also [model#revertRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#revertRecords).
+Return true if the record exists in the model and has a change that can be reverted (is updated or is deleted). See also [model#revertRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#revertRecords).
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record) | The record to check if it can be reverted. |
+| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record) | The record to check if it can be reverted. |
 
 ##### Returns:
 
@@ -1277,15 +1248,15 @@ if ( myModel.canRevertRecord( record ) ) {
 
 #### check(pOperation, pRecordopt, pAddActionopt, pRecordsToAddopt) → {boolean}
 
-Low level operation permission checking. Better to use [model#allowEdit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#allowEdit), [model#allowDelete](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#allowDelete), [model#allowAdd](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#allowAdd), [model#allowDrag](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#allowDrag). The purpose is to determine what kinds of edits are allowed.
+Low level operation permission checking. Better to use [model#allowEdit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#allowEdit), [model#allowDelete](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#allowDelete), [model#allowAdd](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#allowAdd), [model#allowDrag](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#allowDrag). The purpose is to determine what kinds of edits are allowed.
 
-If the model is not editable (editable option is false) then no operations are allowed. Also, no operations are allowed on deleted records or aggregate records. No operations are allowed when the [model#event:refresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:refresh) notification `clearDataPending` property is true until the next fetch completes.
+If the model is not editable (editable option is false) then no operations are allowed. Also, no operations are allowed on deleted records or aggregate records. No operations are allowed when the [model#event:refresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:refresh) notification `clearDataPending` property is true until the next fetch completes.
 
 Operation checking is based on the type of the record (as determined by the type field) and the type information given to the model in the types option. Type names are strings. The special type name "default" is used to provide a default when records don't have a type or the type of the record doesn't specify a value for the operation. Note: The model types option is not currently documented and may change in the future.
 
 Operations are strings. The standard operation permissions are "canAdd", "canDelete", "canEdit", "canDrag". You can define your own as well.
 
-First the record itself is checked to see if it allows the operation by checking if the record metadata contains the specified permission. Next the type of the record is checked to see if it allows the operation. If the record has no type or the operations for that type didn't specify a value for the operation then the default type is checked to see if it allows the operation. The value of an operation is true or false or a function that returns true or false. The function is called in the context of this model with arguments `pRecord, pAddAction, pRecordsToAdd`. If the model options includes a `check` function then it is called with the result so far and all the same arguments as this check function. See [model.CheckCallback](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.CheckCallback).
+First the record itself is checked to see if it allows the operation by checking if the record metadata contains the specified permission. Next the type of the record is checked to see if it allows the operation. If the record has no type or the operations for that type didn't specify a value for the operation then the default type is checked to see if it allows the operation. The value of an operation is true or false or a function that returns true or false. The function is called in the context of this model with arguments `pRecord, pAddAction, pRecordsToAdd`. If the model options includes a `check` function then it is called with the result so far and all the same arguments as this check function. See [model.CheckCallback](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.CheckCallback).
 
 ##### Parameters:
 
@@ -1342,7 +1313,7 @@ true if the operation is allowed.
 Type
 boolean
 
-#### child(pNode, pIndex) → {[model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node)}
+#### child(pNode, pIndex) → {[model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node)}
 
 Return the child at pIndex of node pNode.
 
@@ -1352,7 +1323,7 @@ This method must only be used on tree shape models.
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node) | The node who's ith child is to be returned. |
+| `pNode` | [model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node) | The node who's ith child is to be returned. |
 | `pIndex` | number | The index of the child node. |
 
 ##### Returns:
@@ -1360,7 +1331,7 @@ This method must only be used on tree shape models.
 The ith child node.
 
 Type
-[model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node)
+[model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node)
 
 ##### Example
 
@@ -1384,7 +1355,7 @@ This method must only be used on tree shape models.
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node) | The node whose children are to be counted. |
+| `pNode` | [model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node) | The node whose children are to be counted. |
 
 ##### Returns:
 
@@ -1407,17 +1378,17 @@ for ( i = 0; i < model.childCount( parentNode ); i++ ) {
 
 #### clearChanges()
 
-This marks the model as not having any changes. All change indications will be removed. If any record deletes are pending they will be removed by this method. This does not revert or undo the changes but rather removes all metadata that is tracking changes. This happens implicitly after the model is saved (See [model#save](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#save)). Use this method if changes are persisted in some other way or the changes should be discarded before refreshing the model.
+This marks the model as not having any changes. All change indications will be removed. If any record deletes are pending they will be removed by this method. This does not revert or undo the changes but rather removes all metadata that is tracking changes. This happens implicitly after the model is saved (See [model#save](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#save)). Use this method if changes are persisted in some other way or the changes should be discarded before refreshing the model.
 
-See also [model#revertRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#revertRecords) and option model#trackChanges.
+See also [model#revertRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#revertRecords) and option model#trackChanges.
 
 ##### Fires:
 
-- [model#event:clearChanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:clearChanges)
+- [model#event:clearChanges](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:clearChanges)
 
 ##### Example
 
-This example clears all the changes of an interactive grid with HTML DOM id "emp" in response to a Cancel or Abort button being pressed by the user. Use in an Execute JavaScript Code dynamic action. If not for the call to `clearChanges` before `refresh` the interactive grid would prompt the user to save changes.
+This example clears all the changes of an interactive grid with static id "emp" in response to a Cancel or Abort button being pressed by the user. Use in an Execute JavaScript Code dynamic action. If not for the call to `clearChanges` before `refresh` the interactive grid would prompt the user to save changes.
 
 ```
 var ig$ = apex.region( "emp" ).widget(),
@@ -1432,11 +1403,11 @@ apex.region("emp").refresh();
 
 #### clearData(pNotifyopt) → {boolean}
 
-Remove all data from the model. This is called by view layers to indicate that the model should be refreshed with new data from the server. The model sends a refresh notification and the views respond by requesting new data with [model#fetch](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetch) or [model#forEachInPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#forEachInPage). The `delayClearData` option controls when the data is actually cleared.
+Remove all data from the model. This is called by view layers to indicate that the model should be refreshed with new data from the server. The model sends a refresh notification and the views respond by requesting new data with [model#fetch](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetch) or [model#forEachInPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#forEachInPage). The `delayClearData` option controls when the data is actually cleared.
 
 When `delayClearData` is false the data is cleared right away, before the refresh notification is sent, and the view should remove the displayed data or block all interaction with it, because there is no data backing it in the model.
 
-When `delayClearData` is true the data will be cleared when the next [model#fetch](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetch) request completes. The view can continue to display the current data until fetch completes. The model will not allow editing while clear data is pending.
+When `delayClearData` is true the data will be cleared when the next [model#fetch](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetch) request completes. The view can continue to display the current data until fetch completes. The model will not allow editing while clear data is pending.
 
 ##### Parameters:
 
@@ -1468,7 +1439,7 @@ When `delayClearData` is true the data will be cleared when the next [model#fetc
 
 ##### Fires:
 
-- [model#event:refresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:refresh)
+- [model#event:refresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:refresh)
 
 ##### Returns:
 
@@ -1485,11 +1456,11 @@ Clear the data for a model. This will typically cause any views to refresh, whic
 myModel.clearData();
 ```
 
-See example for [apex.model.multipleFetch](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.multipleFetch).
+See example for [apex.model.multipleFetch](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.multipleFetch).
 
 #### clearSelection()
 
-Unselect all the selected records. Should only be used with table shape models. See also [model#setSelectionState](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#setSelectionState).
+Unselect all the selected records. Should only be used with table shape models. See also [model#setSelectionState](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#setSelectionState).
 
 This method should only be used by view widgets to persist the view selection state in metadata property `sel`. Note there is no notification about this metadata change. Listen to the view for selection change events. Also use the view to change the selection.
 
@@ -1540,7 +1511,7 @@ Copies the given records and inserts the copies into the collection (table or pa
 
 ##### Fires:
 
-- [model#event:copy](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:copy)
+- [model#event:copy](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:copy)
 
 ##### Returns:
 
@@ -1561,7 +1532,7 @@ var keys = model.copyRecords( selectedRecords, null, selectedRecords[ selectedRe
 
 Delete one or more records from a table or tree.
 
-If the `onlyMarkForDelete` option is true the records are just marked for delete. Records marked for delete will be included in data returned by [model#forEach](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#forEach), [model#forEachInPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#forEachInPage), [model#walkTree](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#walkTree), etc. and can be found by [model#getRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecord). They will be deleted once the [model#clearChanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#clearChanges) method is called explicitly or implicitly after data has been saved successfully.
+If the `onlyMarkForDelete` option is true the records are just marked for delete. Records marked for delete will be included in data returned by [model#forEach](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#forEach), [model#forEachInPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#forEachInPage), [model#walkTree](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#walkTree), etc. and can be found by [model#getRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecord). They will be deleted once the [model#clearChanges](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#clearChanges) method is called explicitly or implicitly after data has been saved successfully.
 
 If the `onlyMarkForDelete` option is false the records are deleted right away and are no longer part of the model. In either case the deleted records are on the change list so the deletion can be persisted.
 
@@ -1571,11 +1542,11 @@ If `pRecords` contains records that cannot be found in the collection or finds r
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecords` | Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\> | An array of records to delete. |
+| `pRecords` | Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\> | An array of records to delete. |
 
 ##### Fires:
 
-- [model#event:delete](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:delete)
+- [model#event:delete](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:delete)
 
 ##### Returns:
 
@@ -1602,7 +1573,7 @@ Determine what drag operations are allowed for a set of records. Not all views s
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecords` | Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\> | array of records to determine drag operations for or null when dragging an external record into this model. |
+| `pRecords` | Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\> | array of records to determine drag operations for or null when dragging an external record into this model. |
 
 ##### Returns:
 
@@ -1659,7 +1630,7 @@ Retrieve model data from the server. Data is requested starting at the given off
 
 ##### Fires:
 
-- [model#event:addData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:addData)
+- [model#event:addData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:addData)
 
 ##### Returns:
 
@@ -1670,7 +1641,7 @@ promise
 
 #### fetchAll(pCallback, pNoProgressopt)
 
-Fetch all the data from the server into the model. This repeatedly calls [model#fetch](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetch) until the server reports there is no more data. This is only for table shape models. Data is fetched in chunks that may be larger than model option `pageSize`. Since all the data is to be loaded the intent is to do so in fewer ajax requests.
+Fetch all the data from the server into the model. This repeatedly calls [model#fetch](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetch) until the server reports there is no more data. This is only for table shape models. Data is fetched in chunks that may be larger than model option `pageSize`. Since all the data is to be loaded the intent is to do so in fewer ajax requests.
 
 Use with caution. Loading too much data onto the client can take a long time and cause the browser to become unresponsive.
 
@@ -1719,7 +1690,7 @@ Use with caution. Loading too much data onto the client can take a long time and
 
 ##### Example
 
-This example fetches all the data before using [model#forEach](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#forEach) to loop over the records.
+This example fetches all the data before using [model#forEach](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#forEach) to loop over the records.
 
 ```
 model.fetchAll( function( status ) {
@@ -1780,7 +1751,7 @@ Can use either the callback argument or the returned promise to determine when t
 
 ##### Fires:
 
-- [model#event:addData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:addData)
+- [model#event:addData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:addData)
 
 ##### Returns:
 
@@ -1829,7 +1800,7 @@ Fetches fresh data from the server for the given records. The existing records i
 
 ##### Fires:
 
-- [model#event:refreshRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:refreshRecords)
+- [model#event:refreshRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:refreshRecords)
 
 ##### Returns:
 
@@ -1840,7 +1811,7 @@ promise
 
 ##### Example
 
-This example fetches the selected records from interactive grid with HTML DOM id "emp". There is often no need know when the Ajax request completes because the view is updated from model notifications.
+This example fetches the selected records from interactive grid with static id "emp". There is often no need know when the Ajax request completes because the view is updated from model notifications.
 
 ```
 var model = apex.region( "emp" ).call( "getCurrentView" );
@@ -1849,7 +1820,7 @@ model.fetchRecords( apex.region( "emp" ).call( "getSelectedRecords" );
 
 #### forEach(pCallback, pThisArgopt)
 
-Iterate over the model collection. Calls `pCallback` for each record in the model. Similar to `Array.prototype.forEach`. The model shape must be table or tree. This will never fetch new data. This includes aggregate records if any. For shape tree see also [model#walkTree](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#walkTree).
+Iterate over the model collection. Calls `pCallback` for each record in the model. Similar to `Array.prototype.forEach`. The model shape must be table or tree. This will never fetch new data. This includes aggregate records if any. For shape tree see also [model#walkTree](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#walkTree).
 
 The callback receives the record, the zero based index of the record, and the identity (recordId) of the record.
 
@@ -1906,7 +1877,7 @@ model.forEach( function( record, index, id ) {
 
 #### forEachInPage(pOffset, pCount, pCallback, pThisArgopt)
 
-Iterate over a range (page) of the model collection. This is only valid for table shape models. Calls `pCallback` for `pCount` records in the collection starting at `pOffset`. If the model doesn't yet contain the requested records they will be fetched from the server by calling [model#fetch](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetch).
+Iterate over a range (page) of the model collection. This is only valid for table shape models. Calls `pCallback` for `pCount` records in the collection starting at `pOffset`. If the model doesn't yet contain the requested records they will be fetched from the server by calling [model#fetch](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetch).
 
 The callback receives the record, the zero based index of the record, and the identity (recordId) of the record. If the collection has fewer records than requested or if there is an error fetching data from the server then `pCallback` is called with a null record. If there is an ajax error it is passed to the callback in the error parameter. When more data needs to be fetched the last call before the fetch, has the error parameter set to false. This gives the view layer a way to respond to the pause in rendering due to the asynchronous ajax request.
 
@@ -1974,16 +1945,16 @@ model.forEachInPage( pageOffset, pageSize, function( record, index, id ) {
 } );
 ```
 
-#### getChanges() → {Array.\<[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata)\>}
+#### getChanges() → {Array.\<[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata)\>}
 
-Return an array of record metadata for all changed records. Do not make any changes to the data structure returned. See also [model#isChanged](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#isChanged).
+Return an array of record metadata for all changed records. Do not make any changes to the data structure returned. See also [model#isChanged](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#isChanged).
 
 ##### Returns:
 
 Array of record metadata for changed records.
 
 Type
-Array.\<[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata)\>
+Array.\<[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata)\>
 
 ##### Example
 
@@ -2003,7 +1974,7 @@ Return an opaque id that represents the control break that the record belongs to
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record) | The record to get the control break id from. |
+| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record) | The record to get the control break id from. |
 
 ##### Returns:
 
@@ -2043,7 +2014,7 @@ let tooMuchData = model.getDataOverflow();
 // to return to the client.
 ```
 
-#### getErrors() → {Array.\<[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata)\>}
+#### getErrors() → {Array.\<[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata)\>}
 
 Return an array of record metadata for all records with errors. Do not make any changes to the data structure returned.
 
@@ -2052,11 +2023,11 @@ Return an array of record metadata for all records with errors. Do not make any 
 Array of record metadata for error records.
 
 Type
-Array.\<[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata)\>
+Array.\<[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata)\>
 
 #### getFieldKey(pFieldName) → {string\|number\|undefined}
 
-Return the index/key to use for the given field name when accessing that field of a record. Use the value returned from this method to access a record field without using [model#getValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getValue). This will work regardless of if the records are stored as objects or arrays.
+Return the index/key to use for the given field name when accessing that field of a record. Use the value returned from this method to access a record field without using [model#getValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getValue). This will work regardless of if the records are stored as objects or arrays.
 
 ##### Parameters:
 
@@ -2084,7 +2055,7 @@ for ( i = 0; i < selectedRecords.length; i++ ) {
 }
 ```
 
-#### getFieldMetadata(pFieldName) → {[model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.FieldMeta)}
+#### getFieldMetadata(pFieldName) → {[model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.FieldMeta)}
 
 Return metadata object for given field name. The field metadata is supplied when the model is created in option property `fields`.
 
@@ -2099,11 +2070,11 @@ Return metadata object for given field name. The field metadata is supplied when
 Metadata object or null if there is no such field.
 
 Type
-[model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.FieldMeta)
+[model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.FieldMeta)
 
 #### getOption(pName) → {\*}
 
-Get the value of the given model option. The model options are provided in the call to [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create). See also [model#setOption](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#setOption).
+Get the value of the given model option. The model options are provided in the call to [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create). See also [model#setOption](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#setOption).
 
 ##### Parameters:
 
@@ -2132,13 +2103,13 @@ This example gets the `hasTotalRecords` option.
 var hasTotalRecords = model.getOption( "hasTotalRecords" );
 ```
 
-#### getRecord(pRecordIdopt) → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\|null}
+#### getRecord(pRecordIdopt) → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\|null}
 
 Return the record for a given record id. This only considers records that are currently fetched into the model. The server may have a record with the given record id but if it hasn't yet been fetched into the model, it will not be found with this method.
 
-For table or tree shape models that define an `identityField` option, call with the value of the record's identity field or if the records have multiple identity fields call with an array of ids or a string representation of the combined identity fields as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId).
+For table or tree shape models that define an `identityField` option, call with the value of the record's identity field or if the records have multiple identity fields call with an array of ids or a string representation of the combined identity fields as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId).
 
-For table shape models that don't define an `identityField` option call with the index of the record. This is the same as [model#recordAt](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#recordAt).
+For table shape models that don't define an `identityField` option call with the index of the record. This is the same as [model#recordAt](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#recordAt).
 
 For record shape models call with no record id to get the one and only model record.
 
@@ -2177,7 +2148,7 @@ For tree shape models that do not define an `identityField` this always returns 
 Record or null if no record corresponding to `pRecordId` is found.
 
 Type
-[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record) \| null
+[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record) \| null
 
 ##### Examples
 
@@ -2201,13 +2172,13 @@ record = model.getRecord();
 
 #### getRecordId(pRecord) → {string}
 
-Given a record return the unique identifier (id) for the record. The id is used in calls to [model#getRecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordMetadata) and [model#getRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecord). If the model has multiple identity fields this returns a string representation of the combined fields.
+Given a record return the unique identifier (id) for the record. The id is used in calls to [model#getRecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordMetadata) and [model#getRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecord). If the model has multiple identity fields this returns a string representation of the combined fields.
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record) | The record to get the id from. |
+| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record) | The record to get the id from. |
 
 ##### Returns:
 
@@ -2226,13 +2197,13 @@ var id = model.getRecordId( someRecord ),
 // use meta for something
 ```
 
-#### getRecordMetadata(pRecordIdopt) → {[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata)}
+#### getRecordMetadata(pRecordIdopt) → {[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata)}
 
 Return the metadata object for the record given by the record id. This only applies to models that define an identity field with option `identityField`. From the record metadata you access field metadata via the `fields` property. Note that a fields property doesn't exist if it has no metadata, so you have to check that it exists before accessing or setting any of its properties, as shown in the second example.
 
 Upper layers can store information related to the record here. The metadata should be related to the record itself and not the view of it.
 
-If any metadata property values are changed, call [model#metadataChanged](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#metadataChanged) to notify any view layer of the change if needed.
+If any metadata property values are changed, call [model#metadataChanged](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#metadataChanged) to notify any view layer of the change if needed.
 
 ##### Parameters:
 
@@ -2267,7 +2238,7 @@ If any metadata property values are changed, call [model#metadataChanged](https:
 Metadata object or null if there is no record associated with `pRecordId`.
 
 Type
-[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata)
+[model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata)
 
 ##### Examples
 
@@ -2281,7 +2252,7 @@ if ( meta.updated ) {
 }
 ```
 
-This example, using the EMP table, sets the `highlight` property of the record or the SAL field based on conditions of the SAL and COMM values. Note that the [grid](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html) widget as used by the Interactive Grid region also uses the `highlight` property which could conflict with code such as this. If used with Interactive Grid the code could check if there is already a highlight value or could turn off the Interactive Grid highlight feature. This function would be called from a model [model.Observer](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Observer) in response to a "set" notification or possibly in response to a [apex.event:apexendrecordedit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexendrecordedit) event. The page needs to have custom CSS rules for the "warn-comm" and "warn-sal" classes.
+This example, using the EMP table, sets the `highlight` property of the record or the SAL field based on conditions of the SAL and COMM values. Note that the [grid](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html) widget as used by the Interactive Grid region also uses the `highlight` property which could conflict with code such as this. If used with Interactive Grid the code could check if there is already a highlight value or could turn off the Interactive Grid highlight feature. This function would be called from a model [model.Observer](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Observer) in response to a "set" notification or possibly in response to a [apex.event:apexendrecordedit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexendrecordedit) event. The page needs to have custom CSS rules for the "warn-comm" and "warn-sal" classes.
 
 ```
 function updateRecordHighlights( model, record, id ) {
@@ -2308,13 +2279,13 @@ function updateRecordHighlights( model, record, id ) {
 
 #### getRecordValue(pRecordId, pFieldName) → {\*}
 
-Get the value of a record field given the record id. This is only useful when the model shape is table or tree. If there are many field values to get or set use [model#getRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecord) followed by [model#getValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getValue) or [model#setValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#setValue). See also [model#setRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#setRecordValue).
+Get the value of a record field given the record id. This is only useful when the model shape is table or tree. If there are many field values to get or set use [model#getRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecord) followed by [model#getValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getValue) or [model#setValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#setValue). See also [model#setRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#setRecordValue).
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecordId` | string \| Array.\<string\> | Value of the record's identity field or array of values of the record's identity fields or value returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId). |
+| `pRecordId` | string \| Array.\<string\> | Value of the record's identity field or array of values of the record's identity fields or value returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId). |
 | `pFieldName` | string | Name of record field to get. |
 
 ##### Returns:
@@ -2334,7 +2305,7 @@ var name = model.getRecordValue( "00013", "NAME" );
 
 #### getSelectedCount() → {number}
 
-Return the number of currently selected records. This only applies if a view is storing selection state in the model. The selection may be incomplete if the model hasn't fetched all the data yet. The [model#getSelectionState](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getSelectionState) method is used to tell if the selection is incomplete.
+Return the number of currently selected records. This only applies if a view is storing selection state in the model. The selection may be incomplete if the model hasn't fetched all the data yet. The [model#getSelectionState](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getSelectionState) method is used to tell if the selection is incomplete.
 
 This is used by views that store view selection state in the model to return the selection count.
 
@@ -2345,9 +2316,9 @@ The number of selected records.
 Type
 number
 
-#### getSelectedRecords() → {Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\>}
+#### getSelectedRecords() → {Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\>}
 
-Return an array of the selected records. This only applies if a view is storing selection state in the model. The selection may be incomplete if the model hasn't fetched all the data yet. The [model#getSelectionState](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getSelectionState) method is used to tell if the selection is incomplete.
+Return an array of the selected records. This only applies if a view is storing selection state in the model. The selection may be incomplete if the model hasn't fetched all the data yet. The [model#getSelectionState](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getSelectionState) method is used to tell if the selection is incomplete.
 
 This is used by views that store view selection state in the model to return the selection. It is generally best to get the selected records from the view layer.
 
@@ -2356,7 +2327,7 @@ This is used by views that store view selection state in the model to return the
 The selected records.
 
 Type
-Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\>
+Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\>
 
 #### getSelectionState() → {object}
 
@@ -2441,7 +2412,7 @@ number
 
 #### getValue(pRecordopt, pFieldName) → {\*}
 
-Get the value of a record field given the record itself or omit the record when the model shape is record. See also [model#setValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#setValue).
+Get the value of a record field given the record itself or omit the record when the model shape is record. See also [model#setValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#setValue).
 
 ##### Parameters:
 
@@ -2506,7 +2477,7 @@ Returns true if the node `pNode` has children, false if it does not, and null if
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node) | The node to check if it has any children. |
+| `pNode` | [model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node) | The node to check if it has any children. |
 
 ##### Returns:
 
@@ -2527,7 +2498,7 @@ if ( model.hasChildren( node ) === true ) {
 
 #### hasControlBreaks() → {boolean}
 
-Return true if any control break columns are configured. See `controlBreakIndex` property of [model.FieldMeta](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.FieldMeta).
+Return true if any control break columns are configured. See `controlBreakIndex` property of model.fieldMeta.
 
 ##### Returns:
 
@@ -2557,7 +2528,7 @@ if ( model.hasErrors() ) {
 
 #### indexOf(pRecord) → {number}
 
-Return the index of the record within the collection. The collection may include aggregate records. Useful because [model#forEachInPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#forEachInPage) method takes a starting index/offset.
+Return the index of the record within the collection. The collection may include aggregate records. Useful because [model#forEachInPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#forEachInPage) method takes a starting index/offset.
 
 Only applies to table and tree shape models. Throws an error if the model shape is record. For tree shape models an identity field must be defined and this returns the index of the node among its siblings.
 
@@ -2565,7 +2536,7 @@ Only applies to table and tree shape models. Throws an error if the model shape 
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record) | The record to return the index of. |
+| `pRecord` | [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record) | The record to return the index of. |
 
 ##### Returns:
 
@@ -2576,7 +2547,7 @@ number
 
 #### insertNewRecord(pParentRecordopt, pAfterRecordopt, pNewRecordopt) → {string}
 
-Inserts a new record into the collection. Only applies to tree and table shape models. For tree shape models the record is inserted under the given parent node. The model must allow adding new records. See [model#allowAdd](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#allowAdd).
+Inserts a new record into the collection. Only applies to tree and table shape models. For tree shape models the record is inserted under the given parent node. The model must allow adding new records. See [model#allowAdd](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#allowAdd).
 
 ##### Parameters:
 
@@ -2622,7 +2593,7 @@ Inserts a new record into the collection. Only applies to tree and table shape m
 
 ##### Fires:
 
-- [model#event:insert](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:insert)
+- [model#event:insert](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:insert)
 
 ##### Returns:
 
@@ -2633,9 +2604,9 @@ string
 
 #### isChanged() → {boolean}
 
-Determine if the model has been changed in any way. See also [model#getChanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getChanges).
+Determine if the model has been changed in any way. See also [model#getChanges](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getChanges).
 
-Note: Auto inserted records don't count as changes unless they are also updated, but they are returned by [model#getChanges](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getChanges).
+Note: Auto inserted records don't count as changes unless they are also updated, but they are returned by [model#getChanges](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getChanges).
 
 ##### Returns:
 
@@ -2656,7 +2627,7 @@ if ( model.isChanged() ) {
 
 #### isDisabled(pRecord, pRecordMetaopt) → {boolean}
 
-Return true if the record is disabled and false otherwise. The record disabled state is determined by the record [model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata) `disabled` property. If the `disabled` property is not defined or is null return a default of false.
+Return true if the record is disabled and false otherwise. The record disabled state is determined by the record [model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata) `disabled` property. If the `disabled` property is not defined or is null return a default of false.
 
 ##### Parameters:
 
@@ -2716,7 +2687,7 @@ boolean
 
 #### metadataChanged(pRecordId, pFieldNameopt, pPropertyNameopt)
 
-Call this method if any properties of the metadata returned by [model#getRecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordMetadata) are changed external to this module. Most record or field metadata should not be changed externally. However, it may be useful and reasonable to externally change metadata that comes from the records initially such as canEdit or custom metadata properties. The result of calling this method is sending a [model#event:metaChange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:metaChange) notification.
+Call this method if any properties of the metadata returned by [model#getRecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordMetadata) are changed external to this module. Most record or field metadata should not be changed externally. However, it may be useful and reasonable to externally change metadata that comes from the records initially such as canEdit or custom metadata properties. The result of calling this method is sending a [model#event:metaChange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:metaChange) notification.
 
 ##### Parameters:
 
@@ -2761,16 +2732,16 @@ Call this method if any properties of the metadata returned by [model#getRecordM
 
 ##### Fires:
 
-- [model#event:metaChange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:metaChange)
+- [model#event:metaChange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:metaChange)
 
-#### modelId() → {[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)}
+#### modelId() → {[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)}
 
 Return the model id for this model.
 
 ##### Returns:
 
 Type
-[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
 #### moveRecords(pRecords, pParentRecordopt, pAfterRecordopt) → {Array.\<string\>}
 
@@ -2821,7 +2792,7 @@ For tree shape models if there is a `parentIdentityField` the moved records will
 
 ##### Fires:
 
-- [model#event:move](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:move)
+- [model#event:move](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:move)
 
 ##### Returns:
 
@@ -2830,7 +2801,7 @@ Array of record identities of moved records.
 Type
 Array.\<string\>
 
-#### parent(pNode) → {[model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node)}
+#### parent(pNode) → {[model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node)}
 
 Return the parent node of the given node. Only supported for tree shape models that have an `identityField` option defined.
 
@@ -2840,16 +2811,16 @@ This method must only be used on tree shape models.
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node) | The node to get the parent of. |
+| `pNode` | [model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node) | The node to get the parent of. |
 
 ##### Returns:
 
 Parent node or null for the root node and undefined otherwise
 
 Type
-[model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node)
+[model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node)
 
-#### recordAt(index) → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)}
+#### recordAt(index) → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)}
 
 Return the record at the given index within the model collection. Only applies to table shape models.
 
@@ -2864,7 +2835,7 @@ Return the record at the given index within the model collection. Only applies t
 The record or null if there is no record at the given index.
 
 Type
-[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)
+[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)
 
 ##### Example
 
@@ -2876,17 +2847,17 @@ var record = model.recordAt(5);
 
 #### revertRecords(pRecords) → {number}
 
-Revert one or more records to the way they were when first added to the model or last saved. This undoes any changes made to the records. See also [model#canRevertRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#canRevertRecord).
+Revert one or more records to the way they were when first added to the model or last saved. This undoes any changes made to the records. See also [model#canRevertRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#canRevertRecord).
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecords` | Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\> | The records to revert. |
+| `pRecords` | Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\> | The records to revert. |
 
 ##### Fires:
 
-- [model#event:revert](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:revert)
+- [model#event:revert](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:revert)
 
 ##### Returns:
 
@@ -2905,7 +2876,7 @@ if ( myModel.canRevertRecord( record ) ) {
 }
 ```
 
-#### root() → {[model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node)}
+#### root() → {[model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node)}
 
 Return the root node of the tree. An error is thrown if the model shape is not tree.
 
@@ -2914,7 +2885,7 @@ Return the root node of the tree. An error is thrown if the model shape is not t
 Root node or null if there is no root.
 
 Type
-[model.Node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Node)
+[model.Node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Node)
 
 ##### Example
 
@@ -2930,7 +2901,7 @@ Save all changed model data to the server. The current changes are copied to the
 
 It is possible to continue making changes to the model while a save is in progress. Can use either the callback argument or the returned promise to determine when the request is complete.
 
-See also [apex.model.save](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.save).
+See also [apex.model.save](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.save).
 
 ##### Parameters:
 
@@ -3021,12 +2992,12 @@ Give the model data. This is used in cases where the model doesn't get data from
 
 ##### Fires:
 
-- [model#event:refresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:refresh)
-- [model#event:addData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:addData)
+- [model#event:refresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:refresh)
+- [model#event:addData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:addData)
 
 #### setDisabledState(pRecordId, pDisabled)
 
-Set the `disabled` property of the [model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata) for the record given by pRecordId. This sets the `disabled` property, and calls the [model#metadataChanged](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#metadataChanged) method if the value changed.
+Set the `disabled` property of the [model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata) for the record given by pRecordId. This sets the `disabled` property, and calls the [model#metadataChanged](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#metadataChanged) method if the value changed.
 
 ##### Parameters:
 
@@ -3037,7 +3008,7 @@ Set the `disabled` property of the [model.RecordMetadata](https://docs.oracle.co
 
 #### setHiddenState(pRecordId, pHidden)
 
-Set the `hidden` property of the [model#getRecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordMetadata) for the record given by pRecordId. This is a convenience method that looks up the record metadata, sets the hidden property, and calls the [model#metadataChanged](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#metadataChanged) method if the value changed.
+Set the `hidden` property of the [model#getRecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordMetadata) for the record given by pRecordId. This is a convenience method that looks up the record metadata, sets the hidden property, and calls the [model#metadataChanged](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#metadataChanged) method if the value changed.
 
 ##### Parameters:
 
@@ -3048,7 +3019,7 @@ Set the `hidden` property of the [model#getRecordMetadata](https://docs.oracle.c
 
 #### setOption(pName, pValue)
 
-Set the value of the given model option. The model options are provided in the call to [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create). See also [model#getOption](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getOption).
+Set the value of the given model option. The model options are provided in the call to [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create). See also [model#getOption](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getOption).
 
 The options that can be set are:
 
@@ -3077,13 +3048,13 @@ The options that can be set are:
 
 #### setRecordValue(pRecordId, pFieldName, pValue)
 
-Set the value of a record field given the record id. This is only useful when the model shape is table or tree. If there are many field values to get or set use [model#getRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecord) followed by [model#getValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getValue) or [model#setValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#setValue). See also [model#getRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordValue).
+Set the value of a record field given the record id. This is only useful when the model shape is table or tree. If there are many field values to get or set use [model#getRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecord) followed by [model#getValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getValue) or [model#setValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#setValue). See also [model#getRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordValue).
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pRecordId` | string \| Array.\<string\> | Value of the record's identity field or array of values of the record's identity fields or value returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId). |
+| `pRecordId` | string \| Array.\<string\> | Value of the record's identity field or array of values of the record's identity fields or value returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId). |
 | `pFieldName` | string | Name of record field to set. |
 | `pValue` | \* | Value to set. |
 
@@ -3207,7 +3178,7 @@ if ( invalidReasonMessage ) {
 
 #### setValue(pRecordopt, pFieldName, pValue) → {string\|null}
 
-Set the value of a record field given the record itself or omit the record when the model shape is record. See also [model#getValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getValue).
+Set the value of a record field given the record itself or omit the record when the model shape is record. See also [model#getValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getValue).
 
 An error is thrown if the record does not allow editing or the field does not allow being set.
 
@@ -3253,7 +3224,7 @@ An error is thrown if the record does not allow editing or the field does not al
 
 ##### Fires:
 
-- [model#event:set](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#event:set)
+- [model#event:set](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#event:set)
 
 ##### Returns:
 
@@ -3304,11 +3275,11 @@ Subscribe to model change notifications by adding an observer.
 
 | Name | Type | Description |
 |----|----|----|
-| `pObserver` | [model.Observer](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Observer) | An observer object that includes a callback function to receive notifications. |
+| `pObserver` | [model.Observer](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Observer) | An observer object that includes a callback function to receive notifications. |
 
 ##### Returns:
 
-A viewId to use with [model#unSubscribe](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#unSubscribe). This is the same as the `viewId` property if there is one. One is generated if not given in `pObserver`
+A viewId to use with [model#unSubscribe](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#unSubscribe). This is the same as the `viewId` property if there is one. One is generated if not given in `pObserver`
 
 Type
 string
@@ -3528,7 +3499,7 @@ Unsubscribe to model change notifications.
 
 | Name | Type | Description |
 |----|----|----|
-| `pViewId` | string | The view id returned from [model#subscribe](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#subscribe). |
+| `pViewId` | string | The view id returned from [model#subscribe](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#subscribe). |
 
 ##### Example
 
@@ -3544,7 +3515,7 @@ Update the visibility of all records currently in the model by calling the `visi
 
 Client side filtering works best for reasonable sized reports and when the model has all the data to filter on. Not all view layer components will make use of the hidden property. For those that do it may only work if the view has rendered all the data.
 
-See also [model#setHiddenState](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#setHiddenState) and the `visibilityFilter` and `visibilityFilterContext` options of [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create).
+See also [model#setHiddenState](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#setHiddenState) and the `visibilityFilter` and `visibilityFilterContext` options of [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create).
 
 ##### Parameters:
 
@@ -3576,7 +3547,7 @@ See also [model#setHiddenState](https://docs.oracle.com/en/database/oracle/apex/
 
 ##### Example
 
-The following example filters a Cards region with HTML DOM id "people" using Text Field item P1_FILTER as the user types with a 200ms delay.
+The following example filters a Cards region with static id "people" using Text Field item P1_FILTER as the user types with a 200ms delay.
 
 ```
 var filterItem = apex.item("P1_FILTER"),
@@ -3749,7 +3720,7 @@ model.walkTree( model.root(), {
 
 #### CheckCallback(pResult, pOperation, pRecord, pAddActionopt, pRecordsToAddopt) → {boolean}
 
-A callback function to do additional access checking. See the `check` option property of [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) and the [model#check](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#check) method.
+A callback function to do additional access checking. See the `check` option property of [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) and the [model#check](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#check) method.
 
 ##### Parameters:
 
@@ -3824,7 +3795,7 @@ The field metadata describes the field and affects how the model uses the field.
 | Name | Type | Description |
 |----|----|----|
 | `index` | string | Only used when records are arrays. This is the index into the array where the field value is stored. |
-| `controlBreakIndex` | number | Indicates that the field is used as a control break and provides the order in which this field is sorted for that purpose. Starting at 1. The server is responsible for sorting the data. The view layer may provide additional configuration to control sorting. The end result is that the data is sorted so that all the records with the same control break column values ordered by `controlBreakIndex` are grouped together. The server must also set the record metadata property `endControlBreak`. See [model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata). This field property can change after the model is initialized but doesn't take effect until after the model data is cleared with [model#clearData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#clearData). |
+| `controlBreakIndex` | number | Indicates that the field is used as a control break and provides the order in which this field is sorted for that purpose. Starting at 1. The server is responsible for sorting the data. The view layer may provide additional configuration to control sorting. The end result is that the data is sorted so that all the records with the same control break column values ordered by `controlBreakIndex` are grouped together. The server must also set the record metadata property `endControlBreak`. See [model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata). This field property can change after the model is initialized but doesn't take effect until after the model data is cleared with [model#clearData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#clearData). |
 | `defaultValue` | \* | This value is used when a new record is added or an existing record is duplicated and `noCopy` is true. The defaultValue has no effect for the identity, meta, children, and parent fields if defined. If there is no defaultValue empty string is used. If defaultValue is a function it is called and the return value is used as the field's value. The function is passed the model. If the new record is a copy of an existing record the source record is also passed in. |
 | `dataType` | string | The data type of the field value. |
 | `calcValue` | function | This is a function used to calculate the value for the field. When any of the fields listed in the `dependsOn` property change this function is called. The function signature is `calcValue( argsArray, model, record ) return *`. The values of the fields listed in `dependsOn` are passed in the `argsArray`. This function is also called when a record is received from the server and the value of this field is null or undefined. |
@@ -3838,7 +3809,7 @@ The field metadata describes the field and affects how the model uses the field.
 
 #### IteratorCallback(pRecord, pIndex, pId, pErroropt)
 
-This callback is used by the [model#forEach](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#forEach) and [model#forEachInPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#forEachInPage) methods.
+This callback is used by the [model#forEach](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#forEach) and [model#forEachInPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#forEachInPage) methods.
 
 ##### Parameters:
 
@@ -3910,7 +3881,7 @@ A detail model with instance id "000109".
 
 #### Node
 
-A model node is a synonym for [model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record) that is more naturally used when the model has a tree shape.
+A model node is a synonym for [model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record) that is more naturally used when the model has a tree shape.
 
 ##### Type:
 
@@ -3918,7 +3889,7 @@ A model node is a synonym for [model.Record](https://docs.oracle.com/en/database
 
 #### Observer
 
-Information about an observer for subscribing to this model. See [model#subscribe](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#subscribe) and [model#unSubscribe](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#unSubscribe).
+Information about an observer for subscribing to this model. See [model#subscribe](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#subscribe) and [model#unSubscribe](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#unSubscribe).
 
 ##### Type:
 
@@ -3985,7 +3956,7 @@ A model record is either an array or an object depending on the model option `re
 
 #### RecordFieldMetadata
 
-Metadata related to a specific record field. You access the field metadata from the record metadata. See [model#getRecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordMetadata)
+Metadata related to a specific record field. You access the field metadata from the record metadata. See [model#getRecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordMetadata)
 
 ##### Type:
 
@@ -4007,7 +3978,7 @@ Metadata related to a specific record field. You access the field metadata from 
 
 #### RecordMetadata
 
-Metadata properties that the model creates and uses. See [model#getRecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordMetadata).
+Metadata properties that the model creates and uses. See [model#getRecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordMetadata).
 
 ##### Type:
 
@@ -4029,16 +4000,6 @@ Metadata properties that the model creates and uses. See [model#getRecordMetadat
 </tr>
 </thead>
 <tbody>
-<tr>
-<th class="name" scope="row"><code>index</code></th>
-<td class="type">number</td>
-<td class="description last">For table shaped models only. This is the zero based index of the record in the model collection. The index is updated as records are inserted, moved, or removed. The index is suitable for use with <a href="model.html#recordAt">model#recordAt</a>.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>recSequence</code></th>
-<td class="type">number</td>
-<td class="description last">For table shaped models only. This is similar to index except that it does not include aggregate records.</td>
-</tr>
 <tr>
 <th class="name" scope="row"><code>deleted</code></th>
 <td class="type">boolean</td>

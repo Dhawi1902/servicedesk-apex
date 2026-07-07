@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/index.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/index.html -->
 
 # Introduction
 
@@ -6,9 +6,9 @@
 
 This section describes the JavaScript APIs available to Oracle APEX applications. You can use these functions to provide client-side functionality, such as showing and hiding page elements, or making Ajax (Asynchronous JavaScript and XML) requests.
 
-Most of the APEX JavaScript APIs are organized into namespaces. A namespace is simply a global singleton object that contains a number of functions. There is one top level APEX namespace called [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html). This has a number of sub namespaces such as [apex.server](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html) and [apex.util](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html). Namespaces help to organize code and reduce the chance of name conflicts with other JavaScript libraries.
+Most of the APEX JavaScript APIs are organized into namespaces. A namespace is simply a global singleton object that contains a number of functions. There is one top level APEX namespace called [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html). This has a number of sub namespaces such as [apex.server](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html) and [apex.util](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html). Namespaces help to organize code and reduce the chance of name conflicts with other JavaScript libraries.
 
-There are some older global functions that are not in a namespace. Most of these start with a \$ character. These are known as [Non-namespace APIs](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/global.html). Global symbols that start with `apex` or `$` are reserved by APEX.
+There are some older global functions that are not in a namespace. Most of these start with a \$ character. These are known as [Non-namespace APIs](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/global.html). Global symbols that start with `apex` or `$` are reserved by APEX.
 
 Some functions return an interface that allows access to a specific instance of a page component or other entity. The returned interface is an object that contains functions known as methods and variables known as properties.
 
@@ -57,7 +57,7 @@ Page templates also define the order in which JavaScript is loaded on the page. 
 - \#PAGE_JAVASCRIPT#
 - \#GENERATED_JAVASCRIPT#
 
-If you define your own page template it is highly recommended not to change the order. When in doubt about where your code is loaded view the page source. Set breakpoints or use `console.log` or [apex.debug](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.debug.html) functions to determine when your code executes.
+If you define your own page template it is highly recommended not to change the order. When in doubt about where your code is loaded view the page source. Set breakpoints or use `console.log` or [apex.debug](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.debug.html) functions to determine when your code executes.
 
 The best way to modularize and reuse your code is to create APEX plug-ins. Template Component, Region, Item, and Dynamic Action plug-ins let you control what the server renders for the corresponding component. This includes JavaScript code and JavaScript files. JavaScript files can be uploaded as part of the plug-in. See the APEX PL/SQL APIs in the `APEX_JAVASCRIPT` package including `ADD_3RD_PARTY_LIBRARY_FILE` and `ADD_ONLOAD_CODE`.
 

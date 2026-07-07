@@ -164,7 +164,7 @@ All of these live under `[Left Pane ▸ Processing]` (the gear tab).
   cannot be hard-deleted. **Disable the IG Delete row action** for safety
   (`[Right Pane ▸ Attributes ▸ Edit]` → Delete = No); if a
   deactivate concept is needed later it requires a new `STATUS`/`ACTIVE` column
-  (not in the 26.1 schema today).
+  (not in the 24.2 schema today).
 
 ---
 

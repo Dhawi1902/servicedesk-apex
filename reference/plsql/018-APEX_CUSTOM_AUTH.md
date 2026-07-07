@@ -1,30 +1,30 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 18  APEX_CUSTOM_AUTH
 
 You can use the `APEX_CUSTOM_AUTH` package to perform various operations related to authentication and session management.
 
-- [APPLICATION_PAGE_ITEM_EXISTS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APPLICATION_PAGE_ITEM_EXISTS-Function.html#GUID-7252D07F-C762-4894-B8C0-09284B62177F)
-- [CURRENT_PAGE_IS_PUBLIC Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CURRENT_PAGE_IS_PUBLIC-Function.html#GUID-8101AA16-D385-47BF-8B52-8DF0A39D0ACA)
-- [DEFINE_USER_SESSION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DEFINE_USER_SESSION-Procedure.html#GUID-074370BA-C80B-4C2D-BEB8-12FE895D48CB)
-- [GET_COOKIE_PROPS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_COOKIE_PROPS-Procedure.html#GUID-F21A8AC5-49DE-4E9D-BF33-0E1F3CACB7EA)
-- [GET_LDAP_PROPS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LDAP_PROPS-Procedure.html#GUID-D9070BB8-009F-4BCE-914A-3D6C8FAECFCA)
-- [GET_NEXT_SESSION_ID Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_NEXT_SESSION_ID-Function.html#GUID-EFD81F68-2FA1-4EE3-974F-4B22C456FD16)
-- [GET_SECURITY_GROUP_ID Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SECURITY_GROUP_ID-Function.html#GUID-C0A955EC-D940-4898-8A8F-F3655C045540)
-- [GET_SESSION_ID Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SESSION_ID-Function.html#GUID-A5136D4E-FFE0-4498-BA8B-4CD008F5ABE5)
-- [GET_SESSION_ID_FROM_COOKIE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_SESSION_ID_FROM_COOKIE-Function.html#GUID-5465B60E-5CC5-43CE-94E9-1BC8E69E7704)
-- [GET_USER Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_USER-Function.html#GUID-8ED1A03E-5D85-4DD9-80CE-EC2370D1B318)
-- [GET_USERNAME Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_USERNAME-Function.html#GUID-0D7A6D5A-F46F-49D4-98B1-43F98A031DBA)
-- [IS_SESSION_VALID Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_SESSION_VALID-Function.html#GUID-DC6EACB2-80B1-47ED-BBF1-2ABECC065880)
-- [LDAP_DNPREP Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LDAP_DNPREP-Function.html#GUID-B26FE8AE-D110-47D4-9453-77E15D03C652)
-- [LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGIN-Procedure-2.html#GUID-FCB0BBAE-9587-4052-87A5-5A6BA81FB1AD)
-- [LOGOUT Procedure (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGOUT-Procedure-DEPRECATED.html#GUID-8EB16B9D-53F9-41A6-B0E2-AAB55D0D1425)
-- [POST_LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/POST_LOGIN-Procedure-2.html#GUID-4F23BA8C-909E-46C0-A015-032BBE256D5B)
-- [SESSION_ID_EXISTS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SESSION_ID_EXISTS-Function.html#GUID-10D0470F-29A5-4920-924D-3BF231887413)
-- [SET_SESSION_ID Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_ID-Procedure.html#GUID-3FE8E03F-EDE3-48A3-8192-FEB154E32CD7)
-- [SET_SESSION_ID_TO_NEXT_VALUE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_ID_TO_NEXT_VALUE-Procedure.html#GUID-0B9D256F-84E1-46B6-B9C1-BA6D16E567E5)
-- [SET_USER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_USER-Procedure.html#GUID-19B6B91C-9471-4DFB-993F-A767F70909F1)
+- [APPLICATION_PAGE_ITEM_EXISTS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APPLICATION_PAGE_ITEM_EXISTS-Function.html#GUID-7252D07F-C762-4894-B8C0-09284B62177F)
+- [CURRENT_PAGE_IS_PUBLIC Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CURRENT_PAGE_IS_PUBLIC-Function.html#GUID-8101AA16-D385-47BF-8B52-8DF0A39D0ACA)
+- [DEFINE_USER_SESSION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/DEFINE_USER_SESSION-Procedure.html#GUID-074370BA-C80B-4C2D-BEB8-12FE895D48CB)
+- [GET_COOKIE_PROPS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_COOKIE_PROPS-Procedure.html#GUID-F21A8AC5-49DE-4E9D-BF33-0E1F3CACB7EA)
+- [GET_LDAP_PROPS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_LDAP_PROPS-Procedure.html#GUID-D9070BB8-009F-4BCE-914A-3D6C8FAECFCA)
+- [GET_NEXT_SESSION_ID Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_NEXT_SESSION_ID-Function.html#GUID-EFD81F68-2FA1-4EE3-974F-4B22C456FD16)
+- [GET_SECURITY_GROUP_ID Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_SECURITY_GROUP_ID-Function.html#GUID-C0A955EC-D940-4898-8A8F-F3655C045540)
+- [GET_SESSION_ID Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_SESSION_ID-Function.html#GUID-A5136D4E-FFE0-4498-BA8B-4CD008F5ABE5)
+- [GET_SESSION_ID_FROM_COOKIE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_SESSION_ID_FROM_COOKIE-Function.html#GUID-5465B60E-5CC5-43CE-94E9-1BC8E69E7704)
+- [GET_USER Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_USER-Function.html#GUID-8ED1A03E-5D85-4DD9-80CE-EC2370D1B318)
+- [GET_USERNAME Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_USERNAME-Function.html#GUID-0D7A6D5A-F46F-49D4-98B1-43F98A031DBA)
+- [IS_SESSION_VALID Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/IS_SESSION_VALID-Function.html#GUID-DC6EACB2-80B1-47ED-BBF1-2ABECC065880)
+- [LDAP_DNPREP Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LDAP_DNPREP-Function.html#GUID-B26FE8AE-D110-47D4-9453-77E15D03C652)
+- [LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LOGIN-Procedure-2.html#GUID-FCB0BBAE-9587-4052-87A5-5A6BA81FB1AD)
+- [LOGOUT Procedure (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LOGOUT-Procedure-DEPRECATED.html#GUID-8EB16B9D-53F9-41A6-B0E2-AAB55D0D1425)
+- [POST_LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/POST_LOGIN-Procedure-2.html#GUID-4F23BA8C-909E-46C0-A015-032BBE256D5B)
+- [SESSION_ID_EXISTS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SESSION_ID_EXISTS-Function.html#GUID-10D0470F-29A5-4920-924D-3BF231887413)
+- [SET_SESSION_ID Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_SESSION_ID-Procedure.html#GUID-3FE8E03F-EDE3-48A3-8192-FEB154E32CD7)
+- [SET_SESSION_ID_TO_NEXT_VALUE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_SESSION_ID_TO_NEXT_VALUE-Procedure.html#GUID-0B9D256F-84E1-46B6-B9C1-BA6D16E567E5)
+- [SET_USER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_USER-Procedure.html#GUID-19B6B91C-9471-4DFB-993F-A767F70909F1)
 
 ------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -97,9 +97,9 @@ END;
 
 See Also:
 
-<a href="/pls/topic/lookup?ctx=en/database/oracle/apex/26.1/aeapi&amp;id=HTMDB-GUID-5CF0B715-7A6B-4A49-B14B-471CCA2C775C" target="_blank">Editing Page Attributes</a> in Oracle APEX App Builder User’s Guide.
+<a href="/pls/topic/lookup?ctx=en/database/oracle/apex/24.2/aeapi&amp;id=HTMDB-GUID-5CF0B715-7A6B-4A49-B14B-471CCA2C775C" target="_blank">Editing Page Attributes</a> in Oracle APEX App Builder User’s Guide.
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -134,10 +134,10 @@ APEX_CUSTOM_AUTH.DEFINE_USER_SESSION (
 
 See Also:
 
-- [SET_USER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_USER-Procedure.html#GUID-19B6B91C-9471-4DFB-993F-A767F70909F1)
-- [SET_SESSION_ID Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_SESSION_ID-Procedure.html#GUID-3FE8E03F-EDE3-48A3-8192-FEB154E32CD7)
+- [SET_USER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_USER-Procedure.html#GUID-19B6B91C-9471-4DFB-993F-A767F70909F1)
+- [SET_SESSION_ID Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_SESSION_ID-Procedure.html#GUID-3FE8E03F-EDE3-48A3-8192-FEB154E32CD7)
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -186,7 +186,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -244,7 +244,7 @@ APEX_CUSTOM_AUTH.GET_LDAP_PROPS (
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -271,7 +271,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -298,7 +298,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -325,7 +325,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -352,7 +352,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -379,7 +379,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -406,7 +406,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -438,7 +438,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -473,7 +473,7 @@ return apex_custom_auth.ldap_dnprep(p_username =>
       :USERNAME);
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -506,35 +506,35 @@ Parameter
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d78749e82" style="text-align: left;" data-valign="bottom" width="29%">Parameter</th>
-<th id="d78749e84" style="text-align: left;" data-valign="bottom" width="71%">Description</th>
+<th id="d71753e79" style="text-align: left;" data-valign="bottom" width="29%">Parameter</th>
+<th id="d71753e81" style="text-align: left;" data-valign="bottom" width="71%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d78749e88" style="text-align: left;" data-valign="top" width="29%" headers="d78749e82 "><code class="codeph">p_uname</code></td>
-<td style="text-align: left;" data-valign="top" width="71%" headers="d78749e88 d78749e84 ">Login name of the user.</td>
+<td id="d71753e85" style="text-align: left;" data-valign="top" width="29%" headers="d71753e79 "><code class="codeph">p_uname</code></td>
+<td style="text-align: left;" data-valign="top" width="71%" headers="d71753e85 d71753e81 ">Login name of the user.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d78749e94" style="text-align: left;" data-valign="top" width="29%" headers="d78749e82 "><code class="codeph">p_password</code></td>
-<td style="text-align: left;" data-valign="top" width="71%" headers="d78749e94 d78749e84 ">Clear text user password.</td>
+<td id="d71753e91" style="text-align: left;" data-valign="top" width="29%" headers="d71753e79 "><code class="codeph">p_password</code></td>
+<td style="text-align: left;" data-valign="top" width="71%" headers="d71753e91 d71753e81 ">Clear text user password.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d78749e100" style="text-align: left;" data-valign="top" width="29%" headers="d78749e82 "><code class="codeph">p_session_id</code></td>
-<td style="text-align: left;" data-valign="top" width="71%" headers="d78749e100 d78749e84 "><p>Current Oracle APEX session ID.</p>
+<td id="d71753e97" style="text-align: left;" data-valign="top" width="29%" headers="d71753e79 "><code class="codeph">p_session_id</code></td>
+<td style="text-align: left;" data-valign="top" width="71%" headers="d71753e97 d71753e81 "><p>Current Oracle APEX session ID.</p>
 <p>Do not use bind variable notations for <code class="codeph">p_session_id</code> argument.</p></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d78749e115" style="text-align: left;" data-valign="top" width="29%" headers="d78749e82 "><code class="codeph">p_app_page</code></td>
-<td style="text-align: left;" data-valign="top" width="71%" headers="d78749e115 d78749e84 ">Current application ID. After login page separated by a colon (:).</td>
+<td id="d71753e112" style="text-align: left;" data-valign="top" width="29%" headers="d71753e79 "><code class="codeph">p_app_page</code></td>
+<td style="text-align: left;" data-valign="top" width="71%" headers="d71753e112 d71753e81 ">Current application ID. After login page separated by a colon (:).</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d78749e121" style="text-align: left;" data-valign="top" width="29%" headers="d78749e82 "><code class="codeph">p_entry_point</code></td>
-<td style="text-align: left;" data-valign="top" width="71%" headers="d78749e121 d78749e84 ">Internal use only.</td>
+<td id="d71753e118" style="text-align: left;" data-valign="top" width="29%" headers="d71753e79 "><code class="codeph">p_entry_point</code></td>
+<td style="text-align: left;" data-valign="top" width="71%" headers="d71753e118 d71753e81 ">Internal use only.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d78749e127" style="text-align: left;" data-valign="top" width="29%" headers="d78749e82 "><code class="codeph">p_preserve_case</code></td>
-<td style="text-align: left;" data-valign="top" width="71%" headers="d78749e127 d78749e84 ">If <code class="codeph">TRUE</code>, do not include <code class="codeph">p_uname</code> in uppercase during session registration.</td>
+<td id="d71753e124" style="text-align: left;" data-valign="top" width="29%" headers="d71753e79 "><code class="codeph">p_preserve_case</code></td>
+<td style="text-align: left;" data-valign="top" width="71%" headers="d71753e124 d71753e81 ">If <code class="codeph">TRUE</code>, do not include <code class="codeph">p_uname</code> in uppercase during session registration.</td>
 </tr>
 </tbody>
 </table>
@@ -553,7 +553,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -594,7 +594,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -634,7 +634,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -668,7 +668,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -697,7 +697,7 @@ In the following example, the session ID value registered is retrieved from the 
 APEX_CUSTOM_AUTH.SET_SESSION_ID(APEX_CUSTOM_AUTH.GET_SESSION_ID_FROM_COOKIE);
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -721,7 +721,7 @@ IF NOT APEX_CUSTOM_AUTH.SESSION_ID_EXISTS THEN
 END IF;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
 
 ------------------------------------------------------------------------
 
@@ -752,4 +752,4 @@ IF V('APP_USER') = 'NOBODY' THEN
 END IF;
 ```
 
-**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)
+**Parent topic:** [APEX_CUSTOM_AUTH](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CUSTOM_AUTH.html#GUID-44772E73-B910-400C-869C-8CA23D3C88E0)

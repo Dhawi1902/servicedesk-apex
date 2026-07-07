@@ -55,9 +55,9 @@ Then wire the name (the only non-scriptable part):
 
 ---
 
-## Step 5: Create 4 Authorization Schemes
+## Step 5: Create 5 Authorization Schemes
 
-**Shared Components → Authorization Schemes → Create**. Do this 4 times. Type = **PL/SQL Function Body Returning Boolean**:
+**Shared Components → Authorization Schemes → Create**. Do this 5 times. Type = **PL/SQL Function Body Returning Boolean**:
 
 | Scheme Name | PL/SQL Body |
 |-------------|-------------|
@@ -65,8 +65,9 @@ Then wire the name (the only non-scriptable part):
 | `IS_CLIENT_ADMIN` | `RETURN :APP_ROLE = 'CLIENT_ADMIN';` |
 | `IS_AGENT` | `RETURN :APP_ROLE = 'SUPPORT_AGENT';` |
 | `IS_SYSTEM_ADMIN` | `RETURN :APP_ROLE = 'SYSTEM_ADMIN';` |
+| `Can Raise Tickets` | `RETURN :APP_ROLE IN ('CLIENT_USER','CLIENT_ADMIN','SYSTEM_ADMIN');` |
 
-These gate pages, buttons, columns, and nav entries everywhere else.
+The four `IS_*` schemes gate pages, buttons, columns, and nav entries everywhere else. `Can Raise Tickets` (everyone except plain support agents) gates the Raise Ticket page (Step 6 of `05-raise-ticket.md`).
 
 ---
 

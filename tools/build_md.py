@@ -12,7 +12,7 @@ import re
 import subprocess
 import sys
 
-BASE_URL = "https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/"
+BASE_URL = "https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, "_backup", "raw_html")
 OUT = os.path.join(ROOT, "reference", "plsql")
@@ -89,7 +89,7 @@ def main():
     if cur["pages"]:
         groups.append(cur)
 
-    index = ["# Oracle APEX 26.1 — PL/SQL API Reference (offline markdown)",
+    index = ["# Oracle APEX 24.2 — PL/SQL API Reference (offline markdown)",
              "",
              f"Source: <{BASE_URL}index.html>",
              "",
@@ -110,7 +110,7 @@ def main():
         title = g["title"].replace(" - Oracle", "").strip()
         fname = f"{g['key']}-{sanitize(g['title'])}.md"
         header = (f"<!-- Source: {BASE_URL}{g['pages'][0]['file']} -->\n"
-                  f"<!-- Oracle APEX 26.1 API Reference -->\n\n")
+                  f"<!-- Oracle APEX 24.2 API Reference -->\n\n")
         with open(os.path.join(OUT, fname), "w", encoding="utf-8") as f:
             f.write(header + md)
         index.append(f"| {g['key']} | {title} | [{fname}]({fname}) |")

@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/mapRegion.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/mapRegion.html -->
 <!-- Interfaces: mapRegion -->
 
 # Interface: mapRegion
@@ -7,7 +7,6 @@
 
 ### [Properties](#members-section)
 
-- [bboxCustom](#bboxCustom)
 - [copyrightNotice](#copyrightNotice)
 - [customStyles](#customStyles)
 - [element](#element)
@@ -51,8 +50,6 @@
 - [getMapObject](#getMapObject)
 - [getMapPitchAndBearing](#getMapPitchAndBearing)
 - [getMapStatus](#getMapStatus)
-- [hideLayer](#hideLayer)
-- [moveLayer](#moveLayer)
 - [off](#off)
 - [on](#on)
 - [refresh](#refresh)
@@ -60,40 +57,20 @@
 - [reset](#reset)
 - [setCenter](#setCenter)
 - [setZoomLevel](#setZoomLevel)
-- [showLayer](#showLayer)
 - [updateFeature](#updateFeature)
 
 ## mapRegion
 
-The mapRegion interface is used to access the properties and methods of the spatialMap API. You get access to the mapRegion interface with the [apex.region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.region.html) function when passed the regionId (HTML DOM id) of a Map Region. This region uses the 3rd party [MapLibre GL JS](https://maplibre.org/) library and exposes it via the [mapRegion#getMapObject](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/mapRegion.html#getMapObject) method. Developer code that uses the MapLibre API may not be forward compatible should the MapLibre API change.
+The mapRegion interface is used to access the properties and methods of the spatialMap API. You get access to the mapRegion interface with the [apex.region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.region.html) function when passed the regionId (static ID) of a Map Region. This region uses the 3rd party [MapLibre GL JS](https://maplibre.org/) library and exposes it via the [mapRegion#getMapObject](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/mapRegion.html#getMapObject) method. Developer code that uses the MapLibre API may not be forward compatible should the MapLibre API change.
 
 Since:
 - 21.2
 
 ### Extends
 
-- [region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html)
+- [region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html)
 
 ### Properties
-
-#### bboxCustom :Array.\<Object\>
-
-Bounding box described as a rectangle having only two coordinates, the lower-left and the upper-right
-
-##### Type:
-
-- Array.\<Object\>
-
-Since:
-- 26.1
-
-##### Example
-
-Get option bboxCustom after initialization.
-
-```
-var value = apex.region( "myRegionId" ).bboxCustom;
-```
 
 #### copyrightNotice :string
 
@@ -131,7 +108,7 @@ These styles can be used as the SVG Shape attribute within a Point layer. An arr
 | `width` | number | Svg shape width |
 | `height` | number | Svg shape height |
 | `viewBox` | string | Defines the position and dimension of an SVG viewport. |
-| `elements` | Array.\<Object\> | Array of objects that represent the necessary svg child elements to create the svg shape. Each object must contain all the necessary element attrs. |
+| `elements` | Array.\<Object\> | Array of objects that represent the necessary svg child elements to create the svg shape. Each object most contain all the necessary element attrs. |
 
 ##### Example
 
@@ -167,7 +144,7 @@ The jQuery object for the region element.
 - jQuery
 
 Inherited From:
-- [region#element](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#element)
+- [region#element](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#element)
 
 ##### Example
 
@@ -634,7 +611,7 @@ The mapRegion type is "SpatialMap".
 - string
 
 Overrides:
-- [region#type](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#type)
+- [region#type](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#type)
 
 #### useVectorTileLayers :boolean
 
@@ -929,7 +906,7 @@ Add a new feature to series and to layer. If no layer id is given feature won't 
 
 | Name | Type | Description |
 |----|----|----|
-| `pLayerId` | number | Id of GeoJSON layer. |
+| `pLayerId` | number | Id of layer. |
 | `pFeature` | Object | Feature object to be added. |
 
 ##### Example
@@ -1157,7 +1134,7 @@ apex.region( "regionId" ).displayPopup( "infoWindow", apex.region( "regionId" ).
 Focus the map
 
 Overrides:
-- [region#focus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#focus)
+- [region#focus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#focus)
 
 ##### Example
 
@@ -1353,85 +1330,13 @@ This example gets the current map bbox, zoom level, pitch and bearing values in 
 apex.region( "regionId" ).getMapStatus();
 ```
 
-#### hideLayer(pNameOrId)
-
-Hides layer identified by ID or name.
-
-##### Parameters:
-
-| Name | Type | Description |
-|----|----|----|
-| `pNameOrId` | string \| number | Layer name or ID. |
-
-Since:
-- 26.1
-
-##### Example
-
-This example toggles the specified layer to become invisible.
-
-```
-apex.region( "regionId" ).hideLayer( "earthquakes" );
-```
-
-#### moveLayer(pLayerId, pBeforeLayerIdopt)
-
-Moves a layer to a different z-position. The layer will be inserted before the layer with ID pBeforeLayerId, or appended if pBeforeLayerId is omitted
-
-##### Parameters:
-
-<table class="params" aria-label="Parameters for moveLayer">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th scope="col">Attributes</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>pLayerId</code></th>
-<td class="type">string | number</td>
-<td class="attributes"></td>
-<td class="description last">ID of the layer to move.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>pBeforeLayerId</code></th>
-<td class="type">string | number</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">ID of an existing layer to insert the new layer before.</td>
-</tr>
-</tbody>
-</table>
-
-Since:
-- 26.1
-
-##### Example
-
-This example moves the first layer before the second layer.
-
-```
-let layerId = apex.region( "regionId" ).getLayerIdByName( "First Layer Name" ),
-    beforeLayerId = apex.region( "regionId" ).getLayerIdByName( "Second Layer Name" );
-apex.region( "regionId" ).moveLayer( layerId, beforeLayerId );
-```
-
 #### off(events, …args)
 
-Removes an event handler from the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widget) method returns a value.
+Removes an event handler from the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widget) method returns a value.
 
 This is a shortcut for calling `apex.region(id).widget().off(...)`. Unlike the jQuery object `off` method this does not return the jQuery object and therefore is not chainable. See the jQuery documentation for details.
 
-See also [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#on).
+See also [region#on](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#on).
 
 ##### Parameters:
 
@@ -1468,11 +1373,11 @@ See also [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/
 </table>
 
 Inherited From:
-- [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#off)
+- [region#off](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#off)
 
 ##### Example
 
-This example removes all event handlers for the selectionChange event of an Interactive Grid region. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#event:selectionchange).
+This example removes all event handlers for the selectionChange event of an Interactive Grid region. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#event:selectionchange).
 
 ```
 apex.region( interactiveGridRegionId ).off( "selectionChange" );
@@ -1480,11 +1385,11 @@ apex.region( interactiveGridRegionId ).off( "selectionChange" );
 
 #### on(events, …args)
 
-Attaches an event handler to the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widget) method returns a value.
+Attaches an event handler to the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widget) method returns a value.
 
 This is a shortcut for calling `apex.region(id).widget().on(...)`. Unlike the jQuery object `on` method this does not return the jQuery object and therefore is not chainable. See the jQuery documentation for details.
 
-See also [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#off).
+See also [region#off](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#off).
 
 ##### Parameters:
 
@@ -1521,11 +1426,11 @@ See also [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs
 </table>
 
 Inherited From:
-- [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#on)
+- [region#on](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#on)
 
 ##### Example
 
-This example handles the selectionChange event of an Interactive Grid region by logging a message to the console. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#event:selectionchange)
+This example handles the selectionChange event of an Interactive Grid region by logging a message to the console. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#event:selectionchange)
 
 ```
 apex.region( interactiveGridRegionId ).on( "selectionChange", function(event, data) {
@@ -1538,7 +1443,7 @@ apex.region( interactiveGridRegionId ).on( "selectionChange", function(event, da
 Update map layers data. If map initialization has not been completed region can't be refreshed.
 
 Overrides:
-- [region#refresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#refresh)
+- [region#refresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#refresh)
 
 ##### Example
 
@@ -1556,7 +1461,7 @@ Removes feature from map. If no layer id or feature id are given feature won't b
 
 | Name | Type | Description |
 |----|----|----|
-| `pLayerId` | number | Id of GeoJSON layer. |
+| `pLayerId` | number | Id of layer. |
 | `pFeatureId` | string | Id of feature to remove. |
 
 ##### Example
@@ -1617,27 +1522,6 @@ This example sets the zoom level to 3.
 apex.region( "regionId" ).setZoomLevel( 3 );
 ```
 
-#### showLayer(pNameOrId)
-
-Show layer identified by ID or name.
-
-##### Parameters:
-
-| Name | Type | Description |
-|----|----|----|
-| `pNameOrId` | string \| number | Layer name or ID. |
-
-Since:
-- 26.1
-
-##### Example
-
-This example toggles the specified layer to become visible.
-
-```
-apex.region( "regionId" ).showLayer( "earthquakes" );
-```
-
 #### updateFeature(pLayerId, pFeature)
 
 Update feature from series and layer source. If no layer id or feature object are given feature won't be updated.
@@ -1646,7 +1530,7 @@ Update feature from series and layer source. If no layer id or feature object ar
 
 | Name | Type | Description |
 |----|----|----|
-| `pLayerId` | number | Id of GeoJSON layer. |
+| `pLayerId` | number | Id of layer. |
 | `pFeature` | Object | Feature object to update. |
 
 ##### Example

@@ -38,7 +38,7 @@ Click **Next**.
 |-------|--------|-------|
 | Primary Key Column 1 | `COMMENT_ID (Number)` | Auto-detected PK of `TICKET_COMMENTS`. |
 | Primary Key Column 2 | *(leave `- Select -`)* | Single-column key. |
-| Branch Here on Submit | `4` | Superseded by the **Close Dialog** branch in Step 4 (back to Ticket Detail). |
+| Branch Here on Submit | *(leave blank)* | A Modal Dialog closes via the wizard's **Close Dialog** process (Step 4), not a page branch. A stray page branch throws *"Page Number is required"* on Save. |
 | Cancel and Go To Page | `4` | Back to Ticket Detail. |
 
 Click **Create Page**. APEX opens Page Designer with a Modal Dialog page and a Form region on
@@ -48,7 +48,21 @@ Browse item by hand, and Step 3 inserts the comment with a manual PL/SQL process
 first-response, history, and attachments). Delete the auto-generated items and the automatic DML
 process, then add the hidden key item next.
 
-Add a hidden item `P7_TICKET_ID` (passed from page 4).
+Add a hidden item `P7_TICKET_ID` (passed from page 4). Set its `[Right Pane ▸ Security ▸ Session State Protection]` to **Restricted — may not be set from browser** so the value can't be tampered on the way in.
+
+### Before-Header IDOR guard
+
+> *Fail closed if the dialog is opened for a ticket the caller can't see. Consistent with pages 4/6/12 and required by this guide's checklist. The Step 3 Create process re-checks too — this is the belt to that braces.*
+
+Under `[Left Pane ▸ Processing]`, right-click **Before Header** → **Create Process**, set `[Right Pane ▸ Identification ▸ Type]` = **Execute Code** (older APEX: *PL/SQL Code*), and paste into `[Right Pane ▸ Source ▸ PL/SQL Code]`:
+
+```sql
+DECLARE l_ok PLS_INTEGER;
+BEGIN
+  SELECT COUNT(*) INTO l_ok FROM V_MY_TICKETS WHERE TICKET_ID = :P7_TICKET_ID;
+  IF l_ok = 0 THEN raise_application_error(-20010, 'Ticket not found.'); END IF;
+END;
+```
 
 ---
 
@@ -78,15 +92,15 @@ Add a hidden item `P7_TICKET_ID` (passed from page 4).
 > *The `File Types` accept filter is client-side only. Re-check mime type and size on the
 > server in a page Validation — identical to Raise Ticket Step 3a.*
 
-`[Left Pane ▸ Processing]` add a Validation; `[Right Pane ▸ Identification ▸ Type]` = **PL/SQL Function Body (returning
-Error Text)**:
+Under `[Left Pane ▸ Processing ▸ Validating]`, right-click **Validations** → **Create Validation** (Validations live under the **Validating** group). Set `[Right Pane ▸ Identification ▸ Name]` = `Attachments Are Allowed Types`, and `[Right Pane ▸ Validation ▸ Type]` = **Function Body (returning Error Text)**, Language **PL/SQL**:
 
 ```sql
 DECLARE
   l_err VARCHAR2(4000);
 BEGIN
   FOR f IN (
-    SELECT filename, mime_type, doc_size
+    SELECT filename, mime_type,
+           DBMS_LOB.GETLENGTH(blob_content) AS file_size
       FROM apex_application_temp_files
      WHERE name IN (SELECT column_value
                       FROM TABLE(APEX_STRING.SPLIT(:P7_ATTACH, ':')))
@@ -95,13 +109,15 @@ BEGIN
        AND f.mime_type <> 'application/pdf' THEN
       l_err := 'File "'||f.filename||'" is not an allowed type (images or PDF only).';
     END IF;
-    IF f.doc_size > 10 * 1024 * 1024 THEN
+    IF f.file_size > 10 * 1024 * 1024 THEN
       l_err := 'File "'||f.filename||'" exceeds the 10 MB limit.';
     END IF;
   END LOOP;
   RETURN l_err;   -- NULL = valid; a NULL :P7_ATTACH yields no rows (no-op)
 END;
 ```
+
+> `apex_application_temp_files` has **no `doc_size` column** (raises `ORA-00904: "DOC_SIZE": invalid identifier`). Size comes from `DBMS_LOB.GETLENGTH(blob_content)`.
 
 ---
 
@@ -168,7 +184,7 @@ Drag each from `[Central Pane ▸ Gallery ▸ Buttons]` onto `[Central Pane ▸ 
 | `CANCEL` | `Cancel` | Close Dialog (no submit) |
 | `CREATE` | `Post Comment` | Submit page → runs the Create process |
 
-Add the Branch in `[Left Pane ▸ Processing]` → Close Dialog → refresh parent page (page 4) so the new comment appears in the thread.
+The dialog is closed by the wizard's **Close Dialog** *process* (a Process type, **not** a Branch in this APEX version) — confirm it exists under `[Left Pane ▸ Processing ▸ Processes]` and runs after your Create process; it refreshes the parent Ticket Detail (page 4) so the new comment appears. Delete any stray branch (red ✕) under `[Left Pane ▸ Processing ▸ Branches]`, which would otherwise block Save with *"Page Number is required"*.
 
 ---
 

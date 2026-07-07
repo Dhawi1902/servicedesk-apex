@@ -1,6 +1,6 @@
-# Oracle APEX 26.1 — JavaScript API Reference (offline markdown)
+# Oracle APEX 24.2 — JavaScript API Reference (offline markdown)
 
-Source: <https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/index.html>
+Source: <https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/index.html>
 
 | Category | API | File |
 |---|---|---|
@@ -33,7 +33,6 @@ Source: <https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/index.html>
 | Interfaces | `facetsRegion` | [facetsRegion.md](facetsRegion.md) |
 | Interfaces | `htmlBuilder` | [htmlBuilder.md](htmlBuilder.md) |
 | Interfaces | `interactiveGridView` | [interactiveGridView.md](interactiveGridView.md) |
-| Interfaces | `interactiveReportRegion` | [interactiveReportRegion.md](interactiveReportRegion.md) |
 | Interfaces | `item` | [item.md](item.md) |
 | Interfaces | `mapRegion` | [mapRegion.md](mapRegion.md) |
 | Interfaces | `model` | [model.md](model.md) |

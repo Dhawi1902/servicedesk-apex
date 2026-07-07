@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/htmlBuilder.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/htmlBuilder.html -->
 <!-- Interfaces: htmlBuilder -->
 
 # Interface: htmlBuilder
@@ -7,22 +7,17 @@
 
 ### [Methods](#methods-section)
 
-- [append](#append)
 - [attr](#attr)
 - [clear](#clear)
 - [content](#content)
-- [css](#css)
 - [markup](#markup)
 - [optionalAttr](#optionalAttr)
 - [optionalBoolAttr](#optionalBoolAttr)
-- [toJquery](#toJquery)
 - [toString](#toString)
 
 ## htmlBuilder
 
-The htmlBuilder interface is used create HTML markup. It makes it easy to generate markup that is well-formed and properly escaped. It is simpler and safer than using string concatenation and doesn't require the overhead of using a template library. For simple templates see [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate)
-
-To be compliant with Content-Security-Policy without unsafe-inline, the markup produced using this interface should not include style tags, script tags, inline style attributes or inline event handler attributes.
+The htmlBuilder interface is used create HTML markup. It makes it easy to generate markup that is well-formed and properly escaped. It is simpler and safer than using string concatenation and doesn't require the overhead of using a template library. For simple templates see [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate)
 
 ### Example
 
@@ -47,25 +42,6 @@ $( "#myContainer", out.toString() );
 ```
 
 ### Methods
-
-#### append(pHtmlBuilder) → {this}
-
-Append the content of another htmlBuilder to this htmlBuilder.
-
-This includes both the generated HTML markup and any CSS properties.
-
-##### Parameters:
-
-| Name | Type | Description |
-|----|----|----|
-| `pHtmlBuilder` | [htmlBuilder](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/htmlBuilder.html) | The htmlBuilder whose content is appended to this htmlBuilder. |
-
-##### Returns:
-
-This htmlBuilder instance for method chaining.
-
-Type
-this
 
 #### attr(pNameopt, pValue) → {this}
 
@@ -114,7 +90,7 @@ this
 
 #### clear()
 
-Remove all markup and CSS properties from this builder interface instance. Use this when you want to reuse the builder instance for new markup.
+Remove all markup from this builder interface instance. Use this when you want to reuse the builder instance for new markup.
 
 #### content(pContent) → {this}
 
@@ -125,57 +101,6 @@ Add element content. The content is escaped.
 | Name | Type | Description |
 |----|----|----|
 | `pContent` | string | The content to add between an element open and closing tags. |
-
-##### Returns:
-
-This htmlBuilder instance for method chaining.
-
-Type
-this
-
-#### css(pName, pValuenullable) → {this}
-
-Add an optional CSS property as a data attribute to avoid inline styles.
-
-This method helps avoid Content-Security-Policy (CSP) violations by storing the CSS property as a `data-css-` attribute rather than setting an inline style attribute.
-
-Use of this method should generally be avoided in favor of CSS classes or applying styles after the element is rendered to the DOM.
-
-See the [htmlBuilder#toJquery](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/htmlBuilder.html#toJquery) method for how these data attributes can later be applied as real CSS styles.
-
-##### Parameters:
-
-<table class="params" aria-label="Parameters for css">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th scope="col">Attributes</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>pName</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">Name of the CSS property (e.g. "display", "color").</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>pValue</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;nullable&gt;<br />
-</td>
-<td class="description last">The CSS property value. If null or empty, the property is not added.</td>
-</tr>
-</tbody>
-</table>
 
 ##### Returns:
 
@@ -236,19 +161,6 @@ This htmlBuilder instance for method chaining.
 
 Type
 this
-
-#### toJquery() → {jQuery}
-
-Transforms the current markup in this htmlBuilder instance into a jQuery object and safely applies any CSS properties.
-
-Use this method when [htmlBuilder#css](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/htmlBuilder.html#css) has been used to add CSS properties. If no CSS properties were added, it is more efficient to use [htmlBuilder#toString](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/htmlBuilder.html#toString) instead.
-
-##### Returns:
-
-A jQuery object containing the elements produced from this htmlBuilder with styles applied.
-
-Type
-jQuery
 
 #### toString() → {string}
 

@@ -36,7 +36,7 @@ Add a hidden item `P11_PROJECT_ID` (passed from page 10) — `[Central Pane ▸ 
 
 > *Anyone who can't see this project in `V_MY_PROJECTS` is bounced. This covers URL-tampering for every role (System Admin all, Client Admin own company, Agent via `AGENT_PROJECTS`, Client User via Open + invited Restricted).*
 
-`[Left Pane ▸ Processing]` add a Before-Header PL/SQL process (`[Right Pane ▸ Execution ▸ Point]` = Before Header, `[Right Pane ▸ Identification ▸ Type]` = PL/SQL Code, code into `[Right Pane ▸ Source ▸ PL/SQL Code]`):
+`[Left Pane ▸ Processing]` add a Before-Header PL/SQL process (`[Right Pane ▸ Execution ▸ Point]` = Before Header, `[Right Pane ▸ Identification ▸ Type]` = Execute Code (the anonymous-PL/SQL process type; older APEX: *PL/SQL Code*), code into `[Right Pane ▸ Source ▸ PL/SQL Code]`):
 
 ```sql
 DECLARE l_ok PLS_INTEGER;

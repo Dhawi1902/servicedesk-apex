@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html -->
 <!-- Interfaces: treeNodeAdapter -->
 
 # Interface: treeNodeAdapter
@@ -19,7 +19,6 @@
 - [deleteNode](#deleteNode)
 - [dragOperations](#dragOperations)
 - [fetchChildNodes](#fetchChildNodes)
-- [getAccDescription](#getAccDescription)
 - [getClasses](#getClasses)
 - [getExpandedNodeIds](#getExpandedNodeIds)
 - [getExpandedState](#getExpandedState)
@@ -47,21 +46,21 @@
 
 ## treeNodeAdapter
 
-A treeNodeAdapter is an interface used by the [treeView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html) widget for all access to the underlying tree data structure. The `treeView` has no direct access to the nodes of the tree or any properties of nodes such as label or icon. It is possible to create a `treeNodeAdapter` interface for any hierarchical data structure. The tree data structure must be singly rooted. If the data doesn't have a single root then the adapter must generate a virtual one where the multiple roots are its children.
+A treeNodeAdapter is an interface used by the [treeView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html) widget for all access to the underlying tree data structure. The `treeView` has no direct access to the nodes of the tree or any properties of nodes such as label or icon. It is possible to create a `treeNodeAdapter` interface for any hierarchical data structure. The tree data structure must be singly rooted. If the data doesn't have a single root then the adapter must generate a virtual one where the multiple roots are its children.
 
 The adapter provides the following areas of functionality:
 
-- Access to the hierarchical structure through methods such as [treeNodeAdapter#root](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#root) and [treeNodeAdapter#child](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#child). The adapter supports lazy loading with the [treeNodeAdapter#fetchChildNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#fetchChildNodes) method.
-- Access to node properties such as label, link, and icon that the [treeView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html) uses for display purposes. For example [treeNodeAdapter#getLabel](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getLabel). This includes an optional advanced presentation layer function [treeNodeAdapter#renderNodeContent](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#renderNodeContent) that gives full control over how the node content is rendered.
-- Tree modification methods such as [treeNodeAdapter#deleteNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#deleteNode) and [treeNodeAdapter#addNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#addNode). These methods are only required when the tree is editable.
-- Modification access control methods to determine what modifications are allowed. For example [treeNodeAdapter#allowDelete](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowDelete). These methods are only required when the tree is editable.
-- Optional methods to persist, in the adapter's data model, view state such as which nodes are expanded. For example [treeNodeAdapter#setExpanded](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#setExpanded)
+- Access to the hierarchical structure through methods such as [treeNodeAdapter#root](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#root) and [treeNodeAdapter#child](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#child). The adapter supports lazy loading with the [treeNodeAdapter#fetchChildNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#fetchChildNodes) method.
+- Access to node properties such as label, link, and icon that the [treeView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html) uses for display purposes. For example [treeNodeAdapter#getLabel](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getLabel). This includes an optional advanced presentation layer function [treeNodeAdapter#renderNodeContent](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#renderNodeContent) that gives full control over how the node content is rendered.
+- Tree modification methods such as [treeNodeAdapter#deleteNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#deleteNode) and [treeNodeAdapter#addNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#addNode). These methods are only required when the tree is editable.
+- Modification access control methods to determine what modifications are allowed. For example [treeNodeAdapter#allowDelete](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowDelete). These methods are only required when the tree is editable.
+- Optional methods to persist, in the adapter's data model, view state such as which nodes are expanded. For example [treeNodeAdapter#setExpanded](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#setExpanded)
 
-A default treeNodeAdapter implementation is provided by calling [treeView.makeDefaultNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#.makeDefaultNodeAdapter).
+A default treeNodeAdapter implementation is provided by calling [treeView.makeDefaultNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#.makeDefaultNodeAdapter).
 
-The adapter interface is provided to the treeView with the [treeView#getNodeAdapter(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getNodeAdapter1) option.
+The adapter interface is provided to the treeView with the [treeView#getNodeAdapter(1)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getNodeAdapter1) option.
 
-This interface is used by the [treeView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html). Rarely does a developer need to call these methods. This interface is documented to allow developers to create a custom `treeNodeAdapter` implementation for their own data.
+This interface is used by the [treeView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html). Rarely does a developer need to call these methods. This interface is documented to allow developers to create a custom `treeNodeAdapter` implementation for their own data.
 
 ### Methods
 
@@ -124,7 +123,7 @@ Adds a new node as a child of the given parent node with the given label (option
 
 #### allowAdd(pNode, pOperation, pChildrenopt) → {boolean}
 
-Check if the node allows adding children to it. Returns true if the node allows children to be added to it. If the children parameter is passed in return true if each of those children (or ones just like them) can be added. Children is an array of nodes. Operation is "add" when adding a new node ([treeNodeAdapter#addNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#addNode) will be called), "move" when the node comes from elsewhere in the tree and is being moved ([treeNodeAdapter#moveNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#moveNodes) will be called), and "copy" when the node is a copy of a node from elsewhere in the tree ([treeNodeAdapter#copyNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#copyNodes) will be called). Additional operation values are possible if the adapter supports custom drag operations.
+Check if the node allows adding children to it. Returns true if the node allows children to be added to it. If the children parameter is passed in return true if each of those children (or ones just like them) can be added. Children is an array of nodes. Operation is "add" when adding a new node ([treeNodeAdapter#addNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#addNode) will be called), "move" when the node comes from elsewhere in the tree and is being moved ([treeNodeAdapter#moveNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#moveNodes) will be called), and "copy" when the node is a copy of a node from elsewhere in the tree ([treeNodeAdapter#copyNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#copyNodes) will be called). Additional operation values are possible if the adapter supports custom drag operations.
 
 ##### Parameters:
 
@@ -181,7 +180,7 @@ Return true if the given node can be deleted.
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node to check if deleting is allowed. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node to check if deleting is allowed. |
 
 ##### Returns:
 
@@ -198,7 +197,7 @@ Return true if the given node can be dragged.
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node to check if dragging is allowed. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node to check if dragging is allowed. |
 
 ##### Returns:
 
@@ -215,7 +214,7 @@ Return true if the given node can be renamed.
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node to check if renaming is allowed. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node to check if renaming is allowed. |
 
 ##### Returns:
 
@@ -224,7 +223,7 @@ true if the node can be renamed and false otherwise.
 Type
 boolean
 
-#### child(pNode, pIndex) → {[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)}
+#### child(pNode, pIndex) → {[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)}
 
 Return the i<sup>th</sup> child of the given node.
 
@@ -232,7 +231,7 @@ Return the i<sup>th</sup> child of the given node.
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node from which to get the child node. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node from which to get the child node. |
 | `pIndex` | integer | The index of the child to return. |
 
 ##### Returns:
@@ -240,7 +239,7 @@ Return the i<sup>th</sup> child of the given node.
 The child node. If the node has no children or no child at index i then undefined is returned.
 
 Type
-[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)
+[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)
 
 #### childCount(pNode) → (nullable) {number}
 
@@ -250,7 +249,7 @@ Returns the number of children that the given node has or null if the answer is 
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node from which to get the number of children. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node from which to get the number of children. |
 
 ##### Returns:
 
@@ -261,7 +260,7 @@ number
 
 #### clearViewId(pTreeId, pNodeopt)
 
-Remove the view id mapping for node `pNode`. If the node is null then all previous view id mappings should be removed. See also [treeNodeAdapter#setViewId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#setViewId).
+Remove the view id mapping for node `pNode`. If the node is null then all previous view id mappings should be removed. See also [treeNodeAdapter#setViewId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#setViewId).
 
 ##### Parameters:
 
@@ -305,9 +304,9 @@ Copies one or more nodes from elsewhere in the tree to be children of the given 
 
 | Name | Type | Description |
 |----|----|----|
-| `pParent` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The parent node to copy nodes to. The copied nodes (`pNodes`) become children of this node. |
+| `pParent` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The parent node to copy nodes to. The copied nodes (`pNodes`) become children of this node. |
 | `pIndex` | integer | The index at which to insert the copied nodes. |
-| `pNodes` | Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)\> | An array of nodes from this tree to copy. |
+| `pNodes` | Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)\> | An array of nodes from this tree to copy. |
 | `pCallback` | function | This function must be called when the nodes have been copied. The function takes one parameter which is a places array of indexes where the children nodes ended up. If the tree nodes are sorted then even though they were copied starting at the given index they could end up at any position. If the tree nodes are not sorted then places will consist of integers index ... index + n - 1 where n is the number of nodes copied. If the copy fails call with the places parameter equal to false. If some of the nodes can't be copied return -1 for its index in the places array. |
 
 #### deleteNode(pNode, pCallback, pMore)
@@ -318,7 +317,7 @@ Deletes the given node. When the node has been deleted the callback is called.
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node to delete. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node to delete. |
 | `pCallback` | function | The callback function must be called when the node is deleted. It takes one parameter, status, that is true if the delete was successful and false otherwise. |
 | `pMore` | boolean | If this is true another `deleteNode` call will be made right away. This parameter can be ignored or can be used to batch up deletes. In either case each call to `pCallback` must be made. |
 
@@ -333,7 +332,7 @@ or if nodes is null:
 
 | Name | Type | Description |
 |----|----|----|
-| `pNodes` | Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)\> | An array of nodes being dragged or null when dragging from an external source. |
+| `pNodes` | Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)\> | An array of nodes being dragged or null when dragging from an external source. |
 
 ##### Returns:
 
@@ -344,7 +343,7 @@ Object
 
 #### fetchChildNodes(pNode, pCallback)
 
-Fetch child nodes for the given node from a server (or by any other asynchronous means). This method is optional. This is used for asynchronous/lazy tree construction. The root and first level of nodes should not be lazy loaded. May be called after [treeNodeAdapter#childCount](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#childCount) returns null.
+Fetch child nodes for the given node from a server (or by any other asynchronous means). This method is optional. This is used for asynchronous/lazy tree construction. The root and first level of nodes should not be lazy loaded. May be called after [treeNodeAdapter#childCount](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#childCount) returns null.
 
 ##### Parameters:
 
@@ -380,32 +379,15 @@ Fetch child nodes for the given node from a server (or by any other asynchronous
 </tbody>
 </table>
 
-#### getAccDescription(pNode) → {string}
-
-Returns the accessible description of the given node. This is an optional method. The description is used to provide additional information about the node to assistive technology.
-
-##### Parameters:
-
-| Name | Type | Description |
-|----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node from which to get the accessible description. |
-
-##### Returns:
-
-The node's accessible description.
-
-Type
-string
-
 #### getClasses(pNode) → {string}
 
-Returns one or more CSS classes to add to the node content container or null if none. Multiple classes are separated by a space. This is an optional method.
+Returns one or more CSS classes to add to the node content container or null if none. Multiple classes are separated by a space. This is an optional method. If the method doesn't exist then no nodes will have classes added to the node content container.
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node from which to get the CSS classes. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node from which to get the CSS classes. |
 
 ##### Returns:
 
@@ -416,7 +398,7 @@ string
 
 #### getExpandedNodeIds(pTreeId) → {Array}
 
-Returns an array of each of the expanded node's id. Can be used to persist the expansion state. See [treeView#getExpandedNodeIds](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getExpandedNodeIds).
+Returns an array of each of the expanded node's id. Can be used to persist the expansion state. See [treeView#getExpandedNodeIds](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getExpandedNodeIds).
 
 ##### Parameters:
 
@@ -431,7 +413,7 @@ Array
 
 #### getExpandedState(pTreeId)
 
-Returns map of node id to expansion state. See [treeView#getExpandedState](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getExpandedState).
+Returns map of node id to expansion state. See [treeView#getExpandedState](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getExpandedState).
 
 ##### Parameters:
 
@@ -441,13 +423,13 @@ Returns map of node id to expansion state. See [treeView#getExpandedState](https
 
 #### getIcon(pNode) → {string}
 
-Returns the icon of the node or null if none. The icon is a CSS class name. The icon is used by node content rendering. This is an optional method.
+Returns the icon of the node or null if none. The icon is a CSS class name. The icon is used by node content rendering. This is an optional method. If the method doesn't exist then no nodes will have icons.
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node from which to get the icon. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node from which to get the icon. |
 
 ##### Returns:
 
@@ -458,13 +440,13 @@ string
 
 #### getLabel(pNode) → {string}
 
-Returns the label of the given node. The label is used for node content rendering and for editing during rename.
+Returns the label of the given node. The label is used for node content rendering (if [treeNodeAdapter#renderNodeContent](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#renderNodeContent) not implemented) and for editing during rename.
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node from which to get the label. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node from which to get the label. |
 
 ##### Returns:
 
@@ -475,13 +457,13 @@ string
 
 #### getLink(pNode) → {string}
 
-Returns the URL to navigate to when the node is activated. This is an optional method. It is only needed for navigation trees. If defined it is called during activation if [treeView#navigation](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#navigation) option is true.
+Returns the URL to navigate to when the node is activated. This is an optional method. It is only needed for navigation trees. If defined it is called during activation if [treeView#navigation](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#navigation) option is true.
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node from which to get the link URL. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node from which to get the link URL. |
 
 ##### Returns:
 
@@ -492,13 +474,13 @@ string
 
 #### getLinkTarget(pNode) → {string}
 
-Returns the window target to open the link in when the node is activated. This is an optional method. It is only needed for navigation trees and is only used when there is a link. If defined it is called during activation if [treeView#navigation](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#navigation) option is true.
+Returns the window target to open the link in when the node is activated. This is an optional method. It is only needed for navigation trees and is only used when there is a link. If defined it is called during activation if [treeView#navigation](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#navigation) option is true.
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node from which to get the link target. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node from which to get the link target. |
 
 Since:
 - 20.1
@@ -512,18 +494,18 @@ string
 
 #### getViewId(pTreeId, pNode) → {string}
 
-Return the view id for the given `pTreeId` and `pNode`. This is used by the treeView to map from nodes to DOM elements. See also [treeNodeAdapter#setViewId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#setViewId).
+Return the view id for the given `pTreeId` and `pNode`. This is used by the treeView to map from nodes to DOM elements. See also [treeNodeAdapter#setViewId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#setViewId).
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
 | `pTreeId` | string | This is a unique opaque identifier supplied by the treeView. |
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node to get the view id for. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node to get the view id for. |
 
 ##### Returns:
 
-The view id for this node that was assigned with [treeNodeAdapter#setViewId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#setViewId).
+The view id for this node that was assigned with [treeNodeAdapter#setViewId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#setViewId).
 
 Type
 string
@@ -536,7 +518,7 @@ Returns true if the node has children, false if it does not and null if not yet 
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node for which to determine if it has children. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node for which to determine if it has children. |
 
 ##### Returns:
 
@@ -553,7 +535,7 @@ Returns the disabled state of a node. A disabled node cannot be selected or acti
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node from which to get the disabled state. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node from which to get the disabled state. |
 
 ##### Returns:
 
@@ -571,7 +553,7 @@ Return true if the given node is or should be expanded and false otherwise.
 | Name | Type | Description |
 |----|----|----|
 | `pTreeId` | string | This is a unique opaque identifier supplied by the treeView. |
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node to check if it is expanded. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node to check if it is expanded. |
 
 ##### Returns:
 
@@ -586,7 +568,7 @@ Returns the hidden state of a node. Returns true if the node should be hidden. T
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node from which to get the hidden state. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node from which to get the hidden state. |
 
 ##### Returns:
 
@@ -603,9 +585,9 @@ Moves one or more nodes from elsewhere in the tree to be children of the given p
 
 | Name | Type | Description |
 |----|----|----|
-| `pParent` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The parent node to move nodes to. The moved nodes (`pNodes`) become children of this node. |
+| `pParent` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The parent node to move nodes to. The moved nodes (`pNodes`) become children of this node. |
 | `pIndex` | integer | The index at which to insert the moved nodes. |
-| `pNodes` | Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)\> | An array of nodes from this tree to move. |
+| `pNodes` | Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)\> | An array of nodes from this tree to move. |
 | `pCallback` | function | This function must be called when the nodes have been moved. The function takes one parameter which is a places array of indexes where the children nodes ended up. If the tree nodes are sorted then even though they were moved starting at the given index they could end up at any position. If the tree nodes are not sorted then places will consist of integers index ... index + n - 1 where n is the number of nodes moved. If the move fails call with the places parameter equal to false. If some of the nodes can't be moved return -1 for its index in the places array. |
 
 #### renameNode(pNode, pNewLabel, pCallback)
@@ -616,7 +598,7 @@ Rename the given node.
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node to rename. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node to rename. |
 | `pNewLabel` | string | The new label to rename the node to. |
 | `pCallback` | function | This function must be called once the node is renamed. It takes two parameters. The first is node which is likely the same as `pNode` or false if the rename can be tried again or null if the rename failed. The second parameter is the index of the node after the rename. If the nodes are sorted then renaming the node can change its position. |
 
@@ -624,11 +606,7 @@ Rename the given node.
 
 This is an optional function used to render the node content. It is used for advanced cases where more control over the node markup is needed.
 
-If [treeNodeAdapter#renderNodeContent](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#renderNodeContent) is not implemented, the default node rendering will use adapter methods [treeNodeAdapter#getLabel](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getLabel), [treeNodeAdapter#getClasses](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getClasses), [treeNodeAdapter#getLink](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getLink), [treeNodeAdapter#getLinkTarget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getLinkTarget), [treeNodeAdapter#getAccDescription](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getAccDescription), and [treeNodeAdapter#getIcon](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getIcon) to render the node's label, CSS classes, anchor link, accessible description, and icon respectively. If custom node rendering is implemented, the rendering of these elements (label, classes, link, accessible description, icon, etc.) must be handled to ensure proper appearance and accessibility.
-
-The content must include an element with tabindex='-1' and that element must have a class that matches the [treeView#labelClass](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#labelClass) option and role="treeitem". The custom rendering is responsible for setting the aria-level, aria-disabled, aria-selected, and aria-expanded attributes for proper accessibility.
-
-Ensuring these attributes are properly set is crucial for creating an accessible tree component, for full compliance with modern accessibility standards.
+The content must include an element with `tabindex='-1'` and that element must have a class that matches the [treeView#labelClass](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#labelClass) option. The custom rendering is responsible for setting the `aria-level`, `aria-disabled`, `aria-selected`, and `aria-expanded` attributes for proper accessibility.
 
 The options and state arguments provide additional information to determine how to render the node.
 
@@ -729,25 +707,17 @@ The options and state arguments provide additional information to determine how 
 <td class="type">boolean</td>
 <td class="description last">This is true if the node is expanded.</td>
 </tr>
-<tr>
-<th class="name" scope="row"><code>accDescriptionId</code></th>
-<td class="type">string</td>
-<td class="description last">A unique id that can be used for rendering an accessible node description if there is one. For example by associating a visually hidden element containing the description with the node using attribute <code class="prettyprint">aria-describedby</code>.</td>
-</tr>
 </tbody>
 </table></td>
 </tr>
 </tbody>
 </table>
 
-Deprecated:
-- Yes
-
 ##### Example
 
-See [treeView.makeDefaultNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#.makeDefaultNodeAdapter) for an example.
+See [treeView.makeDefaultNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#.makeDefaultNodeAdapter) for an example.
 
-#### root() → {[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)}
+#### root() → {[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)}
 
 Returns the root node of the tree. All trees must have a single root node even if it is not shown/used.
 
@@ -756,7 +726,7 @@ Returns the root node of the tree. All trees must have a single root node even i
 The root node.
 
 Type
-[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)
+[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)
 
 #### setExpanded(pTreeId, pNode, pExpanded)
 
@@ -767,7 +737,7 @@ Called when the expansion state of the tree node changes.
 | Name | Type | Description |
 |----|----|----|
 | `pTreeId` | string | This is a unique opaque identifier supplied by the treeView. |
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node that has been expanded or collapsed. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node that has been expanded or collapsed. |
 | `pExpanded` | boolean | true if the node is expanded and false if it is collapsed. |
 
 #### setViewId(pTreeId, pNode, pViewId)
@@ -779,18 +749,18 @@ Set the view id for the given `pTreeId` and `pNode`. This is used by the treeVie
 | Name | Type | Description |
 |----|----|----|
 | `pTreeId` | string | This is a unique opaque identifier supplied by the treeView. |
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The node to set the view id for. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The node to set the view id for. |
 | `pViewId` | string | The view id to associate with the given node. |
 
 ### Type Definitions
 
 #### defaultNode
 
-This is the specific object structure for nodes used by the default [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) returned by [treeView.makeDefaultNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#.makeDefaultNodeAdapter). It is possible for nodes to have additional properties. For example the APEX Tree region adds a `tooltip` property
+This is the specific object structure for nodes used by the default [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) returned by [treeView.makeDefaultNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#.makeDefaultNodeAdapter). It is possible for nodes to have additional properties. For example the APEX Tree region adds a `tooltip` property
 
 ##### Type:
 
-- [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)
+- [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)
 
 ##### Properties:
 
@@ -859,13 +829,6 @@ This is the specific object structure for nodes used by the default [treeNodeAda
 <td class="description last">The icon CSS class returned by <a href="treeNodeAdapter.html#getIcon">treeNodeAdapter#getIcon</a>. This overrides any icon based on the node type.</td>
 </tr>
 <tr>
-<th class="name" scope="row"><code>accDescription</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Accessible description for the node, returned by <a href="treeNodeAdapter.html#getAccDescription">treeNodeAdapter#getAccDescription</a>.</td>
-</tr>
-<tr>
 <th class="name" scope="row"><code>classes</code></th>
 <td class="type">string</td>
 <td class="attributes">&lt;optional&gt;<br />
@@ -897,7 +860,7 @@ This is the specific object structure for nodes used by the default [treeNodeAda
 
 #### node
 
-An object that represents a node in a tree data structure. There are no requirements for and no assumptions are made about the specific properties of the object as all access to the node is through the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) interface.
+An object that represents a node in a tree data structure. There are no requirements for and no assumptions are made about the specific properties of the object as all access to the node is through the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) interface.
 
 ##### Type:
 
@@ -905,7 +868,7 @@ An object that represents a node in a tree data structure. There are no requirem
 
 #### typeInfo
 
-The default [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) returned by [treeView.makeDefaultNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#.makeDefaultNodeAdapter) uses this type information to provide default settings and control over allowed edit operations for nodes based on their type.
+The default [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) returned by [treeView.makeDefaultNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#.makeDefaultNodeAdapter) uses this type information to provide default settings and control over allowed edit operations for nodes based on their type.
 
 ##### Type:
 

@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.navigation.dialog.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.navigation.dialog.html -->
 <!-- Namespaces: apex.navigation.dialog -->
 
 # Namespace: dialog
@@ -11,9 +11,9 @@
 - [close](#.close)
 - [registerCloseHandler](#.registerCloseHandler)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html)[.navigation](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.navigation.html).dialog
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html)[.navigation](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.navigation.html).dialog
 
-This namespace contains functions related to a dialog opened with [apex.navigation.dialog](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.navigation.html#.fn:dialog). All of the functions in the [apex.navigation.dialog](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.navigation.html#.fn:dialog) namespace need to be run in the context of the specified dialog page.
+This namespace contains functions related to a dialog opened with [apex.navigation.dialog](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.navigation.html#.fn:dialog). All of the functions in the [apex.navigation.dialog](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.navigation.html#.fn:dialog) namespace need to be run in the context of the specified dialog page.
 
 ### Functions
 
@@ -98,7 +98,7 @@ apex.navigation.dialog.close( true, function( pDialog ) {
             resizable: false
         },
         "t-Dialog-page--standard",
-        $( "#mybutton" ) );
+        $( "#mybutton_static_id" ) );
 } );
 ```
 
@@ -192,7 +192,7 @@ Deprecated:
 
 ##### Example
 
-This example demonstrates a call to open the url in a named popup window, "Information". The new window can be accessed from variable `myPopupWindow`. Some additional parameters are also set in the call, to control scrolling, resizing and the visibility of a toolbar. The variable `myTriggeringElement` is used to define the triggering element of the popup, a button named `myButton`. Using a call to [apex.navigation.dialog.registerCloseHandler](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.navigation.dialog.html#.registerCloseHandler), a new handler can be defined, to associate the close action of the dialog with the button.
+This example demonstrates a call to open the url in a named popup window, "Information". The new window can be accessed from variable `myPopupWindow`. Some additional parameters are also set in the call, to control scrolling, resizing and the visibility of a toolbar. The variable `myTriggeringElement` is used to define the triggering element of the popup, a button named `myButton`. Using a call to [apex.navigation.dialog.registerCloseHandler](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.navigation.dialog.html#.registerCloseHandler), a new handler can be defined, to associate the close action of the dialog with the button.
 
 ```
 var myTriggeringElement,

@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html -->
 <!-- Widgets: tableModelView -->
 
 # Widget: tableModelView
@@ -104,27 +104,27 @@
 
 ## tableModelView
 
-A template driven UI widget report view for table shape data in an APEX [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) that supports pagination, selection, and control breaks. Derived from [tableModelViewBase](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html). It does not directly support editing but does respond to model changes. The contents of the report are called items (not to be confused with APEX Page Items or Column Items). The items represent the records from the model. This kind of report is also known as a "list view" or "cards view" depending on what the items look like.
+A template driven UI widget report view for table shape data in an APEX [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) that supports pagination, selection, and control breaks. Derived from [tableModelViewBase](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html). It does not directly support editing but does respond to model changes. The contents of the report are called items (not to be confused with APEX Page Items or Column Items). The items represent the records from the model. This kind of report is also known as a "list view" or "cards view" depending on what the items look like.
 
 Note: Not all the options and methods from the base widget apply to this widget. For example options and methods related to editing do not apply.
 
 The expected markup is an empty element; typically a `<div>`.
 
-There are two ways to define the item markup for the view. Configure with options [tableModelView#beforeTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#beforeTemplate), [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate), and [tableModelView#afterTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#afterTemplate) for complete control over the markup. Or configure with options [tableModelView#iconClassColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#iconClassColumn), [tableModelView#imageURLColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#imageURLColumn), [tableModelView#imageAttributes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#imageAttributes), [tableModelView#labelColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#labelColumn), [tableModelView#linkTarget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#linkTarget), [tableModelView#linkTargetColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#linkTargetColumn), and [tableModelView#linkAttributes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#linkAttributes) for default list markup.
+There are two ways to define the item markup for the view. Configure with options [tableModelView#beforeTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#beforeTemplate), [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate), and [tableModelView#afterTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#afterTemplate) for complete control over the markup. Or configure with options [tableModelView#iconClassColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#iconClassColumn), [tableModelView#imageURLColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#imageURLColumn), [tableModelView#imageAttributes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#imageAttributes), [tableModelView#labelColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#labelColumn), [tableModelView#linkTarget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#linkTarget), [tableModelView#linkTargetColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#linkTargetColumn), and [tableModelView#linkAttributes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#linkAttributes) for default list markup.
 
 ### Selection, keyboard navigation, and focus management
 
-The view supports optional focus management and single or multiple selection. This is controlled by the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) and [tableModelView#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#multiple) options. When focus or selection is enabled the report manages the focus so that only a single item is a tab stop and arrow keys are used to move the focus to other items. If an item contains elements such as links or buttons that also take focus then just those elements in the currently focused item can be tabbed to. For multiple selection standard keyboard modifiers Shift and Ctrl are combined with arrow keys or mouse clicks to select multiple items. See the [Keyboard End User Information](#keyboard-section) section for details.
+The view supports optional focus management and single or multiple selection. This is controlled by the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) and [tableModelView#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#multiple) options. When focus or selection is enabled the report manages the focus so that only a single item is a tab stop and arrow keys are used to move the focus to other items. If an item contains elements such as links or buttons that also take focus then just those elements in the currently focused item can be tabbed to. For multiple selection standard keyboard modifiers Shift and Ctrl are combined with arrow keys or mouse clicks to select multiple items. See the [Keyboard End User Information](#keyboard-section) section for details.
 
-The selection state can be accessed with methods such as [tableModelView#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#getSelectedRecords) and changed with methods such as [tableModelView#setSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#setSelectedRecords). The [tableModelView#selectionStateItem](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectionStateItem) option specifies an APEX page item that will have its value updated to reflect the current selection.
+The selection state can be accessed with methods such as [tableModelView#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#getSelectedRecords) and changed with methods such as [tableModelView#setSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#setSelectedRecords). The [tableModelView#selectionStateItem](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectionStateItem) option specifies an APEX page item that will have its value updated to reflect the current selection.
 
 ### Template markup
 
-Templates are processed with [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate) and can contain data substitutions, placeholders, and template directives. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate) for details. See each of the template options ([tableModelView#headerTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#headerTemplate), [tableModelView#beforeTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#beforeTemplate), [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate), [tableModelView#aggregateTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#aggregateTemplate), [tableModelView#controlBreakTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakTemplate), [tableModelView#controlBreakBeforeTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakBeforeTemplate), [tableModelView#controlBreakAfterTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakAfterTemplate), and [tableModelView#afterTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#afterTemplate)) for details on any special substitutions or placeholders. See [tableModelView#applyTemplateOptions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#applyTemplateOptions) for how to pass additional options to `applyTemplate`.
+Templates are processed with [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate) and can contain data substitutions, placeholders, and template directives. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate) for details. See each of the template options ([tableModelView#headerTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#headerTemplate), [tableModelView#beforeTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#beforeTemplate), [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate), [tableModelView#aggregateTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#aggregateTemplate), [tableModelView#controlBreakTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakTemplate), [tableModelView#controlBreakBeforeTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakBeforeTemplate), [tableModelView#controlBreakAfterTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakAfterTemplate), and [tableModelView#afterTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#afterTemplate)) for details on any special substitutions or placeholders. See [tableModelView#applyTemplateOptions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#applyTemplateOptions) for how to pass additional options to `applyTemplate`.
 
 There are a few requirements for the template markup so that the report view functions correctly and is accessible. The following markup patterns are supported:
 
-- **Layout grid** This is a collection element with role="grid" containing elements with role="row" and each row element contains exactly one item element with role="gridcell". This is the most accessible pattern especially when using selection. The "grid" role element requires an accessible label. The "gridcell" element requires an `aria-label` attribute that identifies the item. Typically, you would use a data substitution of the same column that is given in the [tableModelView#accLabelColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#accLabelColumn) option. Example:
+- **Layout grid** This is a collection element with role="grid" containing elements with role="row" and each row element contains exactly one item element with role="gridcell". This is the most accessible pattern especially when using selection. The "grid" role element requires an accessible label. The "gridcell" element requires an `aria-label` attribute that identifies the item. Typically, you would use a data substitution of the same column that is given in the [tableModelView#accLabelColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#accLabelColumn) option. Example:
 
   ``` prettyprint
   <ul role="grid" aria-label="My Report">   <!-- beforeTemplate -->
@@ -154,15 +154,15 @@ There are a few requirements for the template markup so that the report view fun
   </tbody></table>         <!-- afterTemplate -->
   ```
 
-In the above examples the item element has class "my-item", so ".my-item" is the value to set for option [tableModelView#itemSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemSelector). Any class or other selector can be used. It is the item element that is returned by or passed to the various selection methods. The item element must have attributes `data-id` and `data-rownum` with values from substitution symbols `&APEX$ROW_ID.` and `&APEX$ROW_INDEX.` respectively. Or more simply by using the `#APEX$ROW_IDENTIFICATION#` placeholder as shown in the example below.
+In the above examples the item element has class "my-item", so ".my-item" is the value to set for option [tableModelView#itemSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemSelector). Any class or other selector can be used. It is the item element that is returned by or passed to the various selection methods. The item element must have attributes `data-id` and `data-rownum` with values from substitution symbols `&APEX$ROW_ID.` and `&APEX$ROW_INDEX.` respectively. Or more simply by using the `#APEX$ROW_IDENTIFICATION#` placeholder as shown in the example below.
 
 If the report will support selection and a selector control is desired add the `#APEX$SELECTOR#` placeholder somewhere within the item element in the recordTemplate. This placeholder will be replaced with the appropriate markup for either a radio button or checkbox depending on if single or multiple selection is configured.
 
 Control breaks (also known as groups) allow visually grouping related items together. The model data must be configured to have control breaks. Note that the model does not actually contain records that represent the control break. The breaks are synthesized in the view layer when the model data has a change in value of control break columns. There are two cases:
 
-1.  An item in the collection can serve as a heading providing visual context to the items after it. This is known as flat grouping. This case uses the [tableModelView#controlBreakTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakTemplate) option.
+1.  An item in the collection can serve as a heading providing visual context to the items after it. This is known as flat grouping. This case uses the [tableModelView#controlBreakTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakTemplate) option.
 
-2.  Two level nested markup can be used such as a list of lists or a layout grid of layout grids. The first level represents the groups and the second level is the items in each group. The group element contains the item elements as descendents. This is known as nested grouping. This case uses the [tableModelView#controlBreakBeforeTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakBeforeTemplate) and [tableModelView#controlBreakAfterTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakAfterTemplate) options.
+2.  Two level nested markup can be used such as a list of lists or a layout grid of layout grids. The first level represents the groups and the second level is the items in each group. The group element contains the item elements as descendents. This is known as nested grouping. This case uses the [tableModelView#controlBreakBeforeTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakBeforeTemplate) and [tableModelView#controlBreakAfterTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakAfterTemplate) options.
 
     Note: Nested groups do not work with virtual scroll pagination or with aggregate records.
 
@@ -190,7 +190,7 @@ or
     </tr>
 ```
 
-In the above examples the "my-group" class indicates that the element is a group so ".my-group" is the value to set for option [tableModelView#controlBreakSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakSelector). The group item typically contains a group heading or label for the group and is visually distinguished from items.
+In the above examples the "my-group" class indicates that the element is a group so ".my-group" is the value to set for option [tableModelView#controlBreakSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakSelector). The group item typically contains a group heading or label for the group and is visually distinguished from items.
 
 For nested grouping the group element contains an element that acts as a heading for the group and a container element that contains the items. The heading element must be the first child of the group element. The group heading need not be an HTML heading element. An \<h4\> is just used as an example below.
 
@@ -245,7 +245,7 @@ Group items can never be selected but they can be focused. A selector control is
 
 List of keyboard shortcuts
 
-These keys are only supported when focus or selection is enabled ([tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) is not "none"). Space and Ctrl+A only apply for multiple selection. For multiple selection the Ctrl and Shift keys modify how the arrow, Home, and End keys and Space key affect the selection. The Shift key extends the selection to include the new item. The Ctrl key moves focus without changing the selection. The Space key selects the currently focused item. Ctrl+Space will toggle selection for the current item.
+These keys are only supported when focus or selection is enabled ([tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) is not "none"). Space and Ctrl+A only apply for multiple selection. For multiple selection the Ctrl and Shift keys modify how the arrow, Home, and End keys and Space key affect the selection. The Shift key extends the selection to include the new item. The Ctrl key moves focus without changing the selection. The Space key selects the currently focused item. Ctrl+Space will toggle selection for the current item.
 
 ### CSS Classes
 
@@ -254,7 +254,7 @@ Most of the classes are provided by the template configuration, however there ar
 | Class | Purpose |
 |----|----|
 | a-TMV | The root widget element. |
-| a-TMV-item | Item element class only if [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate) is null. |
+| a-TMV-item | Item element class only if [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate) is null. |
 | is-selected | A state class on selected item elements. |
 | is-focused | A state class on the focused (current) item element. |
 
@@ -312,7 +312,7 @@ Create a tableModelView for name value pairs displayed in a simple table.
 
 ### Extends
 
-- [tableModelViewBase](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html)
+- [tableModelViewBase](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html)
 
 ### Options
 
@@ -344,7 +344,7 @@ Get or set option accLabelColumn after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "accLabelColumn" );
+var value = $( ".selector" ).tableModelView( "option", "accLabelColumn" );
 
 // set
 
@@ -353,7 +353,7 @@ $( ".selector" ).tableModelView( "option", "accLabelColumn", "EMP_NAME" );
 
 #### afterTemplate :string
 
-Markup to render after the report items. The markup must include elements that close the opening elements from the [tableModelView#beforeTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#beforeTemplate) option. For example `</ul>`.
+Markup to render after the report items. The markup must include elements that close the opening elements from the [tableModelView#beforeTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#beforeTemplate) option. For example `</ul>`.
 
 ##### Type:
 
@@ -379,7 +379,7 @@ Get or set option afterTemplate after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "afterTemplate" );
+var value = $( ".selector" ).tableModelView( "option", "afterTemplate" );
 
 // set
 
@@ -399,7 +399,7 @@ These are the available placeholders:
 
 - APEX\$ROW_IDENTIFICATION - Markup for data-id and data-rownum attributes. Easier than providing your own markup using APEX\$ROW_ID and APEX\$ROW_INDEX.
 
-See also [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate).
+See also [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate).
 
 ##### Type:
 
@@ -425,7 +425,7 @@ Get or set option aggregateTemplate after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "aggregateTemplate" );
+var value = $( ".selector" ).tableModelView( "option", "aggregateTemplate" );
 
 // set
 
@@ -436,7 +436,7 @@ $( ".selector" ).tableModelView( "option", "aggregateTemplate", "<li #APEX$ROW_I
 
 If true the selection can be copied to the clipboard using the browsers copy event. This can only be set at initialization time.
 
-This option only applies when [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) is "select".
+This option only applies when [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) is "select".
 
 ##### Type:
 
@@ -459,14 +459,14 @@ $( ".selector" ).tableModelView( {
 
 #### applyTemplateOptions :object
 
-Options to pass to the [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate) function when processing any templates. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate) for details on the option properties.
+Options to pass to the [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate) function when processing any templates. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.applyTemplate) for details on the option properties.
 
 ##### Type:
 
 - object
 
 Inherited From:
-- [tableModelViewBase#applyTemplateOptions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#applyTemplateOptions)
+- [tableModelViewBase#applyTemplateOptions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#applyTemplateOptions)
 
 Default Value:
 - {}
@@ -491,7 +491,7 @@ Get or set option applyTemplateOptions after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "applyTemplateOptions" );
+var value = $( ".selector" ).tableModelView( "option", "applyTemplateOptions" );
 
 // set
 
@@ -510,7 +510,7 @@ Specifies if a new record should be automatically added when the model doesn't c
 - boolean
 
 Inherited From:
-- [tableModelViewBase#autoAddRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#autoAddRecord)
+- [tableModelViewBase#autoAddRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#autoAddRecord)
 
 Default Value:
 - false
@@ -532,7 +532,7 @@ Get or set option autoAddRecord after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "autoAddRecord" );
+var value = $( ".selector" ).tableModelView( "option", "autoAddRecord" );
 
 // set
 
@@ -547,7 +547,7 @@ These are the available placeholders:
 
 - APEX\$HAS_SELECTOR - "Y" if the report supports selection.
 
-See also [tableModelView#afterTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#afterTemplate) and [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate).
+See also [tableModelView#afterTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#afterTemplate) and [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate).
 
 ##### Type:
 
@@ -573,7 +573,7 @@ Get or set option beforeTemplate after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "beforeTemplate" );
+var value = $( ".selector" ).tableModelView( "option", "beforeTemplate" );
 
 // set
 
@@ -584,7 +584,7 @@ $( ".selector" ).tableModelView( "option", "beforeTemplate", "<ol>" );
 
 A function that allows control over how an item is copied to the clipboard. The function signature is `clipboardValue( index, item$, model, record, recordId ) -> jQuery`
 
-Only applies when [tableModelView#allowCopy](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#allowCopy) is true.
+Only applies when [tableModelView#allowCopy](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#allowCopy) is true.
 
 When copying items to the clipboard the item's inner text is coped for the "text/plain" format and the item's inner HTML is copied for the "text/html" format. This callback function allows changing what gets put on the clipboard by returning a substitute item as a jQuery object. Either the item\$ passed in can be cloned and then modified or a new jQuery object can be created using data from the model record passed in. The inputs must not be modified.
 
@@ -627,7 +627,7 @@ Extra CSS classes to add to the element that is the parent of the collection of 
 - string
 
 Default Value:
-- "a-TMV-defaultIconView" if [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate) is null and null otherwise.
+- "a-TMV-defaultIconView" if [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate) is null and null otherwise.
 
 ##### Examples
 
@@ -646,7 +646,7 @@ Get or set option collectionClasses after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "collectionClasses" );
+var value = $( ".selector" ).tableModelView( "option", "collectionClasses" );
 
 // set
 
@@ -657,7 +657,7 @@ $( ".selector" ).tableModelView( "option", "collectionClasses", "EmployeeList" )
 
 Normally keydown handling will call preventDefault so that arrow key navigation has no effect outside this control. This prevents text selection and keeps parent elements from scrolling. By setting this to false it allows a nested container to respond to arrow navigation keys.
 
-This option only applies when [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) is not "none".
+This option only applies when [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) is not "none".
 
 ##### Type:
 
@@ -683,7 +683,7 @@ Get or set option constrainNavigation after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "constrainNavigation" );
+var value = $( ".selector" ).tableModelView( "option", "constrainNavigation" );
 
 // set
 
@@ -692,7 +692,7 @@ $( ".selector" ).tableModelView( "option", "constrainNavigation", false );
 
 #### controlBreakAfterTemplate :string
 
-Markup to render after a group of items/rows defined by a control break. This template should include any markup needed to close nesting introduced in [tableModelView#controlBreakBeforeTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakBeforeTemplate). This should only be set if the model data has control breaks.
+Markup to render after a group of items/rows defined by a control break. This template should include any markup needed to close nesting introduced in [tableModelView#controlBreakBeforeTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakBeforeTemplate). This should only be set if the model data has control breaks.
 
 ##### Type:
 
@@ -718,7 +718,7 @@ Get or set option controlBreakAfterTemplate after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "controlBreakAfterTemplate" );
+var value = $( ".selector" ).tableModelView( "option", "controlBreakAfterTemplate" );
 
 // set
 
@@ -727,20 +727,20 @@ $( ".selector" ).tableModelView( "option", "controlBreakAfterTemplate", "</ul></
 
 #### controlBreakBeforeTemplate :string
 
-Markup to render before a group of items/rows defined by a control break. This should only be set if the model data has control breaks. This option requires the [tableModelView#controlBreakSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakSelector) and [tableModelView#itemSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemSelector) options be set.
+Markup to render before a group of items/rows defined by a control break. This should only be set if the model data has control breaks. This option requires the [tableModelView#controlBreakSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakSelector) and [tableModelView#itemSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemSelector) options be set.
 
-The `controlBreakBeforeTemplate` and `controlBreakAfterTemplate` templates are used together to create one level of nested list report markup. They can't be combined with [tableModelView#controlBreakTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakTemplate). Nested control break markup cannot currently be combined with aggregates so the [tableModelView#aggregateTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#aggregateTemplate) option must not be used in combination.
+The `controlBreakBeforeTemplate` and `controlBreakAfterTemplate` templates are used together to create one level of nested list report markup. They can't be combined with [tableModelView#controlBreakTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakTemplate). Nested control break markup cannot currently be combined with aggregates so the [tableModelView#aggregateTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#aggregateTemplate) option must not be used in combination.
 
 This template should typically include the control break heading and the start of any nesting markup. The template should only reference control break columns. This template supports the following special substitution symbols:
 
-- APEX\$GROUP_ID - The control break id. See [model#getControlBreakId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getControlBreakId).
+- APEX\$GROUP_ID - The control break id. See [model#getControlBreakId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getControlBreakId).
 - APEX\$ROW_INDEX - The control break index, which is the same as the first record in the control break.
 
 These are the available placeholders:
 
 - APEX\$GROUP_IDENTIFICATION - Markup for data-group-id and data-rownum attributes. Easier than providing your own markup using APEX\$GROUP_ID and APEX\$ROW_INDEX.
 
-See also [tableModelView#controlBreakAfterTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakAfterTemplate), [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate).
+See also [tableModelView#controlBreakAfterTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakAfterTemplate), [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate).
 
 ##### Type:
 
@@ -766,7 +766,7 @@ Get or set option controlBreakBeforeTemplate after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "controlBreakBeforeTemplate" );
+var value = $( ".selector" ).tableModelView( "option", "controlBreakBeforeTemplate" );
 
 // set
 
@@ -801,7 +801,7 @@ Get or set option controlBreakSelector after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "controlBreakSelector" );
+var value = $( ".selector" ).tableModelView( "option", "controlBreakSelector" );
 
 // set
 
@@ -810,16 +810,16 @@ $( ".selector" ).tableModelView( "option", "controlBreakSelector", ".my-card-gro
 
 #### controlBreakTemplate :string
 
-Markup to render for a control break. This should only be set if the model data has control breaks. This option requires the [tableModelView#controlBreakSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#controlBreakSelector) option be set. The template should only reference control break columns. In addition, you can use the following special substitution symbols:
+Markup to render for a control break. This should only be set if the model data has control breaks. This option requires the [tableModelView#controlBreakSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#controlBreakSelector) option be set. The template should only reference control break columns. In addition, you can use the following special substitution symbols:
 
-- APEX\$GROUP_ID - The control break id. See [model#getControlBreakId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getControlBreakId).
+- APEX\$GROUP_ID - The control break id. See [model#getControlBreakId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getControlBreakId).
 - APEX\$ROW_INDEX - The control break index, which is the same as the first record in the control break.
 
 These are the available placeholders:
 
 - APEX\$GROUP_IDENTIFICATION - Markup for data-group-id and data-rownum attributes. Easier than providing your own markup using APEX\$GROUP_ID and APEX\$ROW_INDEX.
 
-See also [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate).
+See also [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate).
 
 ##### Type:
 
@@ -845,7 +845,7 @@ Get or set option controlBreakTemplate after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "controlBreakTemplate" );
+var value = $( ".selector" ).tableModelView( "option", "controlBreakTemplate" );
 
 // set
 
@@ -854,14 +854,14 @@ $( ".selector" ).tableModelView( "option", "controlBreakTemplate", "<li #APEX$GR
 
 #### editable :boolean
 
-Determine if the view allows editing. If true the [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) must also allow editing but if false the model could still allow editing. If true the view data can be edited according to what the model allows. Only applies if the view supports editing.
+Determine if the view allows editing. If true the [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) must also allow editing but if false the model could still allow editing. If true the view data can be edited according to what the model allows. Only applies if the view supports editing.
 
 ##### Type:
 
 - boolean
 
 Inherited From:
-- [tableModelViewBase#editable](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#editable)
+- [tableModelViewBase#editable](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#editable)
 
 Default Value:
 - false
@@ -883,7 +883,7 @@ Get or set option editable after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "editable" );
+var value = $( ".selector" ).tableModelView( "option", "editable" );
 
 // set
 
@@ -899,7 +899,7 @@ This is the name of the singular form of the entity that is the subject of the r
 - string
 
 Inherited From:
-- [tableModelViewBase#entityTitlePlural](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#entityTitlePlural)
+- [tableModelViewBase#entityTitlePlural](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#entityTitlePlural)
 
 Default Value:
 - null
@@ -921,7 +921,7 @@ Get or set option entityTitlePlural after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "entityTitlePlural" );
+var value = $( ".selector" ).tableModelView( "option", "entityTitlePlural" );
 
 // set
 
@@ -937,7 +937,7 @@ This is the singular form of the entity that is the subject of the report. This 
 - string
 
 Inherited From:
-- [tableModelViewBase#entityTitleSingular](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#entityTitleSingular)
+- [tableModelViewBase#entityTitleSingular](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#entityTitleSingular)
 
 Default Value:
 - null
@@ -959,7 +959,7 @@ Get or set option entityTitleSingular after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "entityTitleSingular" );
+var value = $( ".selector" ).tableModelView( "option", "entityTitleSingular" );
 
 // set
 
@@ -975,7 +975,7 @@ Specify if all the rows will have the same height or variable heights.
 - boolean
 
 Inherited From:
-- [tableModelViewBase#fixedRowHeight](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#fixedRowHeight)
+- [tableModelViewBase#fixedRowHeight](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#fixedRowHeight)
 
 Default Value:
 - true
@@ -997,7 +997,7 @@ Get or set option fixedRowHeight after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "fixedRowHeight" );
+var value = $( ".selector" ).tableModelView( "option", "fixedRowHeight" );
 
 // set
 
@@ -1013,7 +1013,7 @@ Determine if the view will include a footer to show status and pagination contro
 - boolean
 
 Inherited From:
-- [tableModelViewBase#footer](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#footer)
+- [tableModelViewBase#footer](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#footer)
 
 Default Value:
 - true
@@ -1035,7 +1035,7 @@ Get or set option footer after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "footer" );
+var value = $( ".selector" ).tableModelView( "option", "footer" );
 
 // set
 
@@ -1057,7 +1057,7 @@ The container width must always be defined.
 - boolean
 
 Inherited From:
-- [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#hasSize)
+- [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#hasSize)
 
 Default Value:
 - false
@@ -1076,7 +1076,7 @@ $( ".selector" ).tableModelView( {
 
 #### headerTemplate :string
 
-Optional markup for a header to render before the report. The header does not scroll with the report and depending on `stickyTop` option may stick to the top of the page. See also option [tableModelView#syncHeaderHScroll](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#syncHeaderHScroll).
+Optional markup for a header to render before the report. The header does not scroll with the report and depending on `stickyTop` option may stick to the top of the page. See also option [tableModelView#syncHeaderHScroll](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#syncHeaderHScroll).
 
 These are the available placeholders:
 
@@ -1107,7 +1107,7 @@ Get or set option headerTemplate after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "headerTemplate" );
+var value = $( ".selector" ).tableModelView( "option", "headerTemplate" );
 
 // set
 
@@ -1116,14 +1116,14 @@ $( ".selector" ).tableModelView( "option", "headerTemplate", "<h4>My Report</h4>
 
 #### hideDeletedRows :boolean
 
-Determine if deleted rows (records) are removed from the view right away or shown with a visual effect to indicate they are going to be deleted. If true (and the view is editable) deleted records will not be visible, otherwise they are visible but have a visual indication that they are deleted. The actual records are not deleted on the server until the model is saved. The visual effect is determined by CSS rules and is typically strike through. See also [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) `onlyMarkForDelete` option.
+Determine if deleted rows (records) are removed from the view right away or shown with a visual effect to indicate they are going to be deleted. If true (and the view is editable) deleted records will not be visible, otherwise they are visible but have a visual indication that they are deleted. The actual records are not deleted on the server until the model is saved. The visual effect is determined by CSS rules and is typically strike through. See also [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) `onlyMarkForDelete` option.
 
 ##### Type:
 
 - boolean
 
 Inherited From:
-- [tableModelViewBase#hideDeletedRows](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#hideDeletedRows)
+- [tableModelViewBase#hideDeletedRows](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#hideDeletedRows)
 
 Default Value:
 - false
@@ -1145,7 +1145,7 @@ Get or set option hideDeletedRows after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "hideDeletedRows" );
+var value = $( ".selector" ).tableModelView( "option", "hideDeletedRows" );
 
 // set
 
@@ -1161,7 +1161,7 @@ Hide the footer if there is no data. This only applies if `footer` is true.
 - boolean
 
 Inherited From:
-- [tableModelViewBase#hideEmptyFooter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#hideEmptyFooter)
+- [tableModelViewBase#hideEmptyFooter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#hideEmptyFooter)
 
 Default Value:
 - false
@@ -1183,7 +1183,7 @@ Get or set option hideEmptyFooter after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "hideEmptyFooter" );
+var value = $( ".selector" ).tableModelView( "option", "hideEmptyFooter" );
 
 // set
 
@@ -1277,7 +1277,7 @@ The object is a mapping of highlight id to color definition.
 </table>
 
 Inherited From:
-- [tableModelViewBase#highlights](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#highlights)
+- [tableModelViewBase#highlights](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#highlights)
 
 ##### Examples
 
@@ -1303,7 +1303,7 @@ Get or set option highlights after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "highlights" );
+var value = $( ".selector" ).tableModelView( "option", "highlights" );
 
 // set
 
@@ -1338,7 +1338,7 @@ Get or set option iconClassColumn after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "iconClassColumn" );
+var value = $( ".selector" ).tableModelView( "option", "iconClassColumn" );
 
 // set
 
@@ -1347,7 +1347,7 @@ $( ".selector" ).tableModelView( "option", "iconClassColumn", "PERSON_AVATAR" );
 
 #### iconListOptions :object
 
-Additional options to pass to the [iconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html) widget. See [iconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html) for information about the options it supports. Only applies if [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) option is true.
+Additional options to pass to the [iconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html) widget. See [iconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html) for information about the options it supports. Only applies if [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) option is true.
 
 ##### Type:
 
@@ -1361,7 +1361,7 @@ Default Value:
 
 #### (nullable) imageAttributes :string
 
-Attributes for the `<img>` element. Only used if [tableModelView#imageURLColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#imageURLColumn) is specified.
+Attributes for the `<img>` element. Only used if [tableModelView#imageURLColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#imageURLColumn) is specified.
 
 ##### Type:
 
@@ -1398,7 +1398,7 @@ Get or set option imageURLColumn after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "imageURLColumn" );
+var value = $( ".selector" ).tableModelView( "option", "imageURLColumn" );
 
 // set
 
@@ -1411,13 +1411,13 @@ Controls how the focus and selection state is handled for items in the report. I
 
 - **none** - The report does not support focus or selection.
 - **focus** - The report supports focus state. Focus can be moved among the items of the report using keyboard or mouse.
-- **select** - The report supports focus and selection state. A selection control such as a checkbox is not required but if one is desired it must be included in the template markup. Use the \#APEX\$SELECTOR# placeholder in the [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate) option.
+- **select** - The report supports focus and selection state. A selection control such as a checkbox is not required but if one is desired it must be included in the template markup. Use the \#APEX\$SELECTOR# placeholder in the [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate) option.
 
 Except when this value is "none", only one item in the report at a time is in the keyboard tab order. and the arrow keys are used to move among the items.
 
-When set to "focus" or "select" the [tableModelView#itemSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemSelector) option is required. When [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) is true this is forced to "none" because the icon list handles selection.
+When set to "focus" or "select" the [tableModelView#itemSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemSelector) option is required. When [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) is true this is forced to "none" because the icon list handles selection.
 
-See also [tableModelView#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#multiple) and [Template markup](#markup-section).
+See also [tableModelView#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#multiple) and [Template markup](#markup-section).
 
 ##### Type:
 
@@ -1443,7 +1443,7 @@ Get or set option itemNavigationMode after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "itemNavigationMode" );
+var value = $( ".selector" ).tableModelView( "option", "itemNavigationMode" );
 
 // set
 
@@ -1452,14 +1452,14 @@ $( ".selector" ).tableModelView( "option", "itemNavigationMode", "select" );
 
 #### (nullable) itemSelector :string
 
-A CSS selector that selects the outermost item element in the view collection. This is required if [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) is not "none". See also [Template markup](#markup-section).
+A CSS selector that selects the outermost item element in the view collection. This is required if [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) is not "none". See also [Template markup](#markup-section).
 
 ##### Type:
 
 - string
 
 Default Value:
-- "a-TMV-item" if [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate) is null and null otherwise.
+- "a-TMV-item" if [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate) is null and null otherwise.
 
 ##### Examples
 
@@ -1478,7 +1478,7 @@ Get or set option itemSelector after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "itemSelector" );
+var value = $( ".selector" ).tableModelView( "option", "itemSelector" );
 
 // set
 
@@ -1489,7 +1489,7 @@ $( ".selector" ).tableModelView( "option", "itemSelector", ".my-card-item" );
 
 Name of the column that contains the label text.
 
-At a minimum one of [tableModelView#labelColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#labelColumn) or [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate) is required.
+At a minimum one of [tableModelView#labelColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#labelColumn) or [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate) is required.
 
 ##### Type:
 
@@ -1515,7 +1515,7 @@ Get or set option labelColumn after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "labelColumn" );
+var value = $( ".selector" ).tableModelView( "option", "labelColumn" );
 
 // set
 
@@ -1550,7 +1550,7 @@ Get or set option linkAttributes after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "linkAttributes" );
+var value = $( ".selector" ).tableModelView( "option", "linkAttributes" );
 
 // set
 
@@ -1585,7 +1585,7 @@ Get or set option linkTarget after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "linkTarget" );
+var value = $( ".selector" ).tableModelView( "option", "linkTarget" );
 
 // set
 
@@ -1620,29 +1620,29 @@ Get or set option linkTargetColumn after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "linkTargetColumn" );
+var value = $( ".selector" ).tableModelView( "option", "linkTargetColumn" );
 
 // set
 
 $( ".selector" ).tableModelView( "option", "linkTargetColumn", "PROD_TARGET" );
 ```
 
-#### loadIncompleteSelection :string
+#### loadIncompleteSelection :boolean
 
 Controls what happens when the selection is incomplete. When selection state is saved in the model, and because the model can fetch data on demand, it is possible to select records that are not yet loaded into the model resulting in an incomplete selection. This can happen when selecting all rows/items or when range selecting a large enough range.
 
-Only applies if [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#persistSelection) is true and with virtual pagination. The value is one of: "always", "never", or "on-demand". The default is "on-demand". When the selection is incomplete:
+Only applies if [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#persistSelection) is true and with virtual pagination. The value is one of: "always", "never", or "on-demand". The default is "on-demand". When the selection is incomplete:
 
 - "always": start fetching all the model data as soon as there is an incomplete selection
 - "never": do nothing
-- "on-demand": display a link for the user to click to cause all the model data to be fetched. The footer must be displayed for the user to access the link. If the footer is turned off and showing the selection count externally the developer is responsible for providing a button (or link) to load the model data on demand by calling [tableModelViewBase#fetchAllData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#fetchAllData). See also [tableModelViewBase#updateStatus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#updateStatus).
+- "on-demand": display a link for the user to click to cause all the model data to be fetched. The footer must be displayed for the user to access the link. If the footer is turned off and showing the selection count externally the developer is responsible for providing a button (or link) to load the model data on demand by calling [tableModelViewBase#fetchAllData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#fetchAllData). See also [tableModelViewBase#updateStatus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#updateStatus).
 
 ##### Type:
 
-- string
+- boolean
 
 Inherited From:
-- [tableModelViewBase#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#loadIncompleteSelection)
+- [tableModelViewBase#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#loadIncompleteSelection)
 
 Default Value:
 - "on-demand"
@@ -1692,23 +1692,23 @@ Get or set option loadIncompleteSelection after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "loadIncompleteSelection" );
+var value = $( ".selector" ).tableModelView( "option", "loadIncompleteSelection" );
 
 // set
 
 $( ".selector" ).tableModelView( "option", "loadIncompleteSelection", "always" );
 ```
 
-#### modelName :[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+#### modelName :[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
-Identifier of model that this view widget will display data from. Can include an instance as well. The model must already exist. This option is required. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) `modelId` argument.
+Identifier of model that this view widget will display data from. Can include an instance as well. The model must already exist. This option is required. See [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) `modelId` argument.
 
 ##### Type:
 
-- [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+- [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
 Inherited From:
-- [tableModelViewBase#modelName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#modelName)
+- [tableModelViewBase#modelName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#modelName)
 
 ##### Examples
 
@@ -1727,7 +1727,7 @@ Get or set option modelName after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "modelName" );
+var value = $( ".selector" ).tableModelView( "option", "modelName" );
 
 // set
 
@@ -1738,7 +1738,7 @@ $( ".selector" ).tableModelView( "option", "modelName", "myModel" );
 
 If true multiple items can be selected otherwise only a single item can be selected.
 
-This option only applies when [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) is "select". See also [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectAll1).
+This option only applies when [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) is "select". See also [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectAll1).
 
 ##### Type:
 
@@ -1764,7 +1764,7 @@ Get or set option multiple after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "multiple" );
+var value = $( ".selector" ).tableModelView( "option", "multiple" );
 
 // set
 
@@ -1780,7 +1780,7 @@ Icon to display when there is no data. The icon is displayed above the `noDataMe
 - string
 
 Inherited From:
-- [tableModelViewBase#noDataIcon](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#noDataIcon)
+- [tableModelViewBase#noDataIcon](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#noDataIcon)
 
 Default Value:
 - "icon-irr-no-results"
@@ -1802,7 +1802,7 @@ Get or set option noDataIcon after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "noDataIcon" );
+var value = $( ".selector" ).tableModelView( "option", "noDataIcon" );
 
 // set
 
@@ -1818,7 +1818,7 @@ Text to display when there is no data.
 - string
 
 Inherited From:
-- [tableModelViewBase#noDataMessage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#noDataMessage)
+- [tableModelViewBase#noDataMessage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#noDataMessage)
 
 Default Value:
 - ""
@@ -1840,7 +1840,7 @@ Get or set option noDataMessage after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "noDataMessage" );
+var value = $( ".selector" ).tableModelView( "option", "noDataMessage" );
 
 // set
 
@@ -1860,7 +1860,7 @@ Pagination settings.
 | Name | Type | Description |
 |----|----|----|
 | `scroll` | boolean | If true the scroll bar is used to page through the results a.k.a. infinite scrolling or virtual paging. If false then next and previous buttons are shown. This is 'page at a time' or traditional pagination. Default is false. |
-| `virtual` | boolean | Only applies if `scroll` is true. If false new records are rendered and added to the DOM as the user scrolls to the bottom of the view. Records are never removed from the DOM. This is 'add more' (aka high-water-mark) scroll pagination. If true records can be removed from the DOM as the user scrolls and the records are no longer visible. If true and in addition `loadMore` is false and the model knows the total number of records (model option `hasTotalRecords` is true) then the view looks as if it contains all the records but only the records that are currently visible are rendered. This allows virtual scroll paging in both directions. This is 'virtual' scroll pagination (aka true virtual scrolling). In this case, if the view supports selection the [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#persistSelection) option should be true so that selection state isn't lost when records are removed from the DOM. Default is false. |
+| `virtual` | boolean | Only applies if `scroll` is true. If false new records are rendered and added to the DOM as the user scrolls to the bottom of the view. Records are never removed from the DOM. This is 'add more' (aka high-water-mark) scroll pagination. If true records can be removed from the DOM as the user scrolls and the records are no longer visible. If true and in addition `loadMore` is false and the model knows the total number of records (model option `hasTotalRecords` is true) then the view looks as if it contains all the records but only the records that are currently visible are rendered. This allows virtual scroll paging in both directions. This is 'virtual' scroll pagination (aka true virtual scrolling). In this case, if the view supports selection the [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#persistSelection) option should be true so that selection state isn't lost when records are removed from the DOM. Default is false. |
 | `loadMore` | boolean | If true show a load more button rather than auto paging. Only applies if `scroll` is true. Default is false. |
 | `showPageLinks` | boolean | If true show page links between buttons. Only applies if `scroll` is false The model must know the total number of rows for this to be true. Default is false. |
 | `maxLinks` | number | The maximum number of links to show when `showPageLinks` is true. Default is 5. |
@@ -1870,7 +1870,7 @@ Pagination settings.
 | `hideSinglePage` | boolean | Hide the pagination controls when there is only one page of results. When true and there is just one page of results the pagination controls are hidden. When false the pagination controls are disabled when there is just one page. Pagination controls include the "first", "next", "previous", and "last" buttons when `scroll` is false and "load more" button when `scroll` and `loadMore` are true. In addition, when true, if the page range typically shows X - Y of Z it will just show the total records when there is just one page. The default is false. |
 
 Inherited From:
-- [tableModelViewBase#pagination](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#pagination)
+- [tableModelViewBase#pagination](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#pagination)
 
 ##### Examples
 
@@ -1894,7 +1894,7 @@ Get or set option pagination after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "pagination" );
+var value = $( ".selector" ).tableModelView( "option", "pagination" );
 
 // set
 
@@ -1910,7 +1910,7 @@ If true and the view supports selection, the selection state for each row or ite
 - boolean
 
 Inherited From:
-- [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#persistSelection)
+- [tableModelViewBase#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#persistSelection)
 
 Default Value:
 - false
@@ -1960,7 +1960,7 @@ Get or set option persistSelection after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "persistSelection" );
+var value = $( ".selector" ).tableModelView( "option", "persistSelection" );
 
 // set
 
@@ -1969,14 +1969,14 @@ $( ".selector" ).tableModelView( "option", "persistSelection", true );
 
 #### progressOptions :object
 
-Options object to pass to [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.showSpinner). The default depends on the `hasSize` option.
+Options object to pass to [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.showSpinner). The default depends on the `hasSize` option.
 
 ##### Type:
 
 - object
 
 Inherited From:
-- [tableModelViewBase#progressOptions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#progressOptions)
+- [tableModelViewBase#progressOptions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#progressOptions)
 
 Default Value:
 - { fixed: !options.hasSize }
@@ -1998,7 +1998,7 @@ Get or set option progressOptions after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "progressOptions" );
+var value = $( ".selector" ).tableModelView( "option", "progressOptions" );
 
 // set
 
@@ -2022,9 +2022,9 @@ These are the available placeholders:
 
 See also the widget description for more information about markup requirements.
 
-At a minimum one of [tableModelView#labelColumn](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#labelColumn) or [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#recordTemplate) is required.
+At a minimum one of [tableModelView#labelColumn](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#labelColumn) or [tableModelView#recordTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#recordTemplate) is required.
 
-See also [tableModelView#beforeTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#beforeTemplate) and [tableModelView#afterTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#afterTemplate).
+See also [tableModelView#beforeTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#beforeTemplate) and [tableModelView#afterTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#afterTemplate).
 
 ##### Type:
 
@@ -2050,7 +2050,7 @@ Get or set option recordTemplate after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "recordTemplate" );
+var value = $( ".selector" ).tableModelView( "option", "recordTemplate" );
 
 // set
 
@@ -2070,7 +2070,7 @@ For traditional pagination this is the number of records to show in a report pag
 - number
 
 Inherited From:
-- [tableModelViewBase#rowsPerPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#rowsPerPage)
+- [tableModelViewBase#rowsPerPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#rowsPerPage)
 
 Default Value:
 - null
@@ -2092,7 +2092,7 @@ Get or set option rowsPerPage after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "rowsPerPage" );
+var value = $( ".selector" ).tableModelView( "option", "rowsPerPage" );
 
 // set
 
@@ -2101,13 +2101,13 @@ $( ".selector" ).tableModelView( "option", "rowsPerPage", 50 );
 
 #### selectAll :boolean
 
-If true then all the items in the current page or all rendered items or all items in the model, depending on pagination settings, can be selected with Ctrl+A or a select all checkbox (if one is provided with [tableModelView#selectAllId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectAllId)) or using the [tableModelView#selectAll(2)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectAll2) method.
+If true then all the items in the current page or all rendered items or all items in the model, depending on pagination settings, can be selected with Ctrl+A or a select all checkbox (if one is provided with [tableModelView#selectAllId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectAllId)) or using the [tableModelView#selectAll(2)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectAll2) method.
 
-Only applies when [tableModelView#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#multiple) is true.
+Only applies when [tableModelView#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#multiple) is true.
 
-When [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#persistSelection) is false only items that are rendered to the DOM can be selected with Select All. For traditional paging this means that all the items in the current page can be selected. For any kind of scroll pagination, only the items that have already been and are currently rendered to the DOM can be selected.
+When [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#persistSelection) is false only items that are rendered to the DOM can be selected with Select All. For traditional paging this means that all the items in the current page can be selected. For any kind of scroll pagination, only the items that have already been and are currently rendered to the DOM can be selected.
 
-When [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#persistSelection) is true the selection state is kept in the model and only records currently loaded in the model can be selected. The [tableModelView#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#loadIncompleteSelection) option controls if and how additional records are loaded in the model so that the selection becomes complete.
+When [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#persistSelection) is true the selection state is kept in the model and only records currently loaded in the model can be selected. The [tableModelView#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#loadIncompleteSelection) option controls if and how additional records are loaded in the model so that the selection becomes complete.
 
 ##### Type:
 
@@ -2133,7 +2133,7 @@ Get or set option selectAll after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "selectAll" );
+var value = $( ".selector" ).tableModelView( "option", "selectAll" );
 
 // set
 
@@ -2144,7 +2144,7 @@ $( ".selector" ).tableModelView( "option", "selectAll", false );
 
 This is the id of an element used to select all items. It has checkbox semantics. When all items are selected the checkbox is checked, otherwise it is unchecked. If it is unchecked, clicking it will select all items. If it is checked, clicking it will unselect all items.
 
-This only applies if [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectAll1) is true.
+This only applies if [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectAll1) is true.
 
 The expected markup is an input of type=checkbox or a span with checkbox role.
 
@@ -2184,7 +2184,7 @@ Get or set option selectAllId after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "selectAllId" );
+var value = $( ".selector" ).tableModelView( "option", "selectAllId" );
 
 // set
 
@@ -2221,7 +2221,7 @@ Get or set option selectionStateItem after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "selectionStateItem" );
+var value = $( ".selector" ).tableModelView( "option", "selectionStateItem" );
 
 // set
 
@@ -2230,14 +2230,14 @@ $( ".selector" ).tableModelView( "option", "selectionStateItem", "P1_REPORT_SELE
 
 #### selectionStatusMessageKey :string
 
-The text message key to use for showing the number of selected items/records in the footer. The message key must have exactly one parameter %0 which is replaced with the number of items/records selected. It is often better to use [tableModelViewBase#entityTitleSingular](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#entityTitleSingular) and [tableModelViewBase#entityTitlePlural](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#entityTitlePlural) rather than this option.
+The text message key to use for showing the number of selected items/records in the footer. The message key must have exactly one parameter %0 which is replaced with the number of items/records selected. It is often better to use [tableModelViewBase#entityTitleSingular](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#entityTitleSingular) and [tableModelViewBase#entityTitlePlural](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#entityTitlePlural) rather than this option.
 
 ##### Type:
 
 - string
 
 Inherited From:
-- [tableModelViewBase#selectionStatusMessageKey](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#selectionStatusMessageKey)
+- [tableModelViewBase#selectionStatusMessageKey](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#selectionStatusMessageKey)
 
 Default Value:
 - "APEX.TMV.SELECTION_COUNT"
@@ -2259,7 +2259,7 @@ Get or set option selectionStatusMessageKey after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "selectionStatusMessageKey" );
+var value = $( ".selector" ).tableModelView( "option", "selectionStatusMessageKey" );
 
 // set
 
@@ -2275,7 +2275,7 @@ Text to display when a field/column value is null or empty string.
 - string
 
 Inherited From:
-- [tableModelViewBase#showNullAs](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#showNullAs)
+- [tableModelViewBase#showNullAs](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#showNullAs)
 
 Default Value:
 - "-"
@@ -2297,7 +2297,7 @@ Get or set option showNullAs after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "showNullAs" );
+var value = $( ".selector" ).tableModelView( "option", "showNullAs" );
 
 // set
 
@@ -2313,7 +2313,7 @@ Determine if the footer will stick to the bottom of the page. Only applies if `h
 - boolean
 
 Inherited From:
-- [tableModelViewBase#stickyFooter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#stickyFooter)
+- [tableModelViewBase#stickyFooter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#stickyFooter)
 
 Default Value:
 - false
@@ -2335,7 +2335,7 @@ Get or set option stickyFooter after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "stickyFooter" );
+var value = $( ".selector" ).tableModelView( "option", "stickyFooter" );
 
 // set
 
@@ -2346,14 +2346,14 @@ $( ".selector" ).tableModelView( "option", "stickyFooter", true );
 
 Determine if the header will stick to the top of the page as it scrolls.
 
-Only applies if [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#hasSize) is false. If false the header will not stick to the page. If true or a function the header will stick to the top of the page using the undocumented `stickyWidget` widget. If the value is a function then it is passed to the `stickyWidget` as the top option.
+Only applies if [tableModelViewBase#hasSize](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#hasSize) is false. If false the header will not stick to the page. If true or a function the header will stick to the top of the page using the undocumented `stickyWidget` widget. If the value is a function then it is passed to the `stickyWidget` as the top option.
 
 ##### Type:
 
 - boolean \| function
 
 Inherited From:
-- [tableModelViewBase#stickyTop](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#stickyTop)
+- [tableModelViewBase#stickyTop](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#stickyTop)
 
 Default Value:
 - false
@@ -2375,7 +2375,7 @@ Get or set option stickyTop after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "stickyTop" );
+var value = $( ".selector" ).tableModelView( "option", "stickyTop" );
 
 // set
 
@@ -2384,7 +2384,7 @@ $( ".selector" ).tableModelView( "option", "stickyTop", true );
 
 #### syncHeaderHScroll :boolean
 
-If there is a [tableModelView#headerTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#headerTemplate) and this is true the horizontal scroll offset will be synchronized between the header and the view body. This is useful in cases such as a table where the header columns need to align with the body columns.
+If there is a [tableModelView#headerTemplate](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#headerTemplate) and this is true the horizontal scroll offset will be synchronized between the header and the view body. This is useful in cases such as a table where the header columns need to align with the body columns.
 
 ##### Type:
 
@@ -2410,7 +2410,7 @@ Get or set option syncHeaderHScroll after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "syncHeaderHScroll" );
+var value = $( ".selector" ).tableModelView( "option", "syncHeaderHScroll" );
 
 // set
 
@@ -2424,17 +2424,16 @@ A callback function that will handle display of report status information such a
 - deletedCount: The number of deleted records if option `hideDeletedRows` is true and null otherwise.
 - selectedCount: The number of selected records
 - total: The total number of records if model option `hasTotalRecords` is true and null otherwise.
-- incomplete: True if the selection is incomplete and false otherwise. The selection is incomplete if the view has selected more records than the model currently has loaded. See option [tableModelViewBase#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#loadIncompleteSelection).
-- altMessage: Message text to display until the next call to `updateStatus`. Currently used for paste operation messages.
+- incomplete: True if the selection is incomplete and false otherwise. The selection is incomplete if the view has selected more records than the model currently has loaded. See option [tableModelViewBase#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#loadIncompleteSelection).
 
-Use this callback to display the selected record count in a custom location in the page. This is most useful when the report footer is not shown [tableModelViewBase#footer](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#footer) is false.
+Use this callback to display the selected record count in a custom location in the page. This is most useful when the report footer is not shown [tableModelViewBase#footer](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#footer) is false.
 
 ##### Type:
 
 - function
 
 Inherited From:
-- [tableModelViewBase#updateStatus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#updateStatus)
+- [tableModelViewBase#updateStatus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#updateStatus)
 
 Default Value:
 - null
@@ -2461,7 +2460,7 @@ $( ".selector" ).tableModelView( {
 
 #### useIconList :boolean
 
-If true use the [iconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html) widget to display the records. The iconList widget supports selection but does not support the [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectAll1), [tableModelView#selectionStateItem](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectionStateItem), or [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#persistSelection) options or the [tableModelView#getCurrentItem](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#getCurrentItem) method.
+If true use the [iconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html) widget to display the records. The iconList widget supports selection but does not support the [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectAll1), [tableModelView#selectionStateItem](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectionStateItem), or [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#persistSelection) options or the [tableModelView#getCurrentItem](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#getCurrentItem) method.
 
 ##### Type:
 
@@ -2490,7 +2489,7 @@ Get or set option useIconList after initialization.
 ```
 // get
 
-let value = $( ".selector" ).tableModelView( "option", "useIconList" );
+var value = $( ".selector" ).tableModelView( "option", "useIconList" );
 
 // set
 
@@ -2501,7 +2500,7 @@ $( ".selector" ).tableModelView( "option", "useIconList", true );
 
 #### currentitemchange
 
-Triggered when the current item changes. It has no additional data. Only tableModelViews with [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) = "select" or "focus" will trigger this event.
+Triggered when the current item changes. It has no additional data. Only tableModelViews with [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) = "select" or "focus" will trigger this event.
 
 ##### Properties:
 
@@ -2598,7 +2597,7 @@ $( ".selector" ).on( "tablemodelviewpagechange", function( event, data ) {} );
 
 #### selectionchange
 
-Triggered when the selection state changes. It has no additional data. Only tableModelViews with [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) = "select" or [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) true support selection.
+Triggered when the selection state changes. It has no additional data. Only tableModelViews with [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) = "select" or [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) true support selection.
 
 ##### Properties:
 
@@ -2626,7 +2625,7 @@ $( ".selector" ).on( "tablemodelviewselectionchange", function( event ) {} );
 
 #### fetchAllData(pShowProgressopt)
 
-Fetch all report data into the view's model. This is mostly a simple wrapper around the [model#fetchAll](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#fetchAll) method that doesn't provide access to the callback function and therefore there is no way to be notified when all the data is fetched. This method keeps the selection state up to date.
+Fetch all report data into the view's model. This is mostly a simple wrapper around the [model#fetchAll](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#fetchAll) method that doesn't provide access to the callback function and therefore there is no way to be notified when all the data is fetched. This method keeps the selection state up to date.
 
 If you need notification use the model `fetchAll` method.
 
@@ -2659,7 +2658,7 @@ If you need notification use the model `fetchAll` method.
 </table>
 
 Inherited From:
-- [tableModelViewBase#fetchAllData](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#fetchAllData)
+- [tableModelViewBase#fetchAllData](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#fetchAllData)
 
 #### finishEditing() → {Promise}
 
@@ -2670,7 +2669,7 @@ Any code that wants to interact with the model should call this method to make s
 Note: This does not affect any edit mode.
 
 Inherited From:
-- [tableModelViewBase#finishEditing](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#finishEditing)
+- [tableModelViewBase#finishEditing](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#finishEditing)
 
 ##### Returns:
 
@@ -2681,11 +2680,11 @@ Promise
 
 ##### Example
 
-The following function saves the grid view model for the Interactive Grid region given by HTML DOM id `igRegion`. This shows how `finishEditing` is used but it is generally much better to use the built-in Interactive Grid "save" action.
+The following function saves the grid view model for the Interactive Grid region given by static id `igRegion`. This shows how `finishEditing` is used but it is generally much better to use the built-in Interactive Grid "save" action.
 
 ```
 function doSave( igRegion ) {
-    let p, finished,
+    var p, finished,
         grid = apex.region( igRegion ).call( "getViews" ).grid;
 
     finished = grid.view$.grid( "finishEditing" );
@@ -2704,7 +2703,7 @@ function doSave( igRegion ) {
 Display the first page of records. If option `pagination.scroll` is true simply scrolls to the top of the viewport and a new page of records is added if needed. If `pagination.scroll` is false and not already on the first page the view is refreshed and shows the first page.
 
 Inherited From:
-- [tableModelViewBase#firstPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#firstPage)
+- [tableModelViewBase#firstPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#firstPage)
 
 ##### Returns:
 
@@ -2733,26 +2732,26 @@ This example focuses the view.
 $( ".selector" ).tableModelView( "focus" );
 ```
 
-#### getActiveRecord() → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)}
+#### getActiveRecord() → {[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)}
 
 Returns the active record or null if there is no active record. The active record is the one currently being edited.
 
 Inherited From:
-- [tableModelViewBase#getActiveRecord](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getActiveRecord)
+- [tableModelViewBase#getActiveRecord](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getActiveRecord)
 
 ##### Returns:
 
 Active record.
 
 Type
-[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)
+[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)
 
 #### getActiveRecordId() → {string}
 
 Returns the identity of the active record or null if there is no active record. The active record is the one currently being edited.
 
 Inherited From:
-- [tableModelViewBase#getActiveRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getActiveRecordId)
+- [tableModelViewBase#getActiveRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getActiveRecordId)
 
 ##### Returns:
 
@@ -2765,7 +2764,7 @@ string
 
 Returns the current item as a jQuery object. The current item is the item that has or last had focus. This includes control break group headings.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [tableModelView#setCurrentItem](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#setCurrentItem).
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [tableModelView#setCurrentItem](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#setCurrentItem).
 
 ##### Returns:
 
@@ -2776,11 +2775,11 @@ jQuery
 
 #### getCurrentItemValue() → {string}
 
-Returns the value of the current item. The current item is the item that has or last had focus. The value of an item is its unique identifier as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId).
+Returns the value of the current item. The current item is the item that has or last had focus. The value of an item is its unique identifier as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId).
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "focus" or "select". See also [tableModelView#setCurrentItemValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#setCurrentItemValue).
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "focus" or "select". See also [tableModelView#setCurrentItemValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#setCurrentItemValue).
 
-If a control break group heading currently has focus then this returns the value of the `data-group-id` attribute, which should be the same as the value returned from [model#getControlBreakId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getControlBreakId).
+If a control break group heading currently has focus then this returns the value of the `data-group-id` attribute, which should be the same as the value returned from [model#getControlBreakId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getControlBreakId).
 
 ##### Returns:
 
@@ -2791,7 +2790,7 @@ string
 
 #### getIconList() → (nullable) {object}
 
-Return the iconList instance if option [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) is true, and null otherwise.
+Return the iconList instance if option [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) is true, and null otherwise.
 
 Note: This returns the instance and not the jQuery object.
 
@@ -2800,7 +2799,7 @@ Deprecated:
 
 ##### Returns:
 
-iconList The [iconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html) widget instance.
+iconList The [iconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html) widget instance.
 
 Type
 object
@@ -2813,33 +2812,33 @@ This example gets the iconList and calls the getColumns method.
 $(".selector").tableModelView("getIconList").getColumns();
 ```
 
-#### getModel() → {[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)}
+#### getModel() → {[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)}
 
-Return the model currently being used by this view. The model can change over time so the returned model should not be saved and used later. If you need to store a reference to the model use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.get) and release it with [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.release).
+Return the model currently being used by this view. The model can change over time so the returned model should not be saved and used later. If you need to store a reference to the model use [apex.model.get](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.get) and release it with [apex.model.release](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.release).
 
 Inherited From:
-- [tableModelViewBase#getModel](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getModel)
+- [tableModelViewBase#getModel](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getModel)
 
 ##### Returns:
 
-The current [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html).
+The current [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html).
 
 Type
-[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)
+[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)
 
-#### getPageInfo() → (nullable) {[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#.pageInfo)}
+#### getPageInfo() → (nullable) {[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#.pageInfo)}
 
 Return information about the current pagination state of the view. Returns null if there is no data in the report.
 
 Inherited From:
-- [tableModelViewBase#getPageInfo](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#getPageInfo)
+- [tableModelViewBase#getPageInfo](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#getPageInfo)
 
 ##### Returns:
 
 Type
-[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#.pageInfo)
+[tableModelViewBase.pageInfo](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#.pageInfo)
 
-#### getRecords(pElements\$) → {Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\>}
+#### getRecords(pElements\$) → {Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\>}
 
 Given a jQuery object with one or more item elements return the corresponding model records. For this to work the elements must have a `data-id` attribute with the value of the record id.
 
@@ -2847,37 +2846,37 @@ Given a jQuery object with one or more item elements return the corresponding mo
 
 | Name | Type | Description |
 |----|----|----|
-| `pElements$` | jQuery | A jQuery object of item elements such as returned by [tableModelView#getSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#getSelection). |
+| `pElements$` | jQuery | A jQuery object of item elements such as returned by [tableModelView#getSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#getSelection). |
 
 ##### Returns:
 
 Array of records from the model corresponding to the item elements.
 
 Type
-Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\>
+Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\>
 
-#### getSelectedRecords() → (nullable) {Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\>}
+#### getSelectedRecords() → (nullable) {Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\>}
 
 Return the underlying data model records corresponding to the current selection.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) option is true.
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) option is true.
 
-When using virtual scroll pagination and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#persistSelection) is true it is possible for the user to select a range of records or all records when the model does not yet contain all the selected records. In this case the selection is incomplete and only the records currently in the model will be returned. See option [tableModelView#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#loadIncompleteSelection) for how an incomplete selection is handled.
+When using virtual scroll pagination and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#persistSelection) is true it is possible for the user to select a range of records or all records when the model does not yet contain all the selected records. In this case the selection is incomplete and only the records currently in the model will be returned. See option [tableModelView#loadIncompleteSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#loadIncompleteSelection) for how an incomplete selection is handled.
 
-See also [tableModelView#setSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#setSelectedRecords).
+See also [tableModelView#setSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#setSelectedRecords).
 
 ##### Returns:
 
 Array of records from the model corresponding to the selected items. Returns null if selection is not supported.
 
 Type
-Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.Record)\>
+Array.\<[model.Record](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.Record)\>
 
 #### getSelectedValues() → (nullable) {Array.\<string\>}
 
-Returns the value for each record returned by [tableModelView#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#getSelectedRecords). The value of a record is its unique identifier as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId).
+Returns the value for each record returned by [tableModelView#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#getSelectedRecords). The value of a record is its unique identifier as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId).
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) option is true.
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) option is true.
 
 ##### Returns:
 
@@ -2890,11 +2889,11 @@ Array.\<string\>
 
 Return the currently selected items as a jQuery collection.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) option is true.
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) option is true.
 
-Because this returns a jQuery collection it can only return selected items that are currently in the DOM. When using virtual scroll pagination and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#persistSelection) is true it is better to use [tableModelView#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#getSelectedRecords)
+Because this returns a jQuery collection it can only return selected items that are currently in the DOM. When using virtual scroll pagination and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#persistSelection) is true it is better to use [tableModelView#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#getSelectedRecords)
 
-See also [tableModelView#setSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#setSelection).
+See also [tableModelView#setSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#setSelection).
 
 ##### Returns:
 
@@ -2914,7 +2913,7 @@ Go to the specified page number. This should only be used when `pagination.scrol
 | `pPageNumber` | number | zero based page number |
 
 Inherited From:
-- [tableModelViewBase#gotoPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#gotoPage)
+- [tableModelViewBase#gotoPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#gotoPage)
 
 ##### Returns:
 
@@ -2928,7 +2927,7 @@ boolean
 Display the last page of records. If `pagination.scroll` is true simply scrolls to the bottom of the viewport and a new page of records is added if needed. If `pagination.scroll` is false and not already on the last page the view is refreshed and shows the last page. This method only works correctly if the model knows the total number of rows.
 
 Inherited From:
-- [tableModelViewBase#lastPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#lastPage)
+- [tableModelViewBase#lastPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#lastPage)
 
 ##### Returns:
 
@@ -2950,7 +2949,7 @@ $( ".selector" ).grid( "lastPage" );
 Load more records into the view. If option `pagination.scroll` is true this adds a new page of records to the end. If `pagination.scroll` is false this is the same as `nextPage`. This is intended to be used when `pagination.loadMore` is true.
 
 Inherited From:
-- [tableModelViewBase#loadMore](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#loadMore)
+- [tableModelViewBase#loadMore](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#loadMore)
 
 ##### Returns:
 
@@ -2965,23 +2964,23 @@ Call to lock the active row while async processing is in progress.
 
 The view edits one row/record at a time. This is known as the active row. In edit mode as the user changes the focused cell with the mouse, tab or enter keys if the new cell is on a different row the previous row is deactivated and the new row is activated. Any dynamic actions or other code that manipulates Column items are acting on the active row. If any actions are asynchronous such as using Ajax to set a column item value then the row must not be deactivated while the async action is in progress otherwise the result would be applied to the wrong row!
 
-So this method must be called before starting an async operation. It can be called multiple times if there are multiple async operations. For each call to `lockActive` there must be exactly one call to `unlockActive`. See also See [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#unlockActive)
+So this method must be called before starting an async operation. It can be called multiple times if there are multiple async operations. For each call to `lockActive` there must be exactly one call to `unlockActive`. See also See [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#unlockActive)
 
-If the view is part of an APEX region plugin, that region should implement the `beforeAsync` and `afterAsync` functions on the object returned from region#getSessionState by calling `lockActive` and `unlockActive` respectively. Then if an appropriate target option is passed to [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin) then the locking will be done automatically. Dynamic Actions that act on column items pass the correct target option. The bottom line is that for Dynamic Actions on columns of an Interactive Grid these lock/unlock methods are called automatically.
+If the view is part of an APEX region plugin, that region should implement the `beforeAsync` and `afterAsync` functions on the object returned from region#getSessionState by calling `lockActive` and `unlockActive` respectively. Then if an appropriate target option is passed to [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin) then the locking will be done automatically. Dynamic Actions that act on column items pass the correct target option. The bottom line is that for Dynamic Actions on columns of an Interactive Grid these lock/unlock methods are called automatically.
 
 Inherited From:
-- [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#lockActive)
+- [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#lockActive)
 
 ##### Example
 
-See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setActiveRecordValue) for an example.
+See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setActiveRecordValue) for an example.
 
 #### nextPage() → {boolean}
 
 Display the next page of records. If `pagination.scroll` is true the viewport scrolls down one page and records are added if needed. If `pagination.scroll` is false and not on the last page refresh the view to show the next page.
 
 Inherited From:
-- [tableModelViewBase#nextPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#nextPage)
+- [tableModelViewBase#nextPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#nextPage)
 
 ##### Returns:
 
@@ -3003,7 +3002,7 @@ $( ".selector" ).grid( "nextPage" );
 Display the previous page of records. If `pagination.scroll` is true the viewport scrolls up one page and records are added if needed. If `pagination.scroll` is false and not on the first page refresh the view to show the previous page.
 
 Inherited From:
-- [tableModelViewBase#previousPage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#previousPage)
+- [tableModelViewBase#previousPage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#previousPage)
 
 ##### Returns:
 
@@ -3054,15 +3053,15 @@ Refresh the view. Typically no need to call this method because it is called aut
 
 #### resize()
 
-This method must be called if the size of the container changes so that pagination state, footer position, and nested [iconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/iconList.html) if any can be updated to reflect the new size.
+This method must be called if the size of the container changes so that pagination state, footer position, and nested [iconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/iconList.html) if any can be updated to reflect the new size.
 
 #### selectAll(pFocusopt, nullable, pNoNotifyopt)
 
-Select all the items in the report that can be selected. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
+Select all the items in the report that can be selected. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" and [tableModelView#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#multiple) and [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectAll1) options are both true. This is not supported when the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) option is true.
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" and [tableModelView#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#multiple) and [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectAll1) options are both true. This is not supported when the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) option is true.
 
-This only applies to the current page or what has been rendered so far unless the selection state is persisted in the model. See [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#selectAll1) for details about how pagination settings and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#persistSelection) affect the meaning of "all items".
+This only applies to the current page or what has been rendered so far unless the selection state is persisted in the model. See [tableModelView#selectAll(1)](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#selectAll1) for details about how pagination settings and [tableModelView#persistSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#persistSelection) affect the meaning of "all items".
 
 ##### Parameters:
 
@@ -3088,7 +3087,7 @@ This only applies to the current page or what has been rendered so far unless th
 <td class="attributes">&lt;optional&gt;<br />
 &lt;nullable&gt;<br />
 </td>
-<td class="description last">If true the first selected item is given focus. If false the first selected item is made focusable. If null or not given the current item and focus is not changed.</td>
+<td class="description last">If true the first selected item is given focus.</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>pNoNotify</code></th>
@@ -3104,7 +3103,7 @@ This only applies to the current page or what has been rendered so far unless th
 
 Use after a column item value is set without triggering a change event to update the model and grid view. Has no effect if there is no active record.
 
-When a dynamic action or other event handler on a change event updates the value of the same item that triggered the change event, the change event from setting the value should be suppressed to avoid an infinite loop. However, the model is only updated from a change event. This method offers a solution to the model not being updated if the value is set asynchronously. Call this method anytime a column item is updated and the change event is suppressed.
+When a dynamic action or other event handler on a change event updates the value of the same item that triggered the change event, the change event from setting the value should be suppressed to avoid an infinite loop. However the model is only updated from a change event. This method offers a solution to the model not being updated if the value is set asynchronously. Call this method anytime a column item is updated and the change event is suppressed.
 
 ##### Parameters:
 
@@ -3113,17 +3112,17 @@ When a dynamic action or other event handler on a change event updates the value
 | `pColumn` | string | The name of the column. |
 
 Inherited From:
-- [tableModelViewBase#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#setActiveRecordValue)
+- [tableModelViewBase#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#setActiveRecordValue)
 
 ##### Example
 
-This example updates the "SALARY" column, which has HTML DOM id "C_SALARY", in interactive grid with HTML DOM id "MyGrid", to add 10 to whatever the user enters. `setTimeout` is used to simulate an async value update. The active row must be locked around the async update.
+This example updates the "SALARY" column, which has static id "C_SALARY", in interactive grid with static id "MyGrid", to add 10 to whatever the user enters. `setTimeout` is used to simulate an async value update. The active row must be locked around the async update.
 
 ```
-let salary = apex.item( "C_SALARY" );
-$( salary.node ).on( "change", function( event ) {
+var salary = apex.item( "C_SALARY" );
+$( salary.node ).change( function( event ) {
     // assume the current view is grid and not single row view.
-    const grid$ = apex.region( "MyGrid" ).call( "getCurrentView" ).view$;
+    var grid$ = apex.region( "MyGrid" ).call( "getCurrentView" ).view$;
     grid$.grid("lockActive");
     setTimeout( function() {
         // suppress this change otherwise this handler will be triggered again
@@ -3139,7 +3138,7 @@ $( salary.node ).on( "change", function( event ) {
 
 Sets the last focused item to the given pItem\$. If pItem\$ is not an item or not in the report container the current item is not changed. This also works for control break group headings.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [tableModelView#getCurrentItem](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#getCurrentItem).
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [tableModelView#getCurrentItem](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#getCurrentItem).
 
 ##### Parameters:
 
@@ -3177,9 +3176,9 @@ This is only applicable if the [tableModelView#itemNavigationMode](https://docs.
 
 #### setCurrentItemValue(pItemValue, pFocusopt)
 
-Sets the last focused item to the one with the given pItemValue. If no item has the given value the current item is not changed. The item must be rendered in order to be made the current item. The value of an item is its unique identifier as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId).
+Sets the last focused item to the one with the given pItemValue. If no item has the given value the current item is not changed. The item must be rendered in order to be made the current item. The value of an item is its unique identifier as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId).
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [tableModelView#getCurrentItemValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#getCurrentItemValue).
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or "focus". See also [tableModelView#getCurrentItemValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#getCurrentItemValue).
 
 ##### Parameters:
 
@@ -3217,11 +3216,11 @@ This is only applicable if the [tableModelView#itemNavigationMode](https://docs.
 
 #### setSelectedRecords(pRecords, pFocusopt, pNoNotifyopt) → {number}
 
-Selects the report items that correspond to the given data model records. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
+Selects the report items that correspond to the given data model records. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) option is true.
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) option is true.
 
-See also [tableModelView#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#getSelectedRecords).
+See also [tableModelView#getSelectedRecords](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#getSelectedRecords).
 
 ##### Parameters:
 
@@ -3273,9 +3272,9 @@ number
 
 #### setSelectedValues(pValues, pFocusopt, pNoNotifyopt) → {number}
 
-Selects the report items that correspond to the given values. The value of an item is the unique identifier of the corresponding model record as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId) and also the value of the item's `data-id` attribute. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
+Selects the report items that correspond to the given values. The value of an item is the unique identifier of the corresponding model record as returned by [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId) and also the value of the item's `data-id` attribute. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) option is true.
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) option is true.
 
 ##### Parameters:
 
@@ -3327,11 +3326,11 @@ number
 
 #### setSelection(pElements\$, pFocusopt, pNoNotifyopt)
 
-Set the selected items. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
+Set the selected items. Triggers the [tableModelView#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#event:selectionchange) event if the selection changes unless `pNoNotify` is true.
 
-This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#itemNavigationMode) option is "select" or if the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) option is true.
+This is only applicable if the [tableModelView#itemNavigationMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#itemNavigationMode) option is "select" or if the [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) option is true.
 
-See also [tableModelView#getSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#getSelection).
+See also [tableModelView#getSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#getSelection).
 
 ##### Parameters:
 
@@ -3378,11 +3377,11 @@ See also [tableModelView#getSelection](https://docs.oracle.com/en/database/oracl
 
 Call to unlock the active row after async processing is complete.
 
-Call after the async operation completes. See [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#lockActive) for more information.
+Call after the async operation completes. See [tableModelViewBase#lockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#lockActive) for more information.
 
 Inherited From:
-- [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelViewBase.html#unlockActive)
+- [tableModelViewBase#unlockActive](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelViewBase.html#unlockActive)
 
 ##### Example
 
-See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#setActiveRecordValue) for an example.
+See [grid#setActiveRecordValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#setActiveRecordValue) for an example.

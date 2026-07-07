@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/global.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/global.html -->
 <!-- Non-namespace APIs: global -->
 
 # Non-namespace APIs
@@ -486,7 +486,7 @@ Type
 
 #### \$s(pNd, pValue, pDisplayValueopt, pSuppressChangeEventopt)
 
-Given a DOM node or string ID (pNd), this function sets the APEX item value taking into account the item type. This is a shortcut for [item#setValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html#setValue). See setValue documentation for details.
+Given a DOM node or string ID (pNd), this function sets the APEX item value taking into account the item type. This is a shortcut for [item#setValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html#setValue). See setValue documentation for details.
 
 ##### Parameters:
 
@@ -601,7 +601,7 @@ Array
 
 #### \$v(pNd)
 
-Given a DOM node or string ID (pNd), this function returns the value of an APEX item as a string. This will either be a single value, or if the item supports multiple values, it will be a ':' colon separated list of values. Note this does not make use of the configurable separator or storage type for multivalued items. See [item#getValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html#getValue) for more details.
+Given a DOM node or string ID (pNd), this function returns the value of an APEX item as a string. This will either be a single value, or if the item supports multiple values, it will be a ':' colon separated list of values. Note this does not make use of the configurable separator or storage type for multivalued items. See [item#getValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html#getValue) for more details.
 
 ##### Parameters:
 
@@ -611,7 +611,7 @@ Given a DOM node or string ID (pNd), this function returns the value of an APEX 
 
 #### \$v2(pNd)
 
-Given a DOM node or string ID (pNd), this function returns the value of an APEX item as a string or an array if the item type can contain multiple values. For example checkbox or multi select list. See [item#getValue](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html#getValue) for more details.
+Given a DOM node or string ID (pNd), this function returns the value of an APEX item as a string or an array if the item type can contain multiple values. For example checkbox or multi select list. See [item#getValue](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html#getValue) for more details.
 
 ##### Parameters:
 
@@ -759,7 +759,7 @@ Element \| Array.\<Element\>
 
 #### \$x_ClassByClass(pNd, pClass, pTagopt, pClass2opt) → {Element\|Array.\<Element\>}
 
-Sets the className of an array of nodes that are selected by (pNd), (pClass) and (pTag) to class (pClass2). See [\$x_ByClass](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/global.html#$x_ByClass) and [\$x_Class](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/global.html#$x_Class).
+Sets the className of an array of nodes that are selected by (pNd), (pClass) and (pTag) to class (pClass2). See [\$x_ByClass](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/global.html#$x_ByClass) and [\$x_Class](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/global.html#$x_Class).
 
 ##### Parameters:
 

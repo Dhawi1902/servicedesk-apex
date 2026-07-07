@@ -1,27 +1,27 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 10  APEX_AUTHENTICATION
 
 The `APEX_AUTHENTICATION` package provides a public API for authentication plug-in.
 
-- [Constants](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION-Constants.html#GUID-0D2C76D2-2A42-42AD-A86F-F92508B64A8D)
-- [CALLBACK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CALLBACK-Procedure.html#GUID-69402EA6-F362-4D25-BBB4-B2C67C789E6E)
-- [CALLBACK2 Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CALLBACK2-Procedure.html#GUID-F67D5A66-2ECB-40A3-8FEE-7D2689C1E103)
-- [GET_CALLBACK_URL Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CALLBACK_URL-Function.html#GUID-313219AF-BA04-4367-9EA0-AB2946AD2689)
-- [GET_LOGIN_USERNAME_COOKIE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LOGIN_USERNAME_COOKIE-Function.html#GUID-BD5AC718-4D89-4BD9-940E-FC88BF937945)
-- [IS_AUTHENTICATED Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_AUTHENTICATED-Function.html#GUID-A240AEBD-E694-43F1-A2E0-1F86DB484365)
-- [IS_PUBLIC_USER Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_PUBLIC_USER-Function.html#GUID-EF06EDD9-8483-4297-915F-59AA5853D342)
-- [LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97)
-- [LOGOUT Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGOUT-Procedure.html#GUID-99FDBE2B-0369-4EAE-987E-4D7C44FA92AF)
-- [PERSISTENT_AUTH_ENABLED Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PERSISTENT_AUTH_ENABLED-Function.html#GUID-3EC703D9-7AA1-45E6-961F-290CBBC6E38C)
-- [PERSISTENT_COOKIES_ENABLED Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PERSISTENT_COOKIES_ENABLED-Function.html#GUID-D44AD38F-D649-4E1E-AA78-A09F8BB0E3C7)
-- [POST_LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/POST_LOGIN-Procedure.html#GUID-72781393-33B9-4992-816A-2DA44B30F3FC)
-- [REMOVE_CURRENT_PERSISTENT_AUTH Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_CURRENT_PERSISTENT_AUTH-Procedure.html#GUID-657B316B-DEEB-477E-9474-EB2635AAB3FF)
-- [REMOVE_PERSISTENT_AUTH Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_PERSISTENT_AUTH-Procedure.html#GUID-4E1EC64B-FCCB-40EA-9690-F653D10093E0)
-- [SAML_CALLBACK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SAML_CALLBACK-Procedure.html#GUID-8FF3F8FD-7029-469E-A8A4-3CFF30DDECBD)
-- [SAML_METADATA Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SAML_METADATA-Procedure.html#GUID-E13F39D2-CDB0-46B4-A842-4291A98F4247)
-- [SEND_LOGIN_USERNAME_COOKIE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SEND_LOGIN_USERNAME_COOKIE-Procedure.html#GUID-CF193954-1F7C-4045-9148-EA9D42C6FC28)
+- [Constants](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION-Constants.html#GUID-0D2C76D2-2A42-42AD-A86F-F92508B64A8D)
+- [CALLBACK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CALLBACK-Procedure.html#GUID-69402EA6-F362-4D25-BBB4-B2C67C789E6E)
+- [CALLBACK2 Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CALLBACK2-Procedure.html#GUID-F67D5A66-2ECB-40A3-8FEE-7D2689C1E103)
+- [GET_CALLBACK_URL Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_CALLBACK_URL-Function.html#GUID-313219AF-BA04-4367-9EA0-AB2946AD2689)
+- [GET_LOGIN_USERNAME_COOKIE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_LOGIN_USERNAME_COOKIE-Function.html#GUID-BD5AC718-4D89-4BD9-940E-FC88BF937945)
+- [IS_AUTHENTICATED Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/IS_AUTHENTICATED-Function.html#GUID-A240AEBD-E694-43F1-A2E0-1F86DB484365)
+- [IS_PUBLIC_USER Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/IS_PUBLIC_USER-Function.html#GUID-EF06EDD9-8483-4297-915F-59AA5853D342)
+- [LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97)
+- [LOGOUT Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LOGOUT-Procedure.html#GUID-99FDBE2B-0369-4EAE-987E-4D7C44FA92AF)
+- [PERSISTENT_AUTH_ENABLED Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/PERSISTENT_AUTH_ENABLED-Function.html#GUID-3EC703D9-7AA1-45E6-961F-290CBBC6E38C)
+- [PERSISTENT_COOKIES_ENABLED Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/PERSISTENT_COOKIES_ENABLED-Function.html#GUID-D44AD38F-D649-4E1E-AA78-A09F8BB0E3C7)
+- [POST_LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/POST_LOGIN-Procedure.html#GUID-72781393-33B9-4992-816A-2DA44B30F3FC)
+- [REMOVE_CURRENT_PERSISTENT_AUTH Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REMOVE_CURRENT_PERSISTENT_AUTH-Procedure.html#GUID-657B316B-DEEB-477E-9474-EB2635AAB3FF)
+- [REMOVE_PERSISTENT_AUTH Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REMOVE_PERSISTENT_AUTH-Procedure.html#GUID-4E1EC64B-FCCB-40EA-9690-F653D10093E0)
+- [SAML_CALLBACK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SAML_CALLBACK-Procedure.html#GUID-8FF3F8FD-7029-469E-A8A4-3CFF30DDECBD)
+- [SAML_METADATA Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SAML_METADATA-Procedure.html#GUID-E13F39D2-CDB0-46B4-A842-4291A98F4247)
+- [SEND_LOGIN_USERNAME_COOKIE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SEND_LOGIN_USERNAME_COOKIE-Procedure.html#GUID-CF193954-1F7C-4045-9148-EA9D42C6FC28)
 
 ------------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ The APEX_AUTHENTICATION package uses the following constants.
 c_default_username_cookie constant varchar2(30) := 'LOGIN_USERNAME_COOKIE';
 ```
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -92,7 +92,7 @@ Parameters
 | `p_session_id` | The Oracle APEX session identifier. |
 | `p_app_id` | The database application identifier. |
 | `p_page_id` | Optional page identifier. |
-| `p_ajax_identifier` | The system generated Ajax identifier. See [GET_AJAX_IDENTIFIER Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_AJAX_IDENTIFIER-Function.html#GUID-4E48F89D-40A1-4EB3-92D7-ACC401B89F47). |
+| `p_ajax_identifier` | The system generated Ajax identifier. See [GET_AJAX_IDENTIFIER Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_AJAX_IDENTIFIER-Function.html#GUID-4E48F89D-40A1-4EB3-92D7-ACC401B89F47). |
 | `p_x01` through `p_x10` | Optional parameters that the external login passes to the authentication plugin. |
 | `state` | OAuth2. |
 | `code` | OAuth2. |
@@ -147,16 +147,16 @@ END;
 
 See Also:
 
-- [GET_CALLBACK_URL Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_CALLBACK_URL-Function.html#GUID-313219AF-BA04-4367-9EA0-AB2946AD2689)
-- [CALLBACK2 Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CALLBACK2-Procedure.html#GUID-F67D5A66-2ECB-40A3-8FEE-7D2689C1E103)
+- [GET_CALLBACK_URL Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_CALLBACK_URL-Function.html#GUID-313219AF-BA04-4367-9EA0-AB2946AD2689)
+- [CALLBACK2 Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CALLBACK2-Procedure.html#GUID-F67D5A66-2ECB-40A3-8FEE-7D2689C1E103)
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
 ## 10.3 CALLBACK2 Procedure
 
-This procedure is an alternative to [CALLBACK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CALLBACK-Procedure.html#GUID-69402EA6-F362-4D25-BBB4-B2C67C789E6E).
+This procedure is an alternative to [CALLBACK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CALLBACK-Procedure.html#GUID-69402EA6-F362-4D25-BBB4-B2C67C789E6E).
 
 Syntax
 
@@ -200,9 +200,9 @@ APEX_AUTHENTICATION.CALLBACK2 (
 
 See Also:
 
-[CALLBACK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CALLBACK-Procedure.html#GUID-69402EA6-F362-4D25-BBB4-B2C67C789E6E)
+[CALLBACK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CALLBACK-Procedure.html#GUID-69402EA6-F362-4D25-BBB4-B2C67C789E6E)
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -237,9 +237,9 @@ Parameters
 
 See Also:
 
-[CALLBACK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CALLBACK-Procedure.html#GUID-69402EA6-F362-4D25-BBB4-B2C67C789E6E)
+[CALLBACK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CALLBACK-Procedure.html#GUID-69402EA6-F362-4D25-BBB4-B2C67C789E6E)
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -275,9 +275,9 @@ This example is a part of a "Before Header" process. It populates a text item `P
 
 See Also:
 
-[SEND_LOGIN_USERNAME_COOKIE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SEND_LOGIN_USERNAME_COOKIE-Procedure.html#GUID-CF193954-1F7C-4045-9148-EA9D42C6FC28)
+[SEND_LOGIN_USERNAME_COOKIE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SEND_LOGIN_USERNAME_COOKIE-Procedure.html#GUID-CF193954-1F7C-4045-9148-EA9D42C6FC28)
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -310,9 +310,9 @@ END IF;
 
 See Also:
 
-[IS_PUBLIC_USER Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_PUBLIC_USER-Function.html#GUID-EF06EDD9-8483-4297-915F-59AA5853D342)
+[IS_PUBLIC_USER Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/IS_PUBLIC_USER-Function.html#GUID-EF06EDD9-8483-4297-915F-59AA5853D342)
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -343,7 +343,7 @@ ELSE
 END IF;
 ```
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -395,9 +395,9 @@ END;
 
 See Also:
 
-[POST_LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/POST_LOGIN-Procedure.html#GUID-72781393-33B9-4992-816A-2DA44B30F3FC)
+[POST_LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/POST_LOGIN-Procedure.html#GUID-72781393-33B9-4992-816A-2DA44B30F3FC)
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -432,7 +432,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -465,7 +465,7 @@ begin
 end;
 ```
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -485,13 +485,13 @@ Returns
 - `TRUE`: `WORKSPACE_NAME_USER_COOKIE` is set to `Y` or not set.
 - `FALSE`: `WORKSPACE_NAME_USER_COOKIE` is set to `N`.
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
 ## 10.12 POST_LOGIN Procedure
 
-This procedure authenticates the user in the current session. It runs a subset of `APEX_AUTHENTICATION.LOGIN`, without steps 1 and 2. For steps, see [LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97). This procedure is useful in authentication schemes where user credentials checking is performed externally to Oracle APEX.
+This procedure authenticates the user in the current session. It runs a subset of `APEX_AUTHENTICATION.LOGIN`, without steps 1 and 2. For steps, see [LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97). This procedure is useful in authentication schemes where user credentials checking is performed externally to Oracle APEX.
 
 Syntax
 
@@ -520,9 +520,9 @@ apex_authentication.post_login('JOE USER', 'mysecret');
 
 See Also:
 
-[LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97)
+[LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97)
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -550,9 +550,9 @@ apex_authentication.remove_current_persistent_auth;
 
 See Also:
 
-[LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97)
+[LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97)
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -584,9 +584,9 @@ apex_authentication.remove_persistent_auth(
 
 See Also:
 
-[LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97)
+[LOGIN Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/LOGIN-Procedure.html#GUID-BAC65D9D-2964-4A9D-B3A7-9194FC917C97)
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -615,7 +615,7 @@ Parameters
 | `SigAlg` | Signature algorithm. |
 | `Signature` | Signature value. |
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -644,7 +644,7 @@ The following example downloads SAML metadata for app 101.
 $ curl https://www.example.com/apex/apex_authentication.saml_metadata?p_app_id=101
 ```
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
 
 ------------------------------------------------------------------------
 
@@ -681,7 +681,7 @@ apex_authentication.send_login_username_cookie (
 
 See Also:
 
-- [GET_LOGIN_USERNAME_COOKIE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LOGIN_USERNAME_COOKIE-Function.html#GUID-BD5AC718-4D89-4BD9-940E-FC88BF937945)
-- [PERSISTENT_COOKIES_ENABLED Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/PERSISTENT_COOKIES_ENABLED-Function.html#GUID-D44AD38F-D649-4E1E-AA78-A09F8BB0E3C7)
+- [GET_LOGIN_USERNAME_COOKIE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_LOGIN_USERNAME_COOKIE-Function.html#GUID-BD5AC718-4D89-4BD9-940E-FC88BF937945)
+- [PERSISTENT_COOKIES_ENABLED Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/PERSISTENT_COOKIES_ENABLED-Function.html#GUID-D44AD38F-D649-4E1E-AA78-A09F8BB0E3C7)
 
-**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)
+**Parent topic:** [APEX_AUTHENTICATION](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_AUTHENTICATION.html#GUID-2BA36F55-4881-455B-AC19-123DD9365E92)

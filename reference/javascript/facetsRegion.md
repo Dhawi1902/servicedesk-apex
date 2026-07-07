@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html -->
 <!-- Interfaces: facetsRegion -->
 
 # Interface: facetsRegion
@@ -72,11 +72,11 @@
 
 ## facetsRegion
 
-The facetsRegion interface is used to access the properties and methods of the facets API which is used by both the Faceted Search and Smart Filters regions. You get access to the facetsRegion interface with the [apex.region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.region.html) function when passed the regionId (HTML DOM id) of either a Faceted Search Region or Smart Filters Region. The terms *facet* and *filter* (when used as a noun) are often used interchangeably.
+The facetsRegion interface is used to access the properties and methods of the facets API which is used by both the Faceted Search and Smart Filters regions. You get access to the facetsRegion interface with the [apex.region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.region.html) function when passed the regionId (static ID) of either a Faceted Search Region or Smart Filters Region. The terms *facet* and *filter* (when used as a noun) are often used interchangeably.
 
-The facetsRegion provides the user interface used to search and filter an associated report. The Faceted Search and Smart Filters regions have a great deal of overlap in their functionality; both allow searching and filtering a report. The biggest difference is in the UI and this is controlled by the [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) property. A number of properties are only supported in one mode or the other as noted in the description of each property.
+The facetsRegion provides the user interface used to search and filter an associated report. The Faceted Search and Smart Filters regions have a great deal of overlap in their functionality; both allow searching and filtering a report. The biggest difference is in the UI and this is controlled by the [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) property. A number of properties are only supported in one mode or the other as noted in the description of each property.
 
-Report region plug-in developers use the facetsRegion API to support the client side of faceted search for their plug-in. The plug-in server-side render code must pass the HTML DOM id of the Faceted Search or Smart Filter region to the client as part of its configuration. The plug-in region must listen for the [facetsRegion#event:change](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#event:change) event and refresh the report in response. Before sending the ajax request to refresh the report it must call [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#lock) and after the response completes it must call [facetsRegion#unlock](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#unlock).
+Report region plug-in developers use the facetsRegion API to support the client side of faceted search for their plug-in. The plug-in server-side render code must pass the static ID of the Faceted Search or Smart Filter region to the client as part of its configuration. The plug-in region must listen for the [facetsRegion#event:change](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#event:change) event and refresh the report in response. Before sending the ajax request to refresh the report it must call [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#lock) and after the response completes it must call [facetsRegion#unlock](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#unlock).
 
 ### Facet Items
 
@@ -121,7 +121,7 @@ Since:
 
 ### Extends
 
-- [region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html)
+- [region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html)
 
 ### Properties
 
@@ -129,9 +129,9 @@ Since:
 
 Batch facet control changes or not. Batching changes allows the user to make a number of selections before the report refreshes. In some cases this can make searching more efficient.
 
-When true, the [facetsRegion#event:change](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#event:change) event is delayed until an "apply" button is pressed. When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode) there will be an apply button shown (unless [facetsRegion#externalApply](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#externalApply) is true). When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) changes are applied when the the facet popup is closed.
+When true, the [facetsRegion#event:change](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#event:change) event is delayed until an "apply" button is pressed. When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode) there will be an apply button shown (unless [facetsRegion#externalApply](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#externalApply) is true). When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) changes are applied when the the facet popup is closed.
 
-When false, the [facetsRegion#event:change](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#event:change) event is fired as soon as any facet control value changes.
+When false, the [facetsRegion#event:change](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#event:change) event is fired as soon as any facet control value changes.
 
 ##### Type:
 
@@ -175,7 +175,7 @@ apex.region( "myRegionId" ).chartTopNValues = 20;
 
 #### clearOnHide :boolean
 
-Controls if facet values are cleared when hidden by the facet configuration popup (More Filters). This option is not applicable when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode)
+Controls if facet values are cleared when hidden by the facet configuration popup (More Filters). This option is not applicable when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode)
 
 ##### Type:
 
@@ -197,7 +197,7 @@ apex.region( "myRegionId" ).clearOnHide = false;
 
 #### collapsibleSearchBar :boolean\|null
 
-This determines if the search bar is collapsible. If null (the default) the search bar is collapsible on mobile sized screens but not on desktop (larger) screens. If true the searchbar is always collapsible. If false the searchbar is not collapsible. When collapsible and there are no filters the search input field is not shown and the suggestions, if any, are on one line. This only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) and [facetsRegion#maxChips](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#maxChips) is not 0.
+This determines if the search bar is collapsible. If null (the default) the search bar is collapsible on mobile sized screens but not on desktop (larger) screens. If true the searchbar is always collapsible. If false the searchbar is not collapsible. When collapsible and there are no filters the search input field is not shown and the suggestions, if any, are on one line. This only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) and [facetsRegion#maxChips](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#maxChips) is not 0.
 
 ##### Type:
 
@@ -217,19 +217,19 @@ var value = apex.region( "myRegionId" ).collapsibleSearchBar;
 apex.region( "myRegionId" ).collapsibleSearchBar = true;
 ```
 
-#### controls :Array.\<[facetsRegion.control](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#.control)\>
+#### controls :Array.\<[facetsRegion.control](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#.control)\>
 
 An array of facet control objects. Required. The controls are set according to the region facet or filter configuration.
 
 ##### Type:
 
-- Array.\<[facetsRegion.control](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#.control)\>
+- Array.\<[facetsRegion.control](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#.control)\>
 
 #### currentFacets :string\|boolean
 
 Controls if and where the list of current (applied) facet choices are shown. This is known as the current facets area. If a string, it is the selector of an element to render the list of current facet values in. If true the list of current facets is added at the top of the facets region. If false or not present there is no list of current facets.
 
-This option can only be set during initialization. When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) this option is forced to be false because applied facets are always shown in the search bar.
+This option can only be set during initialization. When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) this option is forced to be false because applied facets are always shown in the search bar.
 
 ##### Type:
 
@@ -255,7 +255,7 @@ The jQuery object for the region element.
 - jQuery
 
 Inherited From:
-- [region#element](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#element)
+- [region#element](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#element)
 
 ##### Example
 
@@ -267,7 +267,7 @@ var value = apex.region( "myRegionId" ).element;
 
 #### externalApply :boolean
 
-Only applies if [facetsRegion#batch](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#batch) is true and [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode). If true no apply button is shown. Used when facets are in a dialog or popup or otherwise have some other external way to apply the changes. See the [facetsRegion#apply](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#apply) method.
+Only applies if [facetsRegion#batch](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#batch) is true and [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode). If true no apply button is shown. Used when facets are in a dialog or popup or otherwise have some other external way to apply the changes. See the [facetsRegion#apply](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#apply) method.
 
 ##### Type:
 
@@ -289,7 +289,7 @@ apex.region( "myRegionId" ).externalApply = true;
 
 #### feedback :boolean
 
-If true the facet control values give feedback (counts) about how many resources match the facet value. If false there is no feedback. Feedback can also be configured on a per facet basis with the `hasFeedback` property of a control. See [facetsRegion.control](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#.control).
+If true the facet control values give feedback (counts) about how many resources match the facet value. If false there is no feedback. Feedback can also be configured on a per facet basis with the `hasFeedback` property of a control. See [facetsRegion.control](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#.control).
 
 This option can only be set during initialization.
 
@@ -310,20 +310,20 @@ var value = apex.region( "myRegionId" ).feedback;
 
 #### filterRegionId :string
 
-For region plug-ins which support Faceted Search / Smart Filters it is possible to pass in the DOM ID of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html) region in order for APEX to bind the two together. If provided, the region will be automatically refreshed as the filters change. Further, if the region's refresh callback returns a Promise, APEX will also automatically perform the appropriate locking and unlocking of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html) region during refresh.
+For region plug-ins which support Faceted Search / Smart Filters it is possible to pass in the DOM ID of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html) region in order for APEX to bind the two together. If provided, the region will be automatically refreshed as the filters change. Further, if the region's refresh callback returns a Promise, APEX will also automatically perform the appropriate locking and unlocking of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html) region during refresh.
 
 ##### Type:
 
 - string
 
 Inherited From:
-- [region#filterRegionId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#filterRegionId)
+- [region#filterRegionId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#filterRegionId)
 
 #### maxChips :number
 
-The maximum number of suggestion filter chips to show at a time. If 0 the suggestion filter chips area is not shown. If -1 then all available facet suggestions are shown. The [facetsRegion#moreFiltersChip](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#moreFiltersChip) option is only useful when this value is positive.
+The maximum number of suggestion filter chips to show at a time. If 0 the suggestion filter chips area is not shown. If -1 then all available facet suggestions are shown. The [facetsRegion#moreFiltersChip](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#moreFiltersChip) option is only useful when this value is positive.
 
-This only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) and is ignored otherwise.
+This only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) and is ignored otherwise.
 
 ##### Type:
 
@@ -347,7 +347,7 @@ apex.region( "myRegionId" ).maxChips = 6;
 
 Determine if a special "more filters" chip is shown in the suggestion filter chips area. When clicked this chip shows a list of available filers to choose and filer the report on.
 
-This only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) and is ignored otherwise. See also [facetsRegion#maxChips](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#maxChips).
+This only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) and is ignored otherwise. See also [facetsRegion#maxChips](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#maxChips).
 
 ##### Type:
 
@@ -369,7 +369,7 @@ apex.region( "myRegionId" ).moreFiltersChip = false;
 
 #### multipleSearches :boolean
 
-Specify if multiple searches are allowed. If true the report can be filtered by multiple search terms. Each search term must match some part of a record for it to be included in the report. (This means that search term conditions are combined with AND.) If false only a single search term is allowed. When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) this option is forced to be true and cannot be changed.
+Specify if multiple searches are allowed. If true the report can be filtered by multiple search terms. Each search term must match some part of a record for it to be included in the report. (This means that search term conditions are combined with AND.) If false only a single search term is allowed. When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) this option is forced to be true and cannot be changed.
 
 ##### Type:
 
@@ -391,7 +391,7 @@ apex.region( "myRegionId" ).multipleSearches = true;
 
 #### numberFormat :string\|boolean
 
-Controls if and how numbers for facet value counts and total count are formatted. If false the numbers are not formatted. If true the numbers are formatted using compact format (with no fractional digits) for numbers greater than or equal to the [facetsRegion#numberFormatThreshold](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#numberFormatThreshold) and a default format model with group separators otherwise. The [facetsRegion#numberFormatOptions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#numberFormatOptions) are not used. If a string: it is a database number format model or the keyword "compact".
+Controls if and how numbers for facet value counts and total count are formatted. If false the numbers are not formatted. If true the numbers are formatted using compact format (with no fractional digits) for numbers greater than or equal to the [facetsRegion#numberFormatThreshold](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#numberFormatThreshold) and a default format model with group separators otherwise. The [facetsRegion#numberFormatOptions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#numberFormatOptions) are not used. If a string: it is a database number format model or the keyword "compact".
 
 ##### Type:
 
@@ -413,7 +413,7 @@ apex.region( "myRegionId" ).numberFormat = "999G999G999G999";
 
 #### numberFormatOptions :object
 
-Options to pass to the number formatting function. The available option properties depend on the value of [facetsRegion#numberFormat](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#numberFormat). See [apex.locale.formatNumber](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.locale.html#.formatNumber) and [apex.locale.formatCompactNumber](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.locale.html#.formatCompactNumber).
+Options to pass to the number formatting function. The available option properties depend on the value of [facetsRegion#numberFormat](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#numberFormat). See [apex.locale.formatNumber](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.locale.html#.formatNumber) and [apex.locale.formatCompactNumber](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.locale.html#.formatCompactNumber).
 
 ##### Type:
 
@@ -437,7 +437,7 @@ apex.region( "myRegionId" ).numberFormatOptions = {
 
 #### numberFormatThreshold :number
 
-See [facetsRegion#numberFormat](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#numberFormat). Only applies if [facetsRegion#numberFormat](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#numberFormat) is true. If null and `numberFormat` is true then the default format model with group separators is used.
+See [facetsRegion#numberFormat](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#numberFormat). Only applies if [facetsRegion#numberFormat](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#numberFormat) is true. If null and `numberFormat` is true then the default format model with group separators is used.
 
 ##### Type:
 
@@ -481,7 +481,7 @@ apex.region( "myRegionId" ).persistState = false;
 
 #### searchButton :string
 
-The id of a button that initiates the search. Only applies if [facetsRegion#searchField](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#searchField) is a string page item id. If this value is changed call [facetsRegion#refreshView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#refreshView).
+The id of a button that initiates the search. Only applies if [facetsRegion#searchField](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#searchField) is a string page item id. If this value is changed call [facetsRegion#refreshView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#refreshView).
 
 ##### Type:
 
@@ -503,7 +503,7 @@ apex.region( "myRegionId" ).searchButton = "P1_SEARCH_BUTTON";
 
 #### searchField :string\|boolean
 
-This controls the search field. If true a search field is included in the facets area. If false there is no search field. If a string it is the ID of a page item input field to use as the search field When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) this option is forced to be true and cannot be changed.
+This controls the search field. If true a search field is included in the facets area. If false there is no search field. If a string it is the ID of a page item input field to use as the search field When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) this option is forced to be true and cannot be changed.
 
 ##### Type:
 
@@ -525,7 +525,7 @@ apex.region( "myRegionId" ).searchField = "P1_SEARCH";
 
 #### searchItem :string
 
-Name of the search item. Required if [facetsRegion#searchField](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#searchField) is not false.
+Name of the search item. Required if [facetsRegion#searchField](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#searchField) is not false.
 
 ##### Type:
 
@@ -546,7 +546,7 @@ var value = apex.region( "myRegionId" ).searchItem;
 
 Determines if facets can have a button to show a chart of facet counts. If true a chart for a single facet can be shown in a dialog (or popup). If false no charts can be shown. If a string it is the selector of an element to render the charts in.
 
-Charts can also be shown with the [facetsRegion#addChart](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#addChart) method unless this option is false. When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) there is no built-in UI for the user to show charts. The require and JET chart libraries and JET CSS must be available. This is done automatically by the Faceted Search region but not the Smart Filters region.
+Charts can also be shown with the [facetsRegion#addChart](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#addChart) method unless this option is false. When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart filter mode) there is no built-in UI for the user to show charts. The require and JET chart libraries and JET CSS must be available. This is done automatically by the Faceted Search region but not the Smart Filters region.
 
 ##### Type:
 
@@ -597,9 +597,9 @@ Object containing translatable strings. All required.
 
 | Name | Type | Description |
 |----|----|----|
-| `searchLabel` | string | Accessible label for the search input field or search button. Only used when [facetsRegion#searchField](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#searchField) is true. |
-| `searchPlaceholder` | string | Placeholder text for the search input field. Only used when [facetsRegion#searchField](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#searchField) is true. |
-| `totalCountLabel` | string | Label to show before the total results count. Only used when [facetsRegion#showTotalCount](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#showTotalCount) is true. |
+| `searchLabel` | string | Accessible label for the search input field or search button. Only used when [facetsRegion#searchField](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#searchField) is true. |
+| `searchPlaceholder` | string | Placeholder text for the search input field. Only used when [facetsRegion#searchField](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#searchField) is true. |
+| `totalCountLabel` | string | Label to show before the total results count. Only used when [facetsRegion#showTotalCount](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#showTotalCount) is true. |
 
 ##### Example
 
@@ -618,7 +618,7 @@ The facetsRegion type is "Facets".
 - string
 
 Overrides:
-- [region#type](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#type)
+- [region#type](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#type)
 
 #### uiMode :string
 
@@ -811,7 +811,7 @@ Add/show a chart for the given facet.
 
 This API only works for facets that are displayed inline (facetsRegion#displayAs is "INLINE").
 
-See also [facetsRegion#removeChart](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#removeChart).
+See also [facetsRegion#removeChart](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#removeChart).
 
 ##### Parameters:
 
@@ -892,7 +892,7 @@ apex.region( "myRegionId" ).addChart( "P1_JOB", $( "#chartDashboard" ), {type: "
 
 #### apply()
 
-Apply any outstanding changes to facet values. This method is intended for when both [facetsRegion#batch](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#batch) and [facetsRegion#externalApply](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#externalApply) are true.
+Apply any outstanding changes to facet values. This method is intended for when both [facetsRegion#batch](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#batch) and [facetsRegion#externalApply](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#externalApply) are true.
 
 ##### Example
 
@@ -908,7 +908,7 @@ $( "#myApplyButton" ).on( "click", function() {
 
 Clear all the current (applied) facet values and any search terms.
 
-See also [facetsRegion#clearFacets](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#clearFacets).
+See also [facetsRegion#clearFacets](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#clearFacets).
 
 ##### Example
 
@@ -924,11 +924,11 @@ $("#CLEAR_BUTTON").on( "click", function() {
 
 Clear all the current (applied) facet values. Search terms if any are not cleared.
 
-See also [facetsRegion#clear](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#clear).
+See also [facetsRegion#clear](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#clear).
 
 ##### Example
 
-This example defines an action that will clear all the facet values when the keyboard shortcut Ctrl+/,X is pressed. The action could also be associated with a menu item and/or button. See also [actions#add](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#add).
+This example defines an action that will clear all the facet values when the keyboard shortcut Ctrl+/,X is pressed. The action could also be associated with a menu item and/or button. See also [actions#add](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#add).
 
 ```
 apex.actions.add( [ {
@@ -945,7 +945,7 @@ apex.actions.add( [ {
 
 Refreshes the counts for all the facets. This is useful if the report is also filtered by controls, such as page items, that are external to the facets region and those external control values have changed.
 
-See also [facetsRegion#refresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#refresh).
+See also [facetsRegion#refresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#refresh).
 
 ##### Example
 
@@ -959,10 +959,10 @@ $("#P1_EXTERNAL_FILTER").on( "change", function() {
 
 #### focus()
 
-Focus the first tabbable element. In faceted search mode ([facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "F") the search input field is focused if [facetsRegion#searchField](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#searchField) is true or the first facet control body otherwise. In smart filter mode ([facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S") the search bar search input field or search button is focused.
+Focus the first tabbable element. In faceted search mode ([facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "F") the search input field is focused if [facetsRegion#searchField](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#searchField) is true or the first facet control body otherwise. In smart filter mode ([facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S") the search bar search input field or search button is focused.
 
 Overrides:
-- [region#focus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#focus)
+- [region#focus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#focus)
 
 ##### Example
 
@@ -1000,7 +1000,7 @@ object
 
 #### getTotalResourceCount() → {number}
 
-Returns the total number of resources (records) in the report. This is the same value displayed by the [facetsRegion#showTotalCount](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#showTotalCount) property, except it is not formatted. Returns null if [facetsRegion#feedback](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#feedback) property is false.
+Returns the total number of resources (records) in the report. This is the same value displayed by the [facetsRegion#showTotalCount](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#showTotalCount) property, except it is not formatted. Returns null if [facetsRegion#feedback](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#feedback) property is false.
 
 ##### Returns:
 
@@ -1019,13 +1019,13 @@ console.log("Total records is ", apex.region( "regionId" ).getTotalResourceCount
 
 Hides the specified facet. Note that hiding a facet does not clear any value(s) that may currently be filtering the report.
 
-In faceted search mode ([facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "F") the facet header and all choices or other selection UI are hidden.
+In faceted search mode ([facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "F") the facet header and all choices or other selection UI are hidden.
 
 This API only works for facets that are displayed inline (facetsRegion#displayAs is "INLINE").
 
-In smart filter mode ([facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S") the hidden facet will not show in the suggestion chip area or in the suggestion drop down.
+In smart filter mode ([facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S") the hidden facet will not show in the suggestion chip area or in the suggestion drop down.
 
-See also [facetsRegion#showFacet](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#showFacet).
+See also [facetsRegion#showFacet](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#showFacet).
 
 ##### Parameters:
 
@@ -1050,18 +1050,18 @@ apex.region( "myRegionId" ).hideFacet( "P1_COMM" );
 
 #### lock()
 
-Disables the facets region so that facet values cannot be changed through the UI or API. This is done by the report region associated with this facets region so that multiple requests are not sent to the server at the same time. For every call to [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#lock) there must be a corresponding call to [facetsRegion#unlock](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#unlock).
+Disables the facets region so that facet values cannot be changed through the UI or API. This is done by the report region associated with this facets region so that multiple requests are not sent to the server at the same time. For every call to [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#lock) there must be a corresponding call to [facetsRegion#unlock](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#unlock).
 
-See [facetsRegion#unlock](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#unlock).
+See [facetsRegion#unlock](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#unlock).
 
 ##### Examples
 
 This example shows how a report region plug-in would listen for facet value changes and call lock and unlock.
 
 ```
-// ajaxIdentifier and facetsDomId are passed into the report plug-in
-if ( facetsDomId ) {
-    let facetsRegion = apex.region( facetsDomId );
+// ajaxIdentifier and facetsStaticId are passed into the report plug-in
+if ( facetsStaticId ) {
+    let facetsRegion = apex.region( facetsStaticId );
     facetsRegion.widget().on( "facetschange", function() {
         facetsRegion.lock();
         let p = apex.server.plugin( ajaxIdentifier, ... );
@@ -1073,7 +1073,7 @@ if ( facetsDomId ) {
 }
 ```
 
-This example shows how to set multiple facet item values but only cause the report and facet counts to be updated once. The region HTML DOM id is "empFacets" and P2_JOB and P2_MGR are 2 of the facet names.
+This example shows how to set multiple facet item values but only cause the report and facet counts to be updated once. The region static id is "empFacets" and P2_JOB and P2_MGR are 2 of the facet names.
 
 ```
 let facets = apex.region( "empFacets" );
@@ -1085,11 +1085,11 @@ facets.unlock(); // only after this will the report and counts be updated
 
 #### off(events, …args)
 
-Removes an event handler from the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widget) method returns a value.
+Removes an event handler from the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widget) method returns a value.
 
 This is a shortcut for calling `apex.region(id).widget().off(...)`. Unlike the jQuery object `off` method this does not return the jQuery object and therefore is not chainable. See the jQuery documentation for details.
 
-See also [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#on).
+See also [region#on](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#on).
 
 ##### Parameters:
 
@@ -1126,11 +1126,11 @@ See also [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/
 </table>
 
 Inherited From:
-- [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#off)
+- [region#off](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#off)
 
 ##### Example
 
-This example removes all event handlers for the selectionChange event of an Interactive Grid region. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#event:selectionchange).
+This example removes all event handlers for the selectionChange event of an Interactive Grid region. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#event:selectionchange).
 
 ```
 apex.region( interactiveGridRegionId ).off( "selectionChange" );
@@ -1138,11 +1138,11 @@ apex.region( interactiveGridRegionId ).off( "selectionChange" );
 
 #### on(events, …args)
 
-Attaches an event handler to the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widget) method returns a value.
+Attaches an event handler to the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widget) method returns a value.
 
 This is a shortcut for calling `apex.region(id).widget().on(...)`. Unlike the jQuery object `on` method this does not return the jQuery object and therefore is not chainable. See the jQuery documentation for details.
 
-See also [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#off).
+See also [region#off](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#off).
 
 ##### Parameters:
 
@@ -1179,11 +1179,11 @@ See also [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs
 </table>
 
 Inherited From:
-- [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#on)
+- [region#on](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#on)
 
 ##### Example
 
-This example handles the selectionChange event of an Interactive Grid region by logging a message to the console. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#event:selectionchange)
+This example handles the selectionChange event of an Interactive Grid region by logging a message to the console. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#event:selectionchange)
 
 ```
 apex.region( interactiveGridRegionId ).on( "selectionChange", function(event, data) {
@@ -1193,10 +1193,10 @@ apex.region( interactiveGridRegionId ).on( "selectionChange", function(event, da
 
 #### refresh()
 
-This is a convenience method that simply calls the [facetsRegion#fetchCounts](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#fetchCounts) method.
+This is a convenience method that simply calls the [facetsRegion#fetchCounts](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#fetchCounts) method.
 
 Overrides:
-- [region#refresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#refresh)
+- [region#refresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#refresh)
 
 #### refreshView()
 
@@ -1214,7 +1214,7 @@ apex.region( "regionId" ).refreshView();
 
 Remove the chart for the given facet.
 
-See also [facetsRegion#addChart](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#addChart).
+See also [facetsRegion#addChart](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#addChart).
 
 ##### Parameters:
 
@@ -1248,7 +1248,7 @@ Shows the specified facet.
 
 This API only works for facets that are displayed inline (facetsRegion#displayAs is "INLINE").
 
-See also [facetsRegion#hideFacet](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#hideFacet).
+See also [facetsRegion#hideFacet](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#hideFacet).
 
 ##### Parameters:
 
@@ -1266,13 +1266,13 @@ apex.region( "myRegionId" ).showFacet( "P1_COMM" );
 
 #### unlock()
 
-Enables the facets region after it was previously disabled with [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#lock) so that facet values can be changed again. For every call to [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#lock) there must be a corresponding call to [facetsRegion#unlock](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#unlock).
+Enables the facets region after it was previously disabled with [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#lock) so that facet values can be changed again. For every call to [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#lock) there must be a corresponding call to [facetsRegion#unlock](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#unlock).
 
-See [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#lock).
+See [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#lock).
 
 ##### Example
 
-See [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#lock) for examples.
+See [facetsRegion#lock](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#lock) for examples.
 
 ### Type Definitions
 
@@ -1315,17 +1315,17 @@ See also listControl, facetsRegion#rangeControl.
 | `includeLabel` | boolean | Determines if the facet label is also displayed when a facet value is shown standalone such as in the current facets area in faceted search mode or as a suggestion facet chip in smart filters mode. When facet is displayed in filter dialog the label is always shown. |
 | `icon` | string | Icon CSS classes to show before the facet label in faceted search mode and in the suggestions drop down in smart filters mode. |
 | `cssClasses` | string | Additional classes to set on the facet control. In faceted search mode the class is added to the facet control element with class 'a-FS-control'. In smart filters mode the class is added to the suggestion chip element with class 'a-Chip' and to the popup element with class 'a-FS-body'. |
-| `collapsible` | boolean | Determines if the the facet control can be collapsed. Only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode). |
-| `initialCollapsed` | boolean | When `collapsible` is true this determines if the facet control is initially collapsed. Only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode). |
-| `maxHeight` | integer | The maximum height of the facet control values area. If the facet has more values than will fit in this height then they will scroll. Only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode). |
-| `clearBtn` | boolean | If true the control will have a clear button shown when it has a value. Default true. When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart filters mode) this does not apply and is set to false. |
-| `hasFeedback` | boolean | If true then this control expects to get feedback about how many matching resources are available. The default comes from option [facetsRegion#feedback](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#feedback). |
-| `displayAs` | string | Controls whether the facet control is shown as inline or in a filter dialog (INLINE, FILTER_DIALOG). Only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode). |
+| `collapsible` | boolean | Determines if the the facet control can be collapsed. Only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode). |
+| `initialCollapsed` | boolean | When `collapsible` is true this determines if the facet control is initially collapsed. Only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode). |
+| `maxHeight` | integer | The maximum height of the facet control values area. If the facet has more values than will fit in this height then they will scroll. Only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode). |
+| `clearBtn` | boolean | If true the control will have a clear button shown when it has a value. Default true. When [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart filters mode) this does not apply and is set to false. |
+| `hasFeedback` | boolean | If true then this control expects to get feedback about how many matching resources are available. The default comes from option [facetsRegion#feedback](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#feedback). |
+| `displayAs` | string | Controls whether the facet control is shown as inline or in a filter dialog (INLINE, FILTER_DIALOG). Only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "F" (faceted search mode). |
 | `visibleCondition` | object | A condition object as described by apex.util.checkCondition. This controls the visibility of the facet. When the condition is true the facet if visible. When not visible the facet will have no value. |
 | `showChart` | boolean | Default true. Only applicable for LOV related controls and if showCharts, hasFeedback and showCounts is true. |
 | `initialChart` | boolean | Default false. Only applies if showChart is applicable and true and showCharts is a string. |
-| `suggestedValues` | boolean \| array | Determines if a facet suggestion chip is displayed in the suggestion filter chips area and if so what value to suggest. If true the value with the largest count or first value of a LOV facet is used as the suggestion value. If false this facet is not included in the suggestion filter chip area. If an array it is an array of facet values. The first value that has a non-zero count is used. Only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#uiMode) is "S" (smart search mode). |
-| `*` | [facetsRegion.listControl](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#.listControl) \| [facetsRegion.rangeControl](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#.rangeControl) \| [facetsRegion.selectListControl](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#.selectListControl) \| [facetsRegion.checkboxControl](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#.checkboxControl) \| [facetsRegion.inputControl](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html#.inputControl) | Additional type specific properties. |
+| `suggestedValues` | boolean \| array | Determines if a facet suggestion chip is displayed in the suggestion filter chips area and if so what value to suggest. If true the value with the largest count or first value of a LOV facet is used as the suggestion value. If false this facet is not included in the suggestion filter chip area. If an array it is an array of facet values. The first value that has a non-zero count is used. Only applies when [facetsRegion#uiMode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#uiMode) is "S" (smart search mode). |
+| `*` | [facetsRegion.listControl](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#.listControl) \| [facetsRegion.rangeControl](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#.rangeControl) \| [facetsRegion.selectListControl](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#.selectListControl) \| [facetsRegion.checkboxControl](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#.checkboxControl) \| [facetsRegion.inputControl](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html#.inputControl) | Additional type specific properties. |
 
 #### inputControl
 
@@ -1503,11 +1503,6 @@ These are additional options for controls that have a list of values (LOV). Thes
 <th class="name" scope="row"><code>noManualEntry</code></th>
 <td class="type">boolean</td>
 <td class="description last">Only applies to rangeList. If true the manual range entry controls are not added.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>allowExclude</code></th>
-<td class="type">boolean</td>
-<td class="description last">If true a user can toggle the facet between include and exclude mode, the switch is displayed at control value level. When enabled the internal value of each control includes a preffix to indicate which mode is active, "E" for exclude and "I" for include. Read-only</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>actionsFilter</code></th>

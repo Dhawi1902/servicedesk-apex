@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.debug.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.debug.html -->
 <!-- Namespaces: apex.debug -->
 
 # Namespace: debug
@@ -20,7 +20,7 @@
 - [trace](#.trace)
 - [warn](#.warn)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).debug
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).debug
 
 This namespace stores all debug functions of Oracle APEX.
 
@@ -49,7 +49,7 @@ Log level constants
 
 #### (static) error(…arguments)
 
-Log an error message. The error function always writes the error, regardless of the log level from the server or set with [apex.debug.setLevel](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.debug.html#.setLevel). Messages are written using the browsers built-in console logging, if available. If supported, console.trace is called. Older browsers may not support the console object or all of its features.
+Log an error message. The error function always writes the error, regardless of the log level from the server or set with [apex.debug.setLevel](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.debug.html#.setLevel). Messages are written using the browsers built-in console logging, if available. If supported, console.trace is called. Older browsers may not support the console object or all of its features.
 
 ##### Parameters:
 
@@ -114,7 +114,7 @@ apex.debug.log( "Level=", apex.debug.getLevel() );
 
 #### (static) info(…arguments)
 
-Log an informational message. Similar to [apex.debug.message](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.debug.html#.message) with the level set to INFO.
+Log an informational message. Similar to [apex.debug.message](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.debug.html#.message) with the level set to INFO.
 
 ##### Parameters:
 
@@ -154,7 +154,7 @@ apex.debug.info( "Command successful" );
 
 #### (static) log(…arguments)
 
-Log a message. Similar to [apex.debug.message](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.debug.html#.message) with the level set to the highest level.
+Log a message. Similar to [apex.debug.message](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.debug.html#.message) with the level set to the highest level.
 
 ##### Parameters:
 
@@ -194,7 +194,7 @@ apex.debug.log( "Level=", apex.debug.getLevel() );
 
 #### (static) message(pLevel, …arguments)
 
-Log a message at the given debug log level. The log level set from the server or with [apex.debug.setLevel](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.debug.html#.setLevel) controls if the message is actually written. If the set log level is \>= pLevel then the message is written. Messages are written using the browsers built-in console logging, if available. Older browsers may not support the console object or all of its features.
+Log a message at the given debug log level. The log level set from the server or with [apex.debug.setLevel](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.debug.html#.setLevel) controls if the message is actually written. If the set log level is \>= pLevel then the message is written. Messages are written using the browsers built-in console logging, if available. Older browsers may not support the console object or all of its features.
 
 ##### Parameters:
 
@@ -258,7 +258,7 @@ apex.debug.setLevel( apex.debug.LOG_LEVEL.APP_TRACE );
 
 #### (static) trace(…arguments)
 
-Log a trace message. Similar to [apex.debug.message](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.debug.html#.message) with the level set to APP_TRACE.
+Log a trace message. Similar to [apex.debug.message](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.debug.html#.message) with the level set to APP_TRACE.
 
 ##### Parameters:
 
@@ -298,7 +298,7 @@ apex.debug.trace( "Got click event: ", event );
 
 #### (static) warn(…arguments)
 
-Log a warning message. Similar to [apex.debug.message](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.debug.html#.message) with the level set to WARN.
+Log a warning message. Similar to [apex.debug.message](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.debug.html#.message) with the level set to WARN.
 
 ##### Parameters:
 

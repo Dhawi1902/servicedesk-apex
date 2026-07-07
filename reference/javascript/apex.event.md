@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.event.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.event.html -->
 <!-- Namespaces: apex.event -->
 
 # Namespace: event
@@ -9,7 +9,7 @@
 
 - [trigger](#.trigger)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).event
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).event
 
 This namespace is used to store all event related functions of Oracle APEX.
 

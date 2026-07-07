@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.widget.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.widget.html -->
 <!-- Namespaces: apex.widget -->
 
 # Namespace: widget
@@ -10,7 +10,7 @@
 - [initPageItem](#.initPageItem)
 - [waitPopup](#.waitPopup)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).widget
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).widget
 
 The apex.widget namespace stores all the general purpose widget related functions of Oracle APEX.
 
@@ -18,7 +18,7 @@ The apex.widget namespace stores all the general purpose widget related function
 
 #### (static) initPageItem()
 
-This function is a wrapper around [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html#.create). It is for backward compatibility. See [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html#.create) for details.
+This function is a wrapper around [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html#.create). It is for backward compatibility. See [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html#.create) for details.
 
 Deprecated:
 - Yes
@@ -27,9 +27,9 @@ Deprecated:
 
 Shows a wait popup. A wait popup consists of an overlay div that keeps the user from clicking on any part of the page along with a visual "spinner" animation of some kind. It does not keep the user from interacting with the page using the keyboard.
 
-This is intended to be used just prior to submitting the page such that the page (and hence this popup) will soon be replaced with a new page. If you do need to close the popup, use the "remove" function of the returned object. See [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.showSpinner) and [apex.util.delayLinger](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.delayLinger.html) for a low level solution more suitable for ajax requests or other long-running processes.
+This is intended to be used just prior to submitting the page such that the page (and hence this popup) will soon be replaced with a new page. If you do need to close the popup, use the "remove" function of the returned object. See [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.showSpinner) and [apex.util.delayLinger](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.delayLinger.html) for a low level solution more suitable for ajax requests or other long-running processes.
 
-This function is rarely needed because it is automatically called in [apex.page.submit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html#.submit) based on the showWait option. Also typically ajax operations don't require an overlay to disable clicking.
+This function is rarely needed because it is automatically called in [apex.page.submit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html#.submit) based on the showWait option. Also typically ajax operations don't require an overlay to disable clicking.
 
 ##### Parameters:
 

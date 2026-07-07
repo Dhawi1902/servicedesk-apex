@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html -->
 <!-- Namespaces: apex -->
 
 # Namespace: apex
@@ -44,43 +44,43 @@ The apex namespace also contains information on APEX specific events.
 
 ### Namespaces
 
-[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html)
+[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html)
 
-[da](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.da.html)
+[da](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.da.html)
 
-[date](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.date.html)
+[date](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.date.html)
 
-[debug](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.debug.html)
+[debug](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.debug.html)
 
-[event](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.event.html)
+[event](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.event.html)
 
-[item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html)
+[item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html)
 
-[lang](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html)
+[lang](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html)
 
-[locale](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.locale.html)
+[locale](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.locale.html)
 
-[message](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.message.html)
+[message](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.message.html)
 
-[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html)
+[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html)
 
-[navigation](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.navigation.html)
+[navigation](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.navigation.html)
 
-[page](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html)
+[page](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html)
 
-[pwa](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.pwa.html)
+[pwa](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.pwa.html)
 
-[region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.region.html)
+[region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.region.html)
 
-[server](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html)
+[server](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html)
 
-[storage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.storage.html)
+[storage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.storage.html)
 
-[theme](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.theme.html)
+[theme](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.theme.html)
 
-[util](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html)
+[util](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html)
 
-[widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.widget.html)
+[widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.widget.html)
 
 ### Properties
 
@@ -135,7 +135,7 @@ apex.jQuery( ".my_class", apex.gPageContext$ );
 
 #### (static) items
 
-This namespace property holds all the [item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html) interfaces that have been created on this page. See [apex.item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.fn:item) for details.
+This namespace property holds all the [item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html) interfaces that have been created on this page. See [apex.item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.fn:item) for details.
 
 Since:
 - 21.2
@@ -161,7 +161,7 @@ function myFunction() {
 
 #### (static) regions
 
-This namespace property holds all the [region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html) interfaces that have been created on this page. See [apex.region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.fn:region) for details.
+This namespace property holds all the [region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html) interfaces that have been created on this page. See [apex.region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.fn:region) for details.
 
 Since:
 - 21.2
@@ -232,7 +232,7 @@ For buttons it is the button element. For links to dialog pages in lists it is t
 
 ##### Example
 
-This example refreshes the region with HTML DOM id emp when any modal dialog page closes.
+This example refreshes the region with static id emp when any modal dialog page closes.
 
 ```
 apex.gPageContext$.on( "apexafterclosecanceldialog", function( event, data ) {
@@ -306,7 +306,7 @@ Note: This event is triggered in the parent or calling page not in the modal dia
 
 ##### Example
 
-This example refreshes the region with HTML DOM id emp when any modal dialog page closes.
+This example refreshes the region with static id emp when any modal dialog page closes.
 
 ```
 apex.gPageContext$.on( "apexafterclosedialog", function( event, data ) {
@@ -316,7 +316,7 @@ apex.gPageContext$.on( "apexafterclosedialog", function( event, data ) {
 
 #### apexafterrefresh
 
-This event is triggered by a number of page or column items just after they are refreshed with new content or data from the server. It is equivalent to the Dynamic Action event After Refresh. Specifically any item that supports the Cascading LOV Parent Item(s) attribute should trigger this event. This event can also be triggered by the [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin) and [apex.server.process](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.process) APIs if the `refreshObject` option is provided. The event is triggered on the item element or the element given by the `refreshObject`. The event handler receives the data given in `refreshObjectData` if any.
+This event is triggered by a number of page or column items just after they are refreshed with new content or data from the server. It is equivalent to the Dynamic Action event After Refresh. Specifically any item that supports the Cascading LOV Parent Item(s) attribute should trigger this event. This event can also be triggered by the [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin) and [apex.server.process](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.process) APIs if the `refreshObject` option is provided. The event is triggered on the item element or the element given by the `refreshObject`. The event handler receives the data given in `refreshObjectData` if any.
 
 ##### Properties:
 
@@ -354,7 +354,7 @@ This event is triggered by a number of page or column items just after they are 
 
 ##### Example
 
-This example disables the button with HTML DOM id B1 while any refresh is in progress.
+This example disables the button with static id B1 while any refresh is in progress.
 
 ```
 apex.jQuery( "body" ).on( "apexbeforerefresh", function() {
@@ -366,7 +366,7 @@ apex.jQuery( "body" ).on( "apexbeforerefresh", function() {
 
 #### apexbeforepagesubmit
 
-This event is triggered when the page is submitted with [apex.page.submit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html#.submit) or [apex.page.confirm](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html#.confirm). This includes buttons with action Submit Page and Dynamic Action Submit Page action. It is equivalent to the Dynamic Action event Before Page Submit. It is triggered before the page is validated. It is triggered on [apex.gPageContext\$](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.gPageContext$), which is the document. This event can be canceled by a Dynamic Action Confirm or Cancel Event action so you cannot rely on the page actually being submitted. If you need code to run just before the page is actually submitted see the [apex.event:apexpagesubmit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexpagesubmit) event.
+This event is triggered when the page is submitted with [apex.page.submit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html#.submit) or [apex.page.confirm](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html#.confirm). This includes buttons with action Submit Page and Dynamic Action Submit Page action. It is equivalent to the Dynamic Action event Before Page Submit. It is triggered before the page is validated. It is triggered on [apex.gPageContext\$](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.gPageContext$), which is the document. This event can be canceled by a Dynamic Action Confirm or Cancel Event action so you cannot rely on the page actually being submitted. If you need code to run just before the page is actually submitted see the [apex.event:apexpagesubmit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexpagesubmit) event.
 
 The event handler should not do any long running or asynchronous processing. Specifically it should not make a synchronous or asynchronous Ajax request. The event handler receives a string argument that is the request value.
 
@@ -395,7 +395,7 @@ apex.jQuery( apex.gPageContext$ ).on( "apexbeforepagesubmit", function() {
 
 #### apexbeforerefresh
 
-This event is triggered by a number of page or column items just before they are refreshed with new content or data from the server. It is equivalent to the Dynamic Action event Before Refresh. Specifically any item that supports the Cascading LOV Parent Item(s) attribute should trigger this event. This event can also be triggered by the [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.plugin) and [apex.server.process](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html#.process) APIs if the `refreshObject` option is provided. The event is triggered on the item element or the element given by the `refreshObject`. The event handler receives the data given in `refreshObjectData` if any.
+This event is triggered by a number of page or column items just before they are refreshed with new content or data from the server. It is equivalent to the Dynamic Action event Before Refresh. Specifically any item that supports the Cascading LOV Parent Item(s) attribute should trigger this event. This event can also be triggered by the [apex.server.plugin](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.plugin) and [apex.server.process](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html#.process) APIs if the `refreshObject` option is provided. The event is triggered on the item element or the element given by the `refreshObject`. The event handler receives the data given in `refreshObjectData` if any.
 
 ##### Properties:
 
@@ -433,7 +433,7 @@ This event is triggered by a number of page or column items just before they are
 
 ##### Example
 
-This example disables the button with HTML DOM id B1 while any refresh is in progress.
+This example disables the button with static id B1 while any refresh is in progress.
 
 ```
 apex.jQuery( "body" ).on( "apexbeforerefresh", function() {
@@ -445,7 +445,7 @@ apex.jQuery( "body" ).on( "apexbeforerefresh", function() {
 
 #### apexbeginrecordedit
 
-This event is triggered when a [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) row/record is about to be edited (when a new row/record is selected or enters edit mode).
+This event is triggered when a [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) row/record is about to be edited (when a new row/record is selected or enters edit mode).
 
 ##### Properties:
 
@@ -507,7 +507,7 @@ This event is triggered when a [model](https://docs.oracle.com/en/database/oracl
 
 This event is triggered when the current item/row/record changes in a region that supports keyboard navigation and focus management. This event happens a few milliseconds after the last focused item/row/record changes.
 
-Note that some widgets have their own more specific focus management event. See for example [grid#event:currentcellchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html#event:currentcellchange).
+Note that some widgets have their own more specific focus management event. See for example [grid#event:currentcellchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html#event:currentcellchange).
 
 ##### Properties:
 
@@ -557,7 +557,7 @@ Note that some widgets have their own more specific focus management event. See 
 
 ##### Example
 
-A current item change event handler for a report region with HTML DOM id "myReport".
+A current item change event handler for a report region with static id "myReport".
 
 ```
 apex.region( "myReport" ).element.on( "apexcurrentrowchange", function( event, data ) {
@@ -567,7 +567,7 @@ apex.region( "myReport" ).element.on( "apexcurrentrowchange", function( event, d
 
 #### apexendrecordedit
 
-This event is triggered when a [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) row/record is done being edited (when a new row/record is selected or exits edit mode).
+This event is triggered when a [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) row/record is done being edited (when a new row/record is selected or exits edit mode).
 
 ##### Properties:
 
@@ -627,7 +627,7 @@ This event is triggered when a [model](https://docs.oracle.com/en/database/oracl
 
 #### apexpagesubmit
 
-This event is triggered when the page is submitted with [apex.page.submit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html#.submit) or [apex.page.confirm](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html#.confirm). This includes buttons with action Submit Page and Dynamic Action Submit Page action. It is triggered after the page is validated. It is triggered on [apex.gPageContext\$](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.gPageContext$), which is the document. This event is the last chance to set or modify page items before the page is submitted.
+This event is triggered when the page is submitted with [apex.page.submit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html#.submit) or [apex.page.confirm](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html#.confirm). This includes buttons with action Submit Page and Dynamic Action Submit Page action. It is triggered after the page is validated. It is triggered on [apex.gPageContext\$](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.gPageContext$), which is the document. This event is the last chance to set or modify page items before the page is submitted.
 
 The event handler should not do any long running or asynchronous processing. Specifically it should not make a synchronous or asynchronous Ajax request. The event handler receives a string argument that is the request value.
 
@@ -653,7 +653,7 @@ apex.jQuery( apex.gPageContext$ ).on( "apexpagesubmit", function() {
 
 This event is triggered at the end of all APEX page load functionality. This events differs from the standard page load event in that it will not only wait for the DOM to be ready, but also for any *delayLoading* components to be ready.
 
-Please see the *delayLoading* property of the [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html#.create) API for further information about items that can delay loading.
+Please see the *delayLoading* property of the [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html#.create) API for further information about items that can delay loading.
 
 ##### Properties:
 
@@ -675,7 +675,7 @@ apex.jQuery( apex.gPageContext$ ).on( "apexreadyend", function( e ) {
 
 This event is triggered when the selection changes in a region that supports selection. This event is debounced, which means that it is not triggered until up to a few hundred milliseconds after the last change in selection state. This avoids rapid event triggering while the user moves quickly through the report with the keyboard.
 
-Note that some regions and widgets have their own more specific selection change event. See for example [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#event:selectionchange).
+Note that some regions and widgets have their own more specific selection change event. See for example [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#event:selectionchange).
 
 ##### Properties:
 
@@ -725,7 +725,7 @@ Note that some regions and widgets have their own more specific selection change
 
 ##### Example
 
-A selection change event handler for a report region with HTML DOM id "myReport".
+A selection change event handler for a report region with static id "myReport".
 
 ```
 apex.region( "myReport" ).element.on( "apexselectionchange", function( event, data ) {
@@ -760,15 +760,15 @@ apex.jQuery( window ).on( "apexwindowresized", function( event ) {
 
 #### (static) confirm()
 
-This function is an alias for [apex.page.confirm](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html#.confirm).
+This function is an alias for [apex.page.confirm](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html#.confirm).
 
-#### (static) item(pItemId) → {[item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html)}
+#### (static) item(pItemId) → {[item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html)}
 
-Return an [item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html) interface that is used to access item related methods and properties.
+Return an [item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html) interface that is used to access item related methods and properties.
 
-Item plug-in developers can override much of the item behavior, by calling [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.item.html#.create) with their overrides.
+Item plug-in developers can override much of the item behavior, by calling [apex.item.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.item.html#.create) with their overrides.
 
-For items that are created with `apex.item.create` (which should be most items), the item interface can also be accessed from the [apex.items](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.items) collection by `pItemId`. So for an item with name "P1_NAME" the following are equivalent:
+For items that are created with `apex.item.create` (which should be most items), the item interface can also be accessed from the [apex.items](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.items) collection by `pItemId`. So for an item with name "P1_NAME" the following are equivalent:
 
     let myItem = apex.items.P1_NAME;
     let myItem = apex.item( "P1_NAME" );
@@ -784,19 +784,19 @@ For items that are created with `apex.item.create` (which should be most items),
 The item interface for the given item name. If there is no such item on the page the returned item interface `node` property will be false.
 
 Type
-[item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html)
+[item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html)
 
 ##### Example
 
-This function is not used by itself. See the examples for methods of the [item](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html) interface.
+This function is not used by itself. See the examples for methods of the [item](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html) interface.
 
-#### (static) region(pRegionId) → {[region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html)\|null}
+#### (static) region(pRegionId) → {[region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html)\|null}
 
-Return a [region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html) interface for the given region id. The returned region interface object can then be used to access region related functions and properties.
+Return a [region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html) interface for the given region id. The returned region interface object can then be used to access region related functions and properties.
 
-Region plug-in developers can define the behavior of their region by calling [apex.region.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.region.html#.create).
+Region plug-in developers can define the behavior of their region by calling [apex.region.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.region.html#.create).
 
-For regions that are created with `apex.region.create` (which is most native or plug-in regions that have significant dynamic behavior), the region interface can also be accessed from the [apex.regions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.regions) collection by `pRegionId`. So for a region with id "myRegion" the following are equivalent:
+For regions that are created with `apex.region.create` (which is most native or plug-in regions that have significant dynamic behavior), the region interface can also be accessed from the [apex.regions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.regions) collection by `pRegionId`. So for a region with id "myRegion" the following are equivalent:
 
     let myRegion = apex.regions.myRegion;
     let myRegion = apex.region( "myRegion" );
@@ -805,22 +805,22 @@ For regions that are created with `apex.region.create` (which is most native or 
 
 | Name | Type | Description |
 |----|----|----|
-| `pRegionId` | string | Region id or region DOM id. It is a best practice to give a region an HTML DOM id if it is going to be used from JavaScript otherwise an internally generated id is used. The region DOM id is substituted in the region template using the \#DOM_ID# string. The region id can be found by viewing the page source in the browser. |
+| `pRegionId` | string | Region id or region static id. It is a best practice to give a region a Static ID if it is going to be used from JavaScript otherwise an internally generated id is used. The region id is substituted in the region template using the \#REGION_STATIC_ID# string. The region id can be found by viewing the page source in the browser. |
 
 ##### Returns:
 
 The region interface or null if there is no element with the given `pRegionId`.
 
 Type
-[region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html) \| null
+[region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html) \| null
 
 ##### Example
 
-This function is not used by itself. See the examples for methods of the [region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html) interface.
+This function is not used by itself. See the examples for methods of the [region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html) interface.
 
 #### (static) submit()
 
-This function is an alias for [apex.page.submit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.page.html#.submit).
+This function is an alias for [apex.page.submit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.page.html#.submit).
 
 #### (static) userHasTouched() → {boolean}
 

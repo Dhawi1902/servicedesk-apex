@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.delayLinger.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.delayLinger.html -->
 <!-- Namespaces: apex.util.delayLinger -->
 
 # Namespace: delayLinger
@@ -10,17 +10,17 @@
 - [finish](#.finish)
 - [start](#.start)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html)[.util](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html).delayLinger
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html)[.util](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html).delayLinger
 
 The delayLinger namespace solves the problem of flashing progress indicators (such as spinners).
 
 For processes such as an Ajax request (and subsequent user interface updates) that may take a while it is important to let the user know that something is happening. The problem is that if an async process is quick there is no need for a progress indicator. The user experiences the UI update as instantaneous. Showing and hiding a progress indicator around an async process that lasts a very short time causes a flash of content that the user may not have time to fully perceive. At best this can be a distraction and at worse the user wonders if something is wrong or if they missed something important. Simply delaying the progress indicator doesn't solve the problem because the process could finish a short time after the indicator is shown. The indicator must be shown for at least a short but perceivable amount of time even if the request is already finished.
 
-You can use this namespace to help manage the duration of a progress indication such as [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.showSpinner) or with any other progress implementation. Many of the Oracle APEX asynchronous functions such as the ones in the [apex.server](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.server.html) namespace already use delayLinger internally so you only need this API for your own custom long-running asynchronous processing.
+You can use this namespace to help manage the duration of a progress indication such as [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.showSpinner) or with any other progress implementation. Many of the Oracle APEX asynchronous functions such as the ones in the [apex.server](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.server.html) namespace already use delayLinger internally so you only need this API for your own custom long-running asynchronous processing.
 
 ### Example
 
-This example shows using [apex.util.delayLinger.start](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.delayLinger.html#.start) and [apex.util.delayLinger.finish](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.delayLinger.html#.finish) along with [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.showSpinner) to show a progress spinner, only when needed and for long enough to be seen, around a long-running asynchronous process started in function doLongProcess.
+This example shows using [apex.util.delayLinger.start](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.delayLinger.html#.start) and [apex.util.delayLinger.finish](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.delayLinger.html#.finish) along with [apex.util.showSpinner](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.showSpinner) to show a progress spinner, only when needed and for long enough to be seen, around a long-running asynchronous process started in function doLongProcess.
 
 ```
 var lSpinner$, lPromise;

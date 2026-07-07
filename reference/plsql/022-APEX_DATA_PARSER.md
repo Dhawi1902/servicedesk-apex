@@ -1,21 +1,21 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 22  APEX_DATA_PARSER
 
 This package contains the implementation for the file parser in Oracle APEX. `APEX_DATA_PARSER` supports XML, JSON, CSV and XLSX files. The most important function in this package is the PARSE function, which is implemented as a table function returning rows of the `APEX_T_PARSER_ROW` type. The parser supports up to 300 columns.
 
-- [Global Constants](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.Global-Constants.html#GUID-AE3C3092-4156-41BA-9254-DDEDF630CDA7)
-- [Data Types](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.Data-Types.html#GUID-55057C52-3A39-4F89-BF6A-6E66C920558C)
-- [ASSERT_FILE_TYPE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.ASSERT_FILE_TYPE-Function.html#GUID-DA4A9A5C-5575-43BB-A38F-E595E1643322)
-- [DISCOVER Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.DISCOVER-Function.html#GUID-D0DC85D9-A731-4EC0-A1F1-E662B30C6894)
-- [GET_COLUMNS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.GET_COLUMNS-Function.html#GUID-3685DE82-C298-481C-916F-00A578C1D5C3)
-- [GET_FILE_PROFILE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.GET_FILE_PROFILE-Function.html#GUID-8036CFB0-5F82-437E-8D0E-D9304E538CB9)
-- [GET_FILE_TYPE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.GET_FILE_TYPE-Function.html#GUID-C5E80645-7877-48D0-9B7E-9D19EED2879F)
-- [GET_XLSX_WORKSHEETS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.GET_XLSX_WORKSHEETS-Function.html#GUID-41FC640A-A683-440E-A8F4-026BDD582C34)
-- [JSON_TO_PROFILE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.JSON_TO_PROFILE-Function.html#GUID-67B9351A-FFE8-47EE-AEED-A5A0478072DA)
-- [PARSE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.PARSE-Function.html#GUID-B815CF74-C469-4F78-9433-643D1339E930)
-- [SET_PARSER_FLAGS Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.SET_PARSER_FLAGS-Procedure.html#GUID-CDCF2A86-AEEA-4483-A574-014967F0CC90)
+- [Global Constants](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.Global-Constants.html#GUID-AE3C3092-4156-41BA-9254-DDEDF630CDA7)
+- [Data Types](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.Data-Types.html#GUID-55057C52-3A39-4F89-BF6A-6E66C920558C)
+- [ASSERT_FILE_TYPE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.ASSERT_FILE_TYPE-Function.html#GUID-DA4A9A5C-5575-43BB-A38F-E595E1643322)
+- [DISCOVER Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.DISCOVER-Function.html#GUID-D0DC85D9-A731-4EC0-A1F1-E662B30C6894)
+- [GET_COLUMNS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.GET_COLUMNS-Function.html#GUID-3685DE82-C298-481C-916F-00A578C1D5C3)
+- [GET_FILE_PROFILE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.GET_FILE_PROFILE-Function.html#GUID-8036CFB0-5F82-437E-8D0E-D9304E538CB9)
+- [GET_FILE_TYPE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.GET_FILE_TYPE-Function.html#GUID-C5E80645-7877-48D0-9B7E-9D19EED2879F)
+- [GET_XLSX_WORKSHEETS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.GET_XLSX_WORKSHEETS-Function.html#GUID-41FC640A-A683-440E-A8F4-026BDD582C34)
+- [JSON_TO_PROFILE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.JSON_TO_PROFILE-Function.html#GUID-67B9351A-FFE8-47EE-AEED-A5A0478072DA)
+- [PARSE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.PARSE-Function.html#GUID-B815CF74-C469-4F78-9433-643D1339E930)
+- [SET_PARSER_FLAGS Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.SET_PARSER_FLAGS-Procedure.html#GUID-CDCF2A86-AEEA-4483-A574-014967F0CC90)
 
 ------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ c_file_type_json              constant t_file_type := 4; -- File Type Constant
 c_file_type_ics               constant t_file_type := 5; -- File Type Constant
 ```
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
 
 ------------------------------------------------------------------------
 
@@ -75,7 +75,7 @@ type t_file_column is record(
 );
 ```
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
 
 ------------------------------------------------------------------------
 
@@ -117,7 +117,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
 
 ------------------------------------------------------------------------
 
@@ -163,30 +163,30 @@ Parameter
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d85588e80" style="text-align: left;" data-valign="bottom" width="36%">Parameter</th>
-<th id="d85588e82" style="text-align: left;" data-valign="bottom" width="64%">Description</th>
+<th id="d78592e78" style="text-align: left;" data-valign="bottom" width="36%">Parameter</th>
+<th id="d78592e80" style="text-align: left;" data-valign="bottom" width="64%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d85588e86" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_content</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e86 d85588e82 ">The file content to be parsed as a BLOB.</td>
+<td id="d78592e84" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_content</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e84 d78592e80 ">The file content to be parsed as a BLOB.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e92" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_file_name</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e92 d85588e82 ">The name of the file used to derive the file type.</td>
+<td id="d78592e90" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_file_name</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e90 d78592e80 ">The name of the file used to derive the file type.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e98" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_decimal_char</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e98 d85588e82 ">Use this decimal character when trying to detect <code class="codeph">NUMBER</code> data types. If not specified, the procedure will auto-detect the decimal character.</td>
+<td id="d78592e96" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_decimal_char</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e96 d78592e80 ">Use this decimal character when trying to detect <code class="codeph">NUMBER</code> data types. If not specified, the procedure will auto-detect the decimal character.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e107" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_xlsx_sheet_name</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e107 d85588e82 ">For XLSX workbooks. The name of the worksheet to parse. If omitted, the function uses the first worksheet found.</td>
+<td id="d78592e105" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_xlsx_sheet_name</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e105 d78592e80 ">For XLSX workbooks. The name of the worksheet to parse. If omitted, the function uses the first worksheet found.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e113" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_row_selector</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e113 d85588e82 "><p>Row selector to use for XML or JSON files. Pointer to the array/list of rows within the JSON or XML file.</p>
+<td id="d78592e111" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_row_selector</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e111 d78592e80 "><p>Row selector to use for XML or JSON files. Pointer to the array/list of rows within the JSON or XML file.</p>
 <p>If omitted, the function will:</p>
 <ul>
 <li>For XML files: Use <code class="codeph">/*/*</code> (first tag under the root tag) as the row selector.</li>
@@ -194,40 +194,40 @@ Parameter
 </ul></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e130" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_csv_row_delimiter </code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e130 d85588e82 ">Override the default row delimiter for CSV parsing.</td>
+<td id="d78592e128" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_csv_row_delimiter </code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e128 d78592e80 ">Override the default row delimiter for CSV parsing.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e136" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_csv_col_delimiter</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e136 d85588e82 ">Use a specific CSV column delimiter. If omitted, the function detects the column delimiter based on the first row contents.</td>
+<td id="d78592e134" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_csv_col_delimiter</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e134 d78592e80 ">Use a specific CSV column delimiter. If omitted, the function detects the column delimiter based on the first row contents.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e142" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_csv_enclosed </code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e142 d85588e82 ">Override the default enclosure character for CSV parsing.</td>
+<td id="d78592e140" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_csv_enclosed </code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e140 d78592e80 ">Override the default enclosure character for CSV parsing.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e148" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_skip_rows</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e148 d85588e82 ">The amount of rows to skip before parsing. For XML and JSON parsing to get the same behavior as for CSV and XLSX parsing.</td>
+<td id="d78592e146" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_skip_rows</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e146 d78592e80 ">The amount of rows to skip before parsing. For XML and JSON parsing to get the same behavior as for CSV and XLSX parsing.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e154" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_nullif</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e154 d85588e82 ">Similar to SQL <code class="codeph">NULLIF</code> function: If the column has this value, return NULL.</td>
+<td id="d78592e152" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_nullif</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e152 d78592e80 ">Similar to SQL <code class="codeph">NULLIF</code> function: If the column has this value, return NULL.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e163" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_force_trim_whitespace</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e163 d85588e82 ">Whether to force trim enquoted whitespace from parsed values.</td>
+<td id="d78592e161" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_force_trim_whitespace</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e161 d78592e80 ">Whether to force trim enquoted whitespace from parsed values.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e170" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_file_charset </code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e170 d85588e82 ">File encoding, if not <code class="codeph">UTF-8 (AL32UTF8)</code>.</td>
+<td id="d78592e168" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_file_charset </code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e168 d78592e80 ">File encoding, if not <code class="codeph">UTF-8 (AL32UTF8)</code>.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e179" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_max_rows</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e179 d85588e82 ">Stop discovery after <code class="codeph">P_MAX_ROWS</code> rows have been processed.</td>
+<td id="d78592e177" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_max_rows</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e177 d78592e80 ">Stop discovery after <code class="codeph">P_MAX_ROWS</code> rows have been processed.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d85588e188" style="text-align: left;" data-valign="top" width="36%" headers="d85588e80 "><code class="codeph">p_xml_namespaces</code></td>
-<td style="text-align: left;" data-valign="top" width="64%" headers="d85588e188 d85588e82 ">XML namespaces to use when parsing XML files.</td>
+<td id="d78592e186" style="text-align: left;" data-valign="top" width="36%" headers="d78592e78 "><code class="codeph">p_xml_namespaces</code></td>
+<td style="text-align: left;" data-valign="top" width="64%" headers="d78592e186 d78592e80 ">XML namespaces to use when parsing XML files.</td>
 </tr>
 </tbody>
 </table>
@@ -293,7 +293,7 @@ PROFILE_JSON
  }
 ```
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
 
 ------------------------------------------------------------------------
 
@@ -343,7 +343,7 @@ select *
                    8 ID            NUMBER
 ```
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
 
 ------------------------------------------------------------------------
 
@@ -400,7 +400,7 @@ select apex_data_parser.get_file_profile from dual;
 {
     "file-type" : 1,
     "csv-delimiter" : "",
-    "xlsx-worksheet" : "sheet1.xml",
+    "xslx-worksheet" : "sheet1.xml",
     "headings-in-first-row" : true,
     "file-encoding" : "AL32UTF8",
     "single-row" : false,
@@ -459,7 +459,7 @@ select apex_data_parser.get_file_profile from dual;
 }
 ```
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
 
 ------------------------------------------------------------------------
 
@@ -495,7 +495,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
 
 ------------------------------------------------------------------------
 
@@ -534,13 +534,13 @@ SHEET_SEQUENCE SHEET_DISPLAY_NAME   SHEET_FILE_NAME   SHEET_PATH
 1              Sheet1               sheet1.xml        worksheets/sheet1.xml
 ```
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
 
 ------------------------------------------------------------------------
 
 ## 22.9 JSON_TO_PROFILE Function
 
-This function converts a file profile in JSON format to an instance of the `t_file_profile` record type.
+This function converts a file profile in JSON format to an instance of the` t_file_profile` record type.
 
 Syntax
 
@@ -558,7 +558,7 @@ Parameter
 
 Returns
 
-Returns the file profile as an instance of the t_file_profile record type.
+Returns the the file profile in JSON format.
 
 Example
 
@@ -566,11 +566,12 @@ Example
 DECLARE
     l_profile t_file_profile;
 BEGIN
-    l_profile := apex_data_parser.json_to_profile('{"file-type": 2, "csv-delimiter": ","}');
+    l_profile := apex_data_parser.json_to_profile( '{"file-type", "csv-delimiter" : "", ... }' );
+
 END;
 ```
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
 
 ------------------------------------------------------------------------
 
@@ -633,7 +634,7 @@ However, developers can also use the `DBMS_LOB.CREATETEMPORARY` (passing `CACHE 
 
 See Also:
 
-<a href="/pls/topic/lookup?ctx=en/database/oracle/apex/26.1/aeapi&amp;id=ARPLS-GUID-5F805F47-FC30-4E5E-B3C5-EDCB9AF62899" target="_blank">CREATETEMPORARY Procedures</a> and <a href="/pls/topic/lookup?ctx=en/database/oracle/apex/26.1/aeapi&amp;id=ARPLS-GUID-092C14BA-5738-4471-BCD8-10CD4CBCD499" target="_blank">COPY Procedures</a> in Oracle AI Database PL/SQL Packages and Types Reference.
+<a href="/pls/topic/lookup?ctx=en/database/oracle/apex/24.2/aeapi&amp;id=ARPLS-GUID-5F805F47-FC30-4E5E-B3C5-EDCB9AF62899" target="_blank">CREATETEMPORARY Procedures</a> and <a href="/pls/topic/lookup?ctx=en/database/oracle/apex/24.2/aeapi&amp;id=ARPLS-GUID-092C14BA-5738-4471-BCD8-10CD4CBCD499" target="_blank">COPY Procedures</a> in Oracle Database PL/SQL Packages and Types Reference.
 
 Syntax
 
@@ -681,101 +682,101 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d86940e280" style="text-align: left;" data-valign="bottom" width="34%">Parameter</th>
-<th id="d86940e282" style="text-align: left;" data-valign="bottom" width="66%">Description</th>
+<th id="d79944e278" style="text-align: left;" data-valign="bottom" width="34%">Parameter</th>
+<th id="d79944e280" style="text-align: left;" data-valign="bottom" width="66%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d86940e286" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_content</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e286 d86940e282 ">The file content to be parsed as a BLOB.</td>
+<td id="d79944e284" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_content</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e284 d79944e280 ">The file content to be parsed as a BLOB.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e292" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_file_name</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e292 d86940e282 ">The name of the file; only used to derive the file type. Either <code class="codeph">p_file_name</code>, <code class="codeph">p_file_type</code> or <code class="codeph">p_file_profile</code> must be passed in.</td>
+<td id="d79944e290" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_file_name</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e290 d79944e280 ">The name of the file; only used to derive the file type. Either <code class="codeph">p_file_name</code>, <code class="codeph">p_file_type</code> or <code class="codeph">p_file_profile</code> must be passed in.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e307" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_file_type</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e307 d86940e282 ">The type of the file to be parsed. Use this to explicitly pass the file type in. Either <code class="codeph">p_file_name</code>, <code class="codeph">p_file_type</code> or <code class="codeph">p_file_profile</code> must be passed in.</td>
+<td id="d79944e305" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_file_type</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e305 d79944e280 ">The type of the file to be parsed. Use this to explicitly pass the file type in. Either <code class="codeph">p_file_name</code>, <code class="codeph">p_file_type</code> or <code class="codeph">p_file_profile</code> must be passed in.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e322" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_file_profile</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e322 d86940e282 ">File profile to be used for parsing. The file profile might have been computed in a previous <code class="codeph">parse()</code> or <code class="codeph">discover()</code> invocation. If passed in again, the function skips some profile detection logic and use the passed in profile in order to improve performance.</td>
+<td id="d79944e320" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_file_profile</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e320 d79944e280 ">File profile to be used for parsing. The file profile might have been computed in a previous <code class="codeph">parse()</code> or <code class="codeph">discover()</code> invocation. If passed in again, the function skips some profile detection logic and use the passed in profile in order to improve performance.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e334" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_detect_data_types</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e334 d86940e282 "><p>Whether to detect data types (<code class="codeph">NUMBER, DATE, TIMESTAMP</code>) during parsing.</p>
+<td id="d79944e332" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_detect_data_types</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e332 d79944e280 "><p>Whether to detect data types (<code class="codeph">NUMBER, DATE, TIMESTAMP</code>) during parsing.</p>
 <p>If <code class="codeph">Y</code> (default), the function computes the file profile and also add data type information to it.</p>
 <p>If <code class="codeph">N</code>, all columns are <code class="codeph">VARCHAR2</code>.</p>
 <p>When no data types are detected, all columns are reported as <code class="codeph">VARCHAR2(4000)</code>.</p></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e362" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_decimal_char</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e362 d86940e282 ">Use this decimal character when trying to detect <code class="codeph">NUMBER</code> data types. If not specified,the procedure will auto-detect the decimal character.</td>
+<td id="d79944e360" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_decimal_char</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e360 d79944e280 ">Use this decimal character when trying to detect <code class="codeph">NUMBER</code> data types. If not specified,the procedure will auto-detect the decimal character.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e371" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_xlsx_sheet_name</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e371 d86940e282 ">For XLSX workbooks. The name of the worksheet to parse. If omitted, the function uses the first worksheet found.</td>
+<td id="d79944e369" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_xlsx_sheet_name</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e369 d79944e280 ">For XLSX workbooks. The name of the worksheet to parse. If omitted, the function uses the first worksheet found.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e377" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_row_selector</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e377 d86940e282 "><p>For JSON and XML files. Pointer to the array / list of rows within the JSON or XML file. If omitted, the function will:</p>
+<td id="d79944e375" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_row_selector</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e375 d79944e280 "><p>For JSON and XML files. Pointer to the array / list of rows within the JSON or XML file. If omitted, the function will:</p>
 <ul>
 <li>For XML files: Use <code class="codeph">/*/*</code> (first tag under the root tag) as the row selector.</li>
 <li>For JSON files: Look for a JSON array and use the first array found.</li>
 </ul></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e392" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_csv_row_delimiter</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e392 d86940e282 ">Override the default row delimiter for CSV parsing. Limited to one character and defaults to Linefeed (LF). Note that the Linefeed row delimiter also handles "Carriage Return/Linefeed" (CRLF).</td>
+<td id="d79944e390" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_csv_row_delimiter</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e390 d79944e280 ">Override the default row delimiter for CSV parsing. Limited to one character and defaults to Linefeed (LF). Note that the Linefeed row delimiter also handles "Carriage Return/Linefeed" (CRLF).</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e401" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_csv_col_delimiter</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e401 d86940e282 ">Use a specific CSV column delimiter. If omitted, the function will detect the column delimiter based on the first row contents.</td>
+<td id="d79944e399" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_csv_col_delimiter</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e399 d79944e280 ">Use a specific CSV column delimiter. If omitted, the function will detect the column delimiter based on the first row contents.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e407" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_csv_enclosed</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e407 d86940e282 ">Override the default enclosure character for CSV parsing.</td>
+<td id="d79944e405" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_csv_enclosed</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e405 d79944e280 ">Override the default enclosure character for CSV parsing.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e414" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_skip_rows</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e414 d86940e282 ">Skip the first N rows when parsing.</td>
+<td id="d79944e412" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_skip_rows</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e412 d79944e280 ">Skip the first N rows when parsing.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e420" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_add_headers_row</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e420 d86940e282 ">For XML, JSON: Emit the column headers (tag, attr names) as the first row.</td>
+<td id="d79944e418" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_add_headers_row</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e418 d79944e280 ">For XML, JSON: Emit the column headers (tag, attr names) as the first row.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e426" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_nullif</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e426 d86940e282 ">Similar to SQL <code class="codeph">NULLIF</code> function. If the column has this value, return <code class="codeph">NULL</code>.</td>
+<td id="d79944e424" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_nullif</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e424 d79944e280 ">Similar to SQL <code class="codeph">NULLIF</code> function. If the column has this value, return <code class="codeph">NULL</code>.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e438" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_force_trim_whitespace</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e438 d86940e282 ">Whether to force trim enquoted whitespace from parsed values.</td>
+<td id="d79944e436" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_force_trim_whitespace</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e436 d79944e280 ">Whether to force trim enquoted whitespace from parsed values.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e444" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_file_charset</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e444 d86940e282 ">Encoding of the file to parse. Defaults to <code class="codeph">AL32UTF8</code> if omitted or <code class="codeph">NULL</code> is explicitly passed in.</td>
+<td id="d79944e442" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_file_charset</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e442 d79944e280 ">Encoding of the file to parse. Defaults to <code class="codeph">AL32UTF8</code> if omitted or <code class="codeph">NULL</code> is explicitly passed in.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e456" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_max_rows</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e456 d86940e282 ">Stop parsing after <code class="codeph">p_max_rows</code> have been returned.</td>
+<td id="d79944e454" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_max_rows</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e454 d79944e280 ">Stop parsing after <code class="codeph">p_max_rows</code> have been returned.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e465" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_return_rows</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e465 d86940e282 ">Amount of rows to return. This is useful when the parser parses more rows (for data type detection) than it is supposed to return. When the specified amount of rows have been emitted, the function will continue parsing (and refining the detected data types) until <code class="codeph">p_max_rows</code> has been reached, or until the <code class="codeph">rownum</code> &lt; x clause of the SQL query kicks in and stops execution.</td>
+<td id="d79944e463" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_return_rows</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e463 d79944e280 ">Amount of rows to return. This is useful when the parser parses more rows (for data type detection) than it is supposed to return. When the specified amount of rows have been emitted, the function will continue parsing (and refining the detected data types) until <code class="codeph">p_max_rows</code> has been reached, or until the <code class="codeph">rownum</code> &lt; x clause of the SQL query kicks in and stops execution.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e477" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_store_profile_to_collection</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e477 d86940e282 ">Store the File profile which has been computed during parse into a collection. The collection will be cleared, if it exists. Only be used for computed profiles.</td>
+<td id="d79944e475" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_store_profile_to_collection</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e475 d79944e280 ">Store the File profile which has been computed during parse into a collection. The collection will be cleared, if it exists. Only be used for computed profiles.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e483" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_xml_namespaces</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e483 d86940e282 ">XML namespaces to use when parsing XML files.</td>
+<td id="d79944e481" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_xml_namespaces</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e481 d79944e280 ">XML namespaces to use when parsing XML files.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d86940e489" style="text-align: left;" data-valign="top" width="34%" headers="d86940e280 "><code class="codeph">p_fix_excel_precision</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d86940e489 d86940e282 "><p>Whether to round numbers in XLSX files to 15 significant digits. This is useful for XLSX files generated by Microsoft Excel. Excel stores numeric values as floating point numbers with a maximum of 15 significant digits. For calculation results, this can lead to rounding issues, which are fixed using this parameter.</p>
+<td id="d79944e487" style="text-align: left;" data-valign="top" width="34%" headers="d79944e278 "><code class="codeph">p_fix_excel_precision</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d79944e487 d79944e280 "><p>Whether to round numbers in XLSX files to 15 significant digits. This is useful for XLSX files generated by Microsoft Excel. Excel stores numeric values as floating point numbers with a maximum of 15 significant digits. For calculation results, this can lead to rounding issues, which are fixed using this parameter.</p>
 <p>See also: <a href="https://learn.microsoft.com/en-us/office/troubleshoot/excel/floating-point-arithmetic-inaccurate-result" target="_blank">Floating-point arithmetic may give inaccurate results in Excel</a> at Microsoft 365.</p></td>
 </tr>
 </tbody>
@@ -833,11 +834,11 @@ LINE_NUMBER COL001    COL002   COL003                                COL004     
 
 See Also:
 
-- <a href="/pls/topic/lookup?ctx=en/database/oracle/apex/26.1/aeapi&amp;id=ARPLS-GUID-5F805F47-FC30-4E5E-B3C5-EDCB9AF62899" target="_blank">CREATETEMPORARY Procedures</a> in Oracle AI Database PL/SQL Packages and Types Reference
-- <a href="/pls/topic/lookup?ctx=en/database/oracle/apex/26.1/aeapi&amp;id=ARPLS-GUID-092C14BA-5738-4471-BCD8-10CD4CBCD499" target="_blank">COPY Procedures</a> in Oracle AI Database PL/SQL Packages and Types Reference
+- <a href="/pls/topic/lookup?ctx=en/database/oracle/apex/24.2/aeapi&amp;id=ARPLS-GUID-5F805F47-FC30-4E5E-B3C5-EDCB9AF62899" target="_blank">CREATETEMPORARY Procedures</a> in Oracle Database PL/SQL Packages and Types Reference
+- <a href="/pls/topic/lookup?ctx=en/database/oracle/apex/24.2/aeapi&amp;id=ARPLS-GUID-092C14BA-5738-4471-BCD8-10CD4CBCD499" target="_blank">COPY Procedures</a> in Oracle Database PL/SQL Packages and Types Reference
 - <a href="https://learn.microsoft.com/en-us/office/troubleshoot/excel/floating-point-arithmetic-inaccurate-result" target="_blank">Floating-point arithmetic may give inaccurate results in Excel</a> at Microsoft 365
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
 
 ------------------------------------------------------------------------
 
@@ -862,4 +863,4 @@ Parameters
 | `p_name`  | Name of the flag to set. |
 | `p_value` | Value to set.            |
 
-**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)
+**Parent topic:** [APEX_DATA_PARSER](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_DATA_PARSER.html#GUID-07E9397C-DF26-40F7-AC73-F46961E1088A)

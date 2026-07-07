@@ -95,9 +95,16 @@
 2. Set its properties:
    - `[Right Pane ▸ Identification ▸ Name]`: `P3_QUICK`
    - `[Right Pane ▸ Identification ▸ Type]`: **Radio Group**
-   - `[Right Pane ▸ List of Values ▸ Type]`: **Static Values**
+   - `[Right Pane ▸ List of Values ▸ Type]`: **Static Values** — click into the editor and add these rows. **Display Value** is the chip label; **Return Value** is what the Step 5 predicate matches on (must be exact):
 
-> *The chips shown will vary by role:*
+     | Display Value | Return Value |
+     |---------------|--------------|
+     | `Open` | `OPEN` |
+     | `Assigned to me` | `MINE` |
+     | `Unassigned` | `UNASSIGNED` |
+     | `All` | `ALL` |
+
+> *The chips shown will vary by role (all four live in the list; the predicate + default computation drive which is relevant per role):*
 > - *Client User / Admin:* `Open` · `All`
 > - *Support / System Admin:* `Assigned to me` · `Unassigned` · `All`
 
@@ -175,7 +182,7 @@
    | Type | `TICKET_TYPE` | |
    | Company | `COMPANY_ID` | Condition: `APP_ROLE IN ('SYSTEM_ADMIN','SUPPORT_AGENT')`. LOV on company name. |
    | Project | `PROJECT_ID` | Condition: Same PL/SQL Boolean as the column. LOV on project name. |
-   | Assignee | `ASSIGNED_TO` | LOV on user name; include an "Unassigned" bucket. |
+   | Assignee | `ASSIGNED_TO` | Include an "Unassigned" bucket. **Isolation:** source the LOV from users on the caller's own tickets, not base `APP_USERS` — e.g. `SELECT DISTINCT au.FULL_NAME d, t.ASSIGNED_TO r FROM V_MY_TICKETS t JOIN APP_USERS au ON au.USER_ID = t.ASSIGNED_TO ORDER BY 1`. A raw `FROM APP_USERS` list would leak every tenant's user/agent names into the dropdown. |
 
 3. Add a **Search** facet (keyword search over `TICKET_REF` and `SUBJECT`), with placeholder: `Search reference or keyword…`.
 

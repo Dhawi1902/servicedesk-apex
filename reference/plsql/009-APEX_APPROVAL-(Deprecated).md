@@ -1,5 +1,5 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 9 APEX_APPROVAL (Deprecated)
 
@@ -7,44 +7,44 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 The APEX_APPROVAL package provides APIs for the management of approvals and Human Tasks. This package includes functionality to create new Human Tasks for a user to approve as well as operations dealing with the lifecycle management and state handling of Human Tasks. This package is part of the Oracle APEX Workflow functionality.
 
-- [Constants and Data Types](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.Constants-and-Data-Types.html#GUID-536A42B1-5099-467F-908F-A1C3C209D77B)
-- [ADD_TASK_COMMENT Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_TASK_COMMENT-Procedure.html#GUID-A69F74B7-AC57-4615-B709-C77850BF7B7A)
-- [ADD_TASK_POTENTIAL_OWNER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_TASK_POTENTIAL_OWNER-Procedure.html#GUID-CCD5B305-BB5E-4C22-A414-5AB1A210DA49)
-- [ADD_TO_HISTORY Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_TO_HISTORY-Procedure.html#GUID-9B21340D-5897-468B-B8A6-2CC48721C7A9)
-- [APPROVE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APPROVE_TASK-Procedure.html#GUID-1EC3B9FF-B925-4BFB-BE54-4D208E6B0F71)
-- [CANCEL_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CANCEL_TASK-Procedure.html#GUID-A470EEE9-CFA3-494C-928C-4C6517177FD9)
-- [CLAIM_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CLAIM_TASK-Procedure.html#GUID-9FBB4450-E6A3-484B-BCA5-DF2F96009A3F)
-- [COMPLETE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COMPLETE_TASK-Procedure.html#GUID-E2879695-2496-44F9-AC0A-2B2E947A1D17)
-- [CREATE_TASK Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/CREATE_TASK-Function.html#GUID-12261F10-5D8D-42A6-ADD9-FD323DC44156)
-- [DELEGATE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/DELEGATE_TASK-Procedure.html#GUID-BE9387C9-5406-4C5F-A69D-4C183F094F5F)
-- [GET_LOV_PRIORITY Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LOV_PRIORITY-Function.html#GUID-4F10A434-D3B9-4DDE-A095-25C7E69434F1)
-- [GET_LOV_STATE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_LOV_STATE-Function.html#GUID-E681CE57-1CB1-48CB-872C-79A6229AAB09)
-- [GET_NEXT_PURGE_TIMESTAMP Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.GET_NEXT_PURGE_TIMESTAMP-Function.html#GUID-3B2794D9-4735-476A-870A-08581C40333E)
-- [GET_TASK_DELEGATES Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASK_DELEGATES-Function.html#GUID-5711AEF9-45D6-4FCC-9A40-85C5AC726144)
-- [GET_TASK_HISTORY Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASK_HISTORY-Function.html#GUID-4D1838F7-3222-471F-ADF5-BD5EF919F125)
-- [GET_TASK_PARAMETER_OLD_VALUE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASK_PARAMETER_OLD_VALUE-Function.html#GUID-6391B97D-C26D-4A41-999D-02BDADE14D40)
-- [GET_TASK_PARAMETER_VALUE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASK_PARAMETER_VALUE-Function.html#GUID-ACCCB320-9E6E-4C5A-8E06-5BFF77B272CE)
-- [GET_TASK_PRIORITIES Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASK_PRIORITIES-Function.html#GUID-977C6E3B-8F10-42AA-A052-FAE9F92CC506)
-- [GET_TASKS Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/GET_TASKS-Function.html#GUID-D20D814B-29CD-40B8-BD8A-2D0976ADC1A8)
-- [HANDLE_TASK_DEADLINES Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HANDLE_TASK_DEADLINES-Procedure.html#GUID-E0FD697C-977E-4C69-8004-FB0CF21E4A8F)
-- [HAS_TASK_PARAM_CHANGED Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/HAS_TASK_PARAM_CHANGED-Function.html#GUID-2A5B6EA2-0BDF-474F-BA92-1E6F70FF3C45)
-- [IS_ALLOWED Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_ALLOWED-Function.html#GUID-D1732D81-A3DD-4910-8753-465EDB058248)
-- [IS_BUSINESS_ADMIN Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_BUSINESS_ADMIN-Function.html#GUID-B193C8C6-A5C1-4360-BDA3-87A90EF26742)
-- [IS_OF_PARTICIPANT_TYPE Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/IS_OF_PARTICIPANT_TYPE-Function.html#GUID-9736830F-C3CB-4FD5-81AA-8C1D4DE5E4BB)
-- [REJECT_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REJECT_TASK-Procedure.html#GUID-83D225BB-D838-4F09-AB6D-000B59238506)
-- [RELEASE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RELEASE_TASK-Procedure.html#GUID-1F5801D8-6284-4A03-B7ED-B703363ED46E)
-- [REMOVE_POTENTIAL_OWNER Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REMOVE_POTENTIAL_OWNER-Procedure.html#GUID-4A688074-5BEF-4A66-AE30-091FB069BAE5)
-- [RENEW_TASK Function](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/RENEW_TASK-Function.html#GUID-30276716-D04A-465F-99AC-36CDA949A7B5)
-- [REQUEST_MORE_INFORMATION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REQUEST_MORE_INFORMATION-Procedure.html#GUID-3A0AE94D-5C0C-417E-B651-3A7E4497B84D)
-- [SET_INITIATOR_CAN_COMPLETE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_INITIATOR_CAN_COMPLETE-Procedure.html#GUID-EAA186C8-D743-412F-844A-C4E908294E43)
-- [SET_TASK_DUE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TASK_DUE-Procedure.html#GUID-951A567E-CF0D-4B0B-9189-CE46EF4C1CF4)
-- [SET_TASK_PARAMETER_VALUES Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TASK_PARAMETER_VALUES-Procedure.html#GUID-7270BA5A-127A-4A7A-9E7D-0EF1BA0583D0)
-- [SET_TASK_PRIORITY Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SET_TASK_PRIORITY-Procedure.html#GUID-11B98BBF-0305-4896-AD45-A4E5ED621ED4)
-- [SUBMIT_INFORMATION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SUBMIT_INFORMATION-Procedure.html#GUID-30A21FB0-6C5E-447C-BF8E-16C8C2CCCC4E)
+- [Constants and Data Types](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.Constants-and-Data-Types.html#GUID-536A42B1-5099-467F-908F-A1C3C209D77B)
+- [ADD_TASK_COMMENT Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_TASK_COMMENT-Procedure.html#GUID-A69F74B7-AC57-4615-B709-C77850BF7B7A)
+- [ADD_TASK_POTENTIAL_OWNER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_TASK_POTENTIAL_OWNER-Procedure.html#GUID-CCD5B305-BB5E-4C22-A414-5AB1A210DA49)
+- [ADD_TO_HISTORY Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_TO_HISTORY-Procedure.html#GUID-9B21340D-5897-468B-B8A6-2CC48721C7A9)
+- [APPROVE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APPROVE_TASK-Procedure.html#GUID-1EC3B9FF-B925-4BFB-BE54-4D208E6B0F71)
+- [CANCEL_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CANCEL_TASK-Procedure.html#GUID-A470EEE9-CFA3-494C-928C-4C6517177FD9)
+- [CLAIM_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CLAIM_TASK-Procedure.html#GUID-9FBB4450-E6A3-484B-BCA5-DF2F96009A3F)
+- [COMPLETE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/COMPLETE_TASK-Procedure.html#GUID-E2879695-2496-44F9-AC0A-2B2E947A1D17)
+- [CREATE_TASK Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/CREATE_TASK-Function.html#GUID-12261F10-5D8D-42A6-ADD9-FD323DC44156)
+- [DELEGATE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/DELEGATE_TASK-Procedure.html#GUID-BE9387C9-5406-4C5F-A69D-4C183F094F5F)
+- [GET_LOV_PRIORITY Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_LOV_PRIORITY-Function.html#GUID-4F10A434-D3B9-4DDE-A095-25C7E69434F1)
+- [GET_LOV_STATE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_LOV_STATE-Function.html#GUID-E681CE57-1CB1-48CB-872C-79A6229AAB09)
+- [GET_NEXT_PURGE_TIMESTAMP Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.GET_NEXT_PURGE_TIMESTAMP-Function.html#GUID-3B2794D9-4735-476A-870A-08581C40333E)
+- [GET_TASK_DELEGATES Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_TASK_DELEGATES-Function.html#GUID-5711AEF9-45D6-4FCC-9A40-85C5AC726144)
+- [GET_TASK_HISTORY Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_TASK_HISTORY-Function.html#GUID-4D1838F7-3222-471F-ADF5-BD5EF919F125)
+- [GET_TASK_PARAMETER_OLD_VALUE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_TASK_PARAMETER_OLD_VALUE-Function.html#GUID-6391B97D-C26D-4A41-999D-02BDADE14D40)
+- [GET_TASK_PARAMETER_VALUE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_TASK_PARAMETER_VALUE-Function.html#GUID-ACCCB320-9E6E-4C5A-8E06-5BFF77B272CE)
+- [GET_TASK_PRIORITIES Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_TASK_PRIORITIES-Function.html#GUID-977C6E3B-8F10-42AA-A052-FAE9F92CC506)
+- [GET_TASKS Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/GET_TASKS-Function.html#GUID-D20D814B-29CD-40B8-BD8A-2D0976ADC1A8)
+- [HANDLE_TASK_DEADLINES Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/HANDLE_TASK_DEADLINES-Procedure.html#GUID-E0FD697C-977E-4C69-8004-FB0CF21E4A8F)
+- [HAS_TASK_PARAM_CHANGED Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/HAS_TASK_PARAM_CHANGED-Function.html#GUID-2A5B6EA2-0BDF-474F-BA92-1E6F70FF3C45)
+- [IS_ALLOWED Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/IS_ALLOWED-Function.html#GUID-D1732D81-A3DD-4910-8753-465EDB058248)
+- [IS_BUSINESS_ADMIN Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/IS_BUSINESS_ADMIN-Function.html#GUID-B193C8C6-A5C1-4360-BDA3-87A90EF26742)
+- [IS_OF_PARTICIPANT_TYPE Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/IS_OF_PARTICIPANT_TYPE-Function.html#GUID-9736830F-C3CB-4FD5-81AA-8C1D4DE5E4BB)
+- [REJECT_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REJECT_TASK-Procedure.html#GUID-83D225BB-D838-4F09-AB6D-000B59238506)
+- [RELEASE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/RELEASE_TASK-Procedure.html#GUID-1F5801D8-6284-4A03-B7ED-B703363ED46E)
+- [REMOVE_POTENTIAL_OWNER Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REMOVE_POTENTIAL_OWNER-Procedure.html#GUID-4A688074-5BEF-4A66-AE30-091FB069BAE5)
+- [RENEW_TASK Function](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/RENEW_TASK-Function.html#GUID-30276716-D04A-465F-99AC-36CDA949A7B5)
+- [REQUEST_MORE_INFORMATION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REQUEST_MORE_INFORMATION-Procedure.html#GUID-3A0AE94D-5C0C-417E-B651-3A7E4497B84D)
+- [SET_INITIATOR_CAN_COMPLETE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_INITIATOR_CAN_COMPLETE-Procedure.html#GUID-EAA186C8-D743-412F-844A-C4E908294E43)
+- [SET_TASK_DUE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_TASK_DUE-Procedure.html#GUID-951A567E-CF0D-4B0B-9189-CE46EF4C1CF4)
+- [SET_TASK_PARAMETER_VALUES Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_TASK_PARAMETER_VALUES-Procedure.html#GUID-7270BA5A-127A-4A7A-9E7D-0EF1BA0583D0)
+- [SET_TASK_PRIORITY Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SET_TASK_PRIORITY-Procedure.html#GUID-11B98BBF-0305-4896-AD45-A4E5ED621ED4)
+- [SUBMIT_INFORMATION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SUBMIT_INFORMATION-Procedure.html#GUID-30A21FB0-6C5E-447C-BF8E-16C8C2CCCC4E)
 
 ------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 The APEX_APPROVAL package uses the following constants and data types.
 
@@ -242,7 +242,7 @@ type t_task_participant_types is table of t_task_participant_type
     index by pls_integer;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -252,7 +252,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure adds a comment to a task. Any potential owner or business administrator of a Task can add comments to a Task. Comments are useful as additional information regarding a Task. For example, a manager may add her notes to a Task she is working on before delegating the Task.
 
@@ -281,7 +281,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -291,7 +291,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure adds a new potential owner to a task. Only a Business Administrator for the task can invoke this procedure. The procedure throws an error if the task is in `Completed` or `Errored` state.
 
@@ -313,22 +313,22 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d43678e86" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d43678e88" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
+<th id="d37284e84" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
+<th id="d37284e86" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d43678e92" style="text-align: left;" data-valign="top" width="42%" headers="d43678e86 "><code class="codeph">p_task_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d43678e92 d43678e88 ">The Task ID.</td>
+<td id="d37284e90" style="text-align: left;" data-valign="top" width="42%" headers="d37284e84 "><code class="codeph">p_task_id</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d37284e90 d37284e86 ">The Task ID.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d43678e98" style="text-align: left;" data-valign="top" width="42%" headers="d43678e86 "><code class="codeph">p_potential_owner</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d43678e98 d43678e88 ">The potential owner.</td>
+<td id="d37284e96" style="text-align: left;" data-valign="top" width="42%" headers="d37284e84 "><code class="codeph">p_potential_owner</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d37284e96 d37284e86 ">The potential owner.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d43678e104" style="text-align: left;" data-valign="top" width="42%" headers="d43678e86 "><code class="codeph">p_identity_type</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d43678e104 d43678e88 ">The identity type of the potential owner. Default is <code class="codeph">USER</code>.
+<td id="d37284e102" style="text-align: left;" data-valign="top" width="42%" headers="d37284e84 "><code class="codeph">p_identity_type</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d37284e102 d37284e86 ">The identity type of the potential owner. Default is <code class="codeph">USER</code>.
 <p>Note:</p>
 As of this release, the only supported identity type is <code class="codeph">USER</code>. Additional options will be added in a future release.
 </div></td>
@@ -349,7 +349,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -359,7 +359,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure adds a log entry into the task history and is to be used within task action code.
 
@@ -390,7 +390,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -400,7 +400,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure approves a Task. Only the potential owner or actual owner of the task can invoke this procedure. This procedure moves the state of the Task to `Completed` and sets the outcome of the Task to `Approved`.
 
@@ -408,7 +408,7 @@ This is a convenience procedure and equivalent to calling `complete_task` with o
 
 See Also:
 
-[COMPLETE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COMPLETE_TASK-Procedure.html#GUID-E2879695-2496-44F9-AC0A-2B2E947A1D17)
+[COMPLETE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/COMPLETE_TASK-Procedure.html#GUID-E2879695-2496-44F9-AC0A-2B2E947A1D17)
 
 Syntax
 
@@ -440,7 +440,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -450,7 +450,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure cancels the task by setting the task to state `CANCELED`. Only the initiator or the Business Administrator of the task can invoke this procedure. Only tasks which are not in `COMPLETED` or `ERRORED` state can be `CANCELED`.
 
@@ -485,7 +485,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -495,7 +495,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure claims responsibility for a task. A task can be claimed by potential owners of the Task. A Task must be in Unassigned state to claim it. Once the task is claimed by a user, the Task transitions to Assigned state and the actual owner of the task is set to the user who claimed the task.
 
@@ -525,7 +525,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -535,7 +535,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure completes a task. For Approval Tasks, an outcome must be supplied (`Approved` or `Rejected`). Action Tasks do not have an outcome. Only the actual owner or a potential owner of the task can invoke this procedure.
 
@@ -575,7 +575,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -585,7 +585,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function creates a new task. A new Task (Instance) is created. Depending on the task definition participant setting, the Task is set to state `Unassigned` or `Assigned`.
 
@@ -660,7 +660,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -670,7 +670,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure assigns the task to one potential owner and sets the task state to `Assigned`. Either the current owner of the task (the user to whom the task is currently assigned) or the Business Administrator of the task can perform this operation.
 
@@ -706,7 +706,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -716,7 +716,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function retrieves the list of value data for the task priority.
 
@@ -737,7 +737,7 @@ Example
 select disp,val from table ( apex_approval.get_lov_priority )
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -747,7 +747,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function gets the list of value data for the task attribute state.
 
@@ -768,7 +768,7 @@ Example
 select disp,val from table ( apex_approval.get_lov_state )
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -778,7 +778,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function retrieves the timestamp of the next purge.
 
@@ -807,7 +807,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -817,7 +817,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function gets the potential new owners of a task. The actual owner is excluded from the list.
 
@@ -847,7 +847,7 @@ Example
 select disp,val from table ( apex_approval.get_task_delegates ( p_task_id => 1234 ) )
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -857,7 +857,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function gets the approval log for a task.
 
@@ -911,7 +911,7 @@ select *  from table ( apex_approval.get_task_history ( p_task_id => 1234,
                                                  p_include_all => 'Y' ) )
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -921,7 +921,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function retrieves the old value of a parameter of this task that was updated in the current session. Raises a "No Data Found" error if the parameter does not exist and `p_raise_error flag` is set to `TRUE`.
 
@@ -957,7 +957,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -967,7 +967,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function gets the value of a Task parameter. This function can be used in SQL or PL/SQL to get the value of a Task parameter for a given task.
 
@@ -1011,7 +1011,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1021,7 +1021,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function gets the potential new priorities of a task. The actual priority is excluded from the list.
 
@@ -1051,7 +1051,7 @@ Example
 select disp,val from table ( apex_approval.get_task_priorities ( p_task_id => 1234 ) )
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1061,7 +1061,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function gets the tasks of a user depending on the given context.
 
@@ -1142,7 +1142,7 @@ Example
 select * from table ( apex_approval.get_tasks ( p_context => 'MY_TASKS', p_show_expired_tasks => 'Y') )
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1152,7 +1152,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure handles Task Deadlines for all Tasks in the current Workspace. A background Job performs this work every hour.
 
@@ -1178,7 +1178,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1188,7 +1188,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function checks if the value of this task paramter has been modified in the current session. Returns NULL when the parameter does not exist.
 
@@ -1219,7 +1219,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1229,7 +1229,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function checks whether the given user is permitted to perform a certain operation on a Task.
 
@@ -1275,7 +1275,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1285,7 +1285,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function checks whether the given user is a business administrator for at least one task definition.
 
@@ -1324,7 +1324,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1334,7 +1334,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function checks whether the given user is of a certain participant type for a Task.
 
@@ -1379,7 +1379,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1389,7 +1389,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure rejects the task. Only a potential owner or the actual owner of the task can invoke this procedure.
 
@@ -1428,9 +1428,9 @@ END;
 
 See Also:
 
-[COMPLETE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/COMPLETE_TASK-Procedure.html#GUID-E2879695-2496-44F9-AC0A-2B2E947A1D17)
+[COMPLETE_TASK Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/COMPLETE_TASK-Procedure.html#GUID-E2879695-2496-44F9-AC0A-2B2E947A1D17)
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1440,7 +1440,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure releases an `Assigned` task from its current owner and sets the task to `Unassigned` state. Only the current owner of the task can invoke this procedure.
 
@@ -1473,7 +1473,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1483,7 +1483,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure removes a potential owner of a task. If the user to be removed is not  an existing potential owner, the API raises an exception.
 
@@ -1517,7 +1517,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1527,7 +1527,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This function reactivates Expired or Errored Tasks. Tasks that have been transitioned to state `EXPIRED` or `ERRORED` can be renewed by a Business Administrator.
 
@@ -1573,7 +1573,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1583,7 +1583,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure requests more information for a task. The owner of a task can request additional information regarding a Task from the initiator. The task then moves to the Information Requested state and can be acted on by the owner only after the initiator submits the requested information.
 
@@ -1621,9 +1621,9 @@ END;
 
 See Also:
 
-[SUBMIT_INFORMATION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/SUBMIT_INFORMATION-Procedure.html#GUID-30A21FB0-6C5E-447C-BF8E-16C8C2CCCC4E)
+[SUBMIT_INFORMATION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/SUBMIT_INFORMATION-Procedure.html#GUID-30A21FB0-6C5E-447C-BF8E-16C8C2CCCC4E)
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1633,7 +1633,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure updates the `initiator_can_Complete` attribute of a task. The task can not be COMPLETED or ERRORED. Only a user who is a business administrator for the task can invoke this procedure.
 
@@ -1663,7 +1663,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1673,7 +1673,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure sets the due date of a task and can be invoked by the Business Administrator to update the due date of the task.
 
@@ -1707,7 +1707,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1717,7 +1717,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure updates the values of the parameter(s) of this task. This procedure only updates the parameters that are marked as "updatable" in the task definition.
 
@@ -1741,22 +1741,22 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d49969e85" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
-<th id="d49969e87" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
+<th id="d43575e83" style="text-align: left;" data-valign="bottom" width="42%">Parameter</th>
+<th id="d43575e85" style="text-align: left;" data-valign="bottom" width="58%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d49969e91" style="text-align: left;" data-valign="top" width="42%" headers="d49969e85 "><code class="codeph">p_task_id</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d49969e91 d49969e87 ">The Task ID.</td>
+<td id="d43575e89" style="text-align: left;" data-valign="top" width="42%" headers="d43575e83 "><code class="codeph">p_task_id</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d43575e89 d43575e85 ">The Task ID.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d49969e97" style="text-align: left;" data-valign="top" width="42%" headers="d49969e85 "><code class="codeph">p_parameters</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d49969e97 d49969e87 ">The list of changed parameters.</td>
+<td id="d43575e95" style="text-align: left;" data-valign="top" width="42%" headers="d43575e83 "><code class="codeph">p_parameters</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d43575e95 d43575e85 ">The list of changed parameters.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d49969e103" style="text-align: left;" data-valign="top" width="42%" headers="d49969e85 "><code class="codeph">p_raise_error</code></td>
-<td style="text-align: left;" data-valign="top" width="58%" headers="d49969e103 d49969e87 "><p>Default <code class="codeph">TRUE</code>.</p>
+<td id="d43575e101" style="text-align: left;" data-valign="top" width="42%" headers="d43575e83 "><code class="codeph">p_raise_error</code></td>
+<td style="text-align: left;" data-valign="top" width="58%" headers="d43575e101 d43575e85 "><p>Default <code class="codeph">TRUE</code>.</p>
 <p>When <code class="codeph">TRUE</code>, the API raises an exception and cancels updates to the parameters.</p>
 <p>If <code class="codeph">FALSE</code>, the API ignores raised exceptions if the list contains one or more incorrect parameter static IDs or parameters that are not marked as updatable in the Task Definition. The API updates the rest of the parameters.</p></td>
 </tr>
@@ -1777,7 +1777,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1787,7 +1787,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure sets the priority of a task.
 
@@ -1819,7 +1819,7 @@ BEGIN
 END;
 ```
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
 
 ------------------------------------------------------------------------
 
@@ -1829,7 +1829,7 @@ Caution:
 
 This API is deprecated and will be removed in a future release.
 
-Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
+Use [APEX_HUMAN_TASK](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_HUMAN_TASK.html#GUID-8F8F6295-F45E-4801-A8A4-D4C298A178B4) instead.
 
 This procedure submits information for a task. The initiator of a task can submit additional information regarding a Task for which information has been requested. For example, a travel approver might need airline details from the initiator. The initiator can submit this information to the travel approver using this API.
 
@@ -1861,6 +1861,6 @@ END;
 
 See Also:
 
-[REQUEST_MORE_INFORMATION Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/REQUEST_MORE_INFORMATION-Procedure.html#GUID-3A0AE94D-5C0C-417E-B651-3A7E4497B84D)
+[REQUEST_MORE_INFORMATION Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/REQUEST_MORE_INFORMATION-Procedure.html#GUID-3A0AE94D-5C0C-417E-B651-3A7E4497B84D)
 
-**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)
+**Parent topic:** [APEX_APPROVAL (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_APPROVAL.html#GUID-CC1036F7-0705-4750-9AEB-2E899E2AC7E4)

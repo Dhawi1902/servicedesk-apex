@@ -39,7 +39,7 @@
 5. Set `[Right Pane ▸ Settings ▸ Lost Update Type]` to **Checksum**.
 6. Add an IDOR visibility guard: under `[Left Pane ▸ Processing]`, right-click **Before Header** → **Create Process**.
 7. Set its properties:
-   - `[Right Pane ▸ Identification ▸ Type]`: **PL/SQL Code**
+   - `[Right Pane ▸ Identification ▸ Type]`: **Execute Code** (the anonymous-PL/SQL process type; older APEX labelled it *PL/SQL Code*)
    - `[Right Pane ▸ Source ▸ PL/SQL Code]`:
      ```sql
      DECLARE l_ok PLS_INTEGER;
@@ -255,7 +255,7 @@
 
 > *Every write process follows this pattern: visibility guard first, update base table, insert history row.*
 
-1. Under `[Left Pane ▸ Processing]`, create one **PL/SQL Code** process per transition button (Start Work, Resume, etc.).
+1. Under `[Left Pane ▸ Processing]`, create one **Execute Code** process (older APEX labelled this type *PL/SQL Code*) per transition button (Start Work, Resume, etc.).
 2. Set the `[Right Pane ▸ Server-side Condition ▸ When Button Pressed]` for each.
 3. Use the following template, adjusting the `STATUS` value:
 
@@ -327,22 +327,63 @@
 1. Add an **Inline Dialog** region for the Close confirmation and CSAT rating.
 2. Set the CSAT star item `[Right Pane ▸ Server-side Condition ▸ Type]` to Expression:
    `:APP_ROLE IN ('CLIENT_USER','CLIENT_ADMIN') AND :P4_COMPANY_ID = :APP_COMPANY_ID AND :P4_CREATED_BY = :APP_USER_ID AND :P4_CSAT_SCORE IS NULL`
-3. Add the **Close** PL/SQL process to set `STATUS='Closed'`, log history, and write the `CSAT_SCORE` if provided.
-4. Add the **Reopen** PL/SQL process:
+3. Add the **Close** PL/SQL process. Lead with the same `V_MY_TICKETS` guard as Step 8, then set `STATUS='Closed'`, log history, and write the `CSAT_SCORE` if provided:
 
    ```sql
-   UPDATE TICKETS
-      SET STATUS = 'In Progress', REOPEN_COUNT = REOPEN_COUNT + 1, UPDATED_AT = SYSTIMESTAMP
-    WHERE TICKET_ID = :P4_TICKET_ID;
-   -- Make sure to include the V_MY_TICKETS guard first!
+   DECLARE l_ok PLS_INTEGER;
+   BEGIN
+     SELECT COUNT(*) INTO l_ok FROM V_MY_TICKETS WHERE TICKET_ID = :P4_TICKET_ID;
+     IF l_ok = 0 THEN raise_application_error(-20010, 'Ticket not found.'); END IF;
+
+     UPDATE TICKETS
+        SET STATUS = 'Closed', CLOSED_AT = SYSTIMESTAMP, UPDATED_AT = SYSTIMESTAMP,
+            CSAT_SCORE = NVL(:P4_CSAT_SCORE, CSAT_SCORE)
+      WHERE TICKET_ID = :P4_TICKET_ID;
+
+     INSERT INTO TICKET_HISTORY (TICKET_ID, USER_ID, ACTION, OLD_VALUE, NEW_VALUE)
+     VALUES (:P4_TICKET_ID, :APP_USER_ID, 'STATUS_CHANGE', :P4_STATUS, 'Closed');
+   END;
    ```
+
+4. Add the **Reopen** PL/SQL process — the `V_MY_TICKETS` guard is **mandatory** here, not a comment:
+
+   ```sql
+   DECLARE l_ok PLS_INTEGER;
+   BEGIN
+     SELECT COUNT(*) INTO l_ok FROM V_MY_TICKETS WHERE TICKET_ID = :P4_TICKET_ID;
+     IF l_ok = 0 THEN raise_application_error(-20010, 'Ticket not found.'); END IF;
+
+     UPDATE TICKETS
+        SET STATUS = 'In Progress', REOPEN_COUNT = REOPEN_COUNT + 1, UPDATED_AT = SYSTIMESTAMP
+      WHERE TICKET_ID = :P4_TICKET_ID;
+
+     INSERT INTO TICKET_HISTORY (TICKET_ID, USER_ID, ACTION, OLD_VALUE, NEW_VALUE)
+     VALUES (:P4_TICKET_ID, :APP_USER_ID, 'STATUS_CHANGE', :P4_STATUS, 'In Progress');
+   END;
+   ```
+
+> **Isolation (critical):** every write process on this page — Close, Reopen, Set Priority (Step 11), and the Step 8/9 transitions — must open with the `SELECT COUNT(*) FROM V_MY_TICKETS` guard *before* touching `TICKETS`. `P4_TICKET_ID` also carries Session State Protection (Step 12), but the project rule is **both** controls, not either/or: SSP blocks the browser tamper, the count guard is the server-side backstop. Don't ship an unguarded `UPDATE TICKETS … WHERE TICKET_ID = :P4_TICKET_ID`.
 
 ---
 
 ## Step 11: Set Priority dialog + Triage gate (FR-37)
 
 1. Add an **Inline Dialog** for setting priority (`P4_PRIORITY` Select List).
-2. Add its PL/SQL process to update the table and insert `PRIORITY_CHANGE` history.
+2. Add its PL/SQL process to update the table and insert `PRIORITY_CHANGE` history — open with the same `V_MY_TICKETS` guard as Step 8 before the `UPDATE`:
+
+   ```sql
+   DECLARE l_ok PLS_INTEGER;
+   BEGIN
+     SELECT COUNT(*) INTO l_ok FROM V_MY_TICKETS WHERE TICKET_ID = :P4_TICKET_ID;
+     IF l_ok = 0 THEN raise_application_error(-20010, 'Ticket not found.'); END IF;
+
+     UPDATE TICKETS SET PRIORITY = :P4_PRIORITY, UPDATED_AT = SYSTIMESTAMP
+      WHERE TICKET_ID = :P4_TICKET_ID;
+
+     INSERT INTO TICKET_HISTORY (TICKET_ID, USER_ID, ACTION, OLD_VALUE, NEW_VALUE)
+     VALUES (:P4_TICKET_ID, :APP_USER_ID, 'PRIORITY_CHANGE', :P4_PRIORITY_OLD, :P4_PRIORITY);
+   END;
+   ```
 3. Under `[Left Pane ▸ Processing]`, add a **Validation** tied to the **Start Work** button:
    - `[Right Pane ▸ Identification ▸ Type]`: **PL/SQL Expression**
    - Expression: `:P4_PRIORITY IS NOT NULL`

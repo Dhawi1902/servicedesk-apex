@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html -->
 <!-- Interfaces: region -->
 
 # Interface: region
@@ -25,9 +25,9 @@
 
 ## region
 
-The region interface is used to access region related methods and properties. You get access to the region interface for a region with the [apex.region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.fn:region) function.
+The region interface is used to access region related methods and properties. You get access to the region interface for a region with the [apex.region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.fn:region) function.
 
-Plug-in developers can define the behavior of their region by calling [apex.region.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.region.html#.create).
+Plug-in developers can define the behavior of their region by calling [apex.region.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.region.html#.create).
 
 Since:
 - 5.1
@@ -52,7 +52,7 @@ var value = apex.region( "myRegionId" ).element;
 
 #### filterRegionId :string
 
-For region plug-ins which support Faceted Search / Smart Filters it is possible to pass in the DOM ID of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html) region in order for APEX to bind the two together. If provided, the region will be automatically refreshed as the filters change. Further, if the region's refresh callback returns a Promise, APEX will also automatically perform the appropriate locking and unlocking of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/facetsRegion.html) region during refresh.
+For region plug-ins which support Faceted Search / Smart Filters it is possible to pass in the DOM ID of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html) region in order for APEX to bind the two together. If provided, the region will be automatically refreshed as the filters change. Further, if the region's refresh callback returns a Promise, APEX will also automatically perform the appropriate locking and unlocking of the [facetsRegion](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/facetsRegion.html) region during refresh.
 
 ##### Type:
 
@@ -92,7 +92,7 @@ var value = apex.region( "myRegionId" ).type;
 
 #### widgetName :string
 
-For regions that are implemented with a jQuery UI style widget, this is the name of the widget. For other widget implementations it is null. It is used internally by the [region#call](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#call), [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#on) and [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#off) methods.
+For regions that are implemented with a jQuery UI style widget, this is the name of the widget. For other widget implementations it is null. It is used internally by the [region#call](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#call), [region#on](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#on) and [region#off](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#off) methods.
 
 ##### Type:
 
@@ -173,7 +173,7 @@ Type
 
 ##### Example
 
-The call method is a shorthand for calling methods on a widget. The following example shows an Interactive Grid region with HTML DOM id `emp` and two equivalent ways of invoking the `getSelectedRecords` method.
+The call method is a shorthand for calling methods on a widget. The following example shows an Interactive Grid region with Static ID `emp` and two equivalent ways of invoking the `getSelectedRecords` method.
 
 ```
 var records1 = apex.region( "emp" ).call( "getSelectedRecords" );
@@ -189,7 +189,7 @@ The default implementation sets focus to the first element in the region that is
 
 ##### Example
 
-The following example will focus the region with HTML DOM id "myRegion".
+The following example will focus the region with Static ID "myRegion".
 
 ```
 var region = apex.region( "myRegion" );
@@ -198,11 +198,11 @@ region.focus();
 
 #### off(events, …args)
 
-Removes an event handler from the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widget) method returns a value.
+Removes an event handler from the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widget) method returns a value.
 
 This is a shortcut for calling `apex.region(id).widget().off(...)`. Unlike the jQuery object `off` method this does not return the jQuery object and therefore is not chainable. See the jQuery documentation for details.
 
-See also [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#on).
+See also [region#on](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#on).
 
 ##### Parameters:
 
@@ -240,7 +240,7 @@ See also [region#on](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/
 
 ##### Example
 
-This example removes all event handlers for the selectionChange event of an Interactive Grid region. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#event:selectionchange).
+This example removes all event handlers for the selectionChange event of an Interactive Grid region. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#event:selectionchange).
 
 ```
 apex.region( interactiveGridRegionId ).off( "selectionChange" );
@@ -248,11 +248,11 @@ apex.region( interactiveGridRegionId ).off( "selectionChange" );
 
 #### on(events, …args)
 
-Attaches an event handler to the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#widget) method returns a value.
+Attaches an event handler to the widget element associated with this region. This method only applies to regions that are implemented with a jQuery UI style widget. This means that [region#widgetName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widgetName) property must be defined and the [region#widget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#widget) method returns a value.
 
 This is a shortcut for calling `apex.region(id).widget().on(...)`. Unlike the jQuery object `on` method this does not return the jQuery object and therefore is not chainable. See the jQuery documentation for details.
 
-See also [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#off).
+See also [region#off](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#off).
 
 ##### Parameters:
 
@@ -290,7 +290,7 @@ See also [region#off](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs
 
 ##### Example
 
-This example handles the selectionChange event of an Interactive Grid region by logging a message to the console. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#event:selectionchange)
+This example handles the selectionChange event of an Interactive Grid region by logging a message to the console. Note that the short event name "selectionChange" can be used rather than the full name "interactivegridselectionchange". See also [interactiveGrid#event:selectionchange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#event:selectionchange)
 
 ```
 apex.region( interactiveGridRegionId ).on( "selectionChange", function(event, data) {
@@ -321,7 +321,7 @@ Promise
 
 ##### Examples
 
-The following will refresh the region with HTML DOM id "myRegion":
+The following will refresh the region with Static ID "myRegion":
 
 ```
 var region = apex.region( "myRegion" );
@@ -337,7 +337,7 @@ region.refresh( true );
 
 #### widget() → {jQuery\|null}
 
-Returns the widget associated with the region or null if the region isn't implemented with a widget. Some advanced region types such as Calendar, Interactive Grid, or Tree are implemented using a widget. This function provides access to the widget typically by returning a jQuery object for the widget element. You can then call widget methods on the jQuery object. See also the [region#call](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/region.html#call) method.
+Returns the widget associated with the region or null if the region isn't implemented with a widget. Some advanced region types such as Calendar, Interactive Grid, or Tree are implemented using a widget. This function provides access to the widget typically by returning a jQuery object for the widget element. You can then call widget methods on the jQuery object. See also the [region#call](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/region.html#call) method.
 
 ##### Returns:
 
@@ -348,7 +348,7 @@ jQuery \| null
 
 ##### Example
 
-The following adds a row to an Interactive Grid by using the region widget method to access the interactiveGrid widget [interactiveGrid#getActions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html#getActions) method and then invoking the `selection-add-row` action.
+The following adds a row to an Interactive Grid by using the region widget method to access the interactiveGrid widget [interactiveGrid#getActions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html#getActions) method and then invoking the `selection-add-row` action.
 
 ```
 apex.region( "myGridRegion" ).widget().interactiveGrid( "getActions" ).invoke( "selection-add-row" );

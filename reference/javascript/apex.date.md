@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.date.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.date.html -->
 <!-- Namespaces: apex.date -->
 
 # Namespace: date
@@ -42,7 +42,7 @@
 - [toISOString](#.toISOString)
 - [weekOfMonth](#.weekOfMonth)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).date
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).date
 
 The apex.date namespace contains Oracle APEX functions related to date operations.
 
@@ -152,7 +152,7 @@ var weekNumber = apex.date.ISOWeek( myDate );
 
 #### (static) add(pDateopt, pAmount, pUnitopt) → {Date}
 
-Add a certain amount of time to an existing date. This function returns the modified date object as well as altering the original object. If the given date object should not be manipulated use [apex.date.clone](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.date.html#.clone) before calling this function. If *pDate* is not provided it uses the current date & time.
+Add a certain amount of time to an existing date. This function returns the modified date object as well as altering the original object. If the given date object should not be manipulated use [apex.date.clone](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.date.html#.clone) before calling this function. If *pDate* is not provided it uses the current date & time.
 
 ##### Parameters:
 
@@ -1354,7 +1354,7 @@ var seconds = apex.date.secondsPastMidnight( myDate );
 
 #### (static) setDayOfYear(pDateopt, pDay) → {Date}
 
-Set the day number of a year of a given date object. If the given date object should not be manipulated use [apex.date.clone](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.date.html#.clone) before calling this function. If *pDate* is not provided it uses the current date & time.
+Set the day number of a year of a given date object. If the given date object should not be manipulated use [apex.date.clone](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.date.html#.clone) before calling this function. If *pDate* is not provided it uses the current date & time.
 
 ##### Parameters:
 
@@ -1525,7 +1525,7 @@ var dayStartDate = apex.date.startOfDay( myDate );
 
 #### (static) subtract(pDateopt, pAmount, pUnitopt) → {Date}
 
-Subtract a certain amount of time of an existing date. This function returns the modified date object as well as altering the original object. If the given date object should not be manipulated use [apex.date.clone](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.date.html#.clone) before calling this function. If *pDate* is not provided it uses the current date & time.
+Subtract a certain amount of time of an existing date. This function returns the modified date object as well as altering the original object. If the given date object should not be manipulated use [apex.date.clone](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.date.html#.clone) before calling this function. If *pDate* is not provided it uses the current date & time.
 
 ##### Parameters:
 

@@ -1,13 +1,13 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CSS.html -->
-<!-- Oracle APEX 26.1 API Reference -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CSS.html -->
+<!-- Oracle APEX 24.2 API Reference -->
 
 ## 17 APEX_CSS
 
 The `APEX_CSS` package provides utility functions for adding CSS styles to HTTP output. This package is usually used for plug-in development.
 
-- [ADD Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD-Procedure.html#GUID-BED2BC8B-91F5-4A9E-9487-2F4D834AFDD7)
-- [ADD_3RD_PARTY_LIBRARY_FILE Procedure (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_3RD_PARTY_LIBRARY_FILE-Procedure.html#GUID-249CAA12-7293-4CE0-832E-2BED0C0E891B)
-- [ADD_FILE Procedure](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/ADD_FILE-Procedure.html#GUID-4CDF4F1D-3CD9-4BBE-B205-CEBF53E81F3F)
+- [ADD Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD-Procedure.html#GUID-BED2BC8B-91F5-4A9E-9487-2F4D834AFDD7)
+- [ADD_3RD_PARTY_LIBRARY_FILE Procedure (Deprecated)](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_3RD_PARTY_LIBRARY_FILE-Procedure.html#GUID-249CAA12-7293-4CE0-832E-2BED0C0E891B)
+- [ADD_FILE Procedure](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/ADD_FILE-Procedure.html#GUID-4CDF4F1D-3CD9-4BBE-B205-CEBF53E81F3F)
 
 ------------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ apex_css.add (
     p_key => 'autocomplete_widget' );
 ```
 
-**Parent topic:** [APEX_CSS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CSS.html#GUID-37060CB4-6354-445E-8CE8-67CF252D278F)
+**Parent topic:** [APEX_CSS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CSS.html#GUID-37060CB4-6354-445E-8CE8-67CF252D278F)
 
 ------------------------------------------------------------------------
 
@@ -76,34 +76,34 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d76156e86" style="text-align: left;" data-valign="bottom" width="34%">Parameters</th>
-<th id="d76156e88" style="text-align: left;" data-valign="bottom" width="66%">Description</th>
+<th id="d69160e83" style="text-align: left;" data-valign="bottom" width="34%">Parameters</th>
+<th id="d69160e85" style="text-align: left;" data-valign="bottom" width="66%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d76156e92" style="text-align: left;" data-valign="top" width="34%" headers="d76156e86 "><code class="codeph">p_library</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d76156e92 d76156e88 ">Use one of the <code class="codeph">c_library_*</code> constants.</td>
+<td id="d69160e89" style="text-align: left;" data-valign="top" width="34%" headers="d69160e83 "><code class="codeph">p_library</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d69160e89 d69160e85 ">Use one of the <code class="codeph">c_library_*</code> constants.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76156e101" style="text-align: left;" data-valign="top" width="34%" headers="d76156e86 "><code class="codeph">p_file_name</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d76156e101 d76156e88 ">Specifies the file name excluding version, <code class="codeph">.min</code>, and <code class="codeph">.css</code>.</td>
+<td id="d69160e98" style="text-align: left;" data-valign="top" width="34%" headers="d69160e83 "><code class="codeph">p_file_name</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d69160e98 d69160e85 ">Specifies the file name excluding version, <code class="codeph">.min</code>, and <code class="codeph">.css</code>.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76156e113" style="text-align: left;" data-valign="top" width="34%" headers="d76156e86 "><code class="codeph">p_directory</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d76156e113 d76156e88 ">(Optional) Directory where the file <code class="codeph">p_file_name</code> is located.</td>
+<td id="d69160e110" style="text-align: left;" data-valign="top" width="34%" headers="d69160e83 "><code class="codeph">p_directory</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d69160e110 d69160e85 ">(Optional) Directory where the file <code class="codeph">p_file_name</code> is located.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76156e122" style="text-align: left;" data-valign="top" width="34%" headers="d76156e86 "><code class="codeph">p_version</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d76156e122 d76156e88 ">(Optional) If no value is provided, then uses the same version shipped with APEX.</td>
+<td id="d69160e119" style="text-align: left;" data-valign="top" width="34%" headers="d69160e83 "><code class="codeph">p_version</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d69160e119 d69160e85 ">(Optional) If no value is provided, then uses the same version shipped with APEX.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76156e131" style="text-align: left;" data-valign="top" width="34%" headers="d76156e86 "><code class="codeph">p_media_query</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d76156e131 d76156e88 ">(Optional) Value that is set as media query.</td>
+<td id="d69160e128" style="text-align: left;" data-valign="top" width="34%" headers="d69160e83 "><code class="codeph">p_media_query</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d69160e128 d69160e85 ">(Optional) Value that is set as media query.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76156e137" style="text-align: left;" data-valign="top" width="34%" headers="d76156e86 "><code class="codeph">p_attributes</code></td>
-<td style="text-align: left;" data-valign="top" width="66%" headers="d76156e137 d76156e88 "><p>Extra attributes to add to the link tag.</p>
+<td id="d69160e134" style="text-align: left;" data-valign="top" width="34%" headers="d69160e83 "><code class="codeph">p_attributes</code></td>
+<td style="text-align: left;" data-valign="top" width="66%" headers="d69160e134 d69160e85 "><p>Extra attributes to add to the link tag.</p>
 <p>Note:</p>
 Callers are responsible for escaping this parameter.
 </div></td>
@@ -121,7 +121,7 @@ apex_css.add_3rd_party_library_file (
     p_file_name => 'jquery.ui.accordion' )
 ```
 
-**Parent topic:** [APEX_CSS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CSS.html#GUID-37060CB4-6354-445E-8CE8-67CF252D278F)
+**Parent topic:** [APEX_CSS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CSS.html#GUID-37060CB4-6354-445E-8CE8-67CF252D278F)
 
 ------------------------------------------------------------------------
 
@@ -152,38 +152,38 @@ Parameters
 </colgroup>
 <thead>
 <tr data-align="left" data-valign="top">
-<th id="d76519e77" style="text-align: left;" data-valign="bottom" width="24%">Parameter</th>
-<th id="d76519e79" style="text-align: left;" data-valign="bottom" width="76%">Description</th>
+<th id="d69523e74" style="text-align: left;" data-valign="bottom" width="24%">Parameter</th>
+<th id="d69523e76" style="text-align: left;" data-valign="bottom" width="76%">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr data-align="left" data-valign="top">
-<td id="d76519e83" style="text-align: left;" data-valign="top" width="24%" headers="d76519e77 "><code class="codeph">p_name</code></td>
-<td style="text-align: left;" data-valign="top" width="76%" headers="d76519e83 d76519e79 ">Name of the CSS file.</td>
+<td id="d69523e80" style="text-align: left;" data-valign="top" width="24%" headers="d69523e74 "><code class="codeph">p_name</code></td>
+<td style="text-align: left;" data-valign="top" width="76%" headers="d69523e80 d69523e76 ">Name of the CSS file.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76519e90" style="text-align: left;" data-valign="top" width="24%" headers="d76519e77 "><code class="codeph">p_directory</code></td>
-<td style="text-align: left;" data-valign="top" width="76%" headers="d76519e90 d76519e79 ">Begin of the URL where the CSS file should be read from. If you use this function for a plug-in, set this parameter to <code class="codeph">p_plugin.file_prefix</code></td>
+<td id="d69523e87" style="text-align: left;" data-valign="top" width="24%" headers="d69523e74 "><code class="codeph">p_directory</code></td>
+<td style="text-align: left;" data-valign="top" width="76%" headers="d69523e87 d69523e76 ">Begin of the URL where the CSS file should be read from. If you use this function for a plug-in, set this parameter to <code class="codeph">p_plugin.file_prefix</code></td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76519e99" style="text-align: left;" data-valign="top" width="24%" headers="d76519e77 "><code class="codeph">p_version</code></td>
-<td style="text-align: left;" data-valign="top" width="76%" headers="d76519e99 d76519e79 ">Identifier of the version of the CSS file. The version will be added to the CSS filename. In most cases you should use the default of <code class="codeph">NULL</code> as the value.</td>
+<td id="d69523e96" style="text-align: left;" data-valign="top" width="24%" headers="d69523e74 "><code class="codeph">p_version</code></td>
+<td style="text-align: left;" data-valign="top" width="76%" headers="d69523e96 d69523e76 ">Identifier of the version of the CSS file. The version will be added to the CSS filename. In most cases you should use the default of <code class="codeph">NULL</code> as the value.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76519e109" style="text-align: left;" data-valign="top" width="24%" headers="d76519e77 "><code class="codeph">p_skip_extension</code></td>
-<td style="text-align: left;" data-valign="top" width="76%" headers="d76519e109 d76519e79 ">The function automatically adds <code class="codeph">.css</code> to the CSS filename. If set to <code class="codeph">TRUE</code>, the function ignores this addition.</td>
+<td id="d69523e106" style="text-align: left;" data-valign="top" width="24%" headers="d69523e74 "><code class="codeph">p_skip_extension</code></td>
+<td style="text-align: left;" data-valign="top" width="76%" headers="d69523e106 d69523e76 ">The function automatically adds <code class="codeph">.css</code> to the CSS filename. If set to <code class="codeph">TRUE</code>, the function ignores this addition.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76519e122" style="text-align: left;" data-valign="top" width="24%" headers="d76519e77 "><code class="codeph">p_media_query</code></td>
-<td style="text-align: left;" data-valign="top" width="76%" headers="d76519e122 d76519e79 ">Value set as media query.</td>
+<td id="d69523e119" style="text-align: left;" data-valign="top" width="24%" headers="d69523e74 "><code class="codeph">p_media_query</code></td>
+<td style="text-align: left;" data-valign="top" width="76%" headers="d69523e119 d69523e76 ">Value set as media query.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76519e128" style="text-align: left;" data-valign="top" width="24%" headers="d76519e77 "><code class="codeph">p_ie_condition</code></td>
-<td style="text-align: left;" data-valign="top" width="76%" headers="d76519e128 d76519e79 ">(Desupported) Condition used as Internet Explorer condition.</td>
+<td id="d69523e125" style="text-align: left;" data-valign="top" width="24%" headers="d69523e74 "><code class="codeph">p_ie_condition</code></td>
+<td style="text-align: left;" data-valign="top" width="76%" headers="d69523e125 d69523e76 ">(Desupported) Condition used as Internet Explorer condition.</td>
 </tr>
 <tr data-align="left" data-valign="top">
-<td id="d76519e134" style="text-align: left;" data-valign="top" width="24%" headers="d76519e77 "><code class="codeph">p_attributes</code></td>
-<td style="text-align: left;" data-valign="top" width="76%" headers="d76519e134 d76519e79 "><p>Extra attributes to add to the link tag.</p>
+<td id="d69523e131" style="text-align: left;" data-valign="top" width="24%" headers="d69523e74 "><code class="codeph">p_attributes</code></td>
+<td style="text-align: left;" data-valign="top" width="76%" headers="d69523e131 d69523e76 "><p>Extra attributes to add to the link tag.</p>
 <p>Note:</p>
 Callers are responsible for escaping this parameter.
 </div></td>
@@ -201,4 +201,4 @@ apex_css.add_file (
    p_directory => p_plugin.file_prefix );
 ```
 
-**Parent topic:** [APEX_CSS](https://docs.oracle.com/en/database/oracle/apex/26.1/aeapi/APEX_CSS.html#GUID-37060CB4-6354-445E-8CE8-67CF252D278F)
+**Parent topic:** [APEX_CSS](https://docs.oracle.com/en/database/oracle/apex/24.2/aeapi/APEX_CSS.html#GUID-37060CB4-6354-445E-8CE8-67CF252D278F)

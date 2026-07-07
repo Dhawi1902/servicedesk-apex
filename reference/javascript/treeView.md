@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html -->
 <!-- Widgets: treeView -->
 
 # Widget: treeView
@@ -95,65 +95,65 @@
 
 A jQuery UI widget that implements a tree view used to display and interact with hierarchical data. Implements tree view functionality according to WAI-ARIA authoring practices design patterns and the DHTML Style Guide with minor differences in keyboard handling.
 
-The treeView works with any data model via the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) interface supplied when the treeView is created. The tree data model must be singly rooted. If the data doesn't have a single root then the adapter must generate one dynamically where the multiple roots are its children. The tree need not display the root. For a multi-rooted tree set the [treeView#showRoot](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#showRoot) option to false. With `showRoot` false the adapter will never be asked for the label or icon etc. of the root node. The tree can also be created from [markup](#from-markup-section)
+The treeView works with any data model via the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) interface supplied when the treeView is created. The tree data model must be singly rooted. If the data doesn't have a single root then the adapter must generate one dynamically where the multiple roots are its children. The tree need not display the root. For a multi-rooted tree set the [treeView#showRoot](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#showRoot) option to false. With `showRoot` false the adapter will never be asked for the label or icon etc. of the root node. The tree can also be created from [markup](#from-markup-section)
 
 ### Selection
 
-A treeView supports single or multiple selection. See option [treeView#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#multiple). Tree nodes that are disabled cannot be selected but can be focused. Selection is accomplished with mouse and/or keyboard. Node selection is independent of hierarchy. In other words selecting a parent node does not select all of its descendants.
+A treeView supports single or multiple selection. See option [treeView#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#multiple). Tree nodes that are disabled cannot be selected but can be focused. Selection is accomplished with mouse and/or keyboard. Node selection is independent of hierarchy. In other words selecting a parent node does not select all of its descendants.
 
-It is also possible to include as part of each tree node a checkbox for multiple selection or radio button for single selection using the [treeView#nodeSelector](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#nodeSelector) option.
+It is also possible to include as part of each tree node a checkbox for multiple selection or radio button for single selection using the [treeView#nodeSelector](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#nodeSelector) option.
 
 On a touch enabled device where the user has interacted with touch a multi select treeView will automatically enable checkbox selection.
 
 ### Context Menus
 
-The treeView has easy integration with the [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget to provide context menu support. The [treeView#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenu) option is used to provide a [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget options object. When the `contextMenu` option is used the [menu#event:beforeOpen](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html#event:beforeOpen) event/callback ui argument has these additional properties:
+The treeView has easy integration with the [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget to provide context menu support. The [treeView#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenu) option is used to provide a [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget options object. When the `contextMenu` option is used the [menu#event:beforeOpen](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html#event:beforeOpen) event/callback ui argument has these additional properties:
 
 - menuElement: The menu jQuery object.
 - treeView: This tree jQuery object.
-- treeNodeAdapter: The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) for this tree.
+- treeNodeAdapter: The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) for this tree.
 - selection: A jQuery object with the selected tree nodes at the time the menu was opened.
 - selectedNodes: An array of the selected model nodes at the time the menu was opened.
 
-Also the [menu#event:afterClose](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html#event:afterClose) event/callback will automatically focus the tree if the menu action didn't take the focus and the ui argument has these additional properties:
+Also the [menu#event:afterClose](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html#event:afterClose) event/callback will automatically focus the tree if the menu action didn't take the focus and the ui argument has these additional properties:
 
 - menuElement: The menu jQuery object.
 - treeView: This tree jQuery object.
 
-If using the `contextMenu` option the [treeView#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenuId) option can be used to give the menu element an ID. This is useful if other code must refer to the menu element or widget.
+If using the `contextMenu` option the [treeView#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenuId) option can be used to give the menu element an ID. This is useful if other code must refer to the menu element or widget.
 
-You can reference an already existing [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget by specifying the [treeView#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenuId) in place of the [treeView#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenu) option.
+You can reference an already existing [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget by specifying the [treeView#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenuId) in place of the [treeView#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenu) option.
 
-If for any reason you don't want to use the [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget, the [treeView#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenuAction) option allows you to respond to mouse or keyboard interactions that typically result in a context menu. Specifically Right Mouse click (via `contextmenu` event), Shift-F10 key (via `keydown` event) and the Windows context menu key (via `contextmenu` event). The original event is passed to the [treeView#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenuAction) function. The event object can be used to position the menu. If you implement your own menu it is best if you put focus back on the treeView using the [treeView#focus](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#focus) method when the menu closes (unless the menu action directs focus elsewhere).
+If for any reason you don't want to use the [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget, the [treeView#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenuAction) option allows you to respond to mouse or keyboard interactions that typically result in a context menu. Specifically Right Mouse click (via `contextmenu` event), Shift-F10 key (via `keydown` event) and the Windows context menu key (via `contextmenu` event). The original event is passed to the [treeView#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenuAction) function. The event object can be used to position the menu. If you implement your own menu it is best if you put focus back on the treeView using the [treeView#focus](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#focus) method when the menu closes (unless the menu action directs focus elsewhere).
 
-Only one of [treeView#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenuAction) and [treeView#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenu) or [treeView#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenuId) can be specified. The [treeView#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenu) and [treeView#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenuId) options can only be set when the treeView is initialized and it can't be changed. The [treeView#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenuAction) cannot be set if the [treeView#contextMenu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenu) or [treeView#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#contextMenuId) options were given when the tree was created.
+Only one of [treeView#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenuAction) and [treeView#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenu) or [treeView#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenuId) can be specified. The [treeView#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenu) and [treeView#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenuId) options can only be set when the treeView is initialized and it can't be changed. The [treeView#contextMenuAction](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenuAction) cannot be set if the [treeView#contextMenu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenu) or [treeView#contextMenuId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#contextMenuId) options were given when the tree was created.
 
 ### Drag and Drop
 
-To enable drag and drop set the [treeView#dragAndDrop](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#dragAndDrop) option to true. The treeView can be a drag source for either a jQuery UI droppable or the same treeView instance and it can be a drop target for either a jQuery UI draggable or the same treeView instance.
+To enable drag and drop set the [treeView#dragAndDrop](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#dragAndDrop) option to true. The treeView can be a drag source for either a jQuery UI droppable or the same treeView instance and it can be a drop target for either a jQuery UI draggable or the same treeView instance.
 
-To work with a droppable make sure the scope options of the droppable and treeView match and that the droppable accept option allows the treeView node (an element with class `a-TreeView-content`). On droppable drop you would typically call the [treeView#getSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getSelection) or [treeView#getSelectedNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getSelectedNodes) of the treeView instance.
+To work with a droppable make sure the scope options of the droppable and treeView match and that the droppable accept option allows the treeView node (an element with class `a-TreeView-content`). On droppable drop you would typically call the [treeView#getSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getSelection) or [treeView#getSelectedNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getSelectedNodes) of the treeView instance.
 
 To work with a draggable set the draggable `connectToTreeView` option to a selector for the treeView instance you want to be a drop target. Note a treeView plugin extends the draggable to add the `connectToTreeView` option.
 
-The treeView supports dragging single or multiple nodes. In order to drag multiple nodes both the [treeView#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#multiple) and [treeView#dragMultiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#dragMultiple) options must be true. Note it is possible for a treeView instance to support multiple selection but single drag. The reverse (single selection and multiple drag) is not possible.
+The treeView supports dragging single or multiple nodes. In order to drag multiple nodes both the [treeView#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#multiple) and [treeView#dragMultiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#dragMultiple) options must be true. Note it is possible for a treeView instance to support multiple selection but single drag. The reverse (single selection and multiple drag) is not possible.
 
-Regardless of the drag source there are two modes of behavior for identifying drop targets. The mode is determined by the [treeView#dragReorder](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#dragReorder) option. If false (the default) nodes which can have children of the type(s) being dragged are targets and dropping on the target node results in the dragged node(s) being added as children. This mode is suitable when the children have an implicit order such as files in a file system folder. If `dragReorder` is true then a placeholder node, which dynamically moves between nodes whose parent can have children of the type(s) being dragged, is the target. Dropping on the placeholder target adds the nodes where the placeholder is. This mode is suitable for when nodes can be explicitly ordered by the user such as with sections in a document outline.
+Regardless of the drag source there are two modes of behavior for identifying drop targets. The mode is determined by the [treeView#dragReorder](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#dragReorder) option. If false (the default) nodes which can have children of the type(s) being dragged are targets and dropping on the target node results in the dragged node(s) being added as children. This mode is suitable when the children have an implicit order such as files in a file system folder. If `dragReorder` is true then a placeholder node, which dynamically moves between nodes whose parent can have children of the type(s) being dragged, is the target. Dropping on the placeholder target adds the nodes where the placeholder is. This mode is suitable for when nodes can be explicitly ordered by the user such as with sections in a document outline.
 
-A drag and drop can perform various operations. There is builtin support for move, copy and add operations. Add only works when the drag is from a draggable, move and copy work when the tree is the drag source and target. The nodeAdapter decides what operations are supported with the treeView#dragOperations method based on the types of nodes being dragged, or any other context available to the adapter. Different operations are selected with keyboard modifiers: Shift, Ctrl, Alt, and Meta (only one modifier is allowed). Operations besides move, copy, and add are handled with custom logic in the beforeStop event handler. See [treeNodeAdapter#moveNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#moveNodes), and [treeNodeAdapter#copyNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#copyNodes) for how the `treeNodeAdapter` is used for drag and drop move and copy operations.
+A drag and drop can perform various operations. There is builtin support for move, copy and add operations. Add only works when the drag is from a draggable, move and copy work when the tree is the drag source and target. The nodeAdapter decides what operations are supported with the treeView#dragOperations method based on the types of nodes being dragged, or any other context available to the adapter. Different operations are selected with keyboard modifiers: Shift, Ctrl, Alt, and Meta (only one modifier is allowed). Operations besides move, copy, and add are handled with custom logic in the beforeStop event handler. See [treeNodeAdapter#moveNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#moveNodes), and [treeNodeAdapter#copyNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#copyNodes) for how the `treeNodeAdapter` is used for drag and drop move and copy operations.
 
 ### Tree From Markup
 
 A tree data model can be created from HTML markup inside the treeView element. A tree from markup has much less functionality. The markup is nested lists using `<ul>`, `<li>`, and `<a>` or `` for the node labels. This is typically used for navigation such as with a site map. The markup is converted to data and a default adapter with no editing capability is created to interface to it. The markup is removed as it is converted to data and is not restored even if the treeView widget is destroyed. The `<li>` element can include these attributes:
 
-- class - Value returned by [treeNodeAdapter#getClasses](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getClasses).
-- data-id - Value used by [treeNodeAdapter#setViewId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#setViewId).
-- data-icon - Value returned by [treeNodeAdapter#getIcon](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getIcon).
+- class - Value returned by [treeNodeAdapter#getClasses](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getClasses).
+- data-id - Value used by [treeNodeAdapter#setViewId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#setViewId).
+- data-icon - Value returned by [treeNodeAdapter#getIcon](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getIcon).
 - data-type - Used by default adapter, only useful if supplying treeNode#adapterTypesMap.
 - data-current - A true value will select that node.
-- data-disabled - Value returned by [treeNodeAdapter#isDisabled](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#isDisabled).
+- data-disabled - Value returned by [treeNodeAdapter#isDisabled](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#isDisabled).
 
-The span or anchor content is the label. The anchor `href` attribute is the link (returned by [treeNodeAdapter#getLink](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getLink)) used for navigation and the `target` attribute is the linkTarget (returned by [treeNodeAdapter#getLinkTarget](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getLinkTarget)). Unless the top level list has a single item [treeView#showRoot](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#showRoot) should be false. Typically [treeView#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#multiple) is false and [treeView#navigation](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#navigation) is true. An example below shows the basic expected markup.
+The span or anchor content is the label. The anchor `href` attribute is the link (returned by [treeNodeAdapter#getLink](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getLink)) used for navigation and the `target` attribute is the linkTarget (returned by [treeNodeAdapter#getLinkTarget](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getLinkTarget)). Unless the top level list has a single item [treeView#showRoot](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#showRoot) should be false. Typically [treeView#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#multiple) is false and [treeView#navigation](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#navigation) is true. An example below shows the basic expected markup.
 
 ### Keyboard End User Information
 
@@ -322,13 +322,13 @@ $( "#markupTree" ).treeView( {
 
 ### Options
 
-#### actionsContext :[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)
+#### actionsContext :[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)
 
-The [actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html) context that this treeView is associated with. This option is only applicable when [treeView#navigation](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#navigation) option is true and one or more node link URLs have an action binding.
+The [actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html) context that this treeView is associated with. This option is only applicable when [treeView#navigation](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#navigation) option is true and one or more node link URLs have an action binding.
 
 ##### Type:
 
-- [actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)
+- [actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)
 
 Default Value:
 - apex.actions (the global actions context)
@@ -350,7 +350,7 @@ Get or set option actionsContext after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "actionsContext" );
+var value = $( ".selector" ).treeView( "option", "actionsContext" );
 
 // set
 
@@ -359,7 +359,7 @@ $( ".selector" ).treeView( "option", "actionsContext", myContext );
 
 #### adapterTypesMap :Object
 
-Only used when treeView#getNodeAdapter is null (when initializing the treeView from markup) The value is passed to [treeView.makeDefaultNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#.makeDefaultNodeAdapter) as `pTypes` parameter.
+Only used when treeView#getNodeAdapter is null (when initializing the treeView from markup) The value is passed to [treeView.makeDefaultNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#.makeDefaultNodeAdapter) as `pTypes` parameter.
 
 ##### Type:
 
@@ -416,7 +416,7 @@ Get or set option autoCollapse after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "autoCollapse" );
+var value = $( ".selector" ).treeView( "option", "autoCollapse" );
 
 // set
 
@@ -425,7 +425,7 @@ $( ".selector" ).treeView( "option", "autoCollapse", true );
 
 #### clickToRename :boolean
 
-If true allow nodes to be renamed in-place by clicking on a selected node subject to data model approval via [treeNodeAdapter#allowRename](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowRename).
+If true allow nodes to be renamed in-place by clicking on a selected node subject to data model approval via [treeNodeAdapter#allowRename](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowRename).
 
 ##### Type:
 
@@ -451,7 +451,7 @@ Get or set option clickToRename after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "clickToRename" );
+var value = $( ".selector" ).treeView( "option", "clickToRename" );
 
 // set
 
@@ -483,7 +483,7 @@ $( ".selector" ).treeView( {
 
 #### contextMenu :object
 
-A [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget options object use to create the context menu.
+A [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget options object use to create the context menu.
 
 Only specify one of `contextMenu` or `contextMenuId` and `contextMenuAction`. If none of `contextMenu`, `contextMenuId` or `contextMenuAction` are specified there is no context menu.
 
@@ -542,9 +542,9 @@ $( ".selector" ).treeView( {
 
 #### (nullable) contextMenuId :string
 
-If option `contextMenu` is given then this is the element id to give the context [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) created. This allows other code to interact with the created context [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget.
+If option `contextMenu` is given then this is the element id to give the context [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) created. This allows other code to interact with the created context [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget.
 
-If option `contextMenu` is not given then this is the element id of an existing [menu](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/menu.html) widget.
+If option `contextMenu` is not given then this is the element id of an existing [menu](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/menu.html) widget.
 
 This option cannot be set or changed after the widget is initialized.
 
@@ -599,7 +599,7 @@ Get or set option doubleClick after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "doubleClick" );
+var value = $( ".selector" ).treeView( "option", "doubleClick" );
 
 // set
 
@@ -608,7 +608,7 @@ $( ".selector" ).treeView( "option", "doubleClick", "toggle" );
 
 #### dragAndDrop :boolean
 
-If true drag and drop is supported. The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) must also support drag and drop.
+If true drag and drop is supported. The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) must also support drag and drop.
 
 ##### Type:
 
@@ -634,7 +634,7 @@ Get or set option dragAndDrop after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "dragAndDrop" );
+var value = $( ".selector" ).treeView( "option", "dragAndDrop" );
 
 // set
 
@@ -680,7 +680,7 @@ Get or set option dragContainment after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "dragContainment" );
+var value = $( ".selector" ).treeView( "option", "dragContainment" );
 
 // set
 
@@ -737,7 +737,7 @@ Get or set option dragExpandDelay after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "dragExpandDelay" );
+var value = $( ".selector" ).treeView( "option", "dragExpandDelay" );
 
 // set
 
@@ -757,7 +757,7 @@ Default Value:
 
 #### dragMultiple :boolean
 
-This only applies if [treeView#multiple](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#multiple) and [treeView#dragAndDrop](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#dragAndDrop) options are true.
+This only applies if [treeView#multiple](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#multiple) and [treeView#dragAndDrop](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#dragAndDrop) options are true.
 
 If this option is true then multiple nodes can be dragged.
 
@@ -785,7 +785,7 @@ Get or set option dragMultiple after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "dragMultiple" );
+var value = $( ".selector" ).treeView( "option", "dragMultiple" );
 
 // set
 
@@ -820,7 +820,7 @@ Get or set option dragOpacity after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "dragOpacity" );
+var value = $( ".selector" ).treeView( "option", "dragOpacity" );
 
 // set
 
@@ -855,7 +855,7 @@ Get or set option dragReorder after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "dragReorder" );
+var value = $( ".selector" ).treeView( "option", "dragReorder" );
 
 // set
 
@@ -890,7 +890,7 @@ Get or set option dragScroll after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "dragScroll" );
+var value = $( ".selector" ).treeView( "option", "dragScroll" );
 
 // set
 
@@ -925,7 +925,7 @@ Get or set option dragScrollSensitivity after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "dragScrollSensitivity" );
+var value = $( ".selector" ).treeView( "option", "dragScrollSensitivity" );
 
 // set
 
@@ -960,7 +960,7 @@ Get or set option dragScrollSpeed after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "dragScrollSpeed" );
+var value = $( ".selector" ).treeView( "option", "dragScrollSpeed" );
 
 // set
 
@@ -995,7 +995,7 @@ Get or set option dragZIndex after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "dragZIndex" );
+var value = $( ".selector" ).treeView( "option", "dragZIndex" );
 
 // set
 
@@ -1004,7 +1004,7 @@ $( ".selector" ).treeView( "option", "dragZIndex", 1001 );
 
 #### expandRoot :boolean
 
-If true the root node is initially expanded otherwise it is collapsed. Option expandRoot cannot be false when [treeView#collapsibleRoot](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#collapsibleRoot) is false
+If true the root node is initially expanded otherwise it is collapsed. Option expandRoot cannot be false when [treeView#collapsibleRoot](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#collapsibleRoot) is false
 
 ##### Type:
 
@@ -1030,7 +1030,7 @@ Get or set option expandRoot after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "expandRoot" );
+var value = $( ".selector" ).treeView( "option", "expandRoot" );
 
 // set
 
@@ -1039,7 +1039,7 @@ $( ".selector" ).treeView( "option", "expandRoot", false );
 
 #### getNodeAdapter :function
 
-A no argument function returning an object that implements the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) interface. The node adapter provides access to the data behind the treeView. This option is required unless the tree data is supplied by markup.
+A no argument function returning an object that implements the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) interface. The node adapter provides access to the data behind the treeView. This option is required unless the tree data is supplied by markup.
 
 ##### Type:
 
@@ -1062,7 +1062,7 @@ $( ".selector" ).treeView( {
 
 #### iconType :string
 
-Icon type CSS class name. The iconType along with the value returned by [treeNodeAdapter#getIcon](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getIcon) make up the classes used for the tree node icon.
+Icon type CSS class name. The iconType along with the value returned by [treeNodeAdapter#getIcon](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getIcon) make up the classes used for the tree node icon.
 
 ##### Type:
 
@@ -1088,7 +1088,7 @@ Get or set option iconType after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "iconType" );
+var value = $( ".selector" ).treeView( "option", "iconType" );
 
 // set
 
@@ -1120,7 +1120,7 @@ $( ".selector" ).treeView( {
 
 #### keyboardAdd :boolean
 
-If true allow a new child node to be added in-place with Insert key subject to model approval via [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowAdd).
+If true allow a new child node to be added in-place with Insert key subject to model approval via [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowAdd).
 
 ##### Type:
 
@@ -1146,7 +1146,7 @@ Get or set option keyboardAdd after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "keyboardAdd" );
+var value = $( ".selector" ).treeView( "option", "keyboardAdd" );
 
 // set
 
@@ -1155,7 +1155,7 @@ $( ".selector" ).treeView( "option", "keyboardAdd", true );
 
 #### keyboardDelete :boolean
 
-If true allow nodes to be deleted with the Delete key subject to model approval via [treeNodeAdapter#allowDelete](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowDelete).
+If true allow nodes to be deleted with the Delete key subject to model approval via [treeNodeAdapter#allowDelete](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowDelete).
 
 ##### Type:
 
@@ -1181,7 +1181,7 @@ Get or set option keyboardDelete after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "keyboardDelete" );
+var value = $( ".selector" ).treeView( "option", "keyboardDelete" );
 
 // set
 
@@ -1190,7 +1190,7 @@ $( ".selector" ).treeView( "option", "keyboardDelete", true );
 
 #### keyboardRename :boolean
 
-If true allow nodes to be renamed in-place by pressing the F2 key subject to data model approval via [treeNodeAdapter#allowRename](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowRename).
+If true allow nodes to be renamed in-place by pressing the F2 key subject to data model approval via [treeNodeAdapter#allowRename](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowRename).
 
 ##### Type:
 
@@ -1216,7 +1216,7 @@ Get or set option keyboardRename after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "keyboardRename" );
+var value = $( ".selector" ).treeView( "option", "keyboardRename" );
 
 // set
 
@@ -1225,7 +1225,7 @@ $( ".selector" ).treeView( "option", "keyboardRename", true );
 
 #### labelClass :string
 
-The CSS class name to use on the focusable node content element. This should only be changed if the node adapter implements [treeNodeAdapter#renderNodeContent](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#renderNodeContent).
+The CSS class name to use on the focusable node content element. This should only be changed if the node adapter implements [treeNodeAdapter#renderNodeContent](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#renderNodeContent).
 
 ##### Type:
 
@@ -1262,7 +1262,7 @@ Get or set option multiple after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "multiple" );
+var value = $( ".selector" ).treeView( "option", "multiple" );
 
 // set
 
@@ -1271,7 +1271,7 @@ $( ".selector" ).treeView( "option", "multiple", true );
 
 #### navigation :boolean
 
-If true then single click causes activation (unless [treeView#doubleClick](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#doubleClick) value is "activate") and if the node adapter supports [treeNodeAdapter#getLink](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getLink) and `getLink` returns a value the default behavior is to navigate to that link.
+If true then single click causes activation (unless [treeView#doubleClick](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#doubleClick) value is "activate") and if the node adapter supports [treeNodeAdapter#getLink](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getLink) and `getLink` returns a value the default behavior is to navigate to that link.
 
 ##### Type:
 
@@ -1297,7 +1297,7 @@ Get or set option navigation after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "navigation" );
+var value = $( ".selector" ).treeView( "option", "navigation" );
 
 // set
 
@@ -1332,7 +1332,7 @@ Get or set option nodeSelector after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "nodeSelector" );
+var value = $( ".selector" ).treeView( "option", "nodeSelector" );
 
 // set
 
@@ -1367,7 +1367,7 @@ Get or set option scope after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "scope" );
+var value = $( ".selector" ).treeView( "option", "scope" );
 
 // set
 
@@ -1402,7 +1402,7 @@ Get or set option showRoot after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "showRoot" );
+var value = $( ".selector" ).treeView( "option", "showRoot" );
 
 // set
 
@@ -1411,7 +1411,7 @@ $( ".selector" ).treeView( "option", "showRoot", false );
 
 #### tooltip :Object
 
-A tooltip options object suitable for the jQuery UI tooltip widget except that the items property is not needed (it is supplied by the treeView) and the content callback function receives a second argument that is the [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) the tooltip applies to. If not given there is no tooltip.
+A tooltip options object suitable for the jQuery UI tooltip widget except that the items property is not needed (it is supplied by the treeView) and the content callback function receives a second argument that is the [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) the tooltip applies to. If not given there is no tooltip.
 
 See the jQuery UI documentation for details on the tooltip widget.
 
@@ -1470,7 +1470,7 @@ Get or set option useLinks after initialization.
 ```
 // get
 
-let value = $( ".selector" ).treeView( "option", "useLinks" );
+var value = $( ".selector" ).treeView( "option", "useLinks" );
 
 // set
 
@@ -1550,7 +1550,7 @@ Triggered when an accepted draggable starts dragging. Only applies when a connec
 
 #### activateNode
 
-Triggered when when nodes are activated with the Enter key or double click if [treeView#doubleClick](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#doubleClick) option set to "activate" or single click if [treeView#navigation](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#navigation) option is true and [treeView#doubleClick](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#doubleClick) is not "activate". Handler can call the event's preventDefault method to stop navigation.
+Triggered when when nodes are activated with the Enter key or double click if [treeView#doubleClick](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#doubleClick) option set to "activate" or single click if [treeView#navigation](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#navigation) option is true and [treeView#doubleClick](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#doubleClick) is not "activate". Handler can call the event's preventDefault method to stop navigation.
 
 ##### Properties:
 
@@ -2255,7 +2255,7 @@ Triggered when an accepted draggable is dragged over the droppable. Only applies
 
 #### selectionChange
 
-Triggered when the selection state changes. It has no additional data. When the selection changes the handler will generally want to get the current selection using the [treeView#getSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getSelection) or [treeView#getSelectedNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getSelectedNodes) methods.
+Triggered when the selection state changes. It has no additional data. When the selection changes the handler will generally want to get the current selection using the [treeView#getSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getSelection) or [treeView#getSelectedNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getSelectedNodes) methods.
 
 ##### Properties:
 
@@ -2451,7 +2451,7 @@ Triggered when dragging a node stops. See jQuery UI draggable and sortable for d
 
 #### addNode(pToParentNodeContent\$, pIndex, pNodeopt)
 
-Adds the given node to the adapter's data model and the treeView under the given parent tree node and at the given index. If `pNode` is null or omitted then the adapter should create and add a new default node. The treeNodeAdapter must implement the `addNode` and `allowAdd` methods and [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowAdd) must return true for the given node and parent.
+Adds the given node to the adapter's data model and the treeView under the given parent tree node and at the given index. If `pNode` is null or omitted then the adapter should create and add a new default node. The treeNodeAdapter must implement the `addNode` and `allowAdd` methods and [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowAdd) must return true for the given node and parent.
 
 ##### Parameters:
 
@@ -2495,11 +2495,11 @@ Adds the given node to the adapter's data model and the treeView under the given
 
 ##### Throws:
 
-An exception if the node adapter doesn't implement [treeNodeAdapter#addNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#addNode), or [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowAdd) or if no parent node is given and option [treeView#showRoot](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#showRoot) is true.
+An exception if the node adapter doesn't implement [treeNodeAdapter#addNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#addNode), or [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowAdd) or if no parent node is given and option [treeView#showRoot](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#showRoot) is true.
 
 #### addNodeInPlace(pParentNodeContent\$, pInitialLabel, pContextopt)
 
-Adds a new tree node in the treeView and also adds it to the adapter's data model via the [treeNodeAdapter#addNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#addNode) method. First checks if the model allows add for the parent node by calling [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowAdd). The label of the new node is entered by the user in-place. The tree node label is replaced by a text input field. Pressing the Escape key will cancel the add, blur or Enter key will complete the add. The order of the new node among its siblings is determined by the adapter after the node is added.
+Adds a new tree node in the treeView and also adds it to the adapter's data model via the [treeNodeAdapter#addNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#addNode) method. First checks if the model allows add for the parent node by calling [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowAdd). The label of the new node is entered by the user in-place. The tree node label is replaced by a text input field. Pressing the Escape key will cancel the add, blur or Enter key will complete the add. The order of the new node among its siblings is determined by the adapter after the node is added.
 
 ##### Parameters:
 
@@ -2543,11 +2543,11 @@ Adds a new tree node in the treeView and also adds it to the adapter's data mode
 
 ##### Throws:
 
-An exception if the nodeAdapter doesn't implement [treeNodeAdapter#addNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#addNode) or [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowAdd).
+An exception if the nodeAdapter doesn't implement [treeNodeAdapter#addNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#addNode) or [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowAdd).
 
 #### collapse(pNodeContent\$opt)
 
-Collapse the given tree node(s) or if no node is given collapse the root node(s). Collapsing a node makes all of its children hidden. See also [treeView#collapseAll](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#collapseAll) and [treeView#expand](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#expand).
+Collapse the given tree node(s) or if no node is given collapse the root node(s). Collapsing a node makes all of its children hidden. See also [treeView#collapseAll](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#collapseAll) and [treeView#expand](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#expand).
 
 ##### Parameters:
 
@@ -2588,7 +2588,7 @@ tree$.treeView( "collapse", tree$.treeView( "getSelection" ) );
 
 #### collapseAll(pNodeContent\$opt)
 
-Collapse the given tree node(s) or if no node is given the root node(s) and recursively collapse all its children. See also [treeView#expandAll](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#expandAll).
+Collapse the given tree node(s) or if no node is given the root node(s) and recursively collapse all its children. See also [treeView#expandAll](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#expandAll).
 
 ##### Parameters:
 
@@ -2640,11 +2640,11 @@ Copies the given tree nodes to be children of the given parent tree node startin
 
 ##### Throws:
 
-An exception if the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) doesn't implement [treeNodeAdapter#copyNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#copyNodes), or [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowAdd).
+An exception if the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) doesn't implement [treeNodeAdapter#copyNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#copyNodes), or [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowAdd).
 
 #### deleteNodes(pNodeContent\$)
 
-Deletes nodes from the adapter's data model and treeView. First checks that the model allows delete with [treeNodeAdapter#allowDelete](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowDelete) then deletes the node using [treeNodeAdapter#deleteNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#deleteNode) (a potentially async operation). If the deletes are allowed and successful then the tree nodes are removed from the treeView DOM.
+Deletes nodes from the adapter's data model and treeView. First checks that the model allows delete with [treeNodeAdapter#allowDelete](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowDelete) then deletes the node using [treeNodeAdapter#deleteNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#deleteNode) (a potentially async operation). If the deletes are allowed and successful then the tree nodes are removed from the treeView DOM.
 
 ##### Parameters:
 
@@ -2654,7 +2654,7 @@ Deletes nodes from the adapter's data model and treeView. First checks that the 
 
 ##### Throws:
 
-An exception if the node adapter doesn't implement [treeNodeAdapter#deleteNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#deleteNode) or [treeNodeAdapter#allowDelete](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowDelete).
+An exception if the node adapter doesn't implement [treeNodeAdapter#deleteNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#deleteNode) or [treeNodeAdapter#allowDelete](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowDelete).
 
 #### deleteTreeNodes(pNodeContent\$)
 
@@ -2668,7 +2668,7 @@ Deletes tree nodes that have already been deleted from the adapter's data model.
 
 #### expand(pNodeContent\$opt)
 
-Expand the given tree node(s) or if no node is given expand the root node(s). Expanding a node makes all of its children visible. See also [treeView#expandAll](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#expandAll) and [treeView#collapse](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#collapse).
+Expand the given tree node(s) or if no node is given expand the root node(s). Expanding a node makes all of its children visible. See also [treeView#expandAll](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#expandAll) and [treeView#collapse](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#collapse).
 
 ##### Parameters:
 
@@ -2709,7 +2709,7 @@ tree$.treeView( "expand", tree$.treeView( "getSelection" ) );
 
 #### expandAll(pNodeContent\$opt)
 
-Expand the given tree node(s) or if no node is given the root node(s) and recursively expand all its children. See also [treeView#collapseAll](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#collapseAll).
+Expand the given tree node(s) or if no node is given the root node(s) and recursively expand all its children. See also [treeView#collapseAll](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#collapseAll).
 
 ##### Parameters:
 
@@ -2858,11 +2858,11 @@ $( ".selector" ).treeView( "focus" );
 
 #### getExpandedNodeIds()
 
-Get the ids of expanded nodes. The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) must implement view state methods.
+Get the ids of expanded nodes. The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) must implement view state methods.
 
 ##### Throws:
 
-An exception if the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) doesn't implement [treeNodeAdapter#getExpandedNodeIds](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getExpandedNodeIds).
+An exception if the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) doesn't implement [treeNodeAdapter#getExpandedNodeIds](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getExpandedNodeIds).
 
 ##### Returns:
 
@@ -2870,14 +2870,14 @@ An exception if the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle
 
 ##### Examples
 
-This example gets the expanded node ids for an APEX Tree region with HTML DOM id "myTree" and saves them in a page item. This could be done when the page is submitted (See event [apex.event:apexpagesubmit](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.event:apexpagesubmit)) or every time the expansion state changes (see event [treeView#event:expansionStateChange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#event:expansionStateChange)).
+This example gets the expanded node ids for an APEX Tree region with static id "myTree" and saves them in a page item. This could be done when the page is submitted (See event [apex.event:apexpagesubmit](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.event:apexpagesubmit)) or every time the expansion state changes (see event [treeView#event:expansionStateChange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#event:expansionStateChange)).
 
 ```
 var expandedIds = apex.region( "myTree" ).call( "getExpandedNodeIds" );
 $s( "P1_EXPANDED_IDS", expandedIds.join( ":" ) );
 ```
 
-This example builds on the previous one to restore the node expansion state when the page loads; when the tree node adapter is created. This code goes in the Tree region JavaScript Initialization Code attribute for region with HTML DOM id "myTree". Note the `makeNodeAdapter` option is specific to the APEX Tree region not the treeView widget.
+This example builds on the previous one to restore the node expansion state when the page loads; when the tree node adapter is created. This code goes in the Tree region JavaScript Initialization Code attribute for region with static id "myTree". Note the `makeNodeAdapter` option is specific to the APEX Tree region not the treeView widget.
 
 ```
 function( options ) {
@@ -2894,11 +2894,11 @@ function( options ) {
 
 Get a map from node id to Boolean where true = expanded and false = collapsed
 
-Note It is not guaranteed that the map contain all nodes! It may only contain nodes that have been explicitly expanded or collapsed by the user. This is up to the tree node adapter. The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) must implement view state methods.
+Note It is not guaranteed that the map contain all nodes! It may only contain nodes that have been explicitly expanded or collapsed by the user. This is up to the tree node adapter. The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) must implement view state methods.
 
 ##### Throws:
 
-An exception if the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) doesn't implement [treeNodeAdapter#getExpandedState](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getExpandedState).
+An exception if the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) doesn't implement [treeNodeAdapter#getExpandedState](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getExpandedState).
 
 ##### Returns:
 
@@ -2907,14 +2907,14 @@ An object where the properties are node ids and the values are true if expanded 
 Type
 Object
 
-#### getNodeAdapter() → {[treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html)}
+#### getNodeAdapter() → {[treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html)}
 
-Returns the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) that the treeView is using.
+Returns the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) that the treeView is using.
 
 ##### Returns:
 
 Type
-[treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html)
+[treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html)
 
 ##### Example
 
@@ -2932,7 +2932,7 @@ if ( selectedNode ) {
 }
 ```
 
-#### getNodes(pNodeContent\$) → {Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)\>}
+#### getNodes(pNodeContent\$) → {Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)\>}
 
 Given a jQuery object with a set of treeView nodes return an array of adapter data model nodes that corresponds to each treeView node in the set. The tree nodes passed in must be the ones this treeView instance rendered with class `a-TreeView-content`.
 
@@ -2949,7 +2949,7 @@ This is for mapping from DOM elements to model node objects.
 array of data model nodes.
 
 Type
-Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)\>
+Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)\>
 
 ##### Example
 
@@ -2965,16 +2965,16 @@ nodes.forEach( function( n, i ) {
 } );
 ```
 
-#### getSelectedNodes() → {Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)\>}
+#### getSelectedNodes() → {Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)\>}
 
-Returns the adapter's data model nodes corresponding to the currently selected treeView nodes. See also [treeView#getSelection](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getSelection) and [treeView#getNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getNodes).
+Returns the adapter's data model nodes corresponding to the currently selected treeView nodes. See also [treeView#getSelection](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getSelection) and [treeView#getNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getNodes).
 
 ##### Returns:
 
 Array of data model nodes selected.
 
 Type
-Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node)\>
+Array.\<[treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node)\>
 
 ##### Example
 
@@ -3005,7 +3005,7 @@ var selection$ = $( ".selector" ).treeView( "getSelection" );
 
 #### getTreeNode(pNode) → {jQuery}
 
-Given a [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) node return a jQuery object with the treeView element corresponding to that node. The element returned has the class `a-TreeView-content`. The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) must implement view state methods.
+Given a [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) node return a jQuery object with the treeView element corresponding to that node. The element returned has the class `a-TreeView-content`. The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) must implement view state methods.
 
 This is for mapping from a data model node object to a DOM element.
 
@@ -3013,11 +3013,11 @@ This is for mapping from a data model node object to a DOM element.
 
 | Name | Type | Description |
 |----|----|----|
-| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.node) | The model node to get the corresponding treeView node DOM element for. |
+| `pNode` | [treeNodeAdapter.node](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.node) | The model node to get the corresponding treeView node DOM element for. |
 
 ##### Throws:
 
-An exception if the node adapter doesn't implement [treeNodeAdapter#getViewId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getViewId).
+An exception if the node adapter doesn't implement [treeNodeAdapter#getViewId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getViewId).
 
 ##### Returns:
 
@@ -3040,7 +3040,7 @@ Moves the given tree nodes to be children of the given parent tree node starting
 
 ##### Throws:
 
-An exception if the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) doesn't implement [treeNodeAdapter#moveNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#moveNodes), or [treeNodeAdapter#allowDelete](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowDelete) or [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowAdd).
+An exception if the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) doesn't implement [treeNodeAdapter#moveNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#moveNodes), or [treeNodeAdapter#allowDelete](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowDelete) or [treeNodeAdapter#allowAdd](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowAdd).
 
 #### refresh(pNodeContent\$opt)
 
@@ -3084,7 +3084,7 @@ $( ".selector" ).treeView( "refresh" );
 
 #### renameNodeInPlace(nodeContent\$)
 
-Renames a tree node in the treeView and updates the model via the node adapter [treeNodeAdapter#renameNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#renameNode) method. First checks it the model allows the node to be renamed. The rename is done by the user in-place. The tree node label is replaced by a text input field. Escape will cancel, Enter key or loosing focus will complete the rename. The order of the renamed node among its siblings is determined by the model after the node is renamed.
+Renames a tree node in the treeView and updates the model via the node adapter [treeNodeAdapter#renameNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#renameNode) method. First checks it the model allows the node to be renamed. The rename is done by the user in-place. The tree node label is replaced by a text input field. Escape will cancel, Enter key or loosing focus will complete the rename. The order of the renamed node among its siblings is determined by the model after the node is renamed.
 
 ##### Parameters:
 
@@ -3094,11 +3094,11 @@ Renames a tree node in the treeView and updates the model via the node adapter [
 
 ##### Throws:
 
-An exception if the nodeAdapter doesn't implement [treeNodeAdapter#renameNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#renameNode) or [treeNodeAdapter#allowRename](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#allowRename).
+An exception if the nodeAdapter doesn't implement [treeNodeAdapter#renameNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#renameNode) or [treeNodeAdapter#allowRename](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#allowRename).
 
 #### setSelectedNodes(pNodes, pFocusopt, pNoNotifyopt)
 
-Sets the current tree selection. Given an array of nodes from the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) data model, find the corresponding treeView node elements and set the selection to those nodes. The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) must implement view state methods. Depending on the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) implementation it may be possible to supply an array of objects with just the node's identity property filled in. See also [treeView#getSelectedNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getSelectedNodes).
+Sets the current tree selection. Given an array of nodes from the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) data model, find the corresponding treeView node elements and set the selection to those nodes. The [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) must implement view state methods. Depending on the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) implementation it may be possible to supply an array of objects with just the node's identity property filled in. See also [treeView#getSelectedNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getSelectedNodes).
 
 ##### Parameters:
 
@@ -3143,11 +3143,11 @@ Sets the current tree selection. Given an array of nodes from the [treeNodeAdapt
 
 ##### Throws:
 
-An exception if the node adapter doesn't implement [treeNodeAdapter#getViewId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#getViewId).
+An exception if the node adapter doesn't implement [treeNodeAdapter#getViewId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#getViewId).
 
 ##### Example
 
-This example sets the section to the node in variable `theNode` and focuses that node. Data model nodes can be found directly from the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) or from [treeView#getNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getNodes) or [treeView#getSelectedNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getSelectedNodes).
+This example sets the section to the node in variable `theNode` and focuses that node. Data model nodes can be found directly from the [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) or from [treeView#getNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getNodes) or [treeView#getSelectedNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getSelectedNodes).
 
 ```
 $( ".selector" ).treeView( "setSelectedNodes", [theNode], true);
@@ -3206,7 +3206,7 @@ This example selects all the nodes 3 levels deep in the treeView. It uses knowle
 $( ".selector" ).treeView( "setSelection", $( "[aria-level='3']" ).parent() );
 ```
 
-This example selects all the nodes under the currently selected nodes. It expands the selected nodes first to make sure all descendant nodes are rendered. It suppresses the [treeView#event:selectionChange](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#event:selectionChange) event.
+This example selects all the nodes under the currently selected nodes. It expands the selected nodes first to make sure all descendant nodes are rendered. It suppresses the [treeView#event:selectionChange](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#event:selectionChange) event.
 
 ```
 var tree$ = $( ".selector" ),
@@ -3223,7 +3223,7 @@ $( ".selector" ).treeView( "setSelection", $() );
 
 #### update(pNodeContent\$, pRenderopt)
 
-Call this method if the model node changes in a way that would affect its display in the tree. For example if the label or icon changes. If a node's children have changed then call [treeView#refresh](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#refresh) instead. If a nodes position has changed then call refresh on the nodes parent node.
+Call this method if the model node changes in a way that would affect its display in the tree. For example if the label or icon changes. If a node's children have changed then call [treeView#refresh](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#refresh) instead. If a nodes position has changed then call refresh on the nodes parent node.
 
 ##### Parameters:
 
@@ -3261,15 +3261,15 @@ Call this method if the model node changes in a way that would affect its displa
 
 ##### Example
 
-See [treeView#getNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getNodes) for an example.
+See [treeView#getNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getNodes) for an example.
 
-#### (static) makeDefaultNodeAdapter(pData, pTypesopt, pHasIdentityopt, pInitialExpandedNodeIdsopt) → {[treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html)}
+#### (static) makeDefaultNodeAdapter(pData, pTypesopt, pHasIdentityopt, pInitialExpandedNodeIdsopt) → {[treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html)}
 
-Returns a default node adapter. See [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html) for details.
+Returns a default node adapter. See [treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html) for details.
 
-This returns an adapter for the default data model. See [treeNodeAdapter.defaultNode](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#.defaultNode) for details on the node object properties. Use it if you don't already have a prescribed data model. This supports all the treeView features except for asynchronous (lazy) loading of child nodes and custom node rendering. Although it supports editing there is no built-in support for persisting the edits. Editing through the default tree node adapter should be considered an experimental feature subject to change.
+This returns an adapter for the default data model. See [treeNodeAdapter.defaultNode](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#.defaultNode) for details on the node object properties. Use it if you don't already have a prescribed data model. This supports all the treeView features except for asynchronous (lazy) loading of child nodes and custom node rendering. Although it supports editing there is no built-in support for persisting the edits. Editing through the default tree node adapter should be considered an experimental feature subject to change.
 
-You can augment the adapter returned from this function to change its behavior. For example by adding a [treeNodeAdapter#fetchChildNodes](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html#fetchChildNodes) method to lazy load child nodes or a custom node rendering function as shown in the examples below.
+You can augment the adapter returned from this function to change its behavior. For example by adding a [treeNodeAdapter#fetchChildNodes](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html#fetchChildNodes) method to lazy load child nodes or a custom node rendering function as shown in the examples below.
 
 ##### Parameters:
 
@@ -3324,7 +3324,7 @@ You can augment the adapter returned from this function to change its behavior. 
 The default node adapter for the given data.
 
 Type
-[treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeNodeAdapter.html)
+[treeNodeAdapter](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeNodeAdapter.html)
 
 ##### Examples
 
@@ -3351,7 +3351,7 @@ var treeData = {
 var adapter = $.apex.treeView.makeDefaultNodeAdapter( treeData, null, false );
 ```
 
-This example creates an adapter for nodes that do have identity. See also the example for [treeView#getExpandedNodeIds](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/treeView.html#getExpandedNodeIds).
+This example creates an adapter for nodes that do have identity. See also the example for [treeView#getExpandedNodeIds](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/treeView.html#getExpandedNodeIds).
 
 ```
 var treeData = {

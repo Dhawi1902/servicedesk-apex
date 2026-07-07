@@ -242,7 +242,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 
 <!-- HERO -->
 <header class="hero"><div class="wrap" style="padding-top:70px;padding-bottom:74px">
-  <div class="eyebrow" style="color:#9fe9f5">Hackathon Project Brief · Oracle APEX 26.1</div>
+  <div class="eyebrow" style="color:#9fe9f5">Hackathon Project Brief · Oracle APEX 24.2</div>
   <h1>Service Desk <span>Ticketing System</span></h1>
   <p class="sub">A multi-tenant support desk we build, own and brand &mdash; a self-hosted alternative to expensive tools like Jira Service Management.</p>
   <div class="pills">
@@ -301,7 +301,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       <div class="lrow"><span class="sw future"></span><span class="name">FUTURE</span><span class="desc">Explicitly out of scope now &mdash; recorded as the post-hackathon roadmap (WON'T-have this time).</span><span class="cnt">&mdash;</span></div>
     </div>
   </div>
-  <p class="note">Lead's recommendation: cut AI entirely. SLA breach highlighting promoted to <b>SHOULD</b> &mdash; a lookup table + computed column + conditional formatting gives a production feel at low cost. All SHOULD items verified feasible in APEX 26.1.</p>
+  <p class="note">Lead's recommendation: cut AI entirely. SLA breach highlighting promoted to <b>SHOULD</b> &mdash; a lookup table + computed column + conditional formatting gives a production feel at low cost. All SHOULD items verified feasible in APEX 24.2.</p>
 </div></section>
 
 <!-- ROLES -->
@@ -555,7 +555,7 @@ erDiagram
   <div class="dec"><div class="k">E</div><div><div class="q">Confirm the workstream split and who owns what.</div><div class="rec">✓ Decided (5 devs): P1 Foundation/Login + QA · P2 Ticket Detail + Add Comment · P3 Queue/Create/Assign · P4 Dashboard + test data · P5 Admin grids + theme</div></div></div>
   <div class="dec"><div class="k">F</div><div><div class="q">Confirm the 3-week milestone shape.</div><div class="rec">✓ Recommend: Wk1 foundation · Wk2 core · Wk3 polish + demo</div></div></div>
   <div class="dec"><div class="k">G</div><div><div class="q">"Reassign" (manual) vs "Escalation" (automatic) &mdash; how do they differ?</div><div class="rec">✓ Decided: manual reassign (FR-26, logged REASSIGN) is separate from system-driven two-stage auto-escalation (FR-35: warn at 75% SLA, auto-reassign to next tier at 90%, hierarchical fallback when exhausted)</div></div></div>
-  <div class="dec"><div class="k">H</div><div><div class="q">Confirm the SHOULD items (CSAT, dashboard analytics, auto-ack email, reassign, SLA per severity per project, auto-escalation) &mdash; all verified feasible in APEX 26.1?</div><div class="rec">✓ Recommend: yes</div></div></div>
+  <div class="dec"><div class="k">H</div><div><div class="q">Confirm the SHOULD items (CSAT, dashboard analytics, auto-ack email, reassign, SLA per severity per project, auto-escalation) &mdash; all verified feasible in APEX 24.2?</div><div class="rec">✓ Recommend: yes</div></div></div>
   <div class="dec"><div class="k">I</div><div><div class="q">Should agents see every client's queue, or only the projects they're assigned to?</div><div class="rec">✓ Decided (revised): agents are <strong>scoped to their assigned projects</strong> via <code>AGENT_PROJECTS</code> &mdash; each mapping carries a tier (decision M). 4 roles stay &mdash; Manager = overseer (not a role), Project Lead deferred (is_lead flag)</div></div></div>
   <div class="dec"><div class="k">J·L</div><div><div class="q">Can clients assign an agent directly?</div><div class="rec">✓ Decided: yes &mdash; Client User/Admin assign from agents who are <strong>L1 on the ticket's project</strong>; higher tiers only via support-side reassignment</div></div></div>
   <div class="dec"><div class="k">K</div><div><div class="q">One priority field, or separate severity and priority?</div><div class="rec">✓ Decided: separate &mdash; <strong>Severity</strong> (Critical/Major/Minor/Low) client-set at creation; <strong>Priority</strong> (P1&ndash;P4) support-set at triage. SLA keys off severity</div></div></div>
@@ -569,7 +569,7 @@ erDiagram
 </div></section>
 
 <footer><div class="wrap">
-  <div><b style="color:#fff">Service Desk Ticketing System</b> · Project Brief · Oracle APEX 26.1</div>
+  <div><b style="color:#fff">Service Desk Ticketing System</b> · Project Brief · Oracle APEX 24.2</div>
   <div>Living document &mdash; updated as decisions are made · 2026-07-04 · design locked for development</div>
 </div></footer>
 

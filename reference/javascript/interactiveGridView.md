@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGridView.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGridView.html -->
 <!-- Interfaces: interactiveGridView -->
 
 # Interface: interactiveGridView
@@ -25,14 +25,14 @@
 
 ## interactiveGridView
 
-Defines an Interactive Grid view. The [interactiveGrid](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html) widget manages a number of different views of the report data. Each view is implemented by a interactiveGridView interface. The types of views are:
+Defines an Interactive Grid view. The [interactiveGrid](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html) widget manages a number of different views of the report data. Each view is implemented by a interactiveGridView interface. The types of views are:
 
-- grid: This is implemented by the [grid](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/grid.html) widget. It also supports single row view.
+- grid: This is implemented by the [grid](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/grid.html) widget. It also supports single row view.
 - chart: This is implementd by JET ojchart.
-- detail: This is implemented by the [tableModelView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html) widget.
-- icon: This is implemented by the [tableModelView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html) widget. The main difference between this and detail view is that this supports selection. The [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/tableModelView.html#useIconList) option is true.
+- detail: This is implemented by the [tableModelView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html) widget.
+- icon: This is implemented by the [tableModelView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html) widget. The main difference between this and detail view is that this supports selection. The [tableModelView#useIconList](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/tableModelView.html#useIconList) option is true.
 
-Each view has a [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) to manage its data and a widget to implement the user interface. Most of the properties and methods of the view are for internal use by the [interactiveGrid](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/interactiveGrid.html) widget. A few of them are useful in advanced use cases to control or configure interactive grid.
+Each view has a [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) to manage its data and a widget to implement the user interface. Most of the properties and methods of the view are for internal use by the [interactiveGrid](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/interactiveGrid.html) widget. A few of them are useful in advanced use cases to control or configure interactive grid.
 
 ### Properties
 
@@ -60,21 +60,21 @@ Unique internal identifier for the view.
 
 - string
 
-#### model :[model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)
+#### model :[model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)
 
 The model used by this view.
 
 ##### Type:
 
-- [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html)
+- [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html)
 
-#### modelName :[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+#### modelName :[model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
 The id of the model used by this view.
 
 ##### Type:
 
-- [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)
+- [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)
 
 #### singleRowMode :boolean
 
@@ -86,7 +86,7 @@ True if the view is currently showing Single Row View and false otherwise. This 
 
 #### singleRowView\$ :jQuery
 
-The jQuery object for the alternate [recordView](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/recordView.html) widget that implements Single Row View. This only applies if the view supports single row view and the feature is configured.
+The jQuery object for the alternate [recordView](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/recordView.html) widget that implements Single Row View. This only applies if the view supports single row view and the feature is configured.
 
 ##### Type:
 

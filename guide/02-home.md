@@ -43,7 +43,7 @@
 8. Under `[Left Pane ▸ Processing]`, right-click **Processes** → **Create Process**.
 9. Set the process properties:
    - `[Right Pane ▸ Identification ▸ Name]`: `Apply Role Switch`
-   - `[Right Pane ▸ Identification ▸ Type]`: **PL/SQL Code**
+   - `[Right Pane ▸ Identification ▸ Type]`: **Execute Code** (the anonymous-PL/SQL process type; older APEX labelled it *PL/SQL Code*)
    - `[Right Pane ▸ Source ▸ PL/SQL Code]`:
      ```sql
      DECLARE l_ok PLS_INTEGER;

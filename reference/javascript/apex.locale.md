@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.locale.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.locale.html -->
 <!-- Namespaces: apex.locale -->
 
 # Namespace: locale
@@ -25,9 +25,9 @@
 - [resourcesLoaded](#.resourcesLoaded)
 - [toNumber](#.toNumber)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).locale
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).locale
 
-The apex.locale namespace contains Oracle APEX functions related to formatting numbers and dates according to a specific locale. For localizing text messages see [apex.lang](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html).
+The apex.locale namespace contains Oracle APEX functions related to formatting numbers and dates according to a specific locale. For localizing text messages see [apex.lang](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html).
 
 Since:
 - 20.1
@@ -38,7 +38,7 @@ Since:
 
 Formats the given number in a compact, locale specific way. For example in the US English locale the number 123400 would be formatted as "123.4K" and 1234000 as "1.23M".
 
-This function relies on additional resources that are loaded when the page first loads. Calling this function before the resources are loaded returns the number as an unformatted string. See [apex.locale.resourcesLoaded](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.locale.html#.resourcesLoaded).
+This function relies on additional resources that are loaded when the page first loads. Calling this function before the resources are loaded returns the number as an unformatted string. See [apex.locale.resourcesLoaded](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.locale.html#.resourcesLoaded).
 
 ##### Parameters:
 
@@ -408,7 +408,7 @@ array
 
 #### (static) resourcesLoaded(pCallbackopt) → {Promise}
 
-Used to determine if the resources needed by some of the [apex.locale](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.locale.html) functions have been loaded.
+Used to determine if the resources needed by some of the [apex.locale](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.locale.html) functions have been loaded.
 
 ##### Parameters:
 

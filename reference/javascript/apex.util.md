@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html -->
 <!-- Namespaces: apex.util -->
 
 # Namespace: util
@@ -7,124 +7,32 @@
 
 ### [Functions](#methods-section)
 
-- [applyNamedTemplate](#.applyNamedTemplate)
 - [applyTemplate](#.applyTemplate)
 - [arrayEqual](#.arrayEqual)
 - [cancelInvokeAfterPaint](#.cancelInvokeAfterPaint)
 - [debounce](#.debounce)
-- [defineTemplates](#.defineTemplates)
 - [escapeCSS](#.escapeCSS)
 - [escapeHTML](#.escapeHTML)
 - [escapeHTMLAttr](#.escapeHTMLAttr)
 - [getDateFromISO8601String](#.getDateFromISO8601String)
 - [getNestedObject](#.getNestedObject)
 - [getScrollbarSize](#.getScrollbarSize)
-- [getTemplateDef](#.getTemplateDef)
 - [htmlBuilder](#.htmlBuilder)
 - [invokeAfterPaint](#.invokeAfterPaint)
-- [listTemplates](#.listTemplates)
 - [showSpinner](#.showSpinner)
 - [stripHTML](#.stripHTML)
 - [throttle](#.throttle)
 - [toArray](#.toArray)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).util
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).util
 
 The apex.util namespace contains general utility functions of Oracle APEX.
 
 ### Namespaces
 
-[delayLinger](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.delayLinger.html)
+[delayLinger](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.delayLinger.html)
 
 ### Functions
-
-#### (static) applyNamedTemplate(pTemplateName, pOptionsopt) → {string}
-
-This function applies a template by name. Templates are defined with [apex.util.defineTemplates](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.defineTemplates).
-
-##### Parameters:
-
-<table class="params" aria-label="Parameters for applyNamedTemplate">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th scope="col">Attributes</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>pTemplateName</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">The name of the template.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>pOptions</code></th>
-<td class="type">Object</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">An options object with the all properties that specifies how the template is to be processed. See pOptions of <a href="apex.util.html#.applyTemplate">apex.util.applyTemplate</a> for the supported options. It has the following extra option:
-<h6 id="properties">Properties</h6>
-<table class="params" aria-label="Parameters for pOptions">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th scope="col">Attributes</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>args</code></th>
-<td class="type">Object</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">An object map of argument values for the placeholders of the template. The arguments values are templates that are processed when the template is applied. The template can span multiple lines and include any directives including <strong>with apply</strong>. The default is an empty object.</td>
-</tr>
-</tbody>
-</table></td>
-</tr>
-</tbody>
-</table>
-
-Since:
-- 26.1
-
-##### Returns:
-
-The template string with replacement tokens substituted with data values.
-
-Type
-string
-
-##### Example
-
-This example will render the Avatar template of Universal Theme.
-
-```
-const output = apex.util.applyNamedTemplate( "THEME$AVATAR", {
-    args: {
-        "TYPE": "INITIALS",
-        "INITIALS": "{if P1_INITIALS/}&P1_INITIALS.{else/}N/A{endif/}"
-    }
-} );
-$( "#parent" ).append( output );
-```
 
 #### (static) applyTemplate(pTemplate, pOptionsopt) → {string}
 
@@ -145,12 +53,6 @@ Placeholder syntax is:
 ```
 
 The \<placeholder-name\> is an uppercase alpha numeric plus "\_", and "\$" string that must be a property name in option object `placeholders` that gets replaced with the property value. Any placeholder tokens that don't match anything in the placeholders object are left as is (searching for the next placeholder begins with the trailing \# character).
-
-The built-in placeholder names are:
-
-- \#APEX\$DOM_ID#
-- \#APEX\$IS_LAZY_LOADING#
-- \#APEX\$COMPONENT_CSS_CLASSES#
 
 ### Data substitutions
 
@@ -193,7 +95,7 @@ The properties for a column item are:
 - **COLUMN_CLASS** - Any CSS classes defined for the column.
 - **REQUIRED** - "Y" if the column is required and "N" otherwise.
 
-The \<message-key\> is a message key suitable for use in [apex.lang.getMessage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.getMessage) and is replaced with the localized message text for the given key. The message must already be loaded on the client by setting the Text Message attribute *Used in JavaScript* to On or otherwise adding it such as with [apex.lang.addMessages](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.lang.html#.addMessages). If no replacement for a substitution can be found it is replaced with the message key. The language specifier that is supported for server side message substitutions is not supported by the client and will be ignored if present.
+The \<message-key\> is a message key suitable for use in [apex.lang.getMessage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.getMessage) and is replaced with the localized message text for the given key. The message must already be loaded on the client by setting the Text Message attribute *Used in JavaScript* to On or otherwise adding it such as with [apex.lang.addMessages](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.lang.html#.addMessages). If no replacement for a substitution can be found it is replaced with the message key. The language specifier that is supported for server side message substitutions is not supported by the client and will be ignored if present.
 
 The short Text Messages substitution syntax also support parameters. Before the closing brace, add name=value pairs, separated by white space. Names can contain any character except white space and "=". Values can be one of the following:
 
@@ -217,8 +119,6 @@ Quoted_Literal="Jerry Garcia
 Ron ""Pigpen"" McKerhan"}!HTML.
 ```
 
-Note: The short Text Messages substitution syntax requires the Compatibility Mode of the application to be 24.2 or higher.
-
 When substituting a column item the given record of the given model is used to find a matching column name. If not found and if the model has a parent model then the parent model's columns are checked. This continues as long as there is a parent model. The order to resolve a data substitution is: message key, column item, column item from ancestor models, page item, built-in substitutions, and finally extra substitutions. For backward compatibility column items support the "\_LABEL" suffix to access the defined column label. For example if there is a column item named `NOTE` the substitution `&NOTE_LABEL.` will return the label string for column `NOTE`. It is better to use the label property in this case, for example: `&NOTE%label.`.
 
 The built-in substitution names are:
@@ -236,12 +136,12 @@ The built-in substitution names are:
 - &APEX_VERSION.
 - &APEX_BASE_VERSION.
 
-See [apex.env](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html#.env) for the meaning of these substitutions.
+See [apex.env](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html#.env) for the meaning of these substitutions.
 
 The escape-filter controls how the replacement value is escaped or filtered. It can be one of the following values:
 
-- HTML the value will have HTML characters escaped using [apex.util.escapeHTML](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.escapeHTML).
-- ATTR the value will be escaped for an HTML attribute value context using [apex.util.escapeHTMLAttr](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.escapeHTMLAttr).
+- HTML the value will have HTML characters escaped using [apex.util.escapeHTML](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.escapeHTML).
+- ATTR the value will be escaped for an HTML attribute value context using [apex.util.escapeHTMLAttr](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.escapeHTMLAttr).
 - RAW does not change the value at all.
 - STRIPHTML the value will have HTML tags removed and HTML characters escaped.
 
@@ -275,7 +175,7 @@ The entire text from the **if** directive to the matching **endif** directive is
 
 The **if** and **elseif** directives test the value of NAME and if it is true process the following template text. The NAME can be an item-name, quoted-item-name, or placeholder-name. The value of an item-name or quoted-item-name is the value of that page item or column item. The value of a placeholder-name is the text of the placeholder. If no data substitution or placeholder with that name exists then the value is empty string.
 
-A value is false if after trimming leading and trailing spaces it is an empty string, or for a page item the item [item#isEmpty](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html#isEmpty) method returns true, or if the value is equal to any of the values in the `falseValues` option. Any value that is not false is true. If the name is prefixed with exclamation mark (!) operator then the logic is negated and the following template text is processed if the value is false.
+A value is false if after trimming leading and trailing spaces it is an empty string, or for a page item the item [item#isEmpty](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html#isEmpty) method returns true, or if the value is equal to any of the values in the `falseValues` option. Any value that is not false is true. If the name is prefixed with exclamation mark (!) operator then the logic is negated and the following template text is processed if the value is false.
 
 The if condition directive handles both empty (or not empty) tests and Boolean true/false tests (using the convention of character true/false values such as 'Y'/'N') at the same time. This results in confusion for rare case where the intention is to test for not empty but the actual value is 'N', which is not empty but still considered false. The optional '?' prefix operator can be used to explicitly test if the value is empty. The optional '=' prefix operator can be used to explicitly test if the value is true or false.
 
@@ -342,22 +242,22 @@ TEMPLATE_TEXT
 {endloop/}
 ```
 
-The entire text from the **loop** directive to the matching **endloop** directive is replaced with the template text evaluated once for each item in the NAME value or each record in the [model](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html) with id MODEL_ID.
+The entire text from the **loop** directive to the matching **endloop** directive is replaced with the template text evaluated once for each item in the NAME value or each record in the [model](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html) with id MODEL_ID.
 
-In the first syntax, the NAME can be an item-name, quoted-item-name, or placeholder-name. The value of an item-name or quoted-item-name is the value of that page item or column item. The value of a placeholder-name is the text of the placeholder. If no data substitution or placeholder with that name exists then the value is empty string. The NAME value should be a separator delimited string that contains a list of items. The optional SEP argument defines the separator character. If no SEP is given and NAME is an item, then the item's [item#getMultiValueStorage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html#getMultiValueStorage) method is used to determine the separator, otherwise the default separator ":" is used. If SEP is more than one character it is treated as a regular expression.
+In the first syntax, the NAME can be an item-name, quoted-item-name, or placeholder-name. The value of an item-name or quoted-item-name is the value of that page item or column item. The value of a placeholder-name is the text of the placeholder. If no data substitution or placeholder with that name exists then the value is empty string. The NAME value should be a separator delimited string that contains a list of items. The optional SEP argument defines the separator character. If no SEP is given and NAME is an item, then the item's [item#getMultiValueStorage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html#getMultiValueStorage) method is used to determine the separator, otherwise the default separator ":" is used. If SEP is more than one character it is treated as a regular expression.
 
 Within the loop there are two extra data substitutions available:
 
 - **APEX\$ITEM** - This is the value of the current item in the list.
 - **APEX\$I** - This is 1 based index of the current item in the list.
 
-In the second syntax, the MODEL_ID identifies a model created with [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.model.html#.create) (this includes models created by regions such as Interactive Grid and Cards). If the MODEL_ID is omitted then the model passed in the `pOptions.model` property is used. A model name can either be a string or, for detail models, an array of this form: `["name", "instance"]` (see [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.ModelId)). The MODEL_ID allows data substitutions as shown in the nested loop example below.
+In the second syntax, the MODEL_ID identifies a model created with [apex.model.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.model.html#.create) (this includes models created by regions such as Interactive Grid and Cards). If the MODEL_ID is omitted then the model passed in the `pOptions.model` property is used. A model name can either be a string or, for detail models, an array of this form: `["name", "instance"]` (see [model.ModelId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.ModelId)). The MODEL_ID allows data substitutions as shown in the nested loop example below.
 
 Within the loop there are three extra data substitutions available:
 
-- **APEX\$ID** - This is the identity of the record. See [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#getRecordId).
+- **APEX\$ID** - This is the identity of the record. See [model#getRecordId](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#getRecordId).
 - **APEX\$I** - This is 1 based index of the current record.
-- **APEX\$META** - This is an object with metadata about the current record. The metadata comes from [model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/model.html#.RecordMetadata) but in a form that is easier to use from templates. The object has these properties (case is significant):
+- **APEX\$META** - This is an object with metadata about the current record. The metadata comes from [model.RecordMetadata](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/model.html#.RecordMetadata) but in a form that is easier to use from templates. The object has these properties (case is significant):
   - **valid** - This is "Y" (true) unless the record is deleted, an aggregate record or has an error or warning.
   - **state** - This is "O" for original, "D" for deleted, "I" for inserted, "U" for updated and empty string for non-data records.
   - **allowedOperations** - This is one of "" for no editing, "U" update only, "D" for delete only, "UD" for update and delete.
@@ -402,47 +302,6 @@ For brevity the {if APEX\$META%valid/} is omitted from the inner loop.
   <li>&ENAME.</li>
   {endloop/}</ul></li>
 {endif/}{endloop/}</ul>
-```
-
-#### With and Apply directives
-
-Syntax:
-
-```
-{with/}
-FORMAL_ARG1:=ARGUMENT_TEXT
-FORMAL_ARG2:=ARGUMENT_TEXT
-...
-FORMAL_ARGn:=ARGUMENT_TEXT
-{apply TEMPLATE_NAME/}
-```
-
-The text between the **with** and **apply** directives is replaced with the output of processing the template given by TEMPLATE_NAME with the formal arguments mapped to the corresponding actual arguments. The effect is similar to applying a template except that you can specify actual arguments to be used for the formal arguments.
-
-The syntax of a formal argument FORMAL_ARGn is an uppercase alpha numeric plus "\_", and "\$" string. The formal arguments are used in placeholder substitutions in the template text. There can be any number of formal arguments.
-
-The actual arguments are templates that are processed at the time the TEMPLATE_NAME template is applied. The template can span multiple lines and include any directives including **with apply**.
-
-Example:
-There is a template named NAME_VALUE_PAIR with this template text.
-
-```
-<dt>#NAME#</dt><dd>#VALUE#</dd>
-```
-
-You have a report with columns ENAME and JOB and you want to format the rows as a definition list.
-
-```
-{with/}
-NAME:=&ENAME.
-VALUE:=&JOB.
-{apply NAME_VALUE_PAIR/}
-```
-
-The output of one row might look like this.
-
-```
-<dt>FORD</dt><dd>ANALYST</dd>
 ```
 
 #### Comments
@@ -520,7 +379,7 @@ The coordinates {c, d} =
 <td class="attributes">&lt;optional&gt;<br />
 </td>
 <td class="description last">An options object with the following properties that specifies how the template is to be processed:
-<h6 id="properties-1">Properties</h6>
+<h6 id="properties">Properties</h6>
 <table class="params" aria-label="Parameters for pOptions">
 <colgroup>
 <col style="width: 25%" />
@@ -542,7 +401,7 @@ The coordinates {c, d} =
 <td class="type">Object</td>
 <td class="attributes">&lt;optional&gt;<br />
 </td>
-<td class="description last">An object map of placeholder names to values. The default is an empty object.</td>
+<td class="description last">An object map of placeholder names to values. The default is null.</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>directives</code></th>
@@ -598,7 +457,7 @@ The coordinates {c, d} =
 <td class="type">Array.&lt;string&gt;</td>
 <td class="attributes">&lt;optional&gt;<br />
 </td>
-<td class="description last">An array of values that are considered false in if directive tests. Empty string and an item that doesn't exist are always considered false. The default is ["FALSE", "F", "f", "N", "n", "0"]</td>
+<td class="description last">An array of values that are considered false in if directive tests. Empty string and an item that doesn't exist are always considered false. The default is ["F", "f", "N", "n", "0"]</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>iterationCallback</code></th>
@@ -607,34 +466,6 @@ The coordinates {c, d} =
 </td>
 <td class="description last">A function called during loop directive iteration before each item or record and just once before processing a template when options <code class="prettyprint">model</code> and <code class="prettyprint">record</code> are provided. The function signature is:<br />
 <code class="prettyprint">callback(loopArg, model, record, index, placeholders, extraSubstitutions)</code>. The <code class="prettyprint">index</code> parameter is the 0 based index of the item or record in the collection being iterated over. The <code class="prettyprint">extraSubstitutions</code> parameter is an object that contains the properties in the extraSubstitutions option passed to applyTemplate as well as any extra data substitutions defined by the loop directive. This allows making additional substitutions available to the template by assigning a value to a property of <code class="prettyprint">extraSubstitutions</code>. When looping over an item value the model and record parameters will be null. When called once before template processing (when options <code class="prettyprint">model</code> and <code class="prettyprint">record</code> are provided) the loopArg and index parameters will be null.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>id</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">HTML DOM id. Used as value for the APEX$DOM_ID placeholder. The default is a random id.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>idPostfix</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Postfix which is added if applyTemplate has to generate an HTML DOM id in the output. Used as postfix for the APEX$DOM_ID placeholder. The default is empty string.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>isLazyLoading</code></th>
-<td class="type">boolean</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Set to true if the template uses lazy loading to load its data and skeleton markup should be rendered instead. Used as value for the APEX$IS_LAZY_LOADING placeholder. The default is false.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>componentCSSClasses</code></th>
-<td class="type">boolean</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">CSS classes specified for the region. Used as value for the APEX$COMPONENT_CSS_CLASSES placeholder. The default is empty string.</td>
 </tr>
 </tbody>
 </table></td>
@@ -700,20 +531,17 @@ apex.util.arrayEqual( [1,"two",3], [1, "two", "3"] );
 
 #### (static) cancelInvokeAfterPaint(pId)
 
-Wrapper around `cancelAnimationFrame` that can fallback to `clearTimeout`. Cancels the callback using the id returned from [apex.util.invokeAfterPaint](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.invokeAfterPaint).
+Wrapper around cancelAnimationFrame that can fallback to `clearTimeout`. Cancels the callback using the id returned from [apex.util.invokeAfterPaint](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.invokeAfterPaint).
 
 ##### Parameters:
 
 | Name | Type | Description |
 |----|----|----|
-| `pId` | \* | The id returned from [apex.util.invokeAfterPaint](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.invokeAfterPaint). |
-
-Deprecated:
-- Use `window.cancelAnimationFrame` instead.
+| `pId` | \* | The id returned from [apex.util.invokeAfterPaint](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.invokeAfterPaint). |
 
 ##### Example
 
-See example for function [apex.util.invokeAfterPaint](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.invokeAfterPaint)
+See example for function [apex.util.invokeAfterPaint](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.invokeAfterPaint)
 
 #### (static) debounce(pFunction, pDelay, pImmediateopt) → {function}
 
@@ -777,277 +605,6 @@ function formatValue() {
     $s( "P1_PHONE_NUMBER_DISPLAY", value );
 }
 apex.jQuery( "#P1_PHONE_NUMBER" ).on( "keypress", apex.util.debounce( formatValue, 100 ) );
-```
-
-#### (static) defineTemplates(pTemplates)
-
-Define one or more named templates. Named templates are used with the **with apply** template directives. See [apex.util.applyTemplate](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.applyTemplate).
-
-##### Parameters:
-
-<table class="params" aria-label="Parameters for defineTemplates">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>pTemplates</code></th>
-<td class="type">Array.&lt;object&gt;</td>
-<td class="description last">An array of template definitions Template definition properties:
-<h6 id="properties-2">Properties</h6>
-<table class="params" aria-label="Parameters for pTemplates">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th scope="col">Attributes</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>name</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">The template name. The name should be an uppercase alpha numeric plus "_", ".", and "$" string.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>template</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">The template string. See <a href="apex.util.html#.applyTemplate">apex.util.applyTemplate</a> for the syntax of a template string.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>defaultEscape</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">The default escape filter for arguments that don't have an escape filter. Possible values are "ATTR", "HTML", "STRIPHTML", and "RAW". The default is null.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>args</code></th>
-<td class="type">Array.&lt;object&gt;</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">An array of arguments that are used as placeholders of the template.
-<h6 id="properties-3">Properties</h6>
-<table class="params" aria-label="Parameters for args">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th scope="col">Attributes</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>name</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">The name of the argument. The name can be used as a placeholder in the template string.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>required</code></th>
-<td class="type">boolean</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">If true the formal argument must be given and have a non-empty value. Any argument that is not required is optional and if no formal argument is given its value is empty string or the value of default if defined.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>default</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">A default value to use if one is not supplied in <strong>with apply</strong> directive.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>escape</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">The actual argument value is escaped after any substitutions. Possible values are "ATTR", "HTML", "STRIPHTML", and "RAW".</td>
-</tr>
-</tbody>
-</table></td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>cssFileUrls</code></th>
-<td class="type">Array.&lt;object&gt;</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Cascading Style Sheet file URLs to be loaded with this template. These files will be added as link elements in the DOM if needed when the template is applied for the first time using <a href="apex.util.html#.applyTemplate">apex.util.applyTemplate</a>.
-<h6 id="properties-4">Properties</h6>
-<table class="params" aria-label="Parameters for cssFileUrls">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th scope="col">Attributes</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>url</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">The URL of the file.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>media</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">The media attribute of the link element.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>attr</code></th>
-<td class="type">object</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Additional attributes of the link element.</td>
-</tr>
-</tbody>
-</table></td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>javaScriptFileUrls</code></th>
-<td class="type">Array.&lt;object&gt;</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">JavaScript file URLs to be loaded with this template. These files will be added as script elements in the DOM if needed when the template is applied for the first time using <a href="apex.util.html#.applyTemplate">apex.util.applyTemplate</a>.
-<h6 id="properties-5">Properties</h6>
-<table class="params" aria-label="Parameters for javaScriptFileUrls">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col">Name</th>
-<th scope="col">Type</th>
-<th scope="col">Attributes</th>
-<th class="last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="name" scope="row"><code>url</code></th>
-<td class="type">string</td>
-<td class="attributes"></td>
-<td class="description last">The URL of the file.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>requireJsModule</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">The name of the requireJS module to define.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>requireJsExp</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">The expression that defines the requireJS module.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>requirejs</code></th>
-<td class="type">boolean</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Specify if requireJS should be loaded.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>jet</code></th>
-<td class="type">boolean</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Specify if Oracle JET should be loaded.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>attrs</code></th>
-<td class="type">object</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Additional attributes of the script element.</td>
-</tr>
-</tbody>
-</table></td>
-</tr>
-</tbody>
-</table></td>
-</tr>
-</tbody>
-</table>
-
-Since:
-- 26.1
-
-##### Example
-
-This example defines a template that will render a custom element. It also loads the necessary CSS and JavaScript resources when the template is applied if not already loaded.
-
-```
-apex.util.defineTemplates( [
-    {
-        name: "CUSTOM_ELEMENT",
-        template: `<my-element data-name="#NAME#"></my-element>`,
-        args: [
-            {
-                name: "NAME",
-                default: "foo"
-            }
-        ],
-        cssFileUrls: [
-            {
-                url: "/myjs/my-element.css"
-            }
-        ],
-        javaScriptFileUrls: [
-            {
-                url: "/myjs/my-element.js"
-            }
-        ]
-    }
-] );
-
-const output = apex.util.applyNamedTemplate( "CUSTOM_ELEMENT", {
-    args: {
-        "NAME": "bar"
-    }
-} );
-$( "#parent" ).append( output );
 ```
 
 #### (static) escapeCSS(pValue) → {string}
@@ -1198,38 +755,18 @@ The following example returns an object such as `{ width: 17, height: 17 }`. Not
 var size = apex.util.getScrollbarSize();
 ```
 
-#### (static) getTemplateDef(pTemplateName) → {object\|null}
+#### (static) htmlBuilder() → {[htmlBuilder](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/htmlBuilder.html)}
 
-Get the template definition for the given template name. Templates are defined with [apex.util.defineTemplates](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.defineTemplates).
-
-##### Parameters:
-
-| Name | Type | Description |
-|----|----|----|
-| `pTemplateName` | string | The name of the template. |
-
-Since:
-- 26.1
-
-##### Returns:
-
-Returns the template definition or null if there is no template with the given name.
-
-Type
-object \| null
-
-#### (static) htmlBuilder() → {[htmlBuilder](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/htmlBuilder.html)}
-
-Return an [htmlBuilder](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/htmlBuilder.html) interface.
+Return an [htmlBuilder](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/htmlBuilder.html) interface.
 
 ##### Returns:
 
 Type
-[htmlBuilder](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/htmlBuilder.html)
+[htmlBuilder](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/htmlBuilder.html)
 
 #### (static) invokeAfterPaint(pFunction) → {\*}
 
-Wrapper around `requestAnimationFrame` that can fallback to `setTimeout`. Calls the given function before next browser paint. See also [apex.util.cancelInvokeAfterPaint](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.cancelInvokeAfterPaint).
+Wrapper around requestAnimationFrame that can fallback to `setTimeout`. Calls the given function before next browser paint. See also [apex.util.cancelInvokeAfterPaint](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.cancelInvokeAfterPaint).
 
 See HTML documentation for `window.requestAnimationFrame` for details.
 
@@ -1239,12 +776,9 @@ See HTML documentation for `window.requestAnimationFrame` for details.
 |----|----|----|
 | `pFunction` | function | function to call after paint |
 
-Deprecated:
-- Use `window.requestAnimationFrame` instead.
-
 ##### Returns:
 
-id An id that can be passed to [apex.util.cancelInvokeAfterPaint](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.cancelInvokeAfterPaint)
+id An id that can be passed to [apex.util.cancelInvokeAfterPaint](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.cancelInvokeAfterPaint)
 
 Type
 \*
@@ -1259,23 +793,11 @@ var id = apex.util.invokeAfterPaint( myAnimationFunction );
 apex.util.cancelInvokeAfterPaint( id );
 ```
 
-#### (static) listTemplates() → {Array.\<string\>}
-
-List all the defined template names. Templates are defined with [apex.util.defineTemplates](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.defineTemplates).
-
-Since:
-- 26.1
-
-##### Returns:
-
-Type
-Array.\<string\>
-
 #### (static) showSpinner(pContaineropt, pOptionsopt) → {jQuery}
 
 Function that renders a spinning alert to show the user that processing is taking place. Note that the alert is defined as an ARIA alert so that assistive technologies such as screen readers are alerted to the processing status.
 
-The spinner can be used with [apex.util.delayLinger](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.delayLinger.html) for better control over if, when, and for how long it is shown.
+The spinner can be used with [apex.util.delayLinger](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.delayLinger.html) for better control over if, when, and for how long it is shown.
 
 ##### Parameters:
 
@@ -1308,7 +830,7 @@ The spinner can be used with [apex.util.delayLinger](https://docs.oracle.com/en/
 <td class="attributes">&lt;optional&gt;<br />
 </td>
 <td class="description last">Optional object with the following properties:
-<h6 id="properties-6">Properties</h6>
+<h6 id="properties-1">Properties</h6>
 <table class="params" aria-label="Parameters for pOptions">
 <colgroup>
 <col style="width: 25%" />
@@ -1330,28 +852,7 @@ The spinner can be used with [apex.util.delayLinger](https://docs.oracle.com/en/
 <td class="type">string</td>
 <td class="attributes">&lt;optional&gt;<br />
 </td>
-<td class="description last">Alert text visually hidden, but available to Assistive Technologies as the static processing message to be perceived by screen reader users as a landmark label, accessible heading, etc. Defaults to "Processing".</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>ariaProcessingStarted</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Visually hidden ARIA live message emitted once the spinner is visually shown. Defaults to "Processing started...".</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>ariaStillProcessing</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Visually hidden ARIA live message emitted periodically while the spinner is visually shown Defaults to "Still processing...".</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>ariaProcessed</code></th>
-<td class="type">string</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">Visually hidden ARIA live message emitted once the spinner is removed from the DOM or becomes visually hidden. Defaults to "Processing completed.".</td>
+<td class="description last">Alert text visually hidden, but available to Assistive Technologies. Defaults to "Processing".</td>
 </tr>
 <tr>
 <th class="name" scope="row"><code>spinnerClass</code></th>
@@ -1366,13 +867,6 @@ The spinner can be used with [apex.util.delayLinger](https://docs.oracle.com/en/
 <td class="attributes">&lt;optional&gt;<br />
 </td>
 <td class="description last">If true the spinner will be fixed and will not scroll. When fixed is true the pContainer parameter is ignored and the spinner is always appended to the body.</td>
-</tr>
-<tr>
-<th class="name" scope="row"><code>suppressAria</code></th>
-<td class="type">boolean</td>
-<td class="attributes">&lt;optional&gt;<br />
-</td>
-<td class="description last">If true, suppress ARIA attributes and live region processing messages. Use this only when spinner announcements would conflict with other assistive announcements.</td>
 </tr>
 </tbody>
 </table></td>
@@ -1392,13 +886,13 @@ jQuery
 To show the spinner when processing starts.
 
 ```
-const spinner$ = apex.util.showSpinner( $( "#container_id" ) );
+var lSpinner$ = apex.util.showSpinner( $( "#container_id" ) );
 ```
 
 To remove the spinner when processing ends.
 
 ```
-spinner$.remove();
+lSpinner$.remove();
 ```
 
 #### (static) stripHTML(pText) → {string}
@@ -1431,7 +925,7 @@ apex.util.stripHTML( "Please <a href='www.example.com/ad'>click here</a>" );
 
 Returns a new function that calls `pFunction` then waits `pWait` milliseconds from the initial function call before executing again when `pImmediate` is true.
 
-If `pImmediate` is false then the call to `pFunction` will not happen until `pWait` milliseconds after the initial function call. Functions are executed at timed intervals, so if the throttle action is fired during `pWait`, the most recent call is stored and called after `pWait` is done. This is different from [apex.util.debounce](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.util.html#.debounce), which only calls a function once at the end of a single or series of events.
+If `pImmediate` is false then the call to `pFunction` will not happen until `pWait` milliseconds after the initial function call. Functions are executed at timed intervals, so if the throttle action is fired during `pWait`, the most recent call is stored and called after `pWait` is done. This is different from [apex.util.debounce](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.util.html#.debounce), which only calls a function once at the end of a single or series of events.
 
 ##### Parameters:
 
@@ -1576,7 +1070,7 @@ This example returns the jQuery object as an array.
 lTextFields = apex.util.toArray( jQuery( "input[type=text]" ) );
 ```
 
-This example splits a string value into an array. The difference is the [item#getMultiValueStorage](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/item.html#getMultiValueStorage) function is used to get the separator from an item.
+This example splits a string value into an array. The difference is the [item#getMultiValueStorage](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/item.html#getMultiValueStorage) function is used to get the separator from an item.
 
 ```
 lP1Item = apex.item( "P1_ITEM" ); // assume this item is configured with "~" for the separator

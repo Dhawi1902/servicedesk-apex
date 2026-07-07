@@ -1,4 +1,4 @@
-<!-- Source: https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html -->
+<!-- Source: https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html -->
 <!-- Namespaces: apex.actions -->
 
 # Namespace: actions
@@ -17,20 +17,20 @@
 - [setKeyCaps](#.setKeyCaps)
 - [shortcutSupport](#.shortcutSupport)
 
-## [apex](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.html).actions
+## [apex](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.html).actions
 
-The apex.actions namespace contains global functions related to the Oracle APEX actions facility. The methods and properties of the global actions context are also available in the apex.actions namespace but are documented with the [actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html) interface.
+The apex.actions namespace contains global functions related to the Oracle APEX actions facility. The methods and properties of the global actions context are also available in the apex.actions namespace but are documented with the [actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html) interface.
 
 Since:
 - 5.1
 
 ### Functions
 
-#### (static) createContext(pTypeName, pContext) → {[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)}
+#### (static) createContext(pTypeName, pContext) → {[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)}
 
-Create a new [actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html) interface object that is scoped to the given DOM element context. Any action buttons or other UI elements must be within the given pContext. Focus must be within pContext for keyboard shortcuts defined in this context to be recognized. A global context at `document.body` is created automatically and is accessed from apex.actions. The global context type name is "global".
+Create a new [actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html) interface object that is scoped to the given DOM element context. Any action buttons or other UI elements must be within the given pContext. Focus must be within pContext for keyboard shortcuts defined in this context to be recognized. A global context at `document.body` is created automatically and is accessed from apex.actions. The global context type name is "global".
 
-Plug-ins that define actions should use [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext) and add actions to the created context after calling [apex.region.create](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.region.html#.create).
+Plug-ins that define actions should use [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext) and add actions to the created context after calling [apex.region.create](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.region.html#.create).
 
 ##### Parameters:
 
@@ -44,7 +44,7 @@ Plug-ins that define actions should use [apex.actions.createContext](https://doc
 The actions interface object that was created.
 
 Type
-[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)
+[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)
 
 ##### Example
 
@@ -54,7 +54,7 @@ This example creates a context within the element with id `myLogger` with type n
 var log1 = apex.actions.createContext( "logger", $("#myLogger")[0] );
 ```
 
-#### (static) findContext(pTypeNameopt, pContext) → {[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)}
+#### (static) findContext(pTypeNameopt, pContext) → {[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)}
 
 Return the actions interface for a given context. The pTypeName is optional but if given must match the type name used when the context was created. This is not often needed because the actions object returned from createContext should be saved by any widget/component that created the context.
 
@@ -97,7 +97,7 @@ Return the actions interface for a given context. The pTypeName is optional but 
 The actions interface or undefined if there is no actions defined for pContext.
 
 Type
-[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)
+[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)
 
 ##### Examples
 
@@ -113,9 +113,9 @@ This example is the same as the previous one except it does not provide the type
 var log1 = apex.actions.findContext( $("#myLogger")[0] );
 ```
 
-#### (static) findContextById(pContextId) → {[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)}
+#### (static) findContextById(pContextId) → {[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)}
 
-Return the actions interface for a context given by the element id of the context or the [apex.region](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.region.html) that contains the context.
+Return the actions interface for a context given by the element id of the context or the [apex.region](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.region.html) that contains the context.
 
 ##### Parameters:
 
@@ -128,11 +128,11 @@ Return the actions interface for a context given by the element id of the contex
 The actions interface or undefined if there is no actions defined for pContextId.
 
 Type
-[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)
+[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)
 
 ##### Example
 
-This example returns the context for an Interactive Grid region with HTML DOM id `contactsIG`.
+This example returns the context for an Interactive Grid region with static id `contactsIG`.
 
 ```
 var igActions = apex.actions.findContextById( "contactsIG" );
@@ -166,7 +166,7 @@ for ( i = 0; i < types.length; i++ ) { // for each context type
 }
 ```
 
-#### (static) getContextsForType(pTypeName) → {Array.\<[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)\>}
+#### (static) getContextsForType(pTypeName) → {Array.\<[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)\>}
 
 Return an array of all the actions context instances for a given type.
 
@@ -181,7 +181,7 @@ Return an array of all the actions context instances for a given type.
 An array of action instances.
 
 Type
-Array.\<[actions](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html)\>
+Array.\<[actions](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html)\>
 
 ##### Example
 
@@ -193,7 +193,7 @@ var loggers = apex.actions.getContextsForType( "logger" );
 
 #### (static) getKeyCaps() → {Object}
 
-Returns the current key caps. See [apex.actions.setKeyCaps](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.setKeyCaps).
+Returns the current key caps. See [apex.actions.setKeyCaps](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.setKeyCaps).
 
 ##### Returns:
 
@@ -202,7 +202,7 @@ Object
 
 #### (static) removeContext(pTypeName, pContext)
 
-Remove an actions context that was created with [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/apex.actions.html#.createContext).
+Remove an actions context that was created with [apex.actions.createContext](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/apex.actions.html#.createContext).
 
 ##### Parameters:
 
@@ -221,7 +221,7 @@ apex.actions.removeContext( "logger", $("#myLogger")[0] );
 
 #### (static) setKeyCaps(pKeyCaps)
 
-Different types of keyboards for different types of operating systems or different languages can have different symbols printed on the keys. The shortcuts must be defined according to [actions.shortcutName](https://docs.oracle.com/en/database/oracle/apex/26.1/aexjs/actions.html#.shortcutName). This static method lets you set keyboard layout specific names or symbols to display for key names.
+Different types of keyboards for different types of operating systems or different languages can have different symbols printed on the keys. The shortcuts must be defined according to [actions.shortcutName](https://docs.oracle.com/en/database/oracle/apex/24.2/aexjs/actions.html#.shortcutName). This static method lets you set keyboard layout specific names or symbols to display for key names.
 
 Note: This affects how shortcuts are displayed not how they are defined.
 
