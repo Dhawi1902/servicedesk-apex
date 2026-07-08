@@ -301,6 +301,8 @@
 > *In this APEX version, **Close Dialog is a Process type, not a Branch type** — so there's nothing to create here. The Modal Dialog wizard already added a `Close Dialog` process for you.*
 
 1. Confirm the wizard's **Close Dialog** process exists under `[Left Pane ▸ Processing ▸ Processes]`. This is what closes the dialog and refreshes the parent Ticket Queue — leave it in place.
+
+   > ⚠️ **The submit button must be named `CREATE` (uppercase).** The Close Dialog process ships with a Server-side Condition **"Request is contained in `CREATE,SAVE,DELETE`"**, and **APEX request matching is case-sensitive**. A button's **Button Name is the request** (the Label is cosmetic), so a button named `Create` produces request `Create`, which does **not** match `CREATE` → Close Dialog is skipped → the page default-branches to itself and the modal *looks like it just refreshes instead of closing*. If you ever re-create the submit button by hand (`[Gallery ▸ Buttons]` → drag into the region's **Create** slot), set `[Identification ▸ Button Name]` = **`CREATE`**, Action = **Submit Page**, Hot = On.
 2. Make sure it runs **after** your `Create Ticket` process: `Create Ticket` should have a lower `[Right Pane ▸ Execution ▸ Sequence]` than `Close Dialog` (e.g. 60 vs the wizard default). If needed, drag it above `Close Dialog` in the tree.
 3. **Delete any stray branch** you may have created following an earlier version of this step: `[Left Pane ▸ Processing ▸ Branches]` → right-click the extra branch (the one with the red ✕) → **Delete**. A branch with no Page Number blocks Save with *"Page Number is required"*.
 
@@ -365,6 +367,7 @@
 | **Category** / **Assign to** dropdown is empty even after picking a project | Cascading LOV Parent Item not set on the child item | Set **List of Values ▸ Cascading LOV Parent Item(s)** = `P5_PROJECT_ID` on both (Step 3.2 / 3.3) |
 | **Project** dropdown itself is empty (and everything downstream) | Session context not stamped — `V_MY_*` views fail-closed with no `APP_ROLE`/`APP_COMPANY_ID` | Wire `STAMP_TENANT_CONTEXT` as the auth scheme's Post-Authentication Procedure, then log out/in |
 | Category empty *only before* a project is picked | Correct — cascading LOVs are empty until the parent has a value | No action; pick a project |
+| Ticket saves but the **modal reloads instead of closing** (looks like a refresh) | The submit button's **Button Name isn't `CREATE`** (e.g. it's `Create`). The Close Dialog process condition *"Request is contained in `CREATE,SAVE,DELETE`"* is **case-sensitive**, so it's skipped and APEX default-branches back to page 5 | Rename the button `[Identification ▸ Button Name]` = **`CREATE`** (uppercase). Confirm via **View Debug**: the accept log shows `Process "Close Dialog" … Skip because condition … evaluates to FALSE`. (Alt: set the Close Dialog process **Server-side Condition** to include the button's request, or Condition Type = None.) |
 
 > Testing `SELECT * FROM V_MY_CATEGORIES;` in **SQL Workshop returns 0 rows even when everything is correct** — SQL Workshop has no APEX session, so `V('APP_ROLE')` is NULL and the view fail-closes. Only trust these views inside a logged-in app session.
 
